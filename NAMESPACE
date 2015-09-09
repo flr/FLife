@@ -1,0 +1,6 @@
+useDynLib(FLife)
+exportPattern("^[[:alpha:]]+")
+exportMethods(
+    "vonB" 
+)
+importFrom(Rcpp, evalCpp)
