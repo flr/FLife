@@ -13,53 +13,57 @@
 #' 
 #' @examples
 #' \dontrun{
-#' par=FLPar(linf=100,t0=0,k=.4)
+#' params=FLPar(linf=100,t0=0,k=.4)
 #' age=FLQuant(1:10,dimnames=list(age=1:10))
-#' len=vonB(age,par)
-#' age=vonB(par,length=len)
+#' len=vonB(params,age)
+#' age=vonB(params,length=len)
 #' }
-vonBFn=function(par,x){
+vonBFn=function(params,x){
+ 
+  dimnames(par)[[1]]=tolower(dimnames(par)[[1]])
+  
   res=par["linf"]%*%(1.0-exp((-par["k"])%*%(x%-%par["t0"])))
   
   dimnames(res)=dimnames(x)
   res}
 
-invVonBFn=function(par,x){
+invVonBFn=function(params,x){
   res=log(1-(x%/%par["linf"]))%/% (-par["k"])%+%par["t0"]
 
   dimnames(res)=dimnames(x)
   res}
 
-setGeneric('vonB', function(par,x,...)
+setGeneric('vonB', function(params,x,...)
   standardGeneric('vonB'))
 
-setMethod("vonB", signature(par="FLPar",x="FLQuant"),
-          function(par,x,...){   
-            res=vonBFn(par,x)
+setMethod("vonB", signature(params="FLPar",x="FLQuant"),
+          function(params,x,...){   
+            res=vonBFn(params,x)
             res@units=""
             res})
-setMethod("vonB", signature(par="FLPar",x="FLPar"),
-          function(par,x,...){   
-            res=vonBFn(par,x)
+setMethod("vonB", signature(params="FLPar",x="FLPar"),
+          function(params,x,...){   
+            res=vonBFn(params,x)
             res@units=""
             res})
-setMethod("vonB", signature(par="numeric",x="numeric"),
-          function(par,x,...) 
-            vonBFn(par,x))
-setMethod("vonB", signature(par="numeric",x="FLQuant"),
-          function(par,x,...) { 
+setMethod("vonB", signature(params="numeric",x="numeric"),
+          function(params,x,...) 
+            vonBFn(params,x))
+setMethod("vonB", signature(params="numeric",x="FLQuant"),
+          function(params,x,...) { 
             res=vonBFn(FLPar(par),x)
             res@units=""
             res})
-setMethod("vonB", signature(par="missing",x="FLPar"),
-          function(par,x,length,...){   
-            res=invVonBFn(par=x,x=length)
+
+setMethod("vonB", signature(params="missing",x="FLPar"),
+          function(params,x,length,...){   
+            res=invVonBFn(params=x,x=length)
             res@units=""
             res})
 # library(numDeriv)
-# par=FLPar(linf=318.9,k=0.093,t0=-0.970)
-  # fnL=function(len) invVonB(par,FLQuant(len))
-  # fnA=function(age)    vonB(par,FLQuant(age,dimnames=list(age=age)))
+# params=FLPar(linf=318.9,k=0.093,t0=-0.970)
+  # fnL=function(len) invVonB(params,FLQuant(len))
+  # fnA=function(age)    vonB(params,FLQuant(age,dimnames=list(age=age)))
   # 
   # grad(fnL,fnA(15))
 
