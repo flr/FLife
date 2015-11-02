@@ -7,6 +7,8 @@ Author: Laurence Kell
 Maintainer: Laurence Kell <laurie.kell@iccat.int>
 Description: More about what it does (maybe more than one line)
 License: GPL (>= 2)
-Depends: methods
-Imports: Rcpp (>= 0.12.0)
+Depends:
+    R(>= 3.0.1),
+    methods,
+    FLCore(>= 2.5)
 LinkingTo: Rcpp
