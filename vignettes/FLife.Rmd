@@ -1,0 +1,133 @@
+---
+title: "Life History Relationship"
+author: "Laurence Kell"
+date: "August 13th, 2014"
+output: rmarkdown::tufte_handout
+---
+
+<!--
+%% \VignetteEngine{knitr::knitr}
+-->
+
+
+```{r knitr_init, echo=FALSE, results="asis"}
+library(knitr)
+
+# output: rmarkdown::tufte_handout
+
+## Global options
+opts_chunk$set(echo  =TRUE,
+               eval  =TRUE,
+               cache =FALSE,
+               cache.path="cache/",
+               prompt=FALSE,
+               comment=NA,
+               message=FALSE,
+               tidy   =FALSE,
+               warning=FALSE,
+               fig.height=6,
+               fig.width =6)
+```
+
+
+```{r,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE}
+library(ggplotFL)
+library(FLife)
+```
+
+# M
+
+```{r lopt}
+data(pars)
+ln=vonB(pars[[1]],FLQuant(0:20,dimnames=list(age=0:20)))
+wt=pars[[1]]["a"]*ln^pars[[1]]["b"]
+m =lorenzen(pars[[1]][c("m1","m2")],wt)
+
+ln=gascuel(pars[[3]],FLQuant(0:20,dimnames=list(age=0:20)))
+wt=pars[[3]]["a"]*ln^pars[[3]]["b"]
+m =lorenzen(pars[[3]][c("m1","m2")],wt)
+```
+
+# Indicators
+
+The length where the biomass of an unfished cohort reaches a maximum is known as $L_{opt}$ is (Beverton and Holt, 1993). It is a reference point for growth overfishing, since if most fish caught are below this length then yield from the fishery is potentially being lost. Depending on the level of infomation $L_{opt}$ can be estimated as   
+  
+two thirds of $L_{max}$  
+  
+$L_{\infty}\frac{3}{3+M/k}$   
+    
+or from a yield per recruit analysis
+dimnames(pars[[1]])$params
+Where $L_{max}$ is the maximum observed size, $M$ the instantaneous natural mortality and $k$ the growth rate from the Von Bertalannfy growth curve (Von Bertalannfy, 1957).
+
+
+```{r par,echo=TRUE,eval=!TRUE,message=FALSE,warning=FALSE}
+#data(lnMn)
+#data(pars)
+
+data(ln)
+data(pars)
+
+lines=ldply(pars,function(x) data.frame(Linf =c(x["linf"]),
+                                        L50  =c(x["l50"]),
+                                        Lopt =c(x["linf"]*2/3),
+                                        Lopt2=c(lopt2(x,.6))))
+names(lines)[1]="stock"
+dat=melt(lines,id="stock")
+names(dat)[2]="Quantity"
+
+ggplot(ln)+
+  geom_hline(aes(yintercept=value,col=Quantity),
+             data=dat,show_guide=T)+
+  geom_ribbon(aes(year,ymin=p25,ymax=p75),alpha=.2)+
+  geom_line(  aes(year,p50))+
+  facet_grid(stock~.,scale="free")+
+  theme_bw()+
+  xlab("Year")+ylab("Length (cm)")+
+  expand_limits(y=0) 
+```
+
+# Population Growth Rate
+
+The rate at which a population increases in the abscence of density-dependent regulation, the theoretical maximum rate of increase, is known as the intrinsic rate of increase i.e.
+
+$\frac{dN}{dt} \frac{1}{N} = r$
+
+where $\frac{dN}{dt}$  is the rate of increase of the population, N is the population size, and r is the intrinsic rate of increase.  
+
+Leslie matrices [23] are widely used in ecology [39] to estimate r and are commonly used in fisheries to devlop priors for r [9]. 
+
+The population is described by N(t) vector of length A describing the number of individuals in each age-class at time t, with terminal age A (number of age groups). A transition matrix T determines the contribution of each individual to the next age-group and to the new generation. The entries of the Leslie matrix are S(i) and F(i): i.e., the survival rate from age i to age i+1 and the fecundity at age i (i.e. the average number of age zero female individuals produced by an individual), respectively. In the matrix form, the model is written in the recurrence relationship (1):(1)
+
+As T coefficients are all positive and constant over time, the composition of the population at t+n can be predicted by (2):(2)
+
+As t tends to infinity, the system reaches equilibrium and the contribution of each age group in total population becomes stable. The population growth rate, r, is r = ln(λ) with λ is the dominant eigenvalue of matrix T [39]. In our Monte Carlo approach, r is computed for 10000 Leslie population matrices resulting from 10000 random realizations in the pdf parameters.
+Steepness Parameter for the Beverton-Holt Stock-Recruitment Relationship
+
+[24] and [21] expressed the steepness in a Beverton & Holt stock-recruitment model, such as :(3)where α is the maximum number of recruits per spawning biomass unit (slope of SR curve when spawning biomass approaches 0), sr the sex-ratio and the expected surviving biomass per recruit. Wbpr is the expected surviving biomass per recruit (SPRF = 0 in [21]) given in Eq. 4 where l(a) is the fraction of individuals surviving from recruitment (age 1) to age a, the weight of a female at age a, and g(a) the probability that a female is mature at age a
+
+(4) (5)
+
+The simulation of an age-structured population is a necessary step for the calculation of α to avoid the use of a stock-recruitment relationship (as in [21]) because such as relationship remains, for ABFT, unknown and very poorly fitted from stock assessment data (see [25], [40]). We used the approach by [24] to generate a population of N individuals with an age-structured model defined by the vector of mortality rates. Once the population is simulated each individual’s age is known and its corresponding life history traits (length, weight, fecundity, probability of being mature) can be estimated. Then, α is given by the ratio of the number of surviving recruits (e−M0.Fsim), where M0 is the cumulative mortality from fertilization to age 1 (Eq. 1) over the female spawning biomass simulated (Bsim). The number of surviving recruit is obtained using Eq. 6, with Fsim being the total number of oocytes produced by the simulated population.(6)where xn is the age of the nth fish, F(xn) the number of age zero female individuals produced by this age-N individual, g(xn), its probability of being mature, Wf(xn), its weight. It is possible to write explicitly h as a function of M0,
+
+(7)Steepness sample is computed from random realizations in vital rate pdf. To generate a sample for α we repeated the simulation for K = 1000 population of N individuals. 1000 values of Wbpr are computed from Eq. 5.
+
+In this approach, the estimations of r and h assumed independence between the random variables that are involved in their calculations, which may result in overestimating their variability. As the potential correlation between M0 and fecundity is unknown, we did a sensitivity analysis to test the influence of potential correlations among these variables, using a conservative approach. To do so, we re-estimated r and h distributions by implementing a bivariate random sampling procedure based on the empirical distributions of M0 and fecundity, using a correlation coefficient of 0.7 and 0.9 between both variables. This procedure allowed us to re-estimate the distributions of r and h that were expected to be less variable than distributions obtained under the assumption of independence.
+
+
+# References
+
+R.~Beverton and S.~Holt.
+\newblock \emph{On the dynamics of exploited fish populations}, volume~11.
+\newblock Springer, 1993.
+
+Von~Bertalanffy, L. (1957).
+\newblock Quantitative laws in metabolism and growth.
+\newblock {\em Quarterly Review of Biology}, pages 217--231.
+
+23 Leslie PH (1945) On the use of matrices in certain population mathematics. Biometrika 33: 183–212. doi: 10.1093/biomet/33.3.183 
+
+[9] McAllister MK, Pikitch EK, Babcock EA (2001) Using demographic methods to construct Bayesian priors for the intrinsic rate of increase in the Schaefer model and implications for stock rebuilding. Canadian Journal of Fisheries and Aquatic Sciences 58: 1871–1890. doi: 10.1139/cjfas-58-9-1871 
+
+[39] Picard N, Chagneau P, Mortier F, Bar-Hen A (2009) Finding confidence limits on population growth rates: Bootstrap and analytic methods. Mathematical Biosciences 219: 23–31 doi:10.1016/j.mbs.2009.02.002. doi: 10.1016/j.mbs.2009.02.002 
+ 

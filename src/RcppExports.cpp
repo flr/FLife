@@ -2,12 +2,13 @@
 // Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #include <Rcpp.h>
+#include <FLasher.h>
 
 using namespace Rcpp;
 
 // stockCPP
 FLQuant stockCPP(FLQuant F, FLQuant C, FLQuant B, FLQuant params, double tol, int niter);
-RcppExport SEXP FLife_stockCPP(SEXP FSEXP, SEXP CSEXP, SEXP BSEXP, SEXP paramsSEXP, SEXP tolSEXP, SEXP niterSEXP) {
+RcppExport SEXP biodyn_stockCPP(SEXP FSEXP, SEXP CSEXP, SEXP BSEXP, SEXP paramsSEXP, SEXP tolSEXP, SEXP niterSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -23,7 +24,7 @@ END_RCPP
 }
 // fCPP
 FLQuant fCPP(FLQuant F, FLQuant C, FLQuant B, FLQuant params, double tol, int niter);
-RcppExport SEXP FLife_fCPP(SEXP FSEXP, SEXP CSEXP, SEXP BSEXP, SEXP paramsSEXP, SEXP tolSEXP, SEXP niterSEXP) {
+RcppExport SEXP biodyn_fCPP(SEXP FSEXP, SEXP CSEXP, SEXP BSEXP, SEXP paramsSEXP, SEXP tolSEXP, SEXP niterSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -34,16 +35,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
     Rcpp::traits::input_parameter< int >::type niter(niterSEXP);
     __result = Rcpp::wrap(fCPP(F, C, B, params, tol, niter));
-    return __result;
-END_RCPP
-}
-// rcpp_hello_world
-List rcpp_hello_world();
-RcppExport SEXP FLife_rcpp_hello_world() {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    __result = Rcpp::wrap(rcpp_hello_world());
     return __result;
 END_RCPP
 }
