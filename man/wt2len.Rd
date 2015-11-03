@@ -5,28 +5,28 @@
 \alias{wt2len}
 \title{wt2len}
 \usage{
-wt2len(params, data, ...)
+wt2len(wt, param, ...)
 }
 \arguments{
-\item{params}{FLPar with a and b, i.e. condition and scaling factors}
+\item{wt}{FLQuant, FLPar or numeric with length}
 
-\item{age}{FLQuant, FLPar or numeric with length}
+\item{param}{FLPar with a and b, i.e. condition and scaling factors}
 }
 \value{
-Depends on the value of \code{data}
-
-#'
+Depends on the value of \code{wt}
 }
 \description{
 converts weight to length
 }
 \examples{
 \dontrun{
-params=FLPar(a=1,b=3)
-wt2len(params,FLQuant(10))
+param=FLPar(a=1,b=3)
+wt2len(FLQuant(10),param)
 }
+
+if (!isGeneric("rgamma"))
 }
 \seealso{
-\code{\code{\link{len2wt}}}
+\code{\link{len2wt}}
 }
 

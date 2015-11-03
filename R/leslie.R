@@ -12,6 +12,8 @@
 #' 
 #' @seealso \code{\code{\link{lh}}}  
 #' 
+#' @import FLBRP
+#' 
 #' @examples
 #' \dontrun{
 #' pms=data(pars[[1]])

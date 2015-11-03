@@ -16,37 +16,292 @@ library(knitr)
 # output: rmarkdown::tufte_handout
 
 ## Global options
-opts_chunk$set(echo  =TRUE,
-               eval  =TRUE,
-               cache =FALSE,
+opts_chunk$set(echo    =TRUE,
+               eval    =TRUE,
+               cache   =FALSE,
                cache.path="cache/",
-               prompt=FALSE,
-               comment=NA,
-               message=FALSE,
-               tidy   =FALSE,
-               warning=FALSE,
+               prompt  =FALSE,
+               comment =NA,
+               message =FALSE,
+               tidy    =FALSE,
+               warnings=FALSE,
                fig.height=6,
                fig.width =6)
 ```
 
 
 ```{r,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE}
-library(ggplotFL)
+library(ggplot2)
+library(FLCore)
 library(FLife)
+library(ggplotFL)
 ```
 
-# M
+# Introduction
 
-```{r lopt}
+The importance of life history traits has long been recognied (Holt 1962; Beverton 1963; Cushing 1971) and many studies have shown the relationships between processes such as growth, maturity and natural mortality (e.g. ). These relationships have been used to devlop priors in stock assesments and to parameterise ecological models.
+
+code{FLife} has a variety of methods for modelling life history traits and processes such as growth, maturity and fishery selectivity-at-age. The                                                                                                                                        code{gislasim} method takes an code{FLPar} object with life history parameters and uses relationships between them to fill in missing parameters. A code{FLBRP} can then be generated using code{lh}. 
+
+
+# Age based processes
+
+```{r age-grow}
 data(pars)
-ln=vonB(pars[[1]],FLQuant(0:20,dimnames=list(age=0:20)))
-wt=pars[[1]]["a"]*ln^pars[[1]]["b"]
-m =lorenzen(pars[[1]][c("m1","m2")],wt)
 
-ln=gascuel(pars[[3]],FLQuant(0:20,dimnames=list(age=0:20)))
-wt=pars[[3]]["a"]*ln^pars[[3]]["b"]
-m =lorenzen(pars[[3]][c("m1","m2")],wt)
+age=FLQuant(0:20,dimnames=list(age=0:20))
+
+ln =vonB(age,pars[[1]])
+
+wt=pars[[1]]["a"]*ln^pars[[1]]["b"]
+wt=len2wt(ln,pars[[1]])
 ```
+
+```{r age-mat}
+mat=FLife:::sigmoid(age,pars[[1]])
+```
+
+```{r}
+ggplot(FLQuants(Length=ln,Mass=wt,Maturity=mat))+
+  geom_line(aes(age,data))+
+  facet_grid(qname~.,scale="free")
+```
+
+```{r age-m}
+m =FLQuants(Lorenzen=lorenzen(wt,pars[[1]][c("m1","m2")]),
+            Gislason=gislasonM(ln,pars[[1]][-(8:9)]))
+
+ggplot(m)+
+  geom_line(aes(age,data,col=qname))
+```
+
+
+```{r age-sel}
+sel=FLQuants("Flat"=dnormal(age,FLPar(a1="4",sl=3,sr=500)),
+             "Dome"=dnormal(age,FLPar(a1="4",sl=3,sr=5)))
+
+ggplot(sel)+
+  geom_line(aes(age,data,col=qname))
+```
+
+```{r}
+dat=data.frame(expand.grid(
+                length=seq(10,290,10),year=rep(2001:2010,2)),
+                data  =runif(580,0,100)*sample(c(rep(NA,10),rep(10,90)),580,replace=T))
+dat=dat[sample(seq(dim(dat)[1],dim(dat)[1])),]
+
+as.FLQuant(dat[sample(seq(dim(dat)[1],dim(dat)[1])),],quant="length")
+```
+
+# Life history relationships
+
+code{gislasim} takes an code{FLPar} object with a minimum of code{linf}, it then uses life history relationships to derive the missing parameters for k, age at maturity and M. 
+
+t0=-0.1,a=0.001,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000
+
+growth parameters
+k=3.15*linf^(-0.64)
+From Gislason et al 2008, all species combined
+  
+Natural mortality parameters from Model 2, Table 1 Gislason 2010
+m1= 0.55*(linf^1.44)%*%k
+m2=-1.61        
+
+ 
+maturity parameters from http://www.fishbase.org/manual/FishbaseThe_MATURITY_Table.htm
+  if (!("asym"    %in% dimnames(par)$params)) par=rbind(par,FLPar("asym"    =asym, iter=dims(par)$iter))
+
+      $l_{50}=0.72linf^{0.93}$
+    
+    $a50=log(1-(l50/linf/-k+t0$
+
+selectivity guestimate
+a1=par["a50"]
+ 
+attributes(par)$units=c("cm","kg","1000s")
+  
+
+Uses life history theory to derive parameters for biological relationships,
+ i.e. growth, maturity, natural mortality from.
+ 
+
+ @param   code{par} code{FLPar} object with parameters for life history equations and selection pattern.
+ Need L_infty to estimate other parameters, if any other parameters supplied in code{code} then
+ these are not provided by the algorithm 
+ @param   code{t0} of von Bertalanffy. This is a default that isnt normally derived
+ from life history theory, as are the following args.
+ @param   code{a} coefficient of length weight relationship
+ @param   code{b} exponent of length weight relationship
+ @param   code{ato95} age at which 95\% of fish are mature, offset to age at which 50\% are mature
+ @param   code{sl} selectivity-at-age parameter, standard deviation of lefthand limb of double normal
+ @param   code{sr} stock recruitment relationship
+ @param   code{s} steepness of stock recruitment relationship
+ @param   code{v} virgin biomass
+ 
+
+
+lh=function(par,
+            growth       =vonB,
+            fnM         =function(par,len) par["m1"]%*%(exp(log(len)%*%par["m2"])), 
+            fnMat        =function(params,data) {
+              res=FLQuant(0.5,dimnames=dimnames(data))
+              res[data> a50]=1
+              res[data< a50]=0
+              res},
+            fnSel        =dnormal,
+            sr           ="bevholt",
+            range        =c(min=1,max=40,minfbar=1,maxfbar=40,plusgroup=40),
+            spwn         = 0,
+            fish         = 0.5, # proportion of year when fishing happens
+            units=if("units" %in% names(attributes(par))) attributes(par)$units else NULL,
+            ...){
+  
+  args<-list(...)
+
+  if (("m.spwn" %in% names(args)))
+    m.spwn =args[["m.spwn"]]
+  else
+    m.spwn=FLQuant(spwn, dimnames=list(age=range["min"]:range["max"]))
+  
+  if (("harvest.spwn" %in% names(args)))
+    harvest.spwn =args[["harvest.spwn"]]
+  else
+    harvest.spwn=FLQuant(spwn, dimnames=list(age=range["min"]:range["max"]))
+  
+  age=FLQuant(range["min"]:range["max"],
+              dimnames=list(age =range["min"]:range["max"],
+                            iter=dimnames(par)$iter))
+  # Get the lengths through different times of the year
+  stocklen   <- growth(par,age+m.spwn) # stocklen is length at spawning time
+  catchlen   <- growth(par, age+fish) # catchlen is length when fishing happens
+  
+  midyearlen <- growth(par, age+0.5) # midyear length used for natural mortality
+  
+  # Corresponding weights
+  swt=exp(log(stocklen%*%par["a"]))%*%par["b"]
+  cwt=exp(log(catchlen%*%par["a"]))%*%par["b"]
+  if ("bg" %in% dimnames(par)$param)  
+    swt=exp(log(stocklen%*%par["a"]))%*%par["bg"]
+  warning("FLPar%*%FLQuant operator sets 1st dim name to quant regardless")
+
+  if ("numeric" %in% is(fnM)) m.=FLQuant(fnM,dimnames=dimnames(age)) else{
+    if ("len" %in% names(formals(fnM)))   
+      m.   =fnM(par=par,len=midyearlen) # natural mortality is always based on mid year length
+    else if ("age" %in% names(formals(fnM))){ 
+      m.   =fnM(age=age+0.5,par=par) # natural mortality is always based on mid year length
+    }else if ("wt" %in% names(formals(fnM)))
+      m.   =fnM(par[c("m1","m2")],swt) 
+  
+  names(dimnames(m.))[1]="age"}
+
+  #age<<-age
+#mspwn<<-m.spwn
+#return()
+  mat. =fnMat(par,age + m.spwn) # maturity is biological therefore + m.spwn 
+  sel. =fnSel(par,age + fish) # selectivty is fishery  based therefore + fish
+
+  ## create a FLBRP object to   calculate expected equilibrium values and ref pts
+  dms=dimnames(m.)
+
+  res=FLBRP(stock.wt       =swt,
+            landings.wt    =cwt,
+            discards.wt    =cwt,
+            bycatch.wt     =cwt,
+            m              =m.,
+            mat            =FLQuant(mat., dimnames=dimnames(m.)),
+            landings.sel   =FLQuant(sel., dimnames=dimnames(m.)),
+            discards.sel   =FLQuant(0,    dimnames=dimnames(m.)),
+            bycatch.harvest=FLQuant(0,    dimnames=dimnames(m.)),
+            harvest.spwn   =FLQuant(harvest.spwn,    dimnames=dimnames(m.)),
+            m.spwn         =FLQuant(m.spwn,    dimnames=dimnames(m.)),
+            availability   =FLQuant(1,    dimnames=dimnames(m.)),
+            range          =range)
+  ## FApex
+  #if (!("range" %in% names(args))) range(res,c("minfbar","maxfbar"))[]<-as.numeric(dimnames(landings.sel(res)[landings.sel(res)==max(landings.sel(res))][1])$age)
+
+  ## replace any slot passed in as an arg
+  for (slt in names(args)[names(args) %in% names(getSlots("FLBRP"))[names(getSlots("FLBRP"))!="fbar"]])
+    slot(res, slt)<-args[[slt]]
+
+  params(res)=propagate(params(res),dims(res)$iter)
+Stock recruitment relationship
+  model(res) =do.call(sr,list())$model
+  
+  if (sr=="shepherd" & !("c" %in% names(par))){
+    
+    dmns=dimnames(par)
+    
+    dmns$params=c(dmns$params,"c")
+    
+    par.=FLPar(NA,dimnamels=dmns)
+    par.[dimnames(par)$params]=par
+    par.["c"]=1
+    par=par.}
+    
+    params(res)=FLPar(c(a=as.numeric(NA),b=as.numeric(NA)),iter=dims(par)$iter)
+    for (i in seq(dims(par)$iter))
+      if (sr=="shepherd")
+        params(res)[,i][]=unlist(c(FLCore:::ab(par[c("s","v","c"),i],sr,spr0=FLCore:::iter(spr0(res),i))[c("a","b","c")]))
+    else
+      params(res)[,i][]=unlist(c(FLCore:::ab(par[c("s","v"),i],sr,spr0=FLCore:::iter(spr0(res),i))[c("a","b")]))
+
+    warning("iter(params(res),i)=ab(par[c(s,v),i],sr,spr0=iter(spr0(res),i))[c(a,b)] assignment doesnt work")
+    warning("iter(FLBRP,i) doesn't work")
+  }else{
+    if (sr=="shepherd")
+      params(res)=FLCore:::ab(par[c("s","v","c")],sr,spr0=spr0(res))[c("a","b","c")]
+    else{ 
+      params(res)=FLCore:::ab(par[c("s","v")],sr,spr0=spr0(res))[c("a","b")]
+      }
+    }
+
+  refpts(res)=propagate(FLBRP:::refpts(res)[c("virgin","msy","crash","f0.1","fmax")],dims(par)$iter)
+  res=brp(res)
+
+  if ("fbar" %in% names(args)) 
+    fbar(res)<-args[["fbar"]] else 
+      if (any((!is.nan(FLBRP:::refpts(res)["crash","harvest"])))) 
+        fbar(res)<-FLQuant(seq(0,1,length.out=101),quant="age")%*%FLBRP:::refpts(res)["crash","harvest"]
+  
+  names(dimnames(fbar(res)))[1]="age"
+  res=brp(res)
+   
+  if (!("units" %in% names(attributes(par))))  return(res)
+  if (all(is.na(attributes(par)$units)))  return(res)
+  
+  try(res <- setUnits(res, par),silent=TRUE)
+  
+  return(res)}
+ 
+
+```{r lh}
+
+```
+
+# Equilibrium
+```{r gisalsim}
+```
+
+# Operating Models
+```{r om}
+```
+
+# Leslie Matrix
+```{r leslie}
+```
+
+# Reference points and stock indicators
+```{r refpt}
+```
+
+# Catch curve analyses
+```{r cc}
+```
+
+# Elasticity Analysis
+```{r elas}
+```
+
 
 # Indicators
 
@@ -89,30 +344,6 @@ ggplot(ln)+
 
 # Population Growth Rate
 
-The rate at which a population increases in the abscence of density-dependent regulation, the theoretical maximum rate of increase, is known as the intrinsic rate of increase i.e.
-
-$\frac{dN}{dt} \frac{1}{N} = r$
-
-where $\frac{dN}{dt}$  is the rate of increase of the population, N is the population size, and r is the intrinsic rate of increase.  
-
-Leslie matrices [23] are widely used in ecology [39] to estimate r and are commonly used in fisheries to devlop priors for r [9]. 
-
-The population is described by N(t) vector of length A describing the number of individuals in each age-class at time t, with terminal age A (number of age groups). A transition matrix T determines the contribution of each individual to the next age-group and to the new generation. The entries of the Leslie matrix are S(i) and F(i): i.e., the survival rate from age i to age i+1 and the fecundity at age i (i.e. the average number of age zero female individuals produced by an individual), respectively. In the matrix form, the model is written in the recurrence relationship (1):(1)
-
-As T coefficients are all positive and constant over time, the composition of the population at t+n can be predicted by (2):(2)
-
-As t tends to infinity, the system reaches equilibrium and the contribution of each age group in total population becomes stable. The population growth rate, r, is r = ln(λ) with λ is the dominant eigenvalue of matrix T [39]. In our Monte Carlo approach, r is computed for 10000 Leslie population matrices resulting from 10000 random realizations in the pdf parameters.
-Steepness Parameter for the Beverton-Holt Stock-Recruitment Relationship
-
-[24] and [21] expressed the steepness in a Beverton & Holt stock-recruitment model, such as :(3)where α is the maximum number of recruits per spawning biomass unit (slope of SR curve when spawning biomass approaches 0), sr the sex-ratio and the expected surviving biomass per recruit. Wbpr is the expected surviving biomass per recruit (SPRF = 0 in [21]) given in Eq. 4 where l(a) is the fraction of individuals surviving from recruitment (age 1) to age a, the weight of a female at age a, and g(a) the probability that a female is mature at age a
-
-(4) (5)
-
-The simulation of an age-structured population is a necessary step for the calculation of α to avoid the use of a stock-recruitment relationship (as in [21]) because such as relationship remains, for ABFT, unknown and very poorly fitted from stock assessment data (see [25], [40]). We used the approach by [24] to generate a population of N individuals with an age-structured model defined by the vector of mortality rates. Once the population is simulated each individual’s age is known and its corresponding life history traits (length, weight, fecundity, probability of being mature) can be estimated. Then, α is given by the ratio of the number of surviving recruits (e−M0.Fsim), where M0 is the cumulative mortality from fertilization to age 1 (Eq. 1) over the female spawning biomass simulated (Bsim). The number of surviving recruit is obtained using Eq. 6, with Fsim being the total number of oocytes produced by the simulated population.(6)where xn is the age of the nth fish, F(xn) the number of age zero female individuals produced by this age-N individual, g(xn), its probability of being mature, Wf(xn), its weight. It is possible to write explicitly h as a function of M0,
-
-(7)Steepness sample is computed from random realizations in vital rate pdf. To generate a sample for α we repeated the simulation for K = 1000 population of N individuals. 1000 values of Wbpr are computed from Eq. 5.
-
-In this approach, the estimations of r and h assumed independence between the random variables that are involved in their calculations, which may result in overestimating their variability. As the potential correlation between M0 and fecundity is unknown, we did a sensitivity analysis to test the influence of potential correlations among these variables, using a conservative approach. To do so, we re-estimated r and h distributions by implementing a bivariate random sampling procedure based on the empirical distributions of M0 and fecundity, using a correlation coefficient of 0.7 and 0.9 between both variables. This procedure allowed us to re-estimate the distributions of r and h that were expected to be less variable than distributions obtained under the assumption of independence.
 
 
 # References

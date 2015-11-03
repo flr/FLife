@@ -2,9 +2,9 @@
 #'
 #' Double normal ogive
 #' 
-#' @param params FLPar with parameters \code{a1} age at maximum, \code{sl} SD for lefthand limb and 
-#' \code{sr} SD for righthand limb. 
 #' @param age FLQuant or FLCohort 
+#' @param param FLPar with parameters \code{a1} age at maximum, \code{sl} SD for lefthand limb and 
+#' \code{sr} SD for righthand limb. 
 #' 
 #' @return Depends on the value of \code{age} 
 #'  
@@ -16,32 +16,32 @@
 #' 
 #' @examples
 #' \dontrun{
-#' params=FLPar(a1=1,sl=3,sr=500)
-#' wt2len(params,FLQuant(10))
+#' param=FLPar(a1=1,sl=3,sr=500)
+#' wt2len(param,FLQuant(10))
 #' }
-setGeneric('dnormal', function(params,age,...)
+setGeneric('dnormal', function(age,param,...)
   standardGeneric('dnormal'))
 
-setMethod("dnormal", signature(params="FLPar",age="FLQuant"),
-function(params,age,...){   
-  res=dnormalFn(params,age)
+setMethod("dnormal", signature(age="FLQuant",param="FLPar"),
+function(age,param,...){   
+  res=dnormalFn(age,param)
   res@units=""
   res})
-setMethod("dnormal", signature(params="FLPar",age="FLPar"),
-          function(params,age,...){   
-            res=dnormalFn(params,age)
+setMethod("dnormal", signature(age="FLPar",param="FLPar"),
+          function(age,param,...){   
+            res=dnormalFn(age,param)
             res@units=""
             res})
-setMethod("dnormal", signature(params="numeric",age="numeric"),
-          function(params,age,...) 
-            dnormalFn(params,age))
-setMethod("dnormal", signature(params="numeric",age="FLQuant"),
-          function(params,age,...) { 
-            res=dnormalFn(FLPar(params),age)
+setMethod("dnormal", signature(age="numeric",param="numeric"),
+          function(age,param,...) 
+            dnormalFn(age,param))
+setMethod("dnormal", signature(age="FLQuant",param="numeric"),
+          function(age,param,...) { 
+            res=dnormalFn(FLPar(param),age)
             res@units=""
             res})
 
-dnormalFn_<-function(params,age){
+dnormalFn_<-function(age,param){
   pow <-function(a,b) a^b
   func<- function(age,a1,sl,sr){
     if (age < a1)
@@ -49,14 +49,14 @@ dnormalFn_<-function(params,age){
     else
       return(pow(2.0,-((age-a1)/sr*(age-a1)/sr)))}
   
-  sapply(age,func,params["a1"],params["sl"],params["sr"])}
+  sapply(age,func,param["a1"],param["sl"],param["sr"])}
 
 
-dnormalFn<-function(params,age){
+dnormalFn<-function(age,param){
   
-  a1=FLQuant(1,dimnames=dimnames(age))%*%params["a1"]
-  s =FLQuant(1,dimnames=dimnames(age))%*%params["sl"]
-  sr=FLQuant(1,dimnames=dimnames(age))%*%params["sr"]
+  a1=FLQuant(1,dimnames=dimnames(age))%*%param["a1"]
+  s =FLQuant(1,dimnames=dimnames(age))%*%param["sl"]
+  sr=FLQuant(1,dimnames=dimnames(age))%*%param["sr"]
   
   if (dims(age)$iter==1 &  dims(a1)$iter>1)
     age=propagate(age,dims(a1)$iter)

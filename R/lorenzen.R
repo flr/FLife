@@ -3,9 +3,9 @@
 #' Lorenzen natural mortality relatoinship estimate M as a function of weight. 
 #' M=a*wt^b; 
 #' 
+#' @param wt  mass at which M is to be predicted
 #' @param par an FLPar with two values; i.e. a equal to M at unit mass 
 #' and b a power term; defaults are a=0.3 and b=-0.288
-#' @param wt  mass at which M is to be predicted
 #' 
 #' #' @export
 #' @docType methods
@@ -20,7 +20,7 @@
 #'              dimnames=list(age=1:16))
 #' lorenzen(mass)
 #' }
-setGeneric('lorenzen', function(params,wt,...)
+setGeneric('lorenzen', function(wt,param,...)
   standardGeneric('lorenzen'))
 
 lorenzenFn<-function(wt,a=.3,b=-0.288) {
@@ -28,18 +28,19 @@ lorenzenFn<-function(wt,a=.3,b=-0.288) {
   if ("FLPar"%in%is(a)) res=a%*%res else res=a*res
   res}
 
-setMethod('lorenzen', signature(params='missing',wt='FLQuant'),
+setMethod('lorenzen', signature(wt='FLQuant',param='missing'),
       function(wt,...) { 
           res=lorenzenFn(wt)
           res@units='yr^-1'
           res})
-setMethod('lorenzen', signature(params='numeric',wt='FLQuant'),
-      function(params,wt,...) { 
-          res=params[1]*wt^params[2]
+setMethod('lorenzen', signature(wt='FLQuant',param='numeric'),
+      function(wt,param,...) { 
+          res=param[1]*wt^param[2]
           res@units='yr^-1'
           res})
-setMethod('lorenzen', signature(params='FLPar',wt='FLQuant'),
-      function(params,wt,...){   
-          res=params[1]%*%(wt%^%params[2])
+setMethod('lorenzen', signature(wt='FLQuant',param='FLPar'),
+      function(wt,param,...){   
+          res=param[1]%*%(wt%^%param[2])
           res@units='yr^-1'
           res})
+#par["m1"]%*%(exp(log(len)%*%par["m2"])), 

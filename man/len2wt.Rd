@@ -5,15 +5,15 @@
 \alias{len2wt}
 \title{len2wt}
 \usage{
-len2wt(params, data, ...)
+len2wt(length, param, ...)
 }
 \arguments{
-\item{params}{}
-
 \item{length}{age FLQuant, FLPar or numeric}
+
+\item{param}{}
 }
 \value{
-Depends on the value of \code{data}
+Depends on the value of \code{length}
 
 #'
 }
@@ -22,8 +22,8 @@ converts length to weight
 }
 \examples{
 \dontrun{
-params=FLPar(a=1,b=3)
-len2wt(params,FLQuant(10))
+param=FLPar(a=1,b=3)
+len2wt(param,FLQuant(10))
 }
 }
 \seealso{

@@ -8,12 +8,12 @@
 \usage{
 ages(age, ...)
 
-dnormal(params, age, ...)
+dnormal(age, param, ...)
 }
 \arguments{
 \item{age}{FLQuant or FLCohort}
 
-\item{params}{FLPar with parameters \code{a1} age at maximum, \code{sl} SD for lefthand limb and
+\item{param}{FLPar with parameters \code{a1} age at maximum, \code{sl} SD for lefthand limb and
 \code{sr} SD for righthand limb.}
 
 \item{age}{FLQuant or FLCohort}
@@ -40,8 +40,8 @@ params=FLPar(a=1,b=3)
 wt2len(params,FLQuant(10))
 }
 \dontrun{
-params=FLPar(a1=1,sl=3,sr=500)
-wt2len(params,FLQuant(10))
+param=FLPar(a1=1,sl=3,sr=500)
+wt2len(param,FLQuant(10))
 }
 }
 \seealso{

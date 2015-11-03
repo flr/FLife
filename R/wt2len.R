@@ -2,27 +2,30 @@
 #'
 #' converts weight to length
 #' 
-#' @param params FLPar with a and b, i.e. condition and scaling factors 
-#' @param age FLQuant, FLPar or numeric with length 
+#' @param wt FLQuant, FLPar or numeric with length 
+#' @param param FLPar with a and b, i.e. condition and scaling factors 
 #' 
-#' @return Depends on the value of \code{data} 
+#' @return Depends on the value of \code{wt} 
 #' 
-#' #' @export
+#' @export
 #' @docType methods
 #' @rdname wt2len
 #' 
-#' @seealso \code{\code{\link{len2wt}}}  
+#' @seealso \code{\link{len2wt}}  
 #' 
 #' @examples
 #' \dontrun{
-#' params=FLPar(a=1,b=3)
-#' wt2len(params,FLQuant(10))
+#' param=FLPar(a=1,b=3)
+#' wt2len(FLQuant(10),param)
 #' }
-setGeneric('wt2len', function(params,data, ...)
-  standardGeneric('wt2len'))
-setMethod("wt2len", signature(params="FLPar", data="FLQuant"),
-   function(params,data) (data/params["a"])^(1/params["b"]))
-setMethod("wt2len", signature(params="FLPar", data="FLCohort"),
-   function(params,data) (data/params["a"])^(1/params["b"]))
-setMethod("wt2len", signature(params="FLPar", data="numeric"),
-   function(params,data) (data/params["a"])^(1/params["b"]))
+#' 
+#' if (!isGeneric("rgamma"))
+# gamma
+setGeneric('wt2len', function(wt,param,...) standardGeneric('wt2len'))
+
+setMethod("wt2len", signature(wt="FLQuant",param="FLPar"),
+   function(wt,param,...) (wt/param["a"])^(1/param["b"]))
+setMethod("wt2len", signature(wt="FLCohort",param="FLPar"),
+   function(wt,param,...) (wt/param["a"])^(1/param["b"]))
+setMethod("wt2len", signature(wt="numeric",param="FLPar"),
+   function(wt,param,...) (wt/param["a"])^(1/param["b"]))
