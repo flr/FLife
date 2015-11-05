@@ -5,12 +5,12 @@
 \alias{vonB}
 \title{vonB}
 \usage{
-vonB(age, params, ...)
+vonB(age, param, ...)
 }
 \arguments{
 \item{age}{FLQuant, FLPar or numeric with ages}
 
-\item{params}{}
+\item{param}{}
 
 \item{length}{FLQuant, FLPar or numeric with length, if supplied as a named paramreter
 instead  of age then calculates ages.}
@@ -25,10 +25,10 @@ Von Bertalanffy growth equation
 }
 \examples{
 \dontrun{
-params=FLPar(linf=100,t0=0,k=.4)
+param=FLPar(linf=100,t0=0,k=.4)
 age=FLQuant(1:10,dimnames=list(age=1:10))
-len=vonB(age,params)
-age=vonB(params,length=len)
+len=vonB(age,param)
+age=vonB(param,length=len)
 }
 }
 \seealso{

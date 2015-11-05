@@ -24,7 +24,7 @@ setGeneric('leslie', function(object, ...)
   	standardGeneric('leslie'))
 
 setMethod("leslie", signature(object="FLBRP"),
-  function(object,fbar=FLQuant(0),numbers=TRUE,...){
+  function(object,fbar=FLQuant(0),numbers=!TRUE,...){
 
   args=list(...)  
   for (slt in names(args)[names(args) %in% names(getSlots("FLBRP"))])
@@ -48,6 +48,8 @@ setMethod("leslie", signature(object="FLBRP"),
        diag(mx[-1,-length(ages)])=c(stock.wt(object)[-1,1])/c(stock.wt(object)[-length(ages),1])
      mx[1,]=c(stock.wt(object)[,1])*mx[1,]
      }
+  
+  mx[is.na(mx)]=0
   
   return(mx)})
 

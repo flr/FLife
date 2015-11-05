@@ -6,8 +6,9 @@
 #' @param length  mass at which M is to be predicted
 #' @param par an FLPar with two values; i.e. a equal to M at unit mass 
 #' and b a power term; defaults are a=0.3 and b=-0.288
+#'
+#' @import FLCore 
 #' 
-#' #' @export
 #' @docType methods
 #' @rdname gislason
 #' 

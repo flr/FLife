@@ -39,12 +39,12 @@ lh=function(par,
             #                       exp(a[1]%+%(a[2]%*%log(len/100))%+%(a[3]%*%log(par["linf"]/100))%+%(a[4]%*%log(par["k"]))%+%a[5]/T),
             fnM         =function(par,len) par["m1"]%*%(exp(log(len)%*%par["m2"])), 
             #fnM          =function(par,len) 0.55*(len^-1.61)%*%(par["linf"]^1.44)%*%par["k"],
-            fnMat        =function(params,data) {
-              a50=FLQuant(ceiling(rep(c(params["a50"]),each=dim(data)[1])),
-                          dimnames=dimnames(data))
-              res=FLQuant(0.5,dimnames=dimnames(data))
-              res[data> a50]=1
-              res[data< a50]=0
+            fnMat        =function(age,param) {
+              a50=FLQuant(ceiling(rep(c(param["a50"]),each=dim(age)[1])),
+                          dimnames=dimnames(age))
+              res=FLQuant(0.5,dimnames=dimnames(age))
+              res[age> a50]=1
+              res[age< a50]=0
               res},
             fnSel        =dnormal,
             sr           ="bevholt",
@@ -74,10 +74,10 @@ lh=function(par,
               dimnames=list(age =range["min"]:range["max"],
                             iter=dimnames(par)$iter))
   # Get the lengths through different times of the year
-  stocklen   <- growth(par,age+m.spwn) # stocklen is length at spawning time
-  catchlen   <- growth(par, age+fish) # catchlen is length when fishing happens
+  stocklen   <- growth(age+m.spwn,par) # stocklen is length at spawning time
+  catchlen   <- growth(age+fish,  par) # catchlen is length when fishing happens
   
-  midyearlen <- growth(par, age+0.5) # midyear length used for natural mortality
+  midyearlen <- growth(age+0.5,par) # midyear length used for natural mortality
   
   # Corresponding weights
   swt=exp(log(stocklen%*%par["a"]))%*%par["b"]
@@ -99,9 +99,9 @@ lh=function(par,
   #age<<-age
 #mspwn<<-m.spwn
 #return()
-  mat. =fnMat(par,age + m.spwn) # maturity is biological therefore + m.spwn 
-  sel. =fnSel(par,age + fish) # selectivty is fishery  based therefore + fish
 
+  mat. =fnMat(age + m.spwn,par) # maturity is biological therefore + m.spwn 
+  sel. =fnSel(age + fish,  par) # selectivty is fishery  based therefore + fish
   ## create a FLBRP object to   calculate expected equilibrium values and ref pts
   dms=dimnames(m.)
 

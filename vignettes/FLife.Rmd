@@ -61,7 +61,7 @@ wt=len2wt(ln,pars[[1]])
 mat=FLife:::sigmoid(age,pars[[1]])
 ```
 
-```{r}
+```{r, fig.margin=TRUE, fig.width=3, fig.height=6, fig.cap="Biological properties"}
 ggplot(FLQuants(Length=ln,Mass=wt,Maturity=mat))+
   geom_line(aes(age,data))+
   facet_grid(qname~.,scale="free")
@@ -69,7 +69,7 @@ ggplot(FLQuants(Length=ln,Mass=wt,Maturity=mat))+
 
 ```{r age-m}
 m =FLQuants(Lorenzen=lorenzen(wt,pars[[1]][c("m1","m2")]),
-            Gislason=gislasonM(ln,pars[[1]][-(8:9)]))
+            Gislason=gislason(ln,pars[[1]][-(8:9)]))
 
 ggplot(m)+
   geom_line(aes(age,data,col=qname))

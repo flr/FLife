@@ -6,10 +6,10 @@
 \title{lh}
 \usage{
 lh(par, growth = vonB, fnM = function(par, len) par["m1"] \%*\%
-  (exp(log(len) \%*\% par["m2"])), fnMat = function(params, data) {     a50 =
-  FLQuant(ceiling(rep(c(params["a50"]), each = dim(data)[1])), dimnames =
-  dimnames(data))     res = FLQuant(0.5, dimnames = dimnames(data))     res[data
-  > a50] = 1     res[data < a50] = 0     res }, fnSel = dnormal,
+  (exp(log(len) \%*\% par["m2"])), fnMat = function(age, param) {     a50 =
+  FLQuant(ceiling(rep(c(param["a50"]), each = dim(age)[1])), dimnames =
+  dimnames(age))     res = FLQuant(0.5, dimnames = dimnames(age))     res[age >
+  a50] = 1     res[age < a50] = 0     res }, fnSel = dnormal,
   sr = "bevholt", range = c(min = 1, max = 40, minfbar = 1, maxfbar = 40,
   plusgroup = 40), spwn = 0, fish = 0.5, units = if ("units" \%in\%
   names(attributes(par))) attributes(par)$units else NULL, ...)
