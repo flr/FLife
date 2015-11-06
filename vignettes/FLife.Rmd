@@ -67,7 +67,7 @@ ggplot(FLQuants(Length=ln,Mass=wt,Maturity=mat))+
   facet_grid(qname~.,scale="free")
 ```
 
-```{r age-m}
+```{r age-m,eval=FALSE}
 m =FLQuants(Lorenzen=lorenzen(wt,pars[[1]][c("m1","m2")]),
             Gislason=gislason(ln,pars[[1]][-(8:9)]))
 
@@ -289,6 +289,101 @@ Stock recruitment relationship
 # Leslie Matrix
 ```{r leslie}
 ```
+
+The maximum theoretical rate of increase of a population in the absence of density-dependent regulation is given by
+
+\begin{equation} r=\frac{dN}{dt} \frac{1}{N}  \end{equation}
+
+\noindent where the intrinsic population growth rate ($r$) is a function of population size ($N$) and $\frac{dN}{dt}$ the instantaneous rate of increase of the population.
+
+In ecology Leslie matrices \citep{leslie1945use} are widely used to estimate r \citep{picard2009finding} and have been used in fisheries to develop Bayesian priors for r for use in stock assessment citep[see][]{mcallister2001using}. The Leslie Matrix ($A$) is a transition matrix that models age dynamics and can be specified either in numbers or biomass. Each age-class is described by a vector ($B_t$) of length p equal to the terminal age. Entries in the matrix are fecundity ($f_i$) (the quantity of age zero females produced per unit of mature biomass by each age-class) and the survival (and growth if biomass) of an age-class ($s_i$) in each time step $i$, i.e.
+
+\begin{equation}
+\begin{array}{l}
+b_{1}= f_{2}b_{2}+ ... + f_{3}b_{p}\\
+b_{2}=s_{1}b_{1}\\
+~~~~~~...\\
+b_{p}=s_{p-1}b_{p-1}+s_{p}b_{p}\\
+\end{array}
+\end{equation}
+
+The matrix of this linear system is 
+\begin{equation}
+\mathbf{A}=%
+\begin{pmatrix}
+0 & f_{2} & ... & f_{p} \\ 
+s_{1} & 0 & ... & 0 \\ 
+ &...&\\
+0 & ... & s_{p-1} & s_{p}%
+\end{pmatrix}%
+\end{equation}
+
+If the initial population is
+
+\begin{equation}
+\mathbf{B}^{0}=%
+\begin{pmatrix}
+b_{1} \\ 
+b_{2} \\ 
+...\\
+b_{p}%
+\end{pmatrix}%
+\end{equation}
+
+then after time step i=1 the population is given by
+
+\begin{equation}
+\mathbf{B}^{i}=\mathbf{A}^{i}\mathbf{B}^{0}
+\end{equation}
+
+As $i$ tends to infinity the system reaches equilibrium and the contribution of each age group in the population becomes stable. The population growth rate $r$ is then derived from $\lambda$ the dominant eigenvalue of $A$ \citep{caswell1989matrix}.
+
+To construct the Leslie matrix requires estimates of $f_i$ and $p_i$. In this study these were derived by combining a stock recruitment relationship with a spawner-per-recruit ($S/R$) and yield-per-recruit ($Y/R$) analyses. The life history parameters were used to derive mass ($W$), proportion mature ($Q$), natural mortality ($M$) and  fishing mortality ($F$) at age. 
+
+The second term is the plus-group, i.e. the summation of all ages from the last age to infinity. 
+
+Growth in length is modelled by the Von Bertalanffy growth equation \cite{von1957quantitative}
+
+\begin{equation} L = L_{\infty}(1 - exp(-k(t-t_0)) \end{equation}
+         
+where $k$ is the rate at which the rate of growth in length declines as length approaches the asymptotic length  $L_{\infty}$ and $t_{0}$ is the hypothetical time at which an individual is of zero length.
+
+Length is converted to mass using the length-weight relationship 
+    
+\begin{equation} W = aL_t^b \end{equation}
+
+\noindent where $a$ is the condition factor and $b$ is the allometric growth coefficient.
+
+\cite{gislason2010does} showed that M is significantly related to body length, asymptotic length and k. Temperature is non-significant when k is included, since k itself is correlated with temperature. We therefore model M as
+
+\begin{equation}
+            M =  0.55L^{1.61}L_{\infty}^{1.44}k
+\end{equation} 
+
+Selection pattern of the fishery was represented by a double normal \citep[see][]{Hilbornetal2000}) with three parameters that describe the age at maximum selection ($a1$), the rate at which the left-hand  limb increases ($sl$) and the right-hand limb decreases ($sr$) which allows flat topped or domed shaped selection patterns to be chosen.
+         
+\begin{equation}
+f(x) = \left\{ \begin{array}{ll}
+  		0                                 &\mbox{ if $(a_{50}-x)/a_{95} >  5$} \\
+			a_{\infty}                        &\mbox{ if $(a_{50}-x)/a_{95} < -5$} \\
+			\frac{m_{\infty}}{1.0+19.0^{(a_{50}-x)/_{95})}} &\mbox{ otherwise}
+		\end{array}
+       \right.
+\end{equation}
+
+The relationship between stock and recruitment was modelled by a Beverton and Holt stock-recruitment relationship \citep{beverton1993dynamics} reformulated in terms of steepness ($h$), virgin biomass ($v$) and $S/R_{F=0}$
+
+\begin{equation}
+R=\frac{0.8R_0h}{0.2S/R_{F=0}R_0(1-h)+(h-0.2)S}
+\end{equation} 
+
+\noindent where steepness is the ratio of recruitment at 20\% of virgin biomass to virgin recruitment ($R_0$) and $S/R_{F=0}$ is the spawner per recruit at virgin biomass, i.e. when fishing mortality is zero. Steepness is difficult to estimate from stock assessment data sets as there is often insufficient contrast in biomass levels required for its estimation \cite{pepin2015reconsidering}.
+
+S is spawning stock biomass, the sum of the products of the numbers of females, $N$, proportion mature-at-age, $Q$ and their mean fecundity-at-age, $F$, i.e. 
+
+\begin{equation} S = \sum\limits_{i=0}^{p} {N_iQ_iF_i} \end{equation}
+
+where fecundity-at-age is assumed proportional to biomass and the sex ratio to be 1:1. Proportion mature is 50\% at the age that attains a length of $l50$, 0\% below this age and 100\% above. 
 
 # Reference points and stock indicators
 ```{r refpt}

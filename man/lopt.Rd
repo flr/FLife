@@ -10,15 +10,22 @@ lopt(param, ...)
 \arguments{
 \item{param}{}
 
-\item{fnM}{natural mortality}
+\item{m}{natural mortality}
+
+\item{eql}{}
 }
 \value{
-numeric with length
-
-#'
+FLPar with length at maximum biomass
 }
 \description{
 Finds length at maximum biomass
+}
+\details{
+There are several ways to calculate $L_{opt}$, i.e.
+i) ${2/3}^{rds}$ of $L_{\infty}$
+ii) $L_{\infty}\frac{3}{3+k/m}$
+iii) by maximising the biomass of
+iv) from an FLBRP object by fishing at F=0 and finding age where biomass is a maximum
 }
 \examples{
 \dontrun{
