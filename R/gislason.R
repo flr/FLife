@@ -9,6 +9,7 @@
 #'
 #' @import FLCore 
 #' 
+#' @export
 #' @docType methods
 #' @rdname gislason
 #' 

@@ -7,6 +7,7 @@
 #' 
 #' @return Depends on the type of \code{age} 
 #' 
+#' @export
 #' @docType methods
 #' @rdname sigmoid
 #' 
