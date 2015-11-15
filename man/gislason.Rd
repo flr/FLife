@@ -3,15 +3,21 @@
 \docType{methods}
 \name{gislason}
 \alias{gislason}
+\alias{gislason,FLQuant,FLPar-method}
+\alias{gislason,FLQuant,missing-method}
+\alias{gislason,FLQuant,numeric-method}
+\alias{gislason-method}
 \title{gislason}
 \usage{
-gislason(length, param, ...)
+gislason(length, params, ...)
 }
 \arguments{
 \item{length}{mass at which M is to be predicted}
 
-\item{par}{an FLPar with two values; i.e. a equal to M at unit mass
+\item{params}{\code{FLPar} with two values; i.e. a equal to M at unit mass
 and b a power term; defaults are a=0.3 and b=-0.288}
+
+\item{...}{any other arguments}
 }
 \description{
 gislason natural mortality relatoinship estimate M as a function of weight.

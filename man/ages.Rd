@@ -3,24 +3,34 @@
 \docType{methods}
 \name{ages}
 \alias{ages}
+\alias{ages,FLCohort-method}
+\alias{ages,FLQuant-method}
+\alias{ages-method}
 \alias{dnormal}
+\alias{dnormal,FLPar,FLPar-method}
+\alias{dnormal,FLQuant,FLPar-method}
+\alias{dnormal,FLQuant,numeric-method}
+\alias{dnormal,numeric,numeric-method}
+\alias{dnormal-method}
 \title{ages}
 \usage{
 ages(age, ...)
 
-dnormal(age, param, ...)
+dnormal(age, params, ...)
 }
 \arguments{
 \item{age}{FLQuant or FLCohort}
 
-\item{param}{FLPar with parameters \code{a1} age at maximum, \code{sl} SD for lefthand limb and
+\item{...}{any other arguments}
+
+\item{params}{\code{FLPar} with parameters \code{a1} age at maximum, \code{sl} SD for lefthand limb and
 \code{sr} SD for righthand limb.}
 
 \item{age}{FLQuant or FLCohort}
+
+\item{...}{any other arguments}
 }
 \value{
-Depends on the value of \code{data}
-
 Depends on the value of \code{data}
 
 #'
@@ -40,13 +50,13 @@ params=FLPar(a=1,b=3)
 wt2len(params,FLQuant(10))
 }
 \dontrun{
-param=FLPar(a1=1,sl=3,sr=500)
-wt2len(param,FLQuant(10))
+params=FLPar(a1=1,sl=3,sr=500)
+wt2len(params,FLQuant(10))
 }
 }
 \seealso{
-\code{\code{\link{vonB}}}
+\code{\link{vonB}}
 
-\code{\code{\link{vonB}}}
+\code{\link{vonB}}
 }
 

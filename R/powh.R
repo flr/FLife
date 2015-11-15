@@ -1,15 +1,22 @@
+globalVariables(c("ddply","."))
+
 #' powh
 #' 
 #' @description 
 #' 
 #' Estimates growth and mortality parameters from length frequency data.
 #'  
+#'  @param len lengths
+#'  @param n   frequqncies
+#'  @param weights=TRUE
+#'  @param fromMode=FALSE
+#'  
 #' @details
 #'  
 #'  Beverton and Holt (1956) developed a method to estimate population parameters 
 #'  such as total mortality (Z) from length data i.e.
 #' 
-#' \deqn{Z=K\frac{L_{infinity}-\overline{L}}{\overline{L}-L^\prime}}
+#' \deqn{Z=K\frac{L_{infinity}-\overline{L}}{\overline{L}-L'}}
 #'                             
 #' Powell (1979) then developed a method, extended by Wetherall et al. (1987), 
 #' to estimate growth and mortality parameters. This assumes that the right hand tail 
@@ -27,12 +34,12 @@
 #' with constant exponential mortality, no changes in selection pattern of the 
 #' fishery and constant recruitment.
 #' 
-#' In the Powell-Wetherall method $L^\prime$ can take any value between the 
+#' In the Powell-Wetherall method L' can take any value between the 
 #' smallest and largest sizes. Equation 1 then provides a series of estimates of
 #' Z and since 
 #' 
 #' \deqn{
-#' \overline{L}-L{\prime}=a+bL{\prime}
+#' \overline{L}-L'=a+bL'
 #' }
 #' 
 #' a and b can be estimated by a regression analysis where 
@@ -40,7 +47,7 @@
 #' \deqn{b={-K}/{Z+K}}
 #' \deqn{a=-bL_{infinity}}
 #' 
-#' Therefore plotting $\overline{L}-L^\prime$ against $L^\prime$ provides an estimate 
+#' Therefore plotting \deqn{\overline{L}-L} against $L'$ provides an estimate 
 #' of $L_{infinity}$ and Z/K from
 #' 
 #' \deqn{L_{infinity}=-a/b}
@@ -64,16 +71,15 @@
 #'  length-frequency data.
 #'  \emph{ICLARM Conf. Proc}, pages 53--74, 1987.
 #'   
-#'  @aliases 
-#' iav
-#' 
+#' @aliases pow-h
+#'  
 #' @param len vector with length distribution
 #' @param n vector with numbers in each length bin
 #' @return a \code{data.frame} \code{mn} (mean), \code{diff} (difference), 
 #' \code{len} (length) and \code{n} (frequency)
 #' @export
-#' @docType functions
-#' @rdname lk-funcs
+#' @docType methods
+#' @rdname powh
 #' 
 #' @examples
 #' \dontrun{
@@ -83,7 +89,7 @@
 powh=function(len,n,weights=TRUE,fromMode=FALSE){
   
   fn=function(len,n){
-    require(plyr)
+    #require(plyr)
     
     res=ddply(data.frame(n=n,len=len), .(len), function(x) sum(x$n))
     res=res[order(res$len),]
@@ -122,13 +128,10 @@ powh=function(len,n,weights=TRUE,fromMode=FALSE){
 #' @description 
 #'    aa
 #'      
-#' @aliases 
-#' iav
-#' 
 #' @param x; a vector holding a time series
 #' @return a \code{vector} with the inter-annual variation each time step
 #' @export
-#' @docType functions
+#' @docType methods
 #' @rdname utils
 #' 
 #' @examples
@@ -162,8 +165,8 @@ moment=function(x,n=rep(1,length(x)),na.rm=T) {
 #' @param x; a vector of with intervals as names 
 #' @return a \code{data.frame} with left and right boundaries and mid points.
 #' @export
-#' @docType functions
-#' @rdname lk-funcs
+#' @docType methods
+#' @rdname powh
 #' 
 #' @examples
 #' x=summary(cut(runif(100),seq(0,1,.1)))

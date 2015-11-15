@@ -3,16 +3,18 @@
 \docType{methods}
 \name{lopt}
 \alias{lopt}
+\alias{lopt,FLPar-method}
+\alias{lopt-method}
 \title{lopt}
 \usage{
-lopt(param, ...)
+lopt(params, ...)
 }
 \arguments{
-\item{param}{}
+\item{params}{}
+
+\item{...}{any other arguments}
 
 \item{m}{natural mortality}
-
-\item{eql}{}
 }
 \value{
 FLPar with length at maximum biomass
@@ -21,9 +23,9 @@ FLPar with length at maximum biomass
 Finds length at maximum biomass
 }
 \details{
-There are several ways to calculate $L_{opt}$, i.e.
-i) ${2/3}^{rds}$ of $L_{\infty}$
-ii) $L_{\infty}\frac{3}{3+k/m}$
+There are several ways to calculate \deqn{L_{opt}}, i.e.
+i) \deqn{{2/3}^{rds}  L_{\infty}}
+ii) \deqn{L_{\infty}\frac{3}{3+k/m}}
 iii) by maximising the biomass of
 iv) from an FLBRP object by fishing at F=0 and finding age where biomass is a maximum
 }
@@ -34,6 +36,6 @@ lopt(pars[[1]])
 }
 }
 \seealso{
-\code{\code{\link{vonB}}}
+\code{\link{vonB}}
 }
 

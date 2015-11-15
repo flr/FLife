@@ -3,14 +3,19 @@
 \docType{methods}
 \name{wt2len}
 \alias{wt2len}
+\alias{wt2len,FLCohort,FLPar-method}
+\alias{wt2len,FLQuant,FLPar-method}
+\alias{wt2len,numeric,FLPar-method}
 \title{wt2len}
 \usage{
-wt2len(wt, param, ...)
+wt2len(wt, params, ...)
 }
 \arguments{
 \item{wt}{FLQuant, FLPar or numeric with length}
 
-\item{param}{FLPar with a and b, i.e. condition and scaling factors}
+\item{params}{\code{FLPar} with a and b, i.e. condition and scaling factors}
+
+\item{...}{any other arguments}
 }
 \value{
 Depends on the value of \code{wt}
@@ -20,8 +25,8 @@ converts weight to length
 }
 \examples{
 \dontrun{
-param=FLPar(a=1,b=3)
-wt2len(FLQuant(10),param)
+params=FLPar(a=1,b=3)
+wt2len(FLQuant(10),params)
 }
 
 if (!isGeneric("rgamma"))

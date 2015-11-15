@@ -3,17 +3,22 @@
 \docType{methods}
 \name{gascuel}
 \alias{gascuel}
+\alias{gascuel,FLPar,FLPar-method}
+\alias{gascuel,FLPar,FLQuant-method}
+\alias{gascuel,FLPar,missing-method}
+\alias{gascuel,numeric,FLQuant-method}
+\alias{gascuel,numeric,numeric-method}
+\alias{gascuel-method}
 \title{gascuel}
 \usage{
 gascuel(params, age, ...)
 }
 \arguments{
-\item{params}{}
+\item{params}{\code{FLPar}}
 
 \item{age}{FLQuant, FLPar or numeric with ages}
 
-\item{length}{FLQuant, FLPar or numeric with length, if supplied as a named paramreter
-instead  of age then calculates ages.}
+\item{...}{any other arguments}
 }
 \value{
 Depends on the value of \code{data}
@@ -25,8 +30,8 @@ Gascuel growth equation
 }
 \details{
 Gascuel D., Fonteneau, A., and Capisano, C. (1992).
-\newblock  Modelisation d'une croissance en deux stances chez  #l'albacore (Thunnus albacares) de l'Atlantique Est.
-\newblock  Aquat. Living Resour. 5: 155-172.
+Modelisation d'une croissance en deux stances chez  #l'albacore (Thunnus albacares) de l'Atlantique Est.
+Aquat. Living Resour. 5: 155-172.
 }
 \examples{
 \dontrun{
@@ -36,6 +41,6 @@ len=gascuel(params,age)
 }
 }
 \seealso{
-\code{\code{\link{gompertz}}}
+\code{\link{gompertz}}
 }
 

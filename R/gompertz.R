@@ -1,11 +1,15 @@
+globalVariables(c("invgompertzFn"))
+
 #' gompertz
 #'
 #' Gompertz growth equation
 #' 
-#' @param age
-#' @param par FLPar with parameters for \code{linf, a, b}
+#' @param age FLQuant, FLPar or numeric with ages 
+#' @param params \code{FLPar} with parameters for \code{linf, a, b}
+#' @param ... any other arguments
 #' 
-#' #' @export
+#' @aliases gompertz,FLPar,FLPar-method gompertz,FLQuant,FLPar-method gompertz,FLQuant,numeric-method gompertz,missing,FLPar-method gompertz,numeric,numeric-method
+#' 
 #' @docType methods
 #' @rdname gompertz
 #' 
@@ -45,7 +49,7 @@ setMethod("gompertz", signature(age="missing",params="FLPar"),
             res@units=""
             res})
 
-gompertzFn=function(param,age) 
-   par["linf"]%*%exp(-par["a"]%*%par["b"]%^%age)
+gompertzFn=function(params,age) 
+   params["linf"]%*%exp(-params["a"]%*%params["b"]%^%age)
 
 

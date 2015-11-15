@@ -5,15 +5,14 @@
 \alias{knife}
 \title{knife}
 \usage{
-knife(age, param, ...)
+knife(age, params, ...)
 }
 \arguments{
 \item{age}{FLQuant, FLPar or numeric with ages}
 
-\item{param}{}
+\item{params}{\code{FLPar}}
 
-\item{length}{FLQuant, FLPar or numeric with length, if supplied as a named paramreter
-instead  of age then calculates ages.}
+\item{...}{any other arguments}
 }
 \value{
 Depends on the value of \code{data}
@@ -27,10 +26,10 @@ Verhulst hypothesizes that small populations increase geometrically, because the
 }
 \examples{
 \dontrun{
-param=FLPar(linf=100,t0=0,k=.4)
+params=FLPar(linf=100,t0=0,k=.4)
 age=FLQuant(1:10,dimnames=list(age=1:10))
-len=knife(age,param)
-age=knife(param,length=len)
+len=knife(age,params)
+age=knife(params,length=len)
 }
 }
 \seealso{

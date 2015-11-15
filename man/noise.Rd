@@ -3,6 +3,7 @@
 \docType{methods}
 \name{noise}
 \alias{noise}
+\alias{noise,numeric,FLQuant-method}
 \title{noise}
 \usage{
 noise(n, len, ...)
@@ -11,6 +12,8 @@ noise(n, len, ...)
 \item{n}{number of iterations}
 
 \item{len}{an \code{FLQuant}}
+
+\item{...}{any other arguments}
 
 \item{sd}{standard deviation}
 

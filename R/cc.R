@@ -4,6 +4,9 @@
 #' 
 #' @param age
 #' @param n
+#' @param ... any other arguments
+#' 
+#' @aliases cc-method cc,numeric,numeric-method cc,missing,FLQuant-method cc,FLQuant,missing-method
 #' 
 #' @return Depends on the value of \code{data} 
 #' 
@@ -11,7 +14,7 @@
 #' @docType methods
 #' @rdname cc
 #' 
-#' @seealso \code{\code{\link{powh}}}  
+#' @seealso \code{\link{powh}}  
 #' 
 #' @examples
 #' \dontrun{

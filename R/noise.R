@@ -1,4 +1,4 @@
-#globalVariables(c(‘FLCohort’,‘m’,‘FLPar’,‘dims’))
+globalVariables(c("dmns","rho","stk","aaply","maply","alply"))
 
 ##############################################################
 #' noise
@@ -10,7 +10,10 @@
 #' @param   sd standard deviation
 #' @param   b autocorrelation parameter, a real number in [0,1]
 #' @param   trunc get rid of first values equal to trunc, i.e. to allow burn in
+#' @param ... any other arguments
 #'
+#' @aliases noise,numeric,FLQuant-method
+#' 
 #' @export
 #' @docType methods
 #' @rdname noise

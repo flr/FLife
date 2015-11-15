@@ -2,12 +2,16 @@
 % Please edit documentation in R/stars.R
 \name{rod}
 \alias{rod}
+\alias{rod,FLQuant-method}
+\alias{rod-method}
 \title{rod}
 \usage{
 rod(object, ...)
 }
 \arguments{
 \item{object}{an object of class \code{FLQuant}}
+
+\item{...}{any other arguments}
 }
 \description{
 Regime shifts
@@ -16,6 +20,8 @@ Evidence for regime shifts are explored using a a sequential t-test algorithm
 }
 \details{
 Returns a data.frame
+}
+\examples{
 \dontrun{
     object=rlnorm(1,FLQuant(0,dimnames=list(year=1:30)),.3)
     pg=rod(object)

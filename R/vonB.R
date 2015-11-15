@@ -3,9 +3,13 @@
 #' Von Bertalanffy growth equation
 #' 
 #' @param age FLQuant, FLPar or numeric with ages 
-#' @param param
+#' @param params \code{FLPar} 
 #' @param length FLQuant, FLPar or numeric with length, if supplied as a named paramreter
 #' instead  of age then calculates ages.
+#' @param ... any other arguments
+#' 
+#' @aliases vonB,FLPar,FLPar-method vonB,FLQuant,FLPar-method vonB,FLQuant,numeric-method vonB,missing,FLPar-method vonB,numeric,numeric-method
+
 #' 
 #' @return Depends on the value of \code{data} 
 #' 
@@ -13,62 +17,62 @@
 #' @docType methods
 #' @rdname vonB
 #' 
-#' @seealso \code{\code{\link{gascuel}}}  
+#' @seealso \code{\link{gascuel}}  
 #' 
 #' @examples
 #' \dontrun{
-#' param=FLPar(linf=100,t0=0,k=.4)
+#' params=FLPar(linf=100,t0=0,k=.4)
 #' age=FLQuant(1:10,dimnames=list(age=1:10))
-#' len=vonB(age,param)
-#' age=vonB(param,length=len)
+#' len=vonB(age,params)
+#' age=vonB(params,length=len)
 #' }
-setGeneric('vonB', function(age,param,...)
+setGeneric('vonB', function(age,params,...)
   standardGeneric('vonB'))
 
-vonBFn=function(age,param){
+vonBFn=function(age,params){
  
-  dimnames(param)[[1]]=tolower(dimnames(param)[[1]])
+  dimnames(params)[[1]]=tolower(dimnames(params)[[1]])
   
-  res=param["linf"]%*%(1.0-exp((-param["k"])%*%(age%-%param["t0"])))
+  res=params["linf"]%*%(1.0-exp((-params["k"])%*%(age%-%params["t0"])))
   
   dimnames(res)[1:5]=dimnames(age)[1:5]
   res}
 
-invVonBFn=function(length,param){
-  res=log(1-(length%/%param["linf"]))%/% (-param["k"])%+%param["t0"]
+invVonBFn=function(length,params){
+  res=log(1-(length%/%params["linf"]))%/% (-params["k"])%+%params["t0"]
 
   #dimnames(res)=dimnames(length)
   res}
 
-setMethod("vonB", signature(age="FLQuant",param="FLPar"),
-          function(age,param,...){   
-            res=FLife:::vonBFn(age,param)
+setMethod("vonB", signature(age="FLQuant",params="FLPar"),
+          function(age,params,...){   
+            res=vonBFn(age,params)
             res@units=""
             res})
-setMethod("vonB", signature(age="FLPar",param="FLPar"),
-          function(age,param,...){   
-            res=FLife:::vonBFn(age,param)
+setMethod("vonB", signature(age="FLPar",params="FLPar"),
+          function(age,params,...){   
+            res=vonBFn(age,params)
             res@units=""
             res})
-setMethod("vonB", signature(age="numeric",param="numeric"),
-          function(age,param,...) 
-            vonBFn(age,param))
-setMethod("vonB", signature(age="FLQuant",param="numeric"),
-          function(age,param,...) { 
-            res=FLife:::vonBFn(FLPar(param),age)
+setMethod("vonB", signature(age="numeric",params="numeric"),
+          function(age,params,...) 
+            vonBFn(age,params))
+setMethod("vonB", signature(age="FLQuant",params="numeric"),
+          function(age,params,...) { 
+            res=vonBFn(FLPar(params),age)
             res@units=""
             res})
 
-setMethod("vonB", signature(age="missing",param="FLPar"),
-          function(age,param,length,...){  
-            res=FLife:::invVonBFn(length=length,param=param)
+setMethod("vonB", signature(age="missing",params="FLPar"),
+          function(age,params,length,...){  
+            res=invVonBFn(length=length,params=params)
             res@units=""
             res})
 
 # library(numDeriv)
-# param=FLPar(linf=318.9,k=0.093,t0=-0.970)
-  # fnL=function(len) invVonB(param,FLQuant(len))
-  # fnA=function(age)    vonB(param,FLQuant(age,dimnames=list(age=age)))
+# params=FLPar(linf=318.9,k=0.093,t0=-0.970)
+  # fnL=function(len) invVonB(params,FLQuant(len))
+  # fnA=function(age)    vonB(params,FLQuant(age,dimnames=list(age=age)))
   # 
   # grad(fnL,fnA(15))
 

@@ -2,18 +2,22 @@
 % Please edit documentation in R/lorenzen.R
 \docType{methods}
 \name{lorenzen}
+\alias{#'}
 \alias{lorenzen}
+\alias{lorenzen,FLQuant,FLPar-method}
+\alias{lorenzen,FLQuant,missing-method}
+\alias{lorenzen,FLQuant,numeric-method}
 \title{lorenzen}
 \usage{
-lorenzen(wt, param, ...)
+lorenzen(wt, params, ...)
 }
 \arguments{
 \item{wt}{mass at which M is to be predicted}
 
-\item{par}{an FLPar with two values; i.e. a equal to M at unit mass
-and b a power term; defaults are a=0.3 and b=-0.288
+\item{params}{an \code{FLPar} with two values; i.e. a equal to M at unit mass
+and b a power term; defaults are a=0.3 and b=-0.288}
 
-#'}
+\item{...}{any other arguments}
 }
 \description{
 Lorenzen natural mortality relatoinship estimate M as a function of weight.

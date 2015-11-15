@@ -1,16 +1,20 @@
+globalVariables(c("aaply"))
+                
 #' lopt
 #'
 #' Finds length at maximum biomass
 #' 
-#' @param param
+#' @param params
 #' @param m natural mortality 
-#' @param eql 
+#' @param ... any other arguments
+#' 
+#' @aliases lopt-method lopt,FLPar-method
 #' 
 #' @return FLPar with length at maximum biomass 
 #' 
-#' @details There are several ways to calculate $L_{opt}$, i.e.
-#' i) ${2/3}^{rds}$ of $L_{\infty}$
-#' ii) $L_{\infty}\frac{3}{3+k/m}$
+#' @details There are several ways to calculate \deqn{L_{opt}}, i.e.
+#' i) \deqn{{2/3}^{rds}  L_{\infty}}
+#' ii) \deqn{L_{\infty}\frac{3}{3+k/m}}
 #' iii) by maximising the biomass of
 #' iv) from an FLBRP object by fishing at F=0 and finding age where biomass is a maximum
 #' 
@@ -19,45 +23,47 @@
 #' @docType methods
 #' @rdname lopt
 #' 
-#' @seealso \code{\code{\link{vonB}}}  
+#' @seealso \code{\link{vonB}}  
 #' 
 #' @examples
 #' \dontrun{
 #' data(pars)
 #' lopt(pars[[1]])
 #' }
-setGeneric('lopt', function(param,...)
+setGeneric('lopt', function(params,...)
   standardGeneric('lopt'))
 
-setMethod("lopt", signature(param="FLPar"),
-          function(param,
-                   fnM=function(length,param) 
-                     0.55*(length^-1.66)%*%(param["linf"]^1.44)%*%param["k"],...){   
+setMethod("lopt", signature(params="FLPar"),
+          function(params,
+                   m=function(length,params) 
+                     0.55*(length^-1.66)%*%(params["linf"]^1.44)%*%params["k"],...){   
             
-            dmns=dimnames(param)
+            dmns=dimnames(params)
             dmns$params="lopt"
-            dm  =dim(param)
+            dm  =dim(params)
             
-            res=aaply(param,seq(length(dm))[-1],function(x){
+            res=aaply(params,seq(length(dm))[-1],function(x){
                    x.=FLPar(x)
-                   optimise(loptFn,c(.01,c(x["linf"])*.99),param=x.,maximum=TRUE,fnM=fnM)$maximum})
+                   rtn=try(optimise(loptFn,c(.01,c(x["linf"])*.99),params=x.,maximum=TRUE,m=m)$maximum)
+                   if ("character" %in% mode(rtn)) rtn=NA
+                   rtn})
             
             FLPar(array(res,dim=c(1, dm[-1]),dimnames=dmns))})
 
-lopt_=function(param,
-              fnM=function(length,param) 
-                0.55*(length^-1.66)%*%(param["linf"]^1.44)%*%param["k"])
+lopt_=function(params,
+              m=function(length,params) 
+                0.55*(length^-1.66)%*%(params["linf"]^1.44)%*%params["k"])
   
-  optimise(loptFn,c(.01,c(param["linf"])*.99),param=param,maximum=TRUE,fnM=fnM)$maximum
+  optimise(loptFn,c(.01,c(params["linf"])*.99),params=params,maximum=TRUE,m=m)$maximum
 
 
-loptFn=function(x,param,fnM,age=0:200){
+loptFn=function(x,params,m,age=0:200){
   
-  length=vonB(FLQuant(age,         dimnames=list(age=age)),param)
-  m     =FLQuant(fnM(length,param),dimnames=list(age=age))
+  length=vonB(FLQuant(age,         dimnames=list(age=age)),params)
+  m     =FLQuant(m(length,params),dimnames=list(age=age))
   mCum  =FLQuant(aaply(m,2,cumsum),dimnames=dimnames(m))
   
-  a =qmax(vonB(param=param,length=FLQuant(x)),min(age))
+  a =qmax(vonB(params=params,length=FLQuant(x)),min(age))
   a =qmin(a,                                  max(age))
   
   a_=floor(a)
@@ -65,7 +71,7 @@ loptFn=function(x,param,fnM,age=0:200){
   if (is.na(a_)) return (as.numeric(NA))
   
   n =exp(-mCum[ac(a_)]-m[ac(a_)]*(a-a_))
-  c(n*len2wt(x,param))}
+  c(n*len2wt(x,params))}
 
 #params=par[,10]
 #params["t0"]=-.1

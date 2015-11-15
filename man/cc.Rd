@@ -3,6 +3,10 @@
 \docType{methods}
 \name{cc}
 \alias{cc}
+\alias{cc,FLQuant,missing-method}
+\alias{cc,missing,FLQuant-method}
+\alias{cc,numeric,numeric-method}
+\alias{cc-method}
 \title{cc}
 \usage{
 cc(age, n, ...)
@@ -11,6 +15,8 @@ cc(age, n, ...)
 \item{age}{}
 
 \item{n}{}
+
+\item{...}{any other arguments}
 }
 \value{
 Depends on the value of \code{data}
@@ -27,6 +33,6 @@ age=vonB(params,length=len)
 }
 }
 \seealso{
-\code{\code{\link{powh}}}
+\code{\link{powh}}
 }
 

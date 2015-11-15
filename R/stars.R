@@ -1,16 +1,22 @@
+globalVariables(c("ddply",".","year"))
+                
 #' rod
 #'
 #' @description Regime shifts
 #' Evidence for regime shifts are explored using a a sequential t-test algorithm 
 #' (STARS; \cite{rodionov2004sequential}) as modified by Szuwalski et al., (submitted)
 #' 
-#' 
 #' @param   object an object of class \code{FLQuant}
+#' @param ... any other arguments
+#' 
+#' @aliases rod-method rod,FLQuant-method
 #'
 #' @export
 #' @rdname rod
 #'
 #' @details Returns a data.frame 
+#' 
+#' @examples
 #' \dontrun{
 #'     object=rlnorm(1,FLQuant(0,dimnames=list(year=1:30)),.3)
 #'     pg=rod(object) 

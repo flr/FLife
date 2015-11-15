@@ -3,14 +3,21 @@
 \docType{methods}
 \name{sigmoid}
 \alias{sigmoid}
+\alias{sigmoid,FLPar,FLPar-method}
+\alias{sigmoid,FLQuant,FLPar-method}
+\alias{sigmoid,FLQuant,numeric-method}
+\alias{sigmoid,numeric,numeric-method}
+\alias{sigmoid-method}
 \title{sigmoid}
 \usage{
-sigmoid(age, param, ...)
+sigmoid(age, params, ...)
 }
 \arguments{
 \item{age}{FLQuant, FLPar or numeric with ages}
 
-\item{param}{}
+\item{params}{\code{FLPar}}
+
+\item{...}{any other arguments}
 }
 \value{
 Depends on the type of \code{age}
@@ -24,13 +31,13 @@ Verhulst hypothesizes that small populations increase geometrically, because the
 }
 \examples{
 \dontrun{
-param=FLPar(linf=100,t0=0,k=.4)
+params=FLPar(linf=100,t0=0,k=.4)
 age=FLQuant(1:10,dimnames=list(age=1:10))
-len=sigmoid(age,param)
-age=sigmoid(param,length=len)
+len=sigmoid(age,params)
+age=sigmoid(params,length=len)
 }
 }
 \seealso{
-\code{\code{\link{dnormal},\link{knife}}}
+\code{\link{dnormal},\link{knife}}
 }
 

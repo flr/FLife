@@ -3,16 +3,17 @@
 #' Creates FLQuant/FLCohort with ages
 #' 
 #' @param age FLQuant or FLCohort 
+#' @param ... any other arguments
+#' 
+#' @aliases ages-method ages,FLQuant-method ages,FLCohort-method
 #' 
 #' @return Depends on the value of \code{data} 
-#' 
-#' @return Depends on the value of \code{data} 
-#' 
+#'  
 #' #' @export
 #' @docType methods
 #' @rdname ages
 #' 
-#' @seealso \code{\code{\link{vonB}}}  
+#' @seealso \code{\link{vonB}} 
 #' 
 #' @examples
 #' \dontrun{

@@ -3,7 +3,10 @@
 #' converts length to weight
 #' 
 #' @param length age FLQuant, FLPar or numeric 
-#' @param param
+#' @param params \code{FLPar}
+#' @param ... any other arguments
+#' 
+#' @aliases len2wt-method len2wt,FLCohort,FLPar-method len2wt,FLQuant,FLPar-method len2wt,numeric,FLPar-method
 #' 
 #' @return Depends on the value of \code{length} 
 #' 
@@ -11,20 +14,20 @@
 #' @docType methods
 #' @rdname len2wt
 #' 
-#' @seealso \code{\code{\link{wt2len}}}  
+#' @seealso \code{\link{wt2len}} 
 #' 
 #' @examples
 #' \dontrun{
-#' param=FLPar(a=1,b=3)
-#' len2wt(param,FLQuant(10))
+#' params=FLPar(a=1,b=3)
+#' len2wt(params,FLQuant(10))
 #' }
 ## converts wt to len using condition factor
-setGeneric('len2wt', function(length,param,...)
+setGeneric('len2wt', function(length,params,...)
   standardGeneric('len2wt'))
   
-setMethod("len2wt", signature(length="FLQuant",param="FLPar"),
-   function(length,param) param["a"]*length^param["b"])
-setMethod("len2wt", signature(length="FLCohort",param="FLPar"),
-   function(length,param) param["a"]*length^param["b"])
-setMethod("len2wt", signature(length="numeric",param="FLPar"),
-   function(length,param) param["a"]*length^param["b"])
+setMethod("len2wt", signature(length="FLQuant",params="FLPar"),
+   function(length,params) params["a"]*length^params["b"])
+setMethod("len2wt", signature(length="FLCohort",params="FLPar"),
+   function(length,params) params["a"]*length^params["b"])
+setMethod("len2wt", signature(length="numeric",params="FLPar"),
+   function(length,params) params["a"]*length^params["b"])

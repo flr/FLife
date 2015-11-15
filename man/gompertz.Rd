@@ -3,16 +3,21 @@
 \docType{methods}
 \name{gompertz}
 \alias{gompertz}
+\alias{gompertz,FLPar,FLPar-method}
+\alias{gompertz,FLQuant,FLPar-method}
+\alias{gompertz,FLQuant,numeric-method}
+\alias{gompertz,missing,FLPar-method}
+\alias{gompertz,numeric,numeric-method}
 \title{gompertz}
 \usage{
 gompertz(age, params, ...)
 }
 \arguments{
-\item{age}{}
+\item{age}{FLQuant, FLPar or numeric with ages}
 
-\item{par}{FLPar with parameters for \code{linf, a, b}
+\item{params}{\code{FLPar} with parameters for \code{linf, a, b}}
 
-#'}
+\item{...}{any other arguments}
 }
 \description{
 Gompertz growth equation

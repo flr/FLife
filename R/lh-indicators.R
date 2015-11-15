@@ -1,3 +1,5 @@
+globalVariables(c("a","b"))
+
 maxAge=function(object,ref="msy",density=1/10000){
   
   fbar(object)=FLQuant(refpts(object)[ref,"harvest",drop=T])

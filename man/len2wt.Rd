@@ -3,14 +3,20 @@
 \docType{methods}
 \name{len2wt}
 \alias{len2wt}
+\alias{len2wt,FLCohort,FLPar-method}
+\alias{len2wt,FLQuant,FLPar-method}
+\alias{len2wt,numeric,FLPar-method}
+\alias{len2wt-method}
 \title{len2wt}
 \usage{
-len2wt(length, param, ...)
+len2wt(length, params, ...)
 }
 \arguments{
 \item{length}{age FLQuant, FLPar or numeric}
 
-\item{param}{}
+\item{params}{\code{FLPar}}
+
+\item{...}{any other arguments}
 }
 \value{
 Depends on the value of \code{length}
@@ -22,11 +28,11 @@ converts length to weight
 }
 \examples{
 \dontrun{
-param=FLPar(a=1,b=3)
-len2wt(param,FLQuant(10))
+params=FLPar(a=1,b=3)
+len2wt(params,FLQuant(10))
 }
 }
 \seealso{
-\code{\code{\link{wt2len}}}
+\code{\link{wt2len}}
 }
 

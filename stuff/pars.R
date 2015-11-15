@@ -8,7 +8,7 @@ source('~/Desktop/flr/git/FLife/R/gascuel.R')
 source('~/Desktop/flr/git/FLife/R/lh-m-lorenzen.R')
 source('~/Desktop/flr/git/FLife/R/lh-growth-vonB.R')
 source("/home/laurie/Desktop/flr/git/FLife/R/lh-func.R")
-source("/home/laurie/Desktop/flr/git/FLife/R/lh-gislasim.R")
+source("/home/laurie/Desktop/flr/git/FLife/R/lhSim.R")
 source("/home/laurie/Desktop/flr/git/FLife/R/lh-ogive-dnormal.R")
 
 ##Atlantic Bigeye
@@ -67,15 +67,15 @@ pars=FLPars(Bigeye  =betPar,
 
 save(pars,file="/home/laurie/Desktop/flr/git/FLife/data/pars.RData",compress="xz")
 
-bet=gislasim(pars[["Bigeye"]])
+bet=lhSim(pars[["Bigeye"]])
 bet=lh(bet,fnM=lorenzen)
 ggplot(FLQuants("WG"=m,"Lorenzen"=m(bet)))+
   geom_line(aes(age,data,col=qname))
 
-skj=gislasim(pars[["Skipjack"]])
+skj=lhSim(pars[["Skipjack"]])
 skj=lh(skj,fnM=lorenzen)
 
-yft=gislasim(pars[["Yellowfin"]])
+yft=lhSim(pars[["Yellowfin"]])
 yft=lh(yft,growth=gascuel,fnM=lorenzen)
 
 eql=FLBRPs(Bigeye   =bet,

@@ -1,3 +1,29 @@
+globalVariables(c("fwd","jacobian","melt"))
+globalVariables(c("fwd","jacobian","melt"))
+globalVariables(c("maply","jacobian","br","melt","maply","lambda","mdply","jacobian"))
+                           
+#' elasticity
+#'
+#' Estimates elasticity
+#'  
+#' @param par
+#' @param sel
+#' @param fn
+#' 
+#' @aliases elasticity-method
+#' 
+#' @return \code{FLPar} 
+#' 
+#' #' @export
+#' @docType methods
+#' @rdname elasticity
+#'   
+#' @seealso \code{\link{lhPar}}  
+#'  
+#' @examples
+#' \dontrun{
+#' FLPar(linf=200)
+#' }
 elasticity=function(par,sel,fn){
 
    elasFn=function(x,dmns,what,sel,fn) {
@@ -130,8 +156,7 @@ setMethod('sv', signature(x='FLPar', model='character'),
 
 doIt=function(what,par,dynamic=FALSE,fbar=FLQuant(c(seq(0,.75,length.out=21),seq(.75,.0,length.out=21)[-1]),dimnames=list(year=1:41))){
   
-  
-  require(reshape)
+  #require(reshape)
   
   func=function(x,dmns,par,fbar,what) {
     

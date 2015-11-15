@@ -3,9 +3,8 @@
 #' knife edge ogive
 #' 
 #' @param age FLQuant, FLPar or numeric with ages 
-#' @param param
-#' @param length FLQuant, FLPar or numeric with length, if supplied as a named paramreter
-#' instead  of age then calculates ages.
+#' @param params \code{FLPar}
+#' @param ... any other arguments
 #' 
 #' @return Depends on the value of \code{data} 
 #' 
@@ -20,39 +19,32 @@
 #' 
 #' @examples
 #' \dontrun{
-#' param=FLPar(linf=100,t0=0,k=.4)
+#' params=FLPar(linf=100,t0=0,k=.4)
 #' age=FLQuant(1:10,dimnames=list(age=1:10))
-#' len=knife(age,param)
-#' age=knife(param,length=len)
+#' len=knife(age,params)
+#' age=knife(params,length=len)
 #' }
-setGeneric('knife', function(age,param,...)
+setGeneric('knife', function(age,params,...)
   standardGeneric('knife'))
 
-setMethod("knife", signature(age="FLQuant",param="FLPar"),
-          function(age,param,...){   
-            res=knifeFn(age,param)
+setMethod("knife", signature(age="FLQuant",params="FLPar"),
+          function(age,params,...){   
+            res=knifeFn(age,params)
             res@units=""
             res})
-setMethod("knife", signature(age="FLPar",param="FLPar"),
-          function(age,param,...){   
-            res=knifeFn(age,param)
+setMethod("knife", signature(age="FLPar",params="FLPar"),
+          function(age,params,...){   
+            res=knifeFn(age,params)
             res@units=""
             res})
-setMethod("knife", signature(age="numeric",param="numeric"),
-          function(age,param,...) 
-            knifeFn(age,param))
-setMethod("knife", signature(age="FLQuant",param="numeric"),
-          function(age,param,...) { 
-            res=knifeFn(FLPar(param),age)
+setMethod("knife", signature(age="numeric",params="numeric"),
+          function(age,params,...) 
+            knifeFn(age,params))
+setMethod("knife", signature(age="FLQuant",params="numeric"),
+          function(age,params,...) { 
+            res=knifeFn(FLPar(params),age)
             res@units=""
             res})
-
-setMethod("knife", signature(age="missing",param="FLPar"),
-          function(age,param,length,...){   
-            res=invknifeFn(param,length)
-            res@units=""
-            res})
-
 knifeFn<-function(age,par){
     res=age
     

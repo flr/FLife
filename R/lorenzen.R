@@ -4,8 +4,11 @@
 #' M=a*wt^b; 
 #' 
 #' @param wt  mass at which M is to be predicted
-#' @param par an FLPar with two values; i.e. a equal to M at unit mass 
+#' @param params an \code{FLPar} with two values; i.e. a equal to M at unit mass 
 #' and b a power term; defaults are a=0.3 and b=-0.288
+#' @param ... any other arguments
+#' 
+#' @aliases lorenzen,FLQuant,FLPar-method lorenzen,FLQuant,missing-method lorenzen,FLQuant,numeric-method
 #' 
 #' #' @export
 #' @docType methods
@@ -20,7 +23,7 @@
 #'              dimnames=list(age=1:16))
 #' lorenzen(mass)
 #' }
-setGeneric('lorenzen', function(wt,param,...)
+setGeneric('lorenzen', function(wt,params,...)
   standardGeneric('lorenzen'))
 
 lorenzenFn<-function(wt,a=.3,b=-0.288) {
@@ -28,19 +31,19 @@ lorenzenFn<-function(wt,a=.3,b=-0.288) {
   if ("FLPar"%in%is(a)) res=a%*%res else res=a*res
   res}
 
-setMethod('lorenzen', signature(wt='FLQuant',param='missing'),
+setMethod('lorenzen', signature(wt='FLQuant',params='missing'),
       function(wt,...) { 
           res=lorenzenFn(wt)
           res@units='yr^-1'
           res})
-setMethod('lorenzen', signature(wt='FLQuant',param='numeric'),
-      function(wt,param,...) { 
-          res=param[1]*wt^param[2]
+setMethod('lorenzen', signature(wt='FLQuant',params='numeric'),
+      function(wt,params,...) { 
+          res=params[1]*wt^params[2]
           res@units='yr^-1'
           res})
-setMethod('lorenzen', signature(wt='FLQuant',param='FLPar'),
-      function(wt,param,...){   
-          res=param[1]%*%(wt%^%param[2])
+setMethod('lorenzen', signature(wt='FLQuant',params='FLPar'),
+      function(wt,params,...){   
+          res=params[1]%*%(wt%^%params[2])
           res@units='yr^-1'
           res})
 #par["m1"]%*%(exp(log(len)%*%par["m2"])), 
