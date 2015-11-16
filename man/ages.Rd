@@ -14,26 +14,22 @@
 \alias{dnormal-method}
 \title{ages}
 \usage{
-ages(age, ...)
+ages(object, ...)
 
 dnormal(age, params, ...)
 }
 \arguments{
-\item{age}{FLQuant or FLCohort}
+\item{object}{FLQuant or FLCohort}
 
 \item{...}{any other arguments}
+
+\item{age}{FLQuant or FLCohort}
 
 \item{params}{\code{FLPar} with parameters \code{a1} age at maximum, \code{sl} SD for lefthand limb and
 \code{sr} SD for righthand limb.}
-
-\item{age}{FLQuant or FLCohort}
-
-\item{...}{any other arguments}
 }
 \value{
 Depends on the value of \code{data}
-
-#'
 
 Depends on the value of \code{age}
 
@@ -46,8 +42,8 @@ Double normal ogive
 }
 \examples{
 \dontrun{
-params=FLPar(a=1,b=3)
-wt2len(params,FLQuant(10))
+data(ple4)
+ages(m(ple4))
 }
 \dontrun{
 params=FLPar(a1=1,sl=3,sr=500)

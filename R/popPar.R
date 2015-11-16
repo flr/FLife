@@ -2,10 +2,8 @@
 #'
 #' Von Bertalanffy growth equation
 #' 
-#' @param age FLQuant, FLPar or numeric with ages 
 #' @param params \code{FLPar}
-#' @param length FLQuant, FLPar or numeric with length, if supplied as a named paramreter
-#' instead  of age then calculates ages.
+#' @param m function for natural mortality
 #' 
 #' @return Depends on the value of \code{data} 
 #' 

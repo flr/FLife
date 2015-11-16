@@ -6,7 +6,6 @@ mf2FLPar=function(x){
   x=t(as.matrix(x))
   
   FLPar(array(x,dim=dim(x),dimnames=dmns),units="")}
-
 #' lhPar
 #' 
 #' Uses life history theory to derive parameters for biological relationships,

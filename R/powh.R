@@ -1,4 +1,4 @@
-globalVariables(c("ddply","."))
+globalVariables(c("ddply",".","x"))
 
 #' powh
 #' 
@@ -6,10 +6,12 @@ globalVariables(c("ddply","."))
 #' 
 #' Estimates growth and mortality parameters from length frequency data.
 #'  
-#'  @param len lengths
-#'  @param n   frequqncies
-#'  @param weights=TRUE
-#'  @param fromMode=FALSE
+#' @param len vector with length distribution
+#' @param n vector with numbers in each length bin
+#' @param ... any other argument, i.e. weights =TRUE, fromMode =FALSE
+#' 
+#' @return a \code{data.frame} \code{mn} (mean), \code{diff} (difference), 
+#' \code{len} (length) and \code{n} (frequency)
 #'  
 #' @details
 #'  
@@ -55,6 +57,8 @@ globalVariables(c("ddply","."))
 #' 
 #' If K is known Z can also be esimated
 #'
+#' @aliases powh-method powh,numeric,numeric-method 
+#' 
 #' @references
 #' 
 #'  R. Beverton and S. Holt. Review of method for estimating mortality rates in 
@@ -71,12 +75,8 @@ globalVariables(c("ddply","."))
 #'  length-frequency data.
 #'  \emph{ICLARM Conf. Proc}, pages 53--74, 1987.
 #'   
-#' @aliases pow-h
+#' @aliases powh-method powh,numeric,numeric-method
 #'  
-#' @param len vector with length distribution
-#' @param n vector with numbers in each length bin
-#' @return a \code{data.frame} \code{mn} (mean), \code{diff} (difference), 
-#' \code{len} (length) and \code{n} (frequency)
 #' @export
 #' @docType methods
 #' @rdname powh
@@ -86,7 +86,9 @@ globalVariables(c("ddply","."))
 #' data(bonLn)
 #' rslt=with(subset(bonLn,year==2013), powh(len,n))
 #' }
-powh=function(len,n,weights=TRUE,fromMode=FALSE){
+setGeneric('powh', function(len,n,...) standardGeneric('powh'))
+setMethod("powh", signature(len='numeric', n="numeric"),
+          function(len,n,weights=TRUE,fromMode=FALSE){
   
   fn=function(len,n){
     #require(plyr)
@@ -122,31 +124,38 @@ powh=function(len,n,weights=TRUE,fromMode=FALSE){
   dat=dat[is.finite(dat$mn),]
   predict=predict(res,len=dat$len)
   
-  return(list(params=params,data=data.frame(dat,hat=predict)))}
+  return(list(params=params,data=data.frame(dat,hat=predict)))})
+
 #' moment
 #' 
 #' @description 
 #'    aa
 #'      
-#' @param x; a vector holding a time series
+#' @param object a vector holding a time series
+#' @param ... any other arguments, i.e. x,n=rep(1,length(x)),na.rm=T
+#' 
 #' @return a \code{vector} with the inter-annual variation each time step
 #' @export
 #' @docType methods
 #' @rdname utils
 #' 
+#' @aliases moment-method moment,numeric-method 
+#' 
 #' @examples
 #' x=1
-moment=function(x,n=rep(1,length(x)),na.rm=T) { 
-  if(length(n)==1) n=rep(n,length(x)) 
+setGeneric('moment', function(object,...) standardGeneric('moment'))
+setMethod("moment", signature(object='numeric'),
+          function(object,n=rep(1,length(object)),na.rm=T) { 
+  if(length(n)==1) n=rep(n,length(object)) 
   
-  mn= sum(x*n,            na.rm=na.rm)/sum(n,na.rm=na.rm)
-  sd=(sum(n*(x-mn)^2,     na.rm=na.rm)/sum(n,na.rm=na.rm))^.5
-  sk= sum(n*((x-mn)/sd)^3,na.rm=na.rm)/sum(n,na.rm=na.rm)
-  ku= sum(n*((x-mn)/sd)^4,na.rm=na.rm)/sum(n,na.rm=na.rm)-3
+  mn= sum(object*n,            na.rm=na.rm)/sum(n,na.rm=na.rm)
+  sd=(sum(n*(object-mn)^2,     na.rm=na.rm)/sum(n,na.rm=na.rm))^.5
+  sk= sum(n*((object-mn)/sd)^3,na.rm=na.rm)/sum(n,na.rm=na.rm)
+  ku= sum(n*((object-mn)/sd)^4,na.rm=na.rm)/sum(n,na.rm=na.rm)-3
   
   ## weighted median
   n=unlist(c(n))
-  x=unlist(c(x))
+  object=unlist(c(object))
   
   cumn=cumsum(n)/sum(n)
   max.=max((1:length(n))[cumn<.50])
@@ -154,7 +163,7 @@ moment=function(x,n=rep(1,length(x)),na.rm=T) {
   
   me=(x[min.]*n[min.]+x[max.]*n[max.])/(n[min.]+n[max.])
   
-  return(c(mn=mn,sd=sd,sk=sk,ku=ku,me=me))}
+  return(c(mn=mn,sd=sd,sk=sk,ku=ku,me=me))})
 
 #' unbin
 #' 
@@ -162,7 +171,8 @@ moment=function(x,n=rep(1,length(x)),na.rm=T) {
 #'  For a vector with labels corresponding to intervals i.e. \code{"(0,10]"}
 #'  returns a data.frame with left and right boundaries and mid point.
 #'      
-#' @param x; a vector of with intervals as names 
+#' @param x a vector of with intervals as names 
+#' 
 #' @return a \code{data.frame} with left and right boundaries and mid points.
 #' @export
 #' @docType methods

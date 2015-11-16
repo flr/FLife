@@ -2,29 +2,24 @@
 % Please edit documentation in R/powh.R
 \docType{methods}
 \name{powh}
-\alias{pow-h}
 \alias{powh}
+\alias{powh,numeric,numeric-method}
+\alias{powh-method}
 \alias{unbin}
 \title{powh}
 \usage{
-powh(len, n, weights = TRUE, fromMode = FALSE)
+powh(len, n, ...)
 
 unbin(x)
 }
 \arguments{
-\item{len}{lengths}
-
-\item{n}{frequqncies}
-
-\item{weights=TRUE}{}
-
-\item{fromMode=FALSE}{}
-
 \item{len}{vector with length distribution}
 
 \item{n}{vector with numbers in each length bin}
 
-\item{x;}{a vector of with intervals as names}
+\item{...}{any other argument, i.e. weights =TRUE, fromMode =FALSE}
+
+\item{x}{a vector of with intervals as names}
 }
 \value{
 a \code{data.frame} \code{mn} (mean), \code{diff} (difference),

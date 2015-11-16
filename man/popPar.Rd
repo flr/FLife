@@ -11,10 +11,7 @@ popPar(params, m = function(length, params) params["m1"] \%*\%
 \arguments{
 \item{params}{\code{FLPar}}
 
-\item{age}{FLQuant, FLPar or numeric with ages}
-
-\item{length}{FLQuant, FLPar or numeric with length, if supplied as a named paramreter
-instead  of age then calculates ages.}
+\item{m}{function for natural mortality}
 }
 \value{
 Depends on the value of \code{data}

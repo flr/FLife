@@ -2,14 +2,13 @@
 #'
 #' Creates FLQuant/FLCohort with ages
 #' 
-#' @param age FLQuant or FLCohort 
-#' @param ... any other arguments
+#' @param object FLQuant or FLCohort 
 #' 
 #' @aliases ages-method ages,FLQuant-method ages,FLCohort-method
 #' 
 #' @return Depends on the value of \code{data} 
 #'  
-#' #' @export
+#' @export
 #' @docType methods
 #' @rdname ages
 #' 
@@ -17,24 +16,24 @@
 #' 
 #' @examples
 #' \dontrun{
-#' params=FLPar(a=1,b=3)
-#' wt2len(params,FLQuant(10))
+#' data(ple4)
+#' ages(m(ple4))
 #' }
-setGeneric('ages', function(age, ...)
+setGeneric('ages', function(object, ...)
    standardGeneric('ages'))
 
-setMethod("ages", signature(age="FLQuant"),
-   function(age,timing=NULL){
-      res<-FLQuant(dimnames(age)$age,dimnames=dimnames(age))
+setMethod("ages", signature(object="FLQuant"),
+   function(object,timing=NULL){
+      res<-FLQuant(dimnames(object)$age,dimnames=dimnames(object))
 
       if (is.null(timing))
          res<-sweep(res,4,(1:dim(res)[4]-1)/dim(res)[4],"+") else
          res<-sweep(res,4,timing,"+")
 
       return(res)})
-setMethod("ages", signature(age="FLCohort"),
-   function(age,timing=NULL){
-      res<-FLCohort(dimnames(age)$age,dimnames=dimnames(age))
+setMethod("ages", signature(object="FLCohort"),
+   function(object,timing=NULL){
+      res<-FLCohort(dimnames(object)$age,dimnames=dimnames(object))
 
       if (is.null(timing))
          res<-sweep(res,4,(1:dim(res)[4]-1)/dim(res)[4],"+") else

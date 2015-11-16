@@ -13,13 +13,9 @@ noise(n, len, ...)
 
 \item{len}{an \code{FLQuant}}
 
-\item{...}{any other arguments}
-
-\item{sd}{standard deviation}
-
-\item{b}{autocorrelation parameter, a real number in [0,1]}
-
-\item{trunc}{get rid of first values equal to trunc, i.e. to allow burn in}
+\item{...}{any other arguments, sd standard deviation, b autocorrelation parameter
+a real number in [0,1], trunc get rid of first values equal to trunc, i.e. to allow
+burn in}
 }
 \value{
 A vector with autocorrelation equal to B.

@@ -1,27 +1,28 @@
 globalVariables(c("spr2v","srr2s"))
-
 #' lhEql
 #' 
 #' Takes an \code{FLPar} object with life history and selectivity parameters
 #' and generates an corresponding \code{FLBRP} object. Can uses a range of functional forms
 #' 
-#' @param \code{params} an \code{FLPar} object with life history parameters
-#' @param \code{growth} function for growth
-#' @param \code{m} function for natutal mortality      
-#' @param \code{mat} function for proportion mature-at-age
-#' @param \code{sel} function for selectivity-at-age
-#' @param \code{sr} character for stock recruitment relationship
-#' @param \code{range} age range
-#' @param \code{spwn} proportion of year when spawning occurrs, i.e. level of natural mortality prior to spawning
-#' @param \code{fish} proportion of year when fishing happens
-#' @param \code{units} units for FLQuant slots
-#' @param ... any other arguments
-#' 
+#' @param params an \code{FLPar} object with life history parameters
+#' @param ... any other arguments that include,
+#' growth function for growth,
+#' m function for natutal mortality,      
+#' mat function for proportion mature-at-age,
+#' sel function for selectivity-at-age,
+#' sr character for stock recruitment relationship,
+#' range age range,
+#' spwn proportion of year when spawning occurrs, i.e. level of natural mortality prior to spawning,
+#' fish proportion of year when fishing happens,
+#' units units for FLQuant slots
+#'  
 #' @return \code{FLBRP} 
 #' 
 #' @export
 #' @docType methods
 #' @rdname lhEql
+#' 
+#' @aliases lhEql-method lhEql,FLPar-method
 #' 
 #' @seealso \code{\link{vonB}} \code{\link{lorenzen}} \code{\link{sigmoid}}  
 #' 
@@ -29,7 +30,9 @@ globalVariables(c("spr2v","srr2s"))
 #' \dontrun{
 #' par=lhSim(FLPar(linf=100))
 #' }
-lhEql=function(params,
+setGeneric('lhEql', function(params,...) standardGeneric('lhEql'))
+setMethod("lhEql", signature(params='FLPar'),
+          function(params,
             growth       =vonB,
             #fnM          =lorenzen, #function(params,length) exp(10e-3*params["m1"]%-%((log(length)%*%params["m2"]))),
             #fnM          =function(params,length,T=290,a=FLPar(c(a=-2.1104327,b=-1.7023068,c=1.5067827,d=0.9664798,e=763.5074169),iter=dims(params)$iter))
@@ -43,7 +46,7 @@ lhEql=function(params,
               res[age> a50]=1
               res[age< a50]=0
               res},
-            sel        =dnormal,
+            sel          =dnormal,
             sr           ="bevholt",
             range        =c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40),
             spwn         = 0,
@@ -174,7 +177,7 @@ lhEql=function(params,
   
   try(res <- setUnits(res, params),silent=TRUE)
   
-  return(res)}
+  return(res)})
 # 
 # setMethod('ab', signature(x='FLparams', model='character'),
 #   function(x, model, spr0=NA){

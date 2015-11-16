@@ -2,8 +2,8 @@
 #'
 #' Catch curve analysis
 #' 
-#' @param age
-#' @param n
+#' @param age age
+#' @param n   frequency
 #' @param ... any other arguments
 #' 
 #' @aliases cc-method cc,numeric,numeric-method cc,missing,FLQuant-method cc,FLQuant,missing-method

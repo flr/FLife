@@ -2,15 +2,14 @@ globalVariables(c("dmns","rho","stk","aaply","maply","alply"))
 
 ##############################################################
 #' noise
-#'
-#' A noise generator
 #' 
-#' @param   n number of iterations
-#' @param   len an \code{FLQuant}
-#' @param   sd standard deviation
-#' @param   b autocorrelation parameter, a real number in [0,1]
-#' @param   trunc get rid of first values equal to trunc, i.e. to allow burn in
-#' @param ... any other arguments
+#' @description A noise generator
+#' 
+#' @param n number of iterations
+#' @param len an \code{FLQuant}
+#' @param ... any other arguments, sd standard deviation, b autocorrelation parameter 
+#' a real number in [0,1], trunc get rid of first values equal to trunc, i.e. to allow 
+#' burn in
 #'
 #' @aliases noise,numeric,FLQuant-method
 #' 
@@ -68,26 +67,26 @@ noiseFn<- function(len,sd=1,b=0,trunc=0){
 #           function(n,len))
           
 setMethod("noise", signature(n='numeric', len="FLQuant"),
-          function(n=n,len=len,sd=0.3,b=0) {
+    function(n=n,len=len,sd=0.3,b=0,trunc=0) {
           
-          if (dims(len)$iter!=1) stop("len can not have iter>1")
+    if (dims(len)$iter!=1) stop("len can not have iter>1")
         
-          res=aaply(len,c(1,3:5), function(x) 
-            maply(seq(n), function(x) noiseFn(dims(len)$year,b=b,sd=sd,trunc=0)))
+    res=aaply(len,c(1,3:5), function(x) 
+          maply(seq(n), function(x) noiseFn(dims(len)$year,b=b,sd=sd,trunc=0)))
           
-          ln=length(dim(res))  
-          names(dimnames(res))[[ln]]="year"
-          names(dimnames(res))[[ln-1]]="iter"
+    ln=length(dim(res))  
+    names(dimnames(res))[[ln]]="year"
+    names(dimnames(res))[[ln-1]]="iter"
           
-          if (ln==2)
-            res=aperm(res,c(ln,ln-1))
-          else
-            res=aperm(res,c(seq(ln-2),ln,ln-1))
+    if (ln==2)
+       res=aperm(res,c(ln,ln-1))
+    else
+       res=aperm(res,c(seq(ln-2),ln,ln-1))
           
-          dmns=dimnames(len)
-          dmns$iter=seq(n)
+    dmns=dimnames(len)
+    dmns$iter=seq(n)
           
-          FLQuant(c(res),dimnames=dmns)})
+    FLQuant(c(res),dimnames=dmns)})
 
 ## cohort effects
 coEff=function(x,sd=1,B=0){

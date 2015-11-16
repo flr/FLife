@@ -20,6 +20,8 @@
   \linkS4class{FLStock}, \linkS4class{FLSR}, \linkS4class{FLBiol}
   }
 
-\references{nnnnn}
+\references{
+nnnnn
+}
 
 \keyword{datasets}

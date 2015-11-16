@@ -12,9 +12,9 @@
 cc(age, n, ...)
 }
 \arguments{
-\item{age}{}
+\item{age}{age}
 
-\item{n}{}
+\item{n}{frequency}
 
 \item{...}{any other arguments}
 }

@@ -4,9 +4,8 @@
 #' 
 #' @param age FLQuant, FLPar or numeric with ages 
 #' @param params \code{FLPar} 
-#' @param length FLQuant, FLPar or numeric with length, if supplied as a named paramreter
+#' @param ... any other arguments, e.g. length FLQuant, FLPar or numeric with length, if supplied as a named paramreter
 #' instead  of age then calculates ages.
-#' @param ... any other arguments
 #' 
 #' @aliases vonB,FLPar,FLPar-method vonB,FLQuant,FLPar-method vonB,FLQuant,numeric-method vonB,missing,FLPar-method vonB,numeric,numeric-method
 

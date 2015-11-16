@@ -3,39 +3,25 @@
 \docType{methods}
 \name{lhEql}
 \alias{lhEql}
+\alias{lhEql,FLPar-method}
+\alias{lhEql-method}
 \title{lhEql}
 \usage{
-lhEql(params, growth = vonB, m = function(params, length) params["m1"] \%*\%
-  (exp(log(length) \%*\% params["m2"])), mat = function(age, params) {     a50
-  = FLQuant(ceiling(rep(c(params["a50"]), each = dim(age)[1])), dimnames =
-  dimnames(age))     res = FLQuant(0.5, dimnames = dimnames(age))     res[age >
-  a50] = 1     res[age < a50] = 0     res }, sel = dnormal, sr = "bevholt",
-  range = c(min = 0, max = 40, minfbar = 1, maxfbar = 40, plusgroup = 40),
-  spwn = 0, fish = 0.5, units = if ("units" \%in\%
-  names(attributes(params))) attributes(params)$units else NULL, ...)
+lhEql(params, ...)
 }
 \arguments{
-\item{...}{any other arguments}
+\item{params}{an \code{FLPar} object with life history parameters}
 
-\item{\code{params}}{an \code{FLPar} object with life history parameters}
-
-\item{\code{growth}}{function for growth}
-
-\item{\code{m}}{function for natutal mortality}
-
-\item{\code{mat}}{function for proportion mature-at-age}
-
-\item{\code{sel}}{function for selectivity-at-age}
-
-\item{\code{sr}}{character for stock recruitment relationship}
-
-\item{\code{range}}{age range}
-
-\item{\code{spwn}}{proportion of year when spawning occurrs, i.e. level of natural mortality prior to spawning}
-
-\item{\code{fish}}{proportion of year when fishing happens}
-
-\item{\code{units}}{units for FLQuant slots}
+\item{...}{any other arguments that include,
+growth function for growth,
+m function for natutal mortality,
+mat function for proportion mature-at-age,
+sel function for selectivity-at-age,
+sr character for stock recruitment relationship,
+range age range,
+spwn proportion of year when spawning occurrs, i.e. level of natural mortality prior to spawning,
+fish proportion of year when fishing happens,
+units units for FLQuant slots}
 }
 \value{
 \code{FLBRP}

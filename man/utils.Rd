@@ -3,12 +3,16 @@
 \docType{methods}
 \name{moment}
 \alias{moment}
+\alias{moment,numeric-method}
+\alias{moment-method}
 \title{moment}
 \usage{
-moment(x, n = rep(1, length(x)), na.rm = T)
+moment(object, ...)
 }
 \arguments{
-\item{x;}{a vector holding a time series}
+\item{object}{a vector holding a time series}
+
+\item{...}{any other arguments, i.e. x,n=rep(1,length(x)),na.rm=T}
 }
 \value{
 a \code{vector} with the inter-annual variation each time step

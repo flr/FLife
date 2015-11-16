@@ -17,9 +17,7 @@ vonB(age, params, ...)
 
 \item{params}{\code{FLPar}}
 
-\item{...}{any other arguments}
-
-\item{length}{FLQuant, FLPar or numeric with length, if supplied as a named paramreter
+\item{...}{any other arguments, e.g. length FLQuant, FLPar or numeric with length, if supplied as a named paramreter
 instead  of age then calculates ages.}
 }
 \value{

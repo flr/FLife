@@ -78,11 +78,12 @@ setMethod("leslie", signature(object="FLBRP"),
   
   return(mx)})
 
-#' lambda
+#' r
 #'
 #' Estimates population growth rate for a Leslie matrix
 #'  
-#' @param object \code{FLBRP}
+#' @param m \code{FLPar}
+#' @param fec \code{missing}
 #' @param ... any other arguments
 #' 
 #' @aliases r-method r,FLPar-method
@@ -106,12 +107,12 @@ setMethod("leslie", signature(object="FLBRP"),
 #' lsl=leslie(eql)
 #' lambda(lsl)
 #' }
-setGeneric('r', function(object, ...)
-  standardGeneric('r'))
+#setGeneric('r', function(m, ...) standardGeneric('r'))
 
-setMethod("r", signature(object="FLPar"),
-          function(object,...){
+setMethod("r", signature(m="FLPar",fec="missing"),
+          function(m,...){
 
+    object=m        
     #require(popbio)
     
     dmns=dimnames(object)[-2]

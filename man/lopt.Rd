@@ -10,11 +10,9 @@
 lopt(params, ...)
 }
 \arguments{
-\item{params}{}
+\item{params}{FLPar}
 
 \item{...}{any other arguments}
-
-\item{m}{natural mortality}
 }
 \value{
 FLPar with length at maximum biomass

@@ -6,14 +6,14 @@
 \alias{elasticity-method}
 \title{elasticity}
 \usage{
-elasticity(par, sel, fn)
+elasticity(params, sel, fn)
 }
 \arguments{
-\item{par}{}
+\item{params}{parameters}
 
-\item{sel}{}
+\item{sel}{selection pattern}
 
-\item{fn}{}
+\item{fn}{user supplied function}
 }
 \value{
 \code{FLPar}
@@ -25,7 +25,14 @@ Estimates elasticity
 }
 \examples{
 \dontrun{
-FLPar(linf=200)
+library(ggplot2)
+library(FLCore)
+library(FLBRP)
+library(FLife)
+data(pars)
+pms=lhSim(pars[[1]])
+eql=lh(pms,range = c(min=0,max=8, minfbar=1,maxfbar=8,plusgroup=8))
+lsl=leslie(eql,fbar=c(refpts(eql)["crash","harvest"]))
 }
 }
 \seealso{

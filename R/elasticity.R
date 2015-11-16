@@ -6,9 +6,9 @@ globalVariables(c("maply","jacobian","br","melt","maply","lambda","mdply","jacob
 #'
 #' Estimates elasticity
 #'  
-#' @param par
-#' @param sel
-#' @param fn
+#' @param params parameters
+#' @param sel selection pattern
+#' @param fn user supplied function
 #' 
 #' @aliases elasticity-method
 #' 
@@ -22,9 +22,16 @@ globalVariables(c("maply","jacobian","br","melt","maply","lambda","mdply","jacob
 #'  
 #' @examples
 #' \dontrun{
-#' FLPar(linf=200)
+#' library(ggplot2)
+#' library(FLCore)
+#' library(FLBRP)
+#' library(FLife)
+#' data(pars)
+#' pms=lhSim(pars[[1]])
+#' eql=lh(pms,range = c(min=0,max=8, minfbar=1,maxfbar=8,plusgroup=8))
+#' lsl=leslie(eql,fbar=c(refpts(eql)["crash","harvest"]))
 #' }
-elasticity=function(par,sel,fn){
+elasticity=function(params,sel,fn){
 
    elasFn=function(x,dmns,what,sel,fn) {
 
