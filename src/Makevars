@@ -1,5 +1,0 @@
-PKG_CXXFLAGS=-I../inst/include 
-CXX_STD = CXX11
-
-PKG_LIBS = $(SUBLIBS) $(shell $(R_HOME)/bin/${R_ARCH}/R --slave --no-site-file --no-init-file -e 'cat(system.file("libs", package="FLasher"))')/${R_ARCH}/FLasher.so 
-
