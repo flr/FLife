@@ -12,4 +12,3 @@ Depends:
     methods,
     FLCore(>= 2.5),
     FLBRP
-#LinkingTo: Rcpp
