@@ -88,7 +88,7 @@ globalVariables(c("ddply",".","x"))
 #' }
 setGeneric('powh', function(len,n,...) standardGeneric('powh'))
 setMethod("powh", signature(len='numeric', n="numeric"),
-          function(len,n,weights=TRUE,fromMode=FALSE){
+          function(len,n,weights=FALSE,fromMode=FALSE){
   
   fn=function(len,n){
     #require(plyr)

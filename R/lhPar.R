@@ -101,7 +101,7 @@ lhPar=function(params,t0=-0.1,a=0.001,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
   order=order[order%in%dimnames(params)[[1]]]
   order=c(order,dimnames(params)[[1]][!(dimnames(params)[[1]]%in%order)])
 
-  return(par[order])}
+  return(params[order])}
 
 setUnits=function(res, par){
 

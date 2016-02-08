@@ -8,8 +8,8 @@ globalVariables(c("dmns","rho","stk","aaply","maply","alply"))
 #' @param n number of iterations
 #' @param len an \code{FLQuant}
 #' @param ... any other arguments, sd standard deviation, b autocorrelation parameter 
-#' a real number in [0,1], trunc get rid of first values equal to trunc, i.e. to allow 
-#' burn in
+#' a real number in [0,1], trunc get rid of values > abs(trunc), burn allows burn in by getting
+#' rid of 1st values i series
 #'
 #' @aliases noise,numeric,FLQuant-method
 #' 
@@ -38,6 +38,27 @@ globalVariables(c("dmns","rho","stk","aaply","maply","alply"))
 #' blue <- noise(1000,sd=.3,b=-0.8)
 #' plot(blue)
 #' acf(blue)
+#'
+#' data(ple4)
+#' res=noise(4,m(ple4),burn=10,b=0.9)
+#' 
+#' ggplot()+
+#' geom_point(aes(year,age,size= data),
+#'             data=subset(as.data.frame(res),data>0))+
+#' geom_point(aes(year,age,size=-data),
+#'             data=subset(as.data.frame(res),data<=0),colour="red")+
+#' scale_size_area(max_size=4, guide="none")+
+#' facet_wrap(~iter)
+#' 
+#' res=noise(4,m(ple4),burn=10,b=0.9,cohort=TRUE)
+#' ggplot()+
+#' geom_point(aes(year,age,size= data),
+#'           data=subset(as.data.frame(res),data>0))+
+#' geom_point(aes(year,age,size=-data),
+#'           data=subset(as.data.frame(res),data<=0),colour="red")+
+#' scale_size_area(max_size=4, guide="none")+
+#' facet_wrap(~iter)
+#' 
 #' }
 setGeneric('noise', function(n,len,...) standardGeneric('noise'))
 
@@ -47,49 +68,63 @@ setGeneric('noise', function(n,len,...) standardGeneric('noise'))
 # sd =0.3
 # trunc=0
 
-noiseFn<- function(len,sd=1,b=0,trunc=0){
-    mn=0
-    x <- rep(0, len+1) # going to hack off the first value at the end
-    s <- rnorm(len,mean=mn,sd=sd)
+noiseFn<-function(len,sd=0.3,b=0,burn=0,trunc=0){
+
+    if (burn<0) error("burn must be >=0")
+    burn=burn+1
+    x <- rep(0, len+burn) # going to hack off the first values at the end
+    s <- rnorm(len+burn,mean=0,sd=sd)
     
-    for(i in 1:len){
+    for(i in (1:(len+burn-1))){
       x[i+1] <- b * x[i] + s[i] * sqrt(1 - b^2)
       if(trunc>0){
         if (x[i+1] > (1-trunc))  x[i+1] <- ( 1-trunc)
         if (x[i+1] < (-1+trunc)) x[i+1] <- (-1+trunc)}
         }
     
-    x<-x[-1]
+    if (burn<=0) return(x)
+    
+    x<-x[-(seq(burn))]
     
     return(x)}
 
 # setMethod("noise", signature(n='numeric', len="missing"),
 #           function(n,len))
-          
+ 
+if (FALSE){
+  library(FLCore)
+  library(ggplotFL)
+  data(ple4)
+  res=noise(4,m(ple4),burn=10,b=0.9)
+  ggplot()+
+    geom_point(aes(year,age,size= data),
+               data=subset(as.data.frame(res),data>0))+
+    geom_point(aes(year,age,size=-data),
+               data=subset(as.data.frame(res),data<=0),colour="red")+
+    scale_size_area(max_size=4, guide="none")+
+    facet_wrap(~iter)
+}
+
 setMethod("noise", signature(n='numeric', len="FLQuant"),
-    function(n=n,len=len,sd=0.3,b=0,trunc=0) {
-          
-    if (dims(len)$iter!=1) stop("len can not have iter>1")
-        
-    res=aaply(len,c(1,3:5), function(x) 
-          maply(seq(n), function(x) noiseFn(dims(len)$year,b=b,sd=sd,trunc=0)))
-          
-    ln=length(dim(res))  
-    names(dimnames(res))[[ln]]="year"
-    names(dimnames(res))[[ln-1]]="iter"
-          
-    if (ln==2)
-       res=aperm(res,c(ln,ln-1))
-    else
-       res=aperm(res,c(seq(ln-2),ln,ln-1))
-          
-    dmns=dimnames(len)
-    dmns$iter=seq(n)
-          
-    FLQuant(c(res),dimnames=dmns)})
+    function(n=n,len=len,sd=0.3,b=0,burn=0,trunc=0,what=c("year","cohort","age")) {
+      
+      len=propagate(len,n)
+      switch(what[1],
+             "cohort"={object=as(len,"FLCohort")
+                      res   =apply(object,c(2:6), function(x) 
+                           t(noiseFn(length(x),sd,b,burn,trunc)))
+                      res   =array(res,unlist(laply(dimnames(object),length)),
+                            dimnames=dimnames(object))
+                      res   =as(FLCohort(res),"FLQuant")
+                      },
+             "year"  ={res=apply(len,c(1,3:6), function(x) noiseFn(length(x),sd,b,burn,trunc))
+                       res=as.FLQuant(aperm(res,c(2,1,3:6)),dimnames=dimnames(len))},
+             "age"   ={res=apply(len,c(2:6), function(x) noiseFn(length(x),sd,b,burn,trunc))
+                       res=as.FLQuant(res,dimnames=dimnames(len))}
+             )})
 
 ## cohort effects
-coEff=function(x,sd=1,B=0){
+coEff=function(x,sd=1,b=0){
   
   dev        =log(rlnorm(length(dmns$cohort),0,cv))   
   for(i in 2:(length(dev)))
@@ -151,4 +186,5 @@ spectra <- function(x,fs=1,norm = FALSE, pl = TRUE,omit=-(1:5))
   return(as.data.frame(list(mx = mx, f = f)))}
 
 #ggplot(spectra(x))+geom_line(aes(f,mx))
+
 

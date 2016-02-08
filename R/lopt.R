@@ -32,9 +32,11 @@ setGeneric('lopt', function(params,...)
   standardGeneric('lopt'))
 
 setMethod("lopt", signature(params="FLPar"),
-          function(params,
+       function(params,
                    m=function(length,params) 
-                     0.55*(length^-1.66)%*%(params["linf"]^1.44)%*%params["k"],...){   
+                       0.55*(length^-1.66)%*%(params["linf"]^1.44)%*%params["k"],
+                   #m=function(length,params) params["m1"]%*%(exp(log(length)%*%params["m2"])),
+                   ...){   
             
             dmns=dimnames(params)
             dmns$params="lopt"
@@ -53,7 +55,6 @@ lopt_=function(params,
                 0.55*(length^-1.66)%*%(params["linf"]^1.44)%*%params["k"])
   
   optimise(loptFn,c(.01,c(params["linf"])*.99),params=params,maximum=TRUE,m=m)$maximum
-
 
 loptFn=function(x,params,m,age=0:200){
   
@@ -81,5 +82,35 @@ lopt3=function(x){
   
   fbar(x)          =fbar(x)[,1]*0
   stock.n(x)%*%stock.wt(x)}
+
+#setMethod("lopt", signature(params="FLPar"),
+    loptAge=function(params,
+                   m     =function(length,params) params["m1"]%*%(exp(log(length)%*%params["m2"])),
+                   growth=vonB,
+                   ...){   
+
+      loptFn=function(x,params,m){
+        
+        age   =0:ceiling(x)
+        dmns  =list(age=age)
+        length=vonB(age=FLQuant(pmin(age+0.5,x),dimnames=dmns),params=params)
+        m.    =FLQuant(m(length,params),    dimnames=dmns)
+        mCum  =FLQuant(aaply(m.,6,sum))
+        n     =exp(-mCum)
+        c(n*len2wt(length[ac(ceiling(x))],params))}
+            
+      dmns=dimnames(params)
+      dmns$params="lopt"
+      dm  =dim(params)
+            
+      res=aaply(params,seq(length(dm))[-1],function(x){
+            x.=FLPar(x)
+            rtn=try(optimise(loptFn,c(0,40),params=x.,maximum=TRUE,m=m)$maximum)
+            if ("character" %in% mode(rtn)) rtn=NA
+            rtn})
+            
+      vonB(FLQuant(FLPar(array(res,dim=c(1, dm[-1]),dimnames=dmns))),params)
+      
+      } #)
 
   

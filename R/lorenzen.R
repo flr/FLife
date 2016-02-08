@@ -26,9 +26,9 @@
 setGeneric('lorenzen', function(wt,params,...)
   standardGeneric('lorenzen'))
 
-lorenzenFn<-function(wt,a=.3,b=-0.288) {
-  if ("FLPar"%in%is(b)) res=wt%^%b  else res=wt^b
-  if ("FLPar"%in%is(a)) res=a%*%res else res=a*res
+lorenzenFn<-function(wt,m1=.3,m2=-0.288) {
+  if ("FLPar"%in%is(m2)) res=wt%^%m2  else res=wt^m2
+  if ("FLPar"%in%is(m1)) res=m1%*%res else res=m1*res
   res}
 
 setMethod('lorenzen', signature(wt='FLQuant',params='missing'),

@@ -49,7 +49,7 @@ setMethod("lhEql", signature(params='FLPar'),
             sel          =dnormal,
             sr           ="bevholt",
             range        =c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40),
-            spwn         = 0,
+            spwn         =c(params["a50"]-floor(params["a50"])),
             fish         = 0.5, # proportion of year when fishing happens
             units=if("units" %in% names(attributes(params))) attributes(params)$units else NULL,
             ...){
@@ -88,17 +88,13 @@ setMethod("lhEql", signature(params='FLPar'),
 
   if ("numeric" %in% is(m)) m.=FLQuant(m,dimnames=dimnames(age)) else{
     if ("length" %in% names(formals(m)))   
-      m.   =m(params=params,length=midyearlen) # natural mortality is always based on mid year length
+      m.   =m(length=midyearlen,params=params) # natural mortality is always based on mid year length
     else if ("age" %in% names(formals(m))){ 
       m.   =m(age=age+0.5,params=params) # natural mortality is always based on mid year length
     }else if ("wt" %in% names(formals(m)))
-      m.   =m(params[c("m1","m2")],swt) 
+      m.   =m(wt=swt,params[c("m1","m2")]) 
   
   names(dimnames(m.))[1]="age"}
-
-  #age<<-age
-#mspwn<<-m.spwn
-#return()
 
   mat. =mat(age + m.spwn,params) # maturity is biological therefore + m.spwn 
   sel. =sel(age + fish,  params) # selectivty is fishery  based therefore + fish
@@ -126,25 +122,30 @@ setMethod("lhEql", signature(params='FLPar'),
     slot(res, slt)<-args[[slt]]
 
   params(res)=propagate(params(res),dims(res)$iter)
+
   ## Stock recruitment relationship
   model(res) =do.call(sr,list())$model
-  
-  if (sr=="shepherd" & !("c" %in% names(params))){
-    
+ 
+  if (sr=="shepherd" & !("c" %in% dimnames(params)[[1]])){
+
     dmns=dimnames(params)
     
     dmns$params=c(dmns$params,"c")
     
-    par.=FLPar(NA,dimnamels=dmns)
+    par.=FLPar(NA,dimnames=dmns)
     par.[dimnames(params)$params]=params
     par.["c"]=1
     params=par.}
-
+  
   if (dims(params)$iter>1) {
     warning("Scarab, iters dont work for SRR:sv/ab etc")
     warning("Should be no need to specify mode of FLPar element") 
     
-    params(res)=FLPar(c(a=as.numeric(NA),b=as.numeric(NA)),iter=dims(params)$iter)
+    if (sr=="shepherd")
+      params(res)=FLPar(c(a=as.numeric(NA),b=as.numeric(NA),c=as.numeric(NA)),iter=dims(params)$iter)
+    else
+      params(res)=FLPar(c(a=as.numeric(NA),b=as.numeric(NA)),iter=dims(params)$iter)
+    
     for (i in seq(dims(params)$iter))
       if (sr=="shepherd")
         params(res)[,i][]=unlist(c(FLCore::ab(params[c("s","v","c"),i],sr,spr0=FLCore::iter(spr0(res),i))[c("a","b","c")]))
@@ -154,14 +155,15 @@ setMethod("lhEql", signature(params='FLPar'),
     warning("iter(params(res),i)=ab(params[c(s,v),i],sr,spr0=iter(spr0(res),i))[c(a,b)] assignment doesnt work")
     warning("iter(FLBRP,i) doesn't work")
   }else{
-    if (sr=="shepherd")
+    
+    if (sr=="shepherd"){
       params(res)=FLCore::ab(params[c("s","v","c")],sr,spr0=spr0(res))[c("a","b","c")]
-    else{ 
+      }else{ 
       params(res)=FLCore::ab(params[c("s","v")],sr,spr0=spr0(res))[c("a","b")]
       }
     }
 
-  refpts(res)=propagate(FLBRP::refpts(res)[c("virgin","msy","crash","f0.1","fmax")],dims(par)$iter)
+refpts(res)=propagate(FLBRP::refpts(res)[c("virgin","msy","crash","f0.1","fmax")],dims(params)$iter)
   res=brp(res)
 
   if ("fbar" %in% names(args)) 

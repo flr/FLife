@@ -1,3 +1,4 @@
+
 #' popPar
 #'
 #' Von Bertalanffy growth equation
@@ -34,7 +35,7 @@ popPar<-function(params,
 
   rate =r(leslie(eql,fbar=fcrash))
   ratec=r(leslie(eql,fbar=f0.1))
-  lop  =lopt(params,m=m)
+  lop  =loptAge(params,m=m)
   sk   =refpts(eql)["msy","ssb"]/refpts(eql)["virgin","ssb"]
             
   data.frame("r"      =c(rate),
