@@ -1,7 +1,8 @@
 globalVariables(c("fwd","jacobian","melt"))
 globalVariables(c("fwd","jacobian","melt"))
 globalVariables(c("maply","jacobian","br","melt","maply","lambda","mdply","jacobian"))
-                           
+    
+
 #' elasticity
 #'
 #' Estimates elasticity

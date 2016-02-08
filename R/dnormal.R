@@ -1,4 +1,5 @@
 #' dnormal
+#' 
 #'
 #' Double normal ogive
 #' 

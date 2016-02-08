@@ -1,5 +1,6 @@
 globalVariables(c("invGascuelFn"))
 
+
 gascuelFn=function(params,age)
   params["gas.a"]+
   params["gas.b"]*age+

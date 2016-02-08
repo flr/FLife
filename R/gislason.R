@@ -1,4 +1,5 @@
 #' gislason
+#' 
 #'
 #' gislason natural mortality relatoinship estimate M as a function of weight. 
 #' M=a*length^b; 

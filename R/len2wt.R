@@ -1,5 +1,6 @@
 #' len2wt
-#'
+#' 
+#' 
 #' converts length to weight
 #' 
 #' @param length age FLQuant, FLPar or numeric 

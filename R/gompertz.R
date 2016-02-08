@@ -1,5 +1,6 @@
 globalVariables(c("invgompertzFn"))
 
+
 #' gompertz
 #'
 #' Gompertz growth equation

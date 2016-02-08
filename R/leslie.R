@@ -1,5 +1,6 @@
 globalVariables(c("laply","lambda"))
 
+
 #' leslie
 #'
 #' Creates a Leslie Matrix
