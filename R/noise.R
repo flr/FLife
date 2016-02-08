@@ -1,6 +1,7 @@
 globalVariables(c("dmns","rho","stk","aaply","maply","alply"))
 
 
+
 ##############################################################
 #' noise
 #' 

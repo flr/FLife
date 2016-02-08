@@ -1,4 +1,3 @@
-
 #' popPar
 #'
 #' Von Bertalanffy growth equation

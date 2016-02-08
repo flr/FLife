@@ -1,4 +1,5 @@
 #' vonB
+#' 
 #'
 #' Von Bertalanffy growth equation
 #' 

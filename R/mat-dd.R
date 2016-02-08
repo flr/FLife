@@ -1,4 +1,5 @@
 #' matdd
+#' 
 #'
 #' Logistic ogive for proportion mature-at-age, modified to explicitly included maturity 
 #' as a function of numbers in a cohort, i.e. density dependence

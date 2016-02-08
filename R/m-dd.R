@@ -1,4 +1,5 @@
 #' mdd
+#' 
 #'
 #' Lorenzen natural mortality relationship where M is a function of weight, modified to 
 #' explicitly included M as a function of numbers in a cohort, i.e. density dependence

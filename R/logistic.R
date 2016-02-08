@@ -1,4 +1,5 @@
 #' logistic
+#' 
 #'
 #' logistic function
 #' 

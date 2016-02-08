@@ -1,5 +1,6 @@
 globalVariables(c("aaply"))
 
+
 #' lopt
 #'
 #' @description Finds length at maximum biomass

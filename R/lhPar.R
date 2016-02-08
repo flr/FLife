@@ -1,6 +1,7 @@
 globalVariables("asym")
 
 
+
 mf2FLPar=function(x){
   dmns=dimnames(x)[2:1]
   names(dmns)=c("params","iter")

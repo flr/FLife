@@ -1,6 +1,7 @@
 globalVariables(c("ddply",".","year"))
                 
 #' rod
+#' 
 #'
 #' @description Regime shifts
 #' Evidence for regime shifts are explored using a a sequential t-test algorithm 

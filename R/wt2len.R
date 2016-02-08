@@ -1,5 +1,6 @@
 #' wt2len
 #'
+#'
 #' converts weight to length
 #' 
 #' @param wt FLQuant, FLPar or numeric with length 

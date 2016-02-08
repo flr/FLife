@@ -1,5 +1,6 @@
 globalVariables(c("spr2v","srr2s"))
 
+
 #' lhEql
 #' 
 #' Takes an \code{FLPar} object with life history and selectivity parameters

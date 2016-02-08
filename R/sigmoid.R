@@ -1,5 +1,6 @@
 #' sigmoid
 #'
+#'
 #' sigmoid ogive
 #' 
 #' @param age FLQuant, FLPar or numeric with ages 

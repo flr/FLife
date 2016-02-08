@@ -1,5 +1,6 @@
 globalVariables(c("ddply",".","x"))
 
+
 #' powh
 #' 
 #' @description 

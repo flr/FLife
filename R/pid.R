@@ -1,6 +1,7 @@
 production=function(biomass,catch,r=.3,k=1000,p=1,cv=.1) 
    max(biomass*r/p*(1-(biomass/k)^p),0)*rlnorm(1,0,cv)
   
+
 err=0.2
 catch     =rep( 30,100)
 biomass   =rep(1000,100)
