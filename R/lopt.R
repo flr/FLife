@@ -84,8 +84,39 @@ lopt3=function(x){
   fbar(x)          =fbar(x)[,1]*0
   stock.n(x)%*%stock.wt(x)}
 
-#setMethod("lopt", signature(params="FLPar"),
-    loptAge=function(params,
+
+#' loptAge
+#'
+#' @description Finds length at maximum biomass
+#' 
+#' @param params FLPar
+#' @param ... any other arguments
+#' 
+#' @aliases lopt-method lopt,FLPar-method
+#' 
+#' @return FLPar with length at maximum biomass 
+#' 
+#' @details There are several ways to calculate \deqn{L_{opt}}, i.e.
+#' i) \deqn{{2/3}^{rds}  L_{\infty}}
+#' ii) \deqn{L_{\infty}\frac{3}{3+k/m}}
+#' iii) by maximising the biomass of
+#' iv) from an FLBRP object by fishing at F=0 and finding age where biomass is a maximum
+#' 
+#' @export
+#' @docType methods
+#' @rdname loptAge
+#' 
+#' @seealso \code{\link{vonB}}  
+#' 
+#' @examples
+#' \dontrun{
+#' data(pars)
+#' lopt(pars[[1]])
+#' }
+setGeneric('loptAge', function(params,...)
+  standardGeneric('loptAge'))
+setMethod("loptAge", signature(params="FLPar"),
+    function(params,
                    m     =function(length,params) params["m1"]%*%(exp(log(length)%*%params["m2"])),
                    growth=vonB,
                    ...){   
@@ -110,8 +141,7 @@ lopt3=function(x){
             if ("character" %in% mode(rtn)) rtn=NA
             rtn})
             
-      vonB(FLQuant(FLPar(array(res,dim=c(1, dm[-1]),dimnames=dmns))),params)
-      
-      } #)
+      vonB(as(FLPar(array(res,dim=c(1, dm[-1]),dimnames=dmns)),"FLQuant"),params)
+      })
 
   

@@ -167,7 +167,7 @@ if (FALSE){
   
   srDev=rlnorm(100,FLQuant(rep(0,136)),0.3)
   
-  om=mseSBT1(mou,eql,srDev,
+  om=FLife:::mseSBT1(mou,eql,srDev,
              start=dims(mou)$maxyear,end=dims(mou)$maxyear+20,lag=1,interval=3,
              k1=1.5,k2=3.0,gamma=1,nyrs=5,   
              seed=7890,nits=100,

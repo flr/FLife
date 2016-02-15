@@ -22,9 +22,10 @@
 #' }
 popPar<-function(params,
                   m=function(length,params) 
-                         params["m1"]%*%(exp(log(length)%*%params["m2"]))){
+                         params["m1"]%*%(exp(log(length)%*%params["m2"])),
+                 range=c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40)){
   
-  eql=lhEql(params,m=m)
+  eql=lhEql(params,m=m,range=range)
   
   fcrash=FLQuant(refpts(eql)["crash","harvest",drop=T],
                  dimnames=list(iter=seq( dims(eql)$iter)))
@@ -36,11 +37,23 @@ popPar<-function(params,
   ratec=r(leslie(eql,fbar=f0.1))
   lop  =loptAge(params,m=m)
   sk   =refpts(eql)["msy","ssb"]/refpts(eql)["virgin","ssb"]
+  
+  rfs=refpts(eql)[c("f0.1","virgin")]
+  dimnames(rfs)[[1]][1]="ref"
+  rfs["ref",-1]=NA
+  lro=eql
+  params(lro)=params(eql)["a"]/params(eql)["a"]
+  model( lro)=geomean()$model
+  refpts(lro)=rfs
+  lro        =computeRefpts(lro)
+  lro        =c(lro["ref","ssb"]/lro["virgin","ssb"])
             
   data.frame("r"      =c(rate),
              "rc"     =c(ratec),
              "lopt"   =c(lop),
-             "sk"     =c(sk))}
+             "sk"     =c(sk),
+             "lro"    =c(lro))
+}
 
 
 if (FALSE){
@@ -122,6 +135,11 @@ tmp=d_ply(scen,.(juve,dome,steep,m,species), with, {
                         0.55*(length^-1.66)%*%(params["linf"]^1.44)%*%params["k"]}
                    )}
   
+  lro=eql
+  params(lro)=params(eql)["a"]/params(eql)["a"]
+  model( lro)=geomean()$model
+  lro        =computeRefpts(lro)
+  
   res=data.frame("juve"   =juve,
                  "dome"   =dome,
                  "steep"  =steep,
@@ -132,7 +150,8 @@ tmp=d_ply(scen,.(juve,dome,steep,m,species), with, {
                  "r"      =c(rate),
                  "rc"     =c(ratec),
                  "lopt"   =c(lop),
-                 "sk"     =c(ref["msy","ssb"]/ref["virgin","ssb"]))
+                 "sk"     =c(ref["msy","ssb"]/ref["virgin","ssb"]),
+                 "lro"    =c(lro["msy","ssb"]/lro["virgin","ssb"]))
 
   dbWriteTable(con,"res",res,append=TRUE)})
   }
