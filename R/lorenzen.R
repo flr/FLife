@@ -1,5 +1,4 @@
 #' lorenzen
-#' 
 #'
 #' Lorenzen natural mortality relatoinship estimate M as a function of weight. 
 #' M=a*wt^b; 
@@ -11,7 +10,7 @@
 #' 
 #' @aliases lorenzen,FLQuant,FLPar-method lorenzen,FLQuant,missing-method lorenzen,FLQuant,numeric-method
 #' 
-#' #' @export
+#' @export
 #' @docType methods
 #' @rdname lorenzen
 #' 

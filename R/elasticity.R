@@ -15,7 +15,7 @@ globalVariables(c("maply","jacobian","br","melt","maply","lambda","mdply","jacob
 #' 
 #' @return \code{FLPar} 
 #' 
-#' #' @export
+#' @export
 #' @docType methods
 #' @rdname elasticity
 #'   

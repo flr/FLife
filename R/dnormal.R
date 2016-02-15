@@ -12,7 +12,7 @@
 #'                     
 #' @return Depends on the value of \code{age} 
 #'  
-#' #' @export
+#' @export
 #' @docType methods
 #' @rdname ages
 #' 

@@ -6,7 +6,7 @@
 #' @param par
 #' @param age
 #' 
-#' #' @export
+#' @export
 #' @docType methods
 #' @rdname logistic
 #' 

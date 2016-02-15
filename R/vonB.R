@@ -13,7 +13,7 @@
 #' 
 #' @return Depends on the value of \code{data} 
 #' 
-#' #' @export
+#' @export
 #' @docType methods
 #' @rdname vonB
 #' 

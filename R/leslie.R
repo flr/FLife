@@ -12,7 +12,7 @@ globalVariables(c("laply","lambda"))
 #' 
 #' @return \code{matrix} 
 #' 
-#' #' @export
+#' @export
 #' @docType methods
 #' @rdname leslie
 #' 
@@ -91,7 +91,7 @@ setMethod("leslie", signature(object="FLBRP"),
 #' 
 #' @return \code{FLPar} 
 #' 
-#' #' @export
+#' @export
 #' @docType methods
 #' @rdname lambda
 #' 

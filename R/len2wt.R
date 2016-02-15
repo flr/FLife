@@ -11,7 +11,7 @@
 #' 
 #' @return Depends on the value of \code{length} 
 #' 
-#' #' @export
+#' @export
 #' @docType methods
 #' @rdname len2wt
 #' 
