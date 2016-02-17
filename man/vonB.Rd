@@ -13,17 +13,14 @@
 vonB(age, params, ...)
 }
 \arguments{
-\item{age}{FLQuant, FLPar or numeric with ages}
+\item{age}{FLQuant, FLPar or numeric object with values corresponding to ages}
 
-\item{params}{\code{FLPar}}
+\item{params}{\code{FLPar} object with parameters \code{linf}, \code{k} and \code{t0}}
 
-\item{...}{any other arguments, e.g. length FLQuant, FLPar or numeric with length, if supplied as a named paramreter
-instead  of age then calculates ages.}
+\item{length}{a named argument of type FLQuant, FLPar or numeric, if supplied and age omitted then caclulates the inverse growth curve.}
 }
 \value{
-Depends on the value of \code{data}
-
-#'
+an object the same type supplied as \code{age}
 }
 \description{
 Von Bertalanffy growth equation
@@ -32,7 +29,9 @@ Von Bertalanffy growth equation
 \dontrun{
 params=FLPar(linf=100,t0=0,k=.4)
 age=FLQuant(1:10,dimnames=list(age=1:10))
-len=vonB(age,params)
+vonB(age,params)
+
+#inverse growth curve
 age=vonB(params,length=len)
 }
 }
