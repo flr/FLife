@@ -59,7 +59,7 @@ and maturity from
 
 from $l_{\infty}$, and natural mortality from length ($l$)
 
-\begin{equation} M=0.55(l_{-1.66}l_{\infty}^{1.44}k\end{equation}
+\begin{equation} M=0.55(l-1.66l_{\infty}^{1.44}k\end{equation}
 
 where $m_1= 0.55(l_{\infty}^{1.44})k$ and $m_2=-1.61$        
 
