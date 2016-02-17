@@ -1,14 +1,9 @@
 #' matdd
-#' 
 #'
 #' Logistic ogive for proportion mature-at-age, modified to explicitly included maturity 
 #' as a function of numbers in a cohort, i.e. density dependence
 #'
-#'  @details
-#'    
-#' The logistic ogive a function of age i.e. 
-#'  
-#' 
+#' @details
 #' The relationship can be explained by population density, since as fish grow they 
 #' also die and so there is potentially less competition for resources between larger and 
 #' older fish. Density dependence can be modelled by a logistic function, a sigmoid 
@@ -27,7 +22,7 @@
 #'    O=aL/(1+exp(-k(n-ref)))*wt^b;
 #'    
 #' @param wt  mass at which M is to be predicted
-#' @params scale, e.g. stock numbers now relative to a reference level, e.g. at virgin biomass. 
+#' @param scale, e.g. stock numbers now relative to a reference level, e.g. at virgin biomass. 
 #' @param params an \code{FLPar} with two values; i.e. a equal to M at unit mass 
 #' and b a power term; defaults are a=0.3 and b=-0.288
 #' @param k steepness of relationship
@@ -64,7 +59,6 @@
 #'    theme(legend.position="none")
 #'    
 #'  }
-
 pow=function(a,b) a^b
 logisticFn2<-function(age,params,a50,ato95,asym) { #x,a50,ato95,asym=1.0){  
   

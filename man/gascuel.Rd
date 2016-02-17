@@ -22,8 +22,6 @@ gascuel(params, age, ...)
 }
 \value{
 Depends on the value of \code{data}
-
-#'
 }
 \description{
 Gascuel growth equation

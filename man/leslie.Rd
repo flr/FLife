@@ -16,8 +16,6 @@ leslie(object, ...)
 }
 \value{
 \code{matrix}
-
-#'
 }
 \description{
 Creates a Leslie Matrix

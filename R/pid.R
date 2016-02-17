@@ -1,3 +1,4 @@
+if (FALSE){
 production=function(biomass,catch,r=.3,k=1000,p=1,cv=.1) 
    max(biomass*r/p*(1-(biomass/k)^p),0)*rlnorm(1,0,cv)
   
@@ -47,4 +48,5 @@ plot(biomass,type="line",ylim=c(0,1500),xlab="Year")
 plot(catch,  type="line",xlab="Year")
 points(index)
 abline(h=setPt,col="red")
+}
 

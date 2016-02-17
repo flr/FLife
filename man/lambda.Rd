@@ -18,8 +18,6 @@
 }
 \value{
 \code{FLPar}
-
-#'
 }
 \description{
 Estimates population growth rate for a Leslie matrix

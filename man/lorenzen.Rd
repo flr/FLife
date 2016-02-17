@@ -2,7 +2,6 @@
 % Please edit documentation in R/lorenzen.R
 \docType{methods}
 \name{lorenzen}
-\alias{#'}
 \alias{lorenzen}
 \alias{lorenzen,FLQuant,FLPar-method}
 \alias{lorenzen,FLQuant,missing-method}

@@ -29,7 +29,7 @@
 #' @param wt  mass at which M is to be predicted
 #' @param params an \code{FLPar} with two values; i.e. a equal to M at unit mass 
 #' and b a power term; defaults are a=0.3 and b=-0.288
-#' @params scale, e.g. stock numbers now relative to a reference level, e.g. at virgin biomass. 
+#' @param scale, e.g. stock numbers now relative to a reference level, e.g. at virgin biomass. 
 #' @param k steepness of relationship
 #' 
 #' @aliases mdd,FLQuant,FLPar-method

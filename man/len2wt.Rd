@@ -20,8 +20,6 @@ len2wt(length, params, ...)
 }
 \value{
 Depends on the value of \code{length}
-
-#'
 }
 \description{
 converts length to weight

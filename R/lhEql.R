@@ -86,7 +86,7 @@ setMethod("lhEql", signature(params='FLPar'),
   cwt=exp(log(catchlen%*%params["a"]))%*%params["b"]
   if ("bg" %in% dimnames(params)$param)  
     swt=exp(log(stocklen%*%params["a"]))%*%params["bg"]
-  warning("FLPar%*%FLQuant operator sets 1st dim name to quant regardless")
+  #warning("FLPar%*%FLQuant operator sets 1st dim name to quant regardless")
 
   if ("numeric" %in% is(m)) m.=FLQuant(m,dimnames=dimnames(age)) else{
     if ("length" %in% names(formals(m)))   

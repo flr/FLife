@@ -17,8 +17,6 @@ elasticity(params, sel, fn)
 }
 \value{
 \code{FLPar}
-
-#'
 }
 \description{
 Estimates elasticity

@@ -1,25 +1,24 @@
 #' ages
 #' 
-#'
-#' Creates FLQuant/FLCohort with ages
+#' Creates FLQuant/FLCohort with ages as entries
 #' 
 #' @param object FLQuant or FLCohort 
+#' @param ... any other arguments
 #' 
 #' @aliases ages-method ages,FLQuant-method ages,FLCohort-method
 #' 
-#' @return Depends on the value of \code{data} 
+#' @return \code{FLQuant} or \code{FLCohort} 
 #'  
 #' @export
 #' @docType methods
 #' @rdname ages
 #' 
-#' @seealso \code{\link{vonB}} 
+#' @seealso \code{\link{knife}} \code{\link{gascuel}} \code{\link{sigmoid}} \code{\link{gompertz}} \code{\link{vonB}} \code{\link{dnormal}} \code{\link{logistic}}
 #' 
 #' @examples
 #' \dontrun{
 #' data(ple4)
-#' ages(m(ple4))
-#' }
+#' ages(m(ple4))}
 setGeneric('ages', function(object, ...)
    standardGeneric('ages'))
 

@@ -10,7 +10,7 @@ lhPar(params, t0 = -0.1, a = 0.001, b = 3, ato95 = 1, sl = 2,
 }
 \arguments{
 \item{params}{\code{FLPar} object with parameters for life history equations and selection pattern.
-Need L_infty to estimate other parameters, if any other parameters supplied in \code{code} then
+Need L_{\infty} to estimate other parameters, if any other parameters supplied in \code{code} then
 these are not provided by the algorithm}
 
 \item{t0}{of von Bertalanffy. This is a default that isnt normally derived
@@ -34,8 +34,10 @@ from life history theory, as are the following args.}
 An \code{FLPar} object with parameters
 }
 \description{
-Uses life history theory to derive parameters for biological relationships,
-i.e. growth, maturity, natural mortality from.
+Selectivity by default is set so age at peak selectivity is the same as age at 50/% mature (a50) As a minimum all `lhPar` requires is `linf` the asymptotic length of the von Bertalannfy growth equation.
+}
+\details{
+Uses life history theory to derive parameters for biological relationships, i.e. or growth, maturity, natural mortality
 }
 \examples{
 \dontrun{

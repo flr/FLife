@@ -14,7 +14,7 @@
 #'  
 #' @export
 #' @docType methods
-#' @rdname ages
+#' @rdname dnormal
 #' 
 #' @seealso \code{\link{vonB}}  
 #' 

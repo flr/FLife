@@ -29,7 +29,8 @@ mseSBT1<-function(om,eql,srDev,
                         start=dims(om)$maxyear,end=start+20,lag=1,interval=3,
                         k1=1.5,k2=3.0,gamma=1,nyrs=5,   
                         seed=7890,   nits=100,
-                        uCV =0.3){
+                        uCV =0.3,
+                        monitor=FALSE){
   
   set.seed(seed)
   
@@ -37,7 +38,7 @@ mseSBT1<-function(om,eql,srDev,
   nits=c(om=dims(om)$iter, sr=dims(params(eql))$iter, rsdl=dims(srDev)$iter)
   if (length(unique(nits))>=2 & !(1 %in% nits)) ("Stop, iters not '1 or n' in OM")
   nits=max(nits)
-print(1)  
+
   om=fwdWindow(om,end=end+interval,eql)
   #om=fwd(om,f=FLQuant(0.01,dimnames=list(year=start:(end+interval),iter=seq(nits))),sr=eql,sr.residuals=srDev)
   stock(om)=propagate(computeStock(om),nits)
@@ -58,7 +59,7 @@ print(1)
   tac=catch(om)[,ac(start-1)]
   for (iYr in seq(start,end,interval)){
     #iYr = (start:(range(om,'maxyear')-2))[1]
-    cat('===================', iYr, '===================\n')
+    if (monitor) cat('===================', iYr, '===================\n')
     
     cpue=window(cpue,end=iYr)
     cpue[,ac(iYr-(interval:1)+1)]=stock(om)[,ac(iYr-(interval:1)+1)]*uDev[,ac(iYr-(interval:1)+1)]

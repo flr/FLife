@@ -1,4 +1,4 @@
-#' popPar
+#' lhRef
 #'
 #' Von Bertalanffy growth equation
 #' 
@@ -9,7 +9,7 @@
 #' 
 #' @export
 #' @docType methods
-#' @rdname popPar
+#' @rdname lhRef
 #' 
 #' @seealso \code{\link{gascuel}}  
 #' 
@@ -20,7 +20,7 @@
 #' len=vonB(age,params)
 #' age=vonB(params,length=len)
 #' }
-popPar<-function(params,
+lhRef<-function(params,
                   m=function(length,params) 
                          params["m1"]%*%(exp(log(length)%*%params["m2"])),
                  range=c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40)){

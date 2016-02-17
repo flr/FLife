@@ -14,8 +14,8 @@ noise(n, len, ...)
 \item{len}{an \code{FLQuant}}
 
 \item{...}{any other arguments, sd standard deviation, b autocorrelation parameter
-a real number in [0,1], trunc get rid of first values equal to trunc, i.e. to allow
-burn in}
+a real number in [0,1], trunc get rid of values > abs(trunc), burn allows burn in by getting
+rid of 1st values i series}
 }
 \value{
 A vector with autocorrelation equal to B.
@@ -36,6 +36,27 @@ acf(white)
 blue <- noise(1000,sd=.3,b=-0.8)
 plot(blue)
 acf(blue)
+
+data(ple4)
+res=noise(4,m(ple4),burn=10,b=0.9)
+
+ggplot()+
+geom_point(aes(year,age,size= data),
+            data=subset(as.data.frame(res),data>0))+
+geom_point(aes(year,age,size=-data),
+            data=subset(as.data.frame(res),data<=0),colour="red")+
+scale_size_area(max_size=4, guide="none")+
+facet_wrap(~iter)
+
+res=noise(4,m(ple4),burn=10,b=0.9,cohort=TRUE)
+ggplot()+
+geom_point(aes(year,age,size= data),
+          data=subset(as.data.frame(res),data>0))+
+geom_point(aes(year,age,size=-data),
+          data=subset(as.data.frame(res),data<=0),colour="red")+
+scale_size_area(max_size=4, guide="none")+
+facet_wrap(~iter)
+
 }
 }
 \references{

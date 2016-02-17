@@ -1,17 +1,14 @@
 #' vonB
-#' 
 #'
 #' Von Bertalanffy growth equation
 #' 
-#' @param age FLQuant, FLPar or numeric with ages 
-#' @param params \code{FLPar} 
-#' @param ... any other arguments, e.g. length FLQuant, FLPar or numeric with length, if supplied as a named paramreter
-#' instead  of age then calculates ages.
+#' @param age FLQuant, FLPar or numeric object with values corresponding to ages 
+#' @param params \code{FLPar} object with parameters \code{linf}, \code{k} and \code{t0}
+#' @param length a named argument of type FLQuant, FLPar or numeric, if supplied and age omitted then caclulates the inverse growth curve.
 #' 
 #' @aliases vonB,FLPar,FLPar-method vonB,FLQuant,FLPar-method vonB,FLQuant,numeric-method vonB,missing,FLPar-method vonB,numeric,numeric-method
-
 #' 
-#' @return Depends on the value of \code{data} 
+#' @return an object the same type supplied as \code{age} 
 #' 
 #' @export
 #' @docType methods
@@ -23,7 +20,9 @@
 #' \dontrun{
 #' params=FLPar(linf=100,t0=0,k=.4)
 #' age=FLQuant(1:10,dimnames=list(age=1:10))
-#' len=vonB(age,params)
+#' vonB(age,params)
+#' 
+#' #inverse growth curve
 #' age=vonB(params,length=len)
 #' }
 setGeneric('vonB', function(age,params,...)
