@@ -92,7 +92,7 @@ lopt3=function(x){
 #' @param params FLPar
 #' @param ... any other arguments
 #' 
-#' @aliases lopt-method lopt,FLPar-method
+#' @aliases loptAge-method loptAge,FLPar-method
 #' 
 #' @return FLPar with length at maximum biomass 
 #' 

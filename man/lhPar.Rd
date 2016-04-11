@@ -10,7 +10,7 @@ lhPar(params, t0 = -0.1, a = 0.001, b = 3, ato95 = 1, sl = 2,
 }
 \arguments{
 \item{params}{\code{FLPar} object with parameters for life history equations and selection pattern.
-Need L_{\infty} to estimate other parameters, if any other parameters supplied in \code{code} then
+Need Linfinity to estimate other parameters, if any other parameters supplied in \code{code} then
 these are not provided by the algorithm}
 
 \item{t0}{of von Bertalanffy. This is a default that isnt normally derived

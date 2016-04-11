@@ -2,9 +2,9 @@
 % Please edit documentation in R/lopt.R
 \docType{methods}
 \name{loptAge}
-\alias{lopt,FLPar-method}
-\alias{lopt-method}
 \alias{loptAge}
+\alias{loptAge,FLPar-method}
+\alias{loptAge-method}
 \title{loptAge}
 \usage{
 loptAge(params, ...)

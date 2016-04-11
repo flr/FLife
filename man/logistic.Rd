@@ -23,6 +23,6 @@ mat=logistic(par,age)
 }
 }
 \seealso{
-\code{\code{\link{gompertz}}}
+\code{\link{gompertz}}
 }
 

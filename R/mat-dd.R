@@ -34,7 +34,8 @@
 #' @rdname matdd
 #' 
 #' @seealso \code{\link{logistic},\link{mdd}}
-#'  
+#' 
+#' @examples 
 #' \dontrun{
 #' library(FLBRP)
 #' library(FLife)

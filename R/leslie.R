@@ -40,13 +40,12 @@ setMethod("leslie", signature(object="FLBRP"),
   fbar(object)=fbar
   object=brp(object)
   names(dimnames(fbar(object)))[1]=names(dimnames(stock(object)))[1]
- 
+
   ages=dims(object)$min:dims(object)$max
   
   mx=array(0, dim     =c(length(ages),length(ages),dims(stock(object))$iter),
               dimnames=list(age =ages,age=ages,
                             iter=seq(dims(stock(object))$iter)))
-  
   #survivorship
   z=exp(-(m(object)))
   for (i in seq(dims(object)$iter)){
@@ -56,10 +55,14 @@ setMethod("leslie", signature(object="FLBRP"),
     } 
   
   #recruitment
-  tmp    = mat(object)*stock.wt(object)*stock.n(object)[,1]
-  tmp2   = apply(tmp,2:6,sum)
-  mx[1,,]= (rec(object)[,1]%*%tmp%/%tmp2)%/%stock.n(object)[,1]
+  #tmp    =mat(object)*stock.wt(object)*stock.n(object)[,1]
+  #tmp2   =apply(tmp,2:6,sum)
+  #mx[1,,]=(rec(object)[,1]%*%tmp%/%tmp2)%/%stock.n(object)[,1]
   
+  # a/b slope at orign for bevholt
+  #mx[1,,]=(params(object)["a"]/params(object)["b"])%*%(mat(object)%*%stock.wt(object))
+  mx[1,,]=(rec(object)[,1]%/%ssb(object)[,1])%*%(mat(object)%*%stock.wt(object))
+
   #Mass
   if (!numbers){
     #recruitment

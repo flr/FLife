@@ -6,8 +6,9 @@
 \title{lhRef}
 \usage{
 lhRef(params, m = function(length, params) params["m1"] \%*\% (exp(log(length)
-  \%*\% params["m2"])), range = c(min = 0, max = 40, minfbar = 1, maxfbar =
-  40, plusgroup = 40))
+  \%*\% params["m2"])), sr = "bevholt", range = c(min = 0, max = 40, minfbar
+  = 1, maxfbar = 40, plusgroup = 40), what = c("r", "lopt", "rc", "sk",
+  "lro"))
 }
 \arguments{
 \item{params}{\code{FLPar}}

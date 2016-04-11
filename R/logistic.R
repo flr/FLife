@@ -10,7 +10,7 @@
 #' @docType methods
 #' @rdname logistic
 #' 
-#' @seealso \code{\code{\link{gompertz}}}
+#' @seealso \code{\link{gompertz}}
 #' 
 #' @examples
 #' \dontrun{

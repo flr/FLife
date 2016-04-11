@@ -89,7 +89,7 @@ globalVariables(c("ddply",".","x"))
 #' }
 setGeneric('powh', function(len,n,...) standardGeneric('powh'))
 setMethod("powh", signature(len='numeric', n="numeric"),
-          function(len,n,weights=FALSE,fromMode=FALSE){
+          function(len,n,weights=FALSE,fromMode=FALSE,linf=0){
   
   fn=function(len,n){
     #require(plyr)
@@ -103,8 +103,8 @@ setMethod("powh", signature(len='numeric', n="numeric"),
     
     data.frame(mn=mn,diff=mn-res$len,len=res$len,n=res$V1)}
   
-  linf=function(x) -coefficients(x)[1]/coefficients(x)[2]
-  zk  =function(x) (-1-coefficients(x)[2])/coefficients(x)[2]
+  linfFn=function(coef) -coef[1]/coef[2]
+  zkFn  =function(coef) (-1-coef[2])/coef[2]
   
   if (fromMode){
     mode=seq(length(n))[max(n)==n]
@@ -112,20 +112,38 @@ setMethod("powh", signature(len='numeric', n="numeric"),
     n  =  n[mode:length(n)]
   }
   
-  dat=fn(len,n)
+  dat=fn(len-linf,n)
   
   if (!weights)
-    res=lm(diff~len,data=dat)
+    if (all(linf==0))
+      res=lm(diff~len,data=dat)
+    else
+      res=lm(diff~0+len,data=dat)
   else   
-    res=lm(diff~len,weights=n,data=dat)
+    if (all(linf==0))
+      res=lm(diff~len,weights=n,data=dat)
+    else  
+      res=lm(diff~0+len,weights=n,data=dat)
+ 
+  if (all(linf==0))
+    coef=res$coefficients
+  else  
+    coef=c(linf,res$coefficients)
   
-  params=c("linf"=linf(res),"zk"=zk(res))
+  if (all(linf==0))
+     params=c("linf"=linfFn(coef),"zk"=zkFn(coef))
+  else
+     params=c("linf"=linf,"zk"=zkFn(coef))
+  
   names(params)=c("linf","zk")
   
   dat=dat[is.finite(dat$mn),]
+  dat$len=dat$len+linf
+  dat$mn =dat$mn +linf
   predict=predict(res,len=dat$len)
-  
+
   return(list(params=params,data=data.frame(dat,hat=predict)))})
+
 
 #' moment
 #' 

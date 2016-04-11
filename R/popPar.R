@@ -21,39 +21,59 @@
 #' age=vonB(params,length=len)
 #' }
 lhRef<-function(params,
-                  m=function(length,params) 
+                 m=function(length,params) 
                          params["m1"]%*%(exp(log(length)%*%params["m2"])),
-                 range=c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40)){
+                 sr="bevholt",
+                 range=c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40),
+                 what=c("r","lopt","rc","sk","lro")){
   
-  eql=lhEql(params,m=m,range=range)
+  eql=lhEql(params,m=m,sr=sr,range=range)
   
-  fcrash=FLQuant(refpts(eql)["crash","harvest",drop=T],
-                 dimnames=list(iter=seq( dims(eql)$iter)))
-  fcrash[is.na(fcrash)]=4
-  f0.1  =FLQuant(refpts(eql)["f0.1","harvest",drop=T],
+  res=NULL
+  if ("r"%in%what){
+    fcrash=FLQuant(refpts(eql)["crash","harvest",drop=T],
+                   dimnames=list(iter=seq( dims(eql)$iter)))
+    fcrash[is.na(fcrash)]=4
+    rate =r(leslie(eql,fbar=fcrash))
+  
+    res=cbind(res,"r"=c(rate))
+    }
+  
+  if ("rc"%in%what){
+    f0.1  =FLQuant(refpts(eql)["f0.1","harvest",drop=T],
                  dimnames=list(iter=seq( dims(eql)$iter)))
 
-  rate =r(leslie(eql,fbar=fcrash))
-  ratec=r(leslie(eql,fbar=f0.1))
-  lop  =loptAge(params,m=m)
-  sk   =refpts(eql)["msy","ssb"]/refpts(eql)["virgin","ssb"]
+    ratec=r(leslie(eql,fbar=f0.1))
+    
+    res=cbind(res,"rc"     =c(ratec))
+    }
   
-  rfs=refpts(eql)[c("f0.1","virgin")]
-  dimnames(rfs)[[1]][1]="ref"
-  rfs["ref",-1]=NA
-  lro=eql
-  params(lro)=params(eql)["a"]/params(eql)["a"]
-  model( lro)=geomean()$model
-  refpts(lro)=rfs
-  lro        =computeRefpts(lro)
-  lro        =c(lro["ref","ssb"]/lro["virgin","ssb"])
-            
-  data.frame("r"      =c(rate),
-             "rc"     =c(ratec),
-             "lopt"   =c(lop),
-             "sk"     =c(sk),
-             "lro"    =c(lro))
-}
+  if ("lopt"%in%what){
+    lop  =loptAge(params,m=m)
+    
+    res=cbind(res,"lopt"   =c(lop))
+    }
+  
+  if ("sk"%in%what){
+    sk   =refpts(eql)["msy","ssb"]/refpts(eql)["virgin","ssb"]
+    
+    res=cbind(res,"sk"   =c(sk))
+    }
+  
+  if ("lro"%in%what){
+    rfs=refpts(eql)[c("f0.1","virgin")]
+    dimnames(rfs)[[1]][1]="ref"
+    rfs["ref",-1]=NA
+    lro=eql
+    params(lro)=params(eql)["a"]/params(eql)["a"]
+    model( lro)=geomean()$model
+    refpts(lro)=rfs
+    lro        =computeRefpts(lro)
+    lro        =c(lro["ref","ssb"]/lro["virgin","ssb"])
+  
+    res=cbind(res,"lro"    =c(lro))}
+
+    res}
 
 
 if (FALSE){

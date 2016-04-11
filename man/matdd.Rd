@@ -40,9 +40,7 @@ Combining the two functions gives
 
    O=aL/(1+exp(-k(n-ref)))*wt^b;
 }
-\seealso{
-\code{\link{logistic},\link{mdd}}
-
+\examples{
 \dontrun{
 library(FLBRP)
 library(FLife)
@@ -57,7 +55,7 @@ fbar(eql)=FLQuant(c(seq(0,4,length.out=101)*refpts(eql)["msy","harvest"]))
 stk=as(eql,"FLStock")
 
 fbar(eql)=fbar(eql)[,1]
-scale=(stock.n(stk)%-%stock.n(eql))%/%stock.n(eql)
+scale=(stock.n(stk)\%-\%stock.n(eql))\%/\%stock.n(eql)
 par=lhPar(FLPar(linf=100))
 
 scale=exp(noise(1,m(stk),sd=.2,b=0.75))
@@ -67,5 +65,8 @@ ggplot(as.data.frame(mat,drop=TRUE))+
    theme(legend.position="none")
 
  }
+}
+\seealso{
+\code{\link{logistic},\link{mdd}}
 }
 

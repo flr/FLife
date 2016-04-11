@@ -110,7 +110,7 @@ hcrSBT2=function(adult,juve,yrAdult,yrJuve,refJuve=-(1:5),tac,tarCatch,eb=0.25,e
 
 ####
 mseSBT2<-function(om,eql,srDev,yrAdult,yrJuve,refJuve=-(1:5),tarCatch,
-                        start=dims(om)$maxyear,end=dims(mou)$maxyear+20,lag=1,interval=3,
+                        start=dims(om)$maxyear,end=dims(om)$maxyear+20,lag=1,interval=3,
                         eb=0.25,er=0.75,nyrs=5,   
                         seed=7890,   nits=100,
                         uCV =0.3){
@@ -164,11 +164,11 @@ if (FALSE){
   par=lhPar(FLPar(linf=100))  
   eql=lhEql(par)
   mou=as(eql,"FLStock")
-  mou=FLash:::fwd(mou,f=fbar(eql)[,-1]/4,sr=eql)
+  mou=FLash::fwd(mou,f=fbar(eql)[,-1]/4,sr=eql)
   
   srDev=rlnorm(100,FLQuant(rep(0,136)),0.3)
   
-  om=FLife:::mseSBT1(mou,eql,srDev,
+  om=mseSBT1(mou,eql,srDev,
              start=dims(mou)$maxyear,end=dims(mou)$maxyear+20,lag=1,interval=3,
              k1=1.5,k2=3.0,gamma=1,nyrs=5,   
              seed=7890,nits=100,
