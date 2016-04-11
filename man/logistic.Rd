@@ -3,6 +3,7 @@
 \docType{methods}
 \name{logistic}
 \alias{logistic}
+\alias{logistic,FLQuant,FLPar-method}
 \title{logistic}
 \usage{
 logistic(age, params, ...)

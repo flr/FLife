@@ -10,6 +10,8 @@
 #' @docType methods
 #' @rdname logistic
 #' 
+#' @aliases logistic,FLQuant,FLPar-method
+#' 
 #' @seealso \code{\link{gompertz}}
 #' 
 #' @examples
