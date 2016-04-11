@@ -4,7 +4,7 @@
 #' 
 #' @param age FLQuant, FLPar or numeric object with values corresponding to ages 
 #' @param params \code{FLPar} object with parameters \code{linf}, \code{k} and \code{t0}
-#' @param length a named argument of type FLQuant, FLPar or numeric, if supplied and age omitted then caclulates the inverse growth curve.
+#' @param ... other arguments
 #' 
 #' @aliases vonB,FLPar,FLPar-method vonB,FLQuant,FLPar-method vonB,FLQuant,numeric-method vonB,missing,FLPar-method vonB,numeric,numeric-method
 #' 

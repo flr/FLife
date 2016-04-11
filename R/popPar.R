@@ -4,6 +4,9 @@
 #' 
 #' @param params \code{FLPar}
 #' @param m function for natural mortality
+#' @param sr \code{character} with stock recruitment relationship, e.g. "bevholt","ricker",...
+#' @param range ages used i.e. c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40)
+#' @param what quantities to calculate "r","lopt","rc","sk","lro"
 #' 
 #' @return Depends on the value of \code{data} 
 #' 

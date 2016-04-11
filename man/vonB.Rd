@@ -17,7 +17,7 @@ vonB(age, params, ...)
 
 \item{params}{\code{FLPar} object with parameters \code{linf}, \code{k} and \code{t0}}
 
-\item{length}{a named argument of type FLQuant, FLPar or numeric, if supplied and age omitted then caclulates the inverse growth curve.}
+\item{...}{other arguments}
 }
 \value{
 an object the same type supplied as \code{age}

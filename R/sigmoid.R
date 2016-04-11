@@ -50,7 +50,6 @@ setMethod("sigmoid", signature(age="FLQuant",params="numeric"),
             res@units=""
             res})
 
-pow<-function(a,b) a^b
 sigmoidFn<-function(age,params) { #x,a50,ato95,asym=1.0){  
 
   if (!("asym"%in%dimnames(params)$params))

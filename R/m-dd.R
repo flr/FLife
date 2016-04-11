@@ -27,10 +27,8 @@
 #'    M=aL/(1+exp(-k(n-ref)))*wt^b;
 #'    
 #' @param wt  mass at which M is to be predicted
-#' @param params an \code{FLPar} with two values; i.e. a equal to M at unit mass 
-#' and b a power term; defaults are a=0.3 and b=-0.288
-#' @param scale, e.g. stock numbers now relative to a reference level, e.g. at virgin biomass. 
-#' @param k steepness of relationship
+#' @param params an \code{FLPar} with two values; i.e. a equal to M at unit mass and b a power term; defaults are a=0.3 and b=-0.288
+#' @param ... other arguments, such as scale, e.g. stock numbers now relative to a reference level, e.g. at virgin biomass and k steepness of relationship
 #' 
 #' @aliases mdd,FLQuant,FLPar-method
 #' 
@@ -38,7 +36,7 @@
 #' @docType methods
 #' @rdname mdd
 #' 
-#' @seealso \code{\link{lorenzen},\link{matdd}}
+#' @seealso \code{\link{lorenzen}}
 #'  
 #' @examples
 #' \dontrun{

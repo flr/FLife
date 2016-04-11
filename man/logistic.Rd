@@ -8,18 +8,20 @@
 logistic(age, params, ...)
 }
 \arguments{
-\item{age}{}
+\item{age}{\code{FLQuant} with ages}
 
-\item{par}{}
+\item{params}{\code{FLPar} with parameters a50,ato95 and asym}
+
+\item{...}{other arguments}
 }
 \description{
 logistic function
 }
 \examples{
 \dontrun{
-par=lhPar(FLPar(linf=100))
+params=lhPar(FLPar(linf=100))
 age=FLQuant(1:10,dimnames=list(age=1:10))
-mat=logistic(par,age)
+mat=logistic(params,age)
 }
 }
 \seealso{

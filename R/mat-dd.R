@@ -20,12 +20,10 @@
 #' Combining the two functions gives
 #'     
 #'    O=aL/(1+exp(-k(n-ref)))*wt^b;
-#'    
-#' @param wt  mass at which M is to be predicted
-#' @param scale, e.g. stock numbers now relative to a reference level, e.g. at virgin biomass. 
-#' @param params an \code{FLPar} with two values; i.e. a equal to M at unit mass 
-#' and b a power term; defaults are a=0.3 and b=-0.288
-#' @param k steepness of relationship
+#'
+#' @param age ages        
+#' @param params an \code{FLPar} with two values; i.e. a equal to M at unit mass and b a power term; defaults are a=0.3 and b=-0.288
+#' @param ... other arguments, such as scale, e.g. stock numbers now relative to a reference level, e.g. at virgin biomass and k steepness of relationship
 #' 
 #' @aliases matdd,FLQuant,FLPar-method
 #' 
@@ -60,7 +58,14 @@
 #'    theme(legend.position="none")
 #'    
 #'  }
-pow=function(a,b) a^b
+setGeneric('matdd', function(age,params,...)
+  standardGeneric('matdd'))
+
+setMethod('matdd', signature(age='FLQuant',params='FLPar'),
+          function(age,params,scale,k=1,flagAge=FALSE) { 
+            res=matddFn(age,params,scale,k,flagAge)
+            res})
+
 logisticFn2<-function(age,params,a50,ato95,asym) { #x,a50,ato95,asym=1.0){  
   
   res =asym%/%(1.0+pow(19.0,(a50%-%age)%/%ato95))
@@ -90,12 +95,3 @@ matddFn=function(age,params,scale,k=1,flagAge=FALSE){
   ato95=(a50/a50)%*%params["ato95"]
     
   logisticFn2(age,params,a50,ato95,asym)}
-
-
-setGeneric('matdd', function(age,params,...)
-  standardGeneric('matdd'))
-
-setMethod('matdd', signature(age='FLQuant',params='FLPar'),
-          function(age,params,scale,k=1,flagAge=FALSE) { 
-            res=matddFn(age,params,scale,k,flagAge)
-            res})

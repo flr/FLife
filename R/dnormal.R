@@ -46,7 +46,6 @@ setMethod("dnormal", signature(age="FLQuant",params="numeric"),
             res})
 
 dnormalFn_<-function(age,params){
-  pow <-function(a,b) a^b
   func<- function(age,a1,sl,sr){
     if (age < a1)
       return(pow(2.0,-((age-a1)/sl*(age-a1)/sl)))

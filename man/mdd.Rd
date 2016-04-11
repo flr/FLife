@@ -11,12 +11,9 @@ mdd(wt, params, ...)
 \arguments{
 \item{wt}{mass at which M is to be predicted}
 
-\item{params}{an \code{FLPar} with two values; i.e. a equal to M at unit mass
-and b a power term; defaults are a=0.3 and b=-0.288}
+\item{params}{an \code{FLPar} with two values; i.e. a equal to M at unit mass and b a power term; defaults are a=0.3 and b=-0.288}
 
-\item{scale,}{e.g. stock numbers now relative to a reference level, e.g. at virgin biomass.}
-
-\item{k}{steepness of relationship}
+\item{...}{other arguments, such as scale, e.g. stock numbers now relative to a reference level, e.g. at virgin biomass and k steepness of relationship}
 }
 \description{
 Lorenzen natural mortality relationship where M is a function of weight, modified to
@@ -63,6 +60,6 @@ ggplot(as.data.frame(m,drop=TRUE))+geom_line(aes(age,data,group=year,col=factor(
 }
 }
 \seealso{
-\code{\link{lorenzen},\link{matdd}}
+\code{\link{lorenzen}}
 }
 

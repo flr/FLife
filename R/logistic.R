@@ -1,10 +1,10 @@
 #' logistic
-#' 
 #'
 #' logistic function
 #' 
-#' @param par
-#' @param age
+#' @param params \code{FLPar} with parameters a50,ato95 and asym
+#' @param age \code{FLQuant} with ages
+#' @param ... other arguments
 #' 
 #' @export
 #' @docType methods
@@ -14,14 +14,13 @@
 #' 
 #' @examples
 #' \dontrun{
-#' par=lhPar(FLPar(linf=100))
+#' params=lhPar(FLPar(linf=100))
 #' age=FLQuant(1:10,dimnames=list(age=1:10))
-#' mat=logistic(par,age)
+#' mat=logistic(params,age)
 #' }
 setGeneric('logistic', function(age,params,...)
   standardGeneric('logistic'))
 
-pow<-function(a,b) a^b
 logisticFn<-function(age,params) { #x,a50,ato95,asym=1.0){  
   
   res =params["asym"]%/%(1.0+pow(19.0,(params["a50"]%-%age)%/%params["ato95"]))

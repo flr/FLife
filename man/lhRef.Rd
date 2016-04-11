@@ -14,6 +14,12 @@ lhRef(params, m = function(length, params) params["m1"] \%*\% (exp(log(length)
 \item{params}{\code{FLPar}}
 
 \item{m}{function for natural mortality}
+
+\item{sr}{\code{character} with stock recruitment relationship, e.g. "bevholt","ricker",...}
+
+\item{range}{ages used i.e. c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40)}
+
+\item{what}{quantities to calculate "r","lopt","rc","sk","lro"}
 }
 \value{
 Depends on the value of \code{data}
