@@ -1,12 +1,16 @@
 Package: FLife
 Type: Package
-Title: What the package does (short line)
-Version: 1.0
-Date: 2015-09-09
+Title: Methods for modelling life history traits
+Version: 0.9.0
+Date: 2016-04-13
 Author: Laurence Kell
-Maintainer: Laurence Kell <laurie.kell@iccat.int>
-Description: More about what it does (maybe more than one line)
+Maintainer: Laurence Kell <laurie@kell.es>
+Description: Many studies have shown the relationships between life history traits for processes such as growth, maturity and natural mortality. Life history has been used to develop priors in stock assesments and to parameterise ecological models. Package has a variety of methods for modelling life history traits and processes.
+LazyData: true
 License: GPL (>= 2)
-Depends: methods
-Imports: Rcpp (>= 0.12.0)
-LinkingTo: Rcpp
+Depends:
+    R(>= 3.0.1),
+    methods
+Imports:
+    FLCore(>= 2.5),
+    FLBRP
