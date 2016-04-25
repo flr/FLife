@@ -1,0 +1,5 @@
+.travis.yml
+gh-pages/
+Makefile
+.git/
+^appveyor\.yml$

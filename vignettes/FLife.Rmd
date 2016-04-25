@@ -2,19 +2,16 @@
 title: "Life History Relationship"
 author: "Laurence Kell"
 date: "August 13th, 2014"
-output: rmarkdown::tufte_handout
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{FLife}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 bibliography: ref.bib
 ---
 
-<!--
-%% \VignetteEngine{knitr::knitr}
--->
-
-```{r knitr_init, echo=FALSE, results="asis"}
+```{r knitr_init, echo=FALSE, results="hide"}
 library(knitr)
-
-# output: rmarkdown::tufte_handout
-
 ## Global options
 opts_chunk$set(echo    =!TRUE,
                eval    =TRUE,
