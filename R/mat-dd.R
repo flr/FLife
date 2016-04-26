@@ -66,6 +66,8 @@ setMethod('matdd', signature(age='FLQuant',params='FLPar'),
             res=matddFn(age,params,scale,k,flagAge)
             res})
 
+pow<-function(a,b) a^b
+
 logisticFn2<-function(age,params,a50,ato95,asym) { #x,a50,ato95,asym=1.0){  
   
   res =asym%/%(1.0+pow(19.0,(a50%-%age)%/%ato95))

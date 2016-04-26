@@ -6,6 +6,10 @@ mf2FLPar=function(x){
   x=t(as.matrix(x))
   
   FLPar(array(x,dim=dim(x),dimnames=dmns),units="")}
+
+addpar<-function(params,name,val)
+  rbind(params,FLPar(array(val, dim=c(1, dims(params)$iter),dimnames=list(params=name, iter=seq(dims(params)$iter)))))
+
 #' lhPar
 #' 
 #' Uses life history theory to derive parameters for biological relationships, i.e. or growth, maturity, natural mortality
@@ -52,30 +56,36 @@ lhPar=function(params,t0=-0.1,a=0.001,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
   
   names(dimnames(params)) <- tolower(names(dimnames(params)))
   
-  if (!("t0"    %in% dimnames(params)$params)) params=rbind(params,FLPar("t0"    =t0, iter=dims(params)$iter))
-  if (!("a"     %in% dimnames(params)$params)) params=rbind(params,FLPar("a"     =a,  iter=dims(params)$iter))
-  if (!("b"     %in% dimnames(params)$params)) params=rbind(params,FLPar("b"     =b,  iter=dims(params)$iter))
-  if (!("asym"  %in% dimnames(params)$params)) params=rbind(params,FLPar("asym"  =1,  iter=dims(params)$iter))
-  if (!("bg"    %in% dimnames(params)$params)) params=rbind(params,FLPar("bg"    =b,  iter=dims(params)$iter))
-  if (!("sl"    %in% dimnames(params)$params)) params=rbind(params,FLPar("sl"    =sl, iter=dims(params)$iter))
-  if (!("sr"    %in% dimnames(params)$params)) params=rbind(params,FLPar("sr"    =sr, iter=dims(params)$iter))
-  if (!("s"     %in% dimnames(params)$params)) params=rbind(params,FLPar("s"     =s,  iter=dims(params)$iter))
-  if (!("v"     %in% dimnames(params)$params)) params=rbind(params,FLPar("v"     =v,  iter=dims(params)$iter))
-
+  if (!("t0"    %in% dimnames(params)$params)) params=addpar(params,"t0", t0)
+  if (!("a"     %in% dimnames(params)$params)) params=addpar(params,"a",   a)
+  if (!("b"     %in% dimnames(params)$params)) params=addpar(params,"b",   b)
+  if (!("bg"    %in% dimnames(params)$params)) params=addpar(params,"bg",  b)
+  if (!("s"     %in% dimnames(params)$params)) params=addpar(params,"s",   s)
+  if (!("v"     %in% dimnames(params)$params)) params=addpar(params,"v",   v)
+  
   ## growth parameters
-  if (!("k"     %in% dimnames(params)$params)) params=rbind(params,FLPar("k"=3.15*params["linf"]^(-0.64), iter=dims(params)$iter)) # From Gislason et al 2008, all species combined
+  if (!("k"     %in% dimnames(params)$params)) {
+    kpar  =FLPar(array(3.15*params["linf"]^(-0.64), dim=c(1, dims(params)$iter),dimnames=list(params="k", iter=seq(dims(params)$iter))))
+
+    params=rbind(params,kpar) # From Gislason et al 2008, all species combined
+    }
   
   # Natural mortality parameters from Model 2, Table 1 Gislason 2010
-  if (!all(c("m1","m2")%in%dimnames(params)$params))
-    params=rbind(params,FLPar(m1= 0.55*(params["linf"]^1.44)%*%params["k"], iter=dims(params)$iter),
-                        FLPar(m2=-1.61                                    , iter=dims(params)$iter))
+  if (!all(c("m1","m2")%in%dimnames(params)$params)){
+    
+#     params=rbind(params,FLPar(m1= 0.55*(params["linf"]^1.44)%*%params["k"], iter=dims(params)$iter),
+#                         FLPar(m2=-1.61                                    , iter=dims(params)$iter))
+    
+    params=addpar(params,"m1", 0.55*(params["linf"]^1.44)%*%params["k"])
+    params=addpar(params,"m2", 1.61)
+    }
 
-  if (!("ato95" %in% dimnames(params)$params)) params=rbind(params,FLPar("ato95" =ato95, iter=dims(params)$iter))
-  if (!("sl"    %in% dimnames(params)$params)) params=rbind(params,FLPar("sl"    =sl,    iter=dims(params)$iter))
-  if (!("sr"    %in% dimnames(params)$params)) params=rbind(params,FLPar("sr"    =sr,    iter=dims(params)$iter))
+  if (!("ato95" %in% dimnames(params)$params)) params=addpar(params,"ato95",ato95)  #rbind(params,FLPar("ato95" =ato95, iter=dims(params)$iter))
+  if (!("sl"    %in% dimnames(params)$params)) params=addpar(params,"sl",   sl)     #rbind(params,FLPar("sl"    =sl,    iter=dims(params)$iter))
+  if (!("sr"    %in% dimnames(params)$params)) params=addpar(params,"sr",   sr)     #rbind(params,FLPar("sr"    =sr,    iter=dims(params)$iter))
  
   ## maturity parameters from http://www.fishbase.org/manual/FishbaseThe_MATURITY_Table.htm
-  if (!("asym"    %in% dimnames(params)$params)) params=rbind(params,FLPar("asym"    =asym, iter=dims(params)$iter))
+  if (!("asym"    %in% dimnames(params)$params)) params=params=addpar(params,"asym",  1) #rbind(params,FLPar("asym"    =asym, iter=dims(params)$iter))
 
   if (!("a50" %in% dimnames(params)$params)){
     if (!("l50" %in% dimnames(params)$params)){
@@ -84,7 +94,7 @@ lhPar=function(params,t0=-0.1,a=0.001,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
       }else{
       l50=params["l50"]
       }
-    
+      
     a50=log(1-(l50%/%params["linf"]))%/%(-params["k"])%+%params["t0"]
     dimnames(a50)$params="a50"
     
