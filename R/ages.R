@@ -2,10 +2,11 @@
 #' 
 #' Creates FLQuant/FLCohort with ages as entries
 #' 
-#' @param object FLQuant or FLCohort 
+#' @param object \code{FLQuant} or \code{FLCohort} 
+#' @param season the season dim
 #' @param ... any other arguments
 #' 
-#' @aliases ages-method ages,FLQuant-method ages,FLCohort-method
+#' @aliases ages ages-method ages,FLQuant-method ages,FLCohort-method
 #' 
 #' @return \code{FLQuant} or \code{FLCohort} 
 #'  
@@ -19,24 +20,21 @@
 #' \dontrun{
 #' data(ple4)
 #' ages(m(ple4))}
-setGeneric('ages', function(object, ...)
-   standardGeneric('ages'))
-
 setMethod("ages", signature(object="FLQuant"),
-   function(object,timing=NULL){
+   function(object,season=NULL){
       res<-FLQuant(dimnames(object)$age,dimnames=dimnames(object))
 
-      if (is.null(timing))
+      if (is.null(season))
          res<-sweep(res,4,(1:dim(res)[4]-1)/dim(res)[4],"+") else
-         res<-sweep(res,4,timing,"+")
+         res<-sweep(res,4,season,"+")
 
       return(res)})
 setMethod("ages", signature(object="FLCohort"),
-   function(object,timing=NULL){
+   function(object,season=NULL){
       res<-FLCohort(dimnames(object)$age,dimnames=dimnames(object))
 
-      if (is.null(timing))
+      if (is.null(season))
          res<-sweep(res,4,(1:dim(res)[4]-1)/dim(res)[4],"+") else
-         res<-sweep(res,4,timing,"+")
+         res<-sweep(res,4,season,"+")
 
       return(res)})

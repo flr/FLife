@@ -1,5 +1,3 @@
-globalVariables(c("dmns","rho","stk","aaply","maply","alply","error"))
-
 
 
 ##############################################################
@@ -9,15 +7,20 @@ globalVariables(c("dmns","rho","stk","aaply","maply","alply","error"))
 #' 
 #' @param n number of iterations
 #' @param len an \code{FLQuant}
-#' @param ... any other arguments, sd standard deviation, b autocorrelation parameter 
-#' a real number in [0,1], trunc get rid of values > abs(trunc), burn allows burn in by getting
-#' rid of 1st values i series
-#'
-#' @aliases noise,numeric,FLQuant-method
+#' @param sd standard error for simulated series
+#' @param b autocorrelation parameter a real number in [0,1] 
+#' @param burn gets rid of 1st values i series
+#' @param trunc get rid of values > abs(trunc)
+#' @param what returns time series for year, cohort or age"
+#' @param ... any other arguments
+#' 
+#' @aliases noise noise-method noise,numeric,FLQuant-method
 #' 
 #' @export
 #' @docType methods
 #' @rdname noise
+#'
+#' @importFrom methods is
 #'
 #' @return A vector with autocorrelation equal to B.
 #' 
@@ -62,51 +65,11 @@ globalVariables(c("dmns","rho","stk","aaply","maply","alply","error"))
 #' facet_wrap(~iter)
 #' 
 #' }
-setGeneric('noise', function(n,len,...) standardGeneric('noise'))
-
 # n  =100
 # len=FLQuant(0,dimnames=list(year=1:55)) 
 # b  =0
 # sd =0.3
 # trunc=0
-
-noiseFn<-function(len,sd=0.3,b=0,burn=0,trunc=0){
-
-    if (burn<0) error("burn must be >=0")
-    burn=burn+1
-    x <- rep(0, len+burn) # going to hack off the first values at the end
-    s <- rnorm(len+burn,mean=0,sd=sd)
-    
-    for(i in (1:(len+burn-1))){
-      x[i+1] <- b * x[i] + s[i] * sqrt(1 - b^2)
-      if(trunc>0){
-        if (x[i+1] > (1-trunc))  x[i+1] <- ( 1-trunc)
-        if (x[i+1] < (-1+trunc)) x[i+1] <- (-1+trunc)}
-        }
-    
-    if (burn<=0) return(x)
-    
-    x<-x[-(seq(burn))]
-    
-    return(x)}
-
-# setMethod("noise", signature(n='numeric', len="missing"),
-#           function(n,len))
- 
-if (FALSE){
-  library(FLCore)
-  library(ggplotFL)
-  data(ple4)
-  res=noise(4,m(ple4),burn=10,b=0.9)
-  ggplot()+
-    geom_point(aes(year,age,size= data),
-               data=subset(as.data.frame(res),data>0))+
-    geom_point(aes(year,age,size=-data),
-               data=subset(as.data.frame(res),data<=0),colour="red")+
-    scale_size_area(max_size=4, guide="none")+
-    facet_wrap(~iter)
-}
-
 setMethod("noise", signature(n='numeric', len="FLQuant"),
     function(n=n,len=len,sd=0.3,b=0,burn=0,trunc=0,what=c("year","cohort","age")) {
       
@@ -124,6 +87,45 @@ setMethod("noise", signature(n='numeric', len="FLQuant"),
              "age"   ={res=apply(len,c(2:6), function(x) noiseFn(length(x),sd,b,burn,trunc))
                        res=as.FLQuant(res,dimnames=dimnames(len))}
              )})
+
+
+noiseFn<-function(len,sd=0.3,b=0,burn=0,trunc=0){
+  
+  if (burn<0) error("burn must be >=0")
+  burn=burn+1
+  x <- rep(0, len+burn) # going to hack off the first values at the end
+  s <- rnorm(len+burn,mean=0,sd=sd)
+  
+  for(i in (1:(len+burn-1))){
+    x[i+1] <- b * x[i] + s[i] * sqrt(1 - b^2)
+    if(trunc>0){
+      if (x[i+1] > (1-trunc))  x[i+1] <- ( 1-trunc)
+      if (x[i+1] < (-1+trunc)) x[i+1] <- (-1+trunc)}
+  }
+  
+  if (burn<=0) return(x)
+  
+  x<-x[-(seq(burn))]
+  
+  return(x)}
+
+# setMethod("noise", signature(n='numeric', len="missing"),
+#           function(n,len))
+
+if (FALSE){
+  library(FLCore)
+  library(ggplotFL)
+  data(ple4)
+  res=noise(4,m(ple4),burn=10,b=0.9)
+  ggplot()+
+    geom_point(aes(year,age,size= data),
+               data=subset(as.data.frame(res),data>0))+
+    geom_point(aes(year,age,size=-data),
+               data=subset(as.data.frame(res),data<=0),colour="red")+
+    scale_size_area(max_size=4, guide="none")+
+    facet_wrap(~iter)
+}
+
 
 ## cohort effects
 coEff=function(x,sd=1,b=0){

@@ -8,8 +8,15 @@ globalVariables(c("ddply",".","x"))
 #'  
 #' @param len vector with length distribution
 #' @param n vector with numbers in each length bin
-#' @param ... any other argument, i.e. weights =TRUE, fromMode =FALSE
+#' @param weights weights for observations
+#' @param fromMode booelean set to FALSE by default
+#' @param linf allows linf to be fixed if >0
 #' 
+#' @param ... any other argument, i.e. weights =TRUE, fromMode =FALSE
+#'
+#'
+#' @aliases powh powh-method powh,numeric,numeric-method
+#'  
 #' @return a \code{data.frame} \code{mn} (mean), \code{diff} (difference), 
 #' \code{len} (length) and \code{n} (frequency)
 #'  
@@ -86,7 +93,6 @@ globalVariables(c("ddply",".","x"))
 #' data(bonLn)
 #' rslt=with(subset(bonLn,year==2013), powh(len,n))
 #' }
-setGeneric('powh', function(len,n,...) standardGeneric('powh'))
 setMethod("powh", signature(len='numeric', n="numeric"),
           function(len,n,weights=FALSE,fromMode=FALSE,linf=0){
   
@@ -143,45 +149,6 @@ setMethod("powh", signature(len='numeric', n="numeric"),
 
   return(list(params=params,data=data.frame(dat,hat=predict)))})
 
-
-#' moment
-#' 
-#' @description 
-#'    aa
-#'      
-#' @param object a vector holding a time series
-#' @param ... any other arguments, i.e. x,n=rep(1,length(x)),na.rm=T
-#' 
-#' @return a \code{vector} with the inter-annual variation each time step
-#' @export
-#' @docType methods
-#' @rdname utils
-#' 
-#' @aliases moment-method moment,numeric-method 
-#' 
-#' @examples
-#' x=1
-setGeneric('moment', function(object,...) standardGeneric('moment'))
-setMethod("moment", signature(object='numeric'),
-          function(object,n=rep(1,length(object)),na.rm=T) { 
-  if(length(n)==1) n=rep(n,length(object)) 
-  
-  mn= sum(object*n,            na.rm=na.rm)/sum(n,na.rm=na.rm)
-  sd=(sum(n*(object-mn)^2,     na.rm=na.rm)/sum(n,na.rm=na.rm))^.5
-  sk= sum(n*((object-mn)/sd)^3,na.rm=na.rm)/sum(n,na.rm=na.rm)
-  ku= sum(n*((object-mn)/sd)^4,na.rm=na.rm)/sum(n,na.rm=na.rm)-3
-  
-  ## weighted median
-  n=unlist(c(n))
-  object=unlist(c(object))
-  
-  cumn=cumsum(n)/sum(n)
-  max.=max((1:length(n))[cumn<.50])
-  min.=min((1:length(n))[cumn>=.50])
-  
-  me=(x[min.]*n[min.]+x[max.]*n[max.])/(n[min.]+n[max.])
-  
-  return(c(mn=mn,sd=sd,sk=sk,ku=ku,me=me))})
 
 #' unbin
 #' 

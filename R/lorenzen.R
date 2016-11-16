@@ -8,7 +8,7 @@
 #' and b a power term; defaults are a=0.3 and b=-0.288
 #' @param ... any other arguments
 #' 
-#' @aliases lorenzen,FLQuant,FLPar-method lorenzen,FLQuant,missing-method lorenzen,FLQuant,numeric-method
+#' @aliases lorenzen lorenzen-method lorenzen,FLQuant,FLPar-method lorenzen,FLQuant,missing-method lorenzen,FLQuant,numeric-method  lorenzen,numeric,missing-method
 #' 
 #' @export
 #' @docType methods
@@ -16,6 +16,8 @@
 #' 
 #' @seealso \code{\link{gislason}}
 #'  
+#' @importFrom methods is
+#'
 #' @examples
 #' \dontrun{
 #' mass=FLQuant(c( 1.90, 4.23, 7.47,11.48,16.04,20.96,26.07,31.22,
@@ -23,17 +25,15 @@
 #'              dimnames=list(age=1:16))
 #' lorenzen(mass)
 #' }
-setGeneric('lorenzen', function(wt,params,...)
-  standardGeneric('lorenzen'))
 
-lorenzenFn<-function(wt,m1=.3,m2=-0.288) {
-  if ("FLPar"%in%is(m2)) res=wt%^%m2  else res=wt^m2
-  if ("FLPar"%in%is(m1)) res=m1%*%res else res=m1*res
-  res}
-
+setMethod('lorenzen', signature(wt='FLQuant',params='FLPar'),
+          function(wt,params,...){   
+            res=params[1]%*%(wt%^%params[2])
+            res@units='yr^-1'
+            res})
 setMethod('lorenzen', signature(wt='FLQuant',params='missing'),
-      function(wt,...) { 
-          res=lorenzenFn(wt)
+      function(wt,m1=.3,m2=-0.288,...) { 
+          res=lorenzenFn(wt,m1=m1,m2=m2)
           res@units='yr^-1'
           res})
 setMethod('lorenzen', signature(wt='FLQuant',params='numeric'),
@@ -41,9 +41,19 @@ setMethod('lorenzen', signature(wt='FLQuant',params='numeric'),
           res=params[1]*wt^params[2]
           res@units='yr^-1'
           res})
-setMethod('lorenzen', signature(wt='FLQuant',params='FLPar'),
-      function(wt,params,...){   
-          res=params[1]%*%(wt%^%params[2])
-          res@units='yr^-1'
-          res})
-#par["m1"]%*%(exp(log(len)%*%par["m2"])), 
+setMethod('lorenzen', signature(wt='numeric',params='missing'),
+          function(wt,m1=.3,m2=-0.288,...) { 
+            res=lorenzenFn(wt,m1=m1,m2=m2)
+            res})
+
+lorenzenFn<-function(wt,m1=.3,m2=-0.288){
+  if ("FLPar"%in%is(m2)) res=wt%^%m2  else res=wt^m2
+  if ("FLPar"%in%is(m1)) res=m1%*%res else res=m1*res
+  res}
+
+m1<-function(m,wt){
+  
+  fn<-function(x,wt,ref) sum((lorenzen(wt,m1=x)-m)^2)
+  
+  optimize(fn, c(0, 100), tol=0.0000001,wt=wt,ref=m)$minimum}
+  

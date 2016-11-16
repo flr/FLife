@@ -5,13 +5,56 @@ Version: 0.9.1
 Date: 2016-04-25
 Author: Laurence Kell
 Maintainer: Laurence Kell <laurie@kell.es>
-Description: Many studies have shown the relationships between life history traits for processes such as growth, maturity and natural mortality. Life history has been used to develop priors in stock assesments and to parameterise ecological models. Package has a variety of methods for modelling life history traits and processes.
+Description: Many studies have shown the relationships between life history
+    traits for processes such as growth, maturity and natural mortality. Life
+    history has been used to develop priors in stock assesments and to parameterise
+    ecological models. Package has a variety of methods for modelling life history
+    traits and processes.
 LazyData: true
 License: GPL (>= 2)
 Depends:
     R(>= 3.0.1),
-    FLCore(>= 2.5),
-    ggplotFL,
-    methods
+    FLCore(>= 2.5)
 Imports:
-    FLBRP
+    methods
+Suggests:
+    ggplotFL
+Collate:
+    generic.R
+    vonB.R
+    gascuel.R
+    gompertz.R
+    ages.R
+    len2wt.R   
+    wt2len.R
+    knife.R
+    logistic.R
+    dnormal.R 
+    sigmoid.R  
+    gislason.R
+    lorenzen.R
+    mFn.R
+    fapex.R  
+    elasticity.R
+    lhPar.R
+    lhEql.R
+    lhRef.R
+    lopt.R
+    lh-indicators.R
+    bench.R
+    lh-srr-sv.R
+    cc.R      
+    powh.R   
+    noise.R  
+    stars.R   
+    m-dd.R      
+    mat-dd.R  
+    moment.R  
+    pid.R    
+    util.R
+    leslie.R
+    pidVaughan.R
+    sbt-mse.R
+    calcR.R
+    RcppExports.R 
+RoxygenNote: 5.0.1

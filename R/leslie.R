@@ -6,6 +6,8 @@ globalVariables(c("laply","lambda"))
 #' Creates a Leslie Matrix
 #'  
 #' @param object \code{FLBRP}
+#' @param fbar \code{numeric} F at whicj survival calculated
+#' @param numbers \code{boolean} numbers or biomass, numbers bt default
 #' @param ... any other arguments
 #' 
 #' @aliases leslie-method leslie,FLBRP-method
@@ -18,8 +20,6 @@ globalVariables(c("laply","lambda"))
 #' 
 #' @seealso \code{\link{lh}}  
 #' 
-#' @import FLBRP
-#' 
 #' @examples
 #' \dontrun{
 #' library(ggplot2)
@@ -31,15 +31,12 @@ globalVariables(c("laply","lambda"))
 #' eql=lh(pms,range = c(min=0,max=8, minfbar=1,maxfbar=8,plusgroup=8))
 #' lsl=leslie(eql,fbar=c(refpts(eql)["crash","harvest"]))
 #' }
-setGeneric('leslie', function(object, ...)
-  	standardGeneric('leslie'))
-
 setMethod("leslie", signature(object="FLBRP"),
   function(object,fbar=FLQuant(0),numbers=TRUE,...){
 
   fbar(object)=fbar
   object=brp(object)
-  names(dimnames(fbar(object)))[1]=names(dimnames(stock(object)))[1]
+  names(dimnames(fbar(object)))[1]=names(dimnames(m(object)))[1]
 
   ages=dims(object)$min:dims(object)$max
   
@@ -111,7 +108,6 @@ setMethod("leslie", signature(object="FLBRP"),
 #' lsl=leslie(eql)
 #' lambda(lsl)
 #' }
-#setGeneric('r', function(m, ...) standardGeneric('r'))
 
 setMethod("r", signature(m="FLPar",fec="missing"),
           function(m,...){

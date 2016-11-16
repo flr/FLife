@@ -48,7 +48,7 @@ addpar<-function(params,name,val)
 # 1 & x \ge 0
 # \end{array}
 # \right. }{ (non-Latex version) }
-lhPar=function(params,t0=-0.1,a=0.001,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
+lhPar=function(params,t0=-0.1,a=0.0003,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
  
   if("data.frame"%in%class(params)) params=mf2FLPar(params)
   
@@ -76,7 +76,9 @@ lhPar=function(params,t0=-0.1,a=0.001,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
 #     params=rbind(params,FLPar(m1= 0.55*(params["linf"]^1.44)%*%params["k"], iter=dims(params)$iter),
 #                         FLPar(m2=-1.61                                    , iter=dims(params)$iter))
     
-    params=addpar(params,"m1", 0.55*(params["linf"]^1.44)%*%params["k"])
+    #m=(length^-1.61)%*%(exp(0.55)*params["linf"]^1.44)%*%params["k"]
+    
+    params=addpar(params,"m1", exp(0.55)*(params["linf"]^1.44)%*%params["k"])
     params=addpar(params,"m2", 1.61)
     }
 

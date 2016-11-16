@@ -24,8 +24,7 @@
 #' age=vonB(params,length=len)
 #' }
 lhRef<-function(params,
-                 m=function(length,params) 
-                         params["m1"]%*%(exp(log(length)%*%params["m2"])),
+                 m=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
                  sr="bevholt",
                  range=c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40),
                  what=c("r","lopt","rc","sk","lro")){

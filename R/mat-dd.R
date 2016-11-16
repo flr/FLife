@@ -25,7 +25,11 @@
 #' @param params an \code{FLPar} with two values; i.e. a equal to M at unit mass and b a power term; defaults are a=0.3 and b=-0.288
 #' @param ... other arguments, such as scale, e.g. stock numbers now relative to a reference level, e.g. at virgin biomass and k steepness of relationship
 #' 
-#' @aliases matdd,FLQuant,FLPar-method
+#' @param scale reference 
+#' @param k rate of change in density dependence
+#' @param flagAge default is FALSE, i.e. density dependence is based on length ratherv than age
+#' 
+#' @aliases matdd matdd-method matdd,FLQuant,FLPar-method
 #' 
 #' @export
 #' @docType methods
@@ -58,9 +62,6 @@
 #'    theme(legend.position="none")
 #'    
 #'  }
-setGeneric('matdd', function(age,params,...)
-  standardGeneric('matdd'))
-
 setMethod('matdd', signature(age='FLQuant',params='FLPar'),
           function(age,params,scale,k=1,flagAge=FALSE) { 
             res=matddFn(age,params,scale,k,flagAge)

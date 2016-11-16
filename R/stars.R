@@ -10,7 +10,7 @@ globalVariables(c("ddply",".","year"))
 #' @param   object an object of class \code{FLQuant}
 #' @param ... any other arguments
 #' 
-#' @aliases rod-method rod,FLQuant-method
+#' @aliases rod rod-method rod,FLQuant-method
 #'
 #' @export
 #' @rdname rod
@@ -27,7 +27,6 @@ globalVariables(c("ddply",".","year"))
 #'        lwd=.25,data=pg,alpha=.2)
 #' }
 #' 
-setGeneric('rod', function(object, ...) standardGeneric('rod'))
 setMethod("rod", signature(object="FLQuant"),
           function(object, ...) 
             ddply(as.data.frame(object),.(iter), with, rodFn(data,year)))

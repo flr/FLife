@@ -10,7 +10,7 @@
 #' @docType methods
 #' @rdname logistic
 #' 
-#' @aliases logistic,FLQuant,FLPar-method
+#' @aliases logistic logistic-method logistic,FLQuant,FLPar-method
 #' 
 #' @seealso \code{\link{gompertz}}
 #' 
@@ -20,8 +20,11 @@
 #' age=FLQuant(1:10,dimnames=list(age=1:10))
 #' mat=logistic(params,age)
 #' }
-setGeneric('logistic', function(age,params,...)
-  standardGeneric('logistic'))
+setMethod('logistic', signature(age='FLQuant',params='FLPar'),
+          function(age,params,...) { 
+            res=logisticFn(age,params)
+            res@units='proportion'
+            res})
 
 logisticFn<-function(age,params) { #x,a50,ato95,asym=1.0){  
   
@@ -39,14 +42,3 @@ logisticFn<-function(age,params) { #x,a50,ato95,asym=1.0){
   dimnames(res) =dmns
   
   return(res)}
-
-# setMethod('logistic', signature(age='FLQuant',params='numeric'),
-#           function(age,...) { 
-#             res=logisticFn(age,FLPar(params))
-#             res@units='proportion'
-#             res})
-setMethod('logistic', signature(age='FLQuant',params='FLPar'),
-          function(age,params,...) { 
-            res=logisticFn(age,params)
-            res@units='proportion'
-            res})

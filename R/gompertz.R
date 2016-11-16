@@ -1,20 +1,23 @@
 globalVariables(c("invgompertzFn"))
 
-
-#' gompertz
-#'
-#' Gompertz growth equation
+#' @title{gompertz growth equation}
+#' @description  
+#' gompertz growth equation
 #' 
 #' @param age FLQuant, FLPar or numeric with ages 
 #' @param params \code{FLPar} with parameters for \code{linf, a, b}
 #' @param ... any other arguments
 #' 
-#' @aliases gompertz,FLPar,FLPar-method gompertz,FLQuant,FLPar-method gompertz,FLQuant,numeric-method gompertz,missing,FLPar-method gompertz,numeric,numeric-method
+#' @aliases gompertz 
+#' gompertz-method 
+#' gompertz,FLQuant,FLPar-method g
+#' gompertz,FLPar,FLPar-method gompertz,FLQuant,numeric-method gompertz,missing,FLPar-method gompertz,numeric,numeric-method
 #' 
+#' @return Depends on the value of \code{data} 
+#' 
+#' @exportMethod gompertz
 #' @docType methods
 #' @rdname gompertz
-#' 
-#' @seealso \code{\link{gompertz}}   
 #' 
 #' @examples
 #' \dontrun{
@@ -22,9 +25,7 @@ globalVariables(c("invgompertzFn"))
 #' age=FLQuant(1:10,dimnames=list(age=1:10))
 #' len=gompertz(par,age)
 #' }
-setGeneric('gompertz', function(age,params,...)
-  standardGeneric('gompertz'))
-
+#' 
 setMethod("gompertz", signature(age="FLQuant",params="FLPar"),
           function(age,params,...){   
             res=gompertzFn(age,params)

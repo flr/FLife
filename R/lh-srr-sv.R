@@ -1,8 +1,24 @@
-#### SRR 
-
-setGeneric('sv', function(x,model, ...)
-  standardGeneric('sv'))
-
+#' sv
+#'
+#' Calculates steepness and virgin biomass given a and b for a Beverton and Holt SRR
+#' 
+#' @param x \code{FLPar} with a and b
+#' @param model \code{character} with name of stock recruitment relationship, by default "bevholt"
+#' @param spr0 \code{} spawner per recruit at F=0
+#' @param ... any other arguments
+#'  
+#' @return  \code{FLPar} 
+#' @export
+#' @docType methods
+#' @rdname sv
+#' 
+#' 
+#' @examples
+#' \dontrun{
+#' params=FLPar(a=37.8,b=8.93)
+#' sv(params)
+#' }
+#
 setMethod('sv', signature(x='FLPar', model='character'),
   function(x, model, spr0=NA){
  
@@ -34,6 +50,9 @@ setMethod('sv', signature(x='FLPar', model='character'),
    res=rbind(res, spr0)
  
    return(res)})
+
+#x=FLPar(s=0.75,v=1500,spr0=12)
+#sv(ab(x,"bevholt"),"bevholt")
 
 abPars. <- function(x,spr0=NA,model){
   s=x["s"]

@@ -1,37 +1,5 @@
 globalVariables(c("invGascuelFn"))
 
-
-gascuelFn=function(params,age)
-  params["gas.a"]+
-  params["gas.b"]*age+
-  (params["gas.c"]-params["gas.d"]*age)*
-  (1-exp(- params["gas.e"]*age))^params["gas.f"]
-
-invGascuel<-function(length,
-                     params, age_limits=c(0,15),
-                     timing=0.5,
-                     tol   =0.000001) {  
-  
-  names(params)=tolower(names(params))
-  
-  fn<-function(age,length,params,timing)
-    (length-gascuel(params,age+timing))^2
-  
-  age=optimize(fn, age_limits,length=length,params=params,timing=-timing)$minimum
-  
-  age}
-
-invGascuel<-function(length,
-                     params, age_limits=c(0,15),
-                     timing=0.5,
-                     tol   =0.000001) {  
-  
-  age=invGascuel(length,params,age_limits,timing,tol) 
-  
-  age=pmax(pmin(age, age_limits[2]), age_limits[1])
-  age=as.integer(age)
-  age}
-
 #' gascuel
 #'
 #' Gascuel growth equation
@@ -39,17 +7,21 @@ invGascuel<-function(length,
 #' @param age FLQuant, FLPar or numeric with ages 
 #' @param params \code{FLPar}
 #' @param ... any other arguments
-#' 
-#' @aliases gascuel-method gascuel,FLPar,FLPar-method gascuel,FLPar,FLQuant-method  gascuel,FLPar,missing-method gascuel,numeric,FLQuant-method gascuel,numeric,numeric-method 
+#'  
+#' @aliases gascuel gascuel-method gascuel,FLQuant,missing-method gascuel,FLPar,FLPar-method gascuel,FLPar,FLQuant-method
+#' gascuel,FLPar,missing-method 
+#' gascuel,numeric,FLQuant-method 
+#' gascuel,numeric,numeric-method 
+#' gascuel,numeric,FLPar-method 
+#' gascuel,numeric,missing-method
+#' gascuel,missing,FLPar-method 
+#' gascuel,missing,missing-method
 #' 
 #' @return Depends on the value of \code{data} 
-#' 
 #' @export
 #' @docType methods
 #' @rdname gascuel
 #' 
-#' @seealso \code{\link{gompertz}}
-#'
 #' @details 
 #' Gascuel D., Fonteneau, A., and Capisano, C. (1992).
 #' Modelisation d'une croissance en deux stances chez  #l'albacore (Thunnus albacares) de l'Atlantique Est. 
@@ -57,34 +29,104 @@ invGascuel<-function(length,
 #'  
 #' @examples
 #' \dontrun{
-#' params=FLPar(gas.a=37.8,gas.b=8.93,gas.c=137.0,
-#'              gas.d=8.93,gas.e=0.808,gas.f=7.49)
+#' params=FLPar(a=37.8,b=8.93,c=137.0,
+#'              d=8.93,e=0.808,f=7.49)
 #' len=gascuel(params,age)
 #' }
 #
-setGeneric('gascuel', function(params,age,...)
-  standardGeneric('gascuel'))
-setMethod("gascuel", signature(params="FLPar",age="FLQuant"),
-          function(params,age,...){   
-            res=gascuelFn(params,age)
-            res@units=""
+setMethod("gascuel", signature(age="FLQuant",params="FLPar"),
+          function(age,params,...){   
+            res=gascuelFn(age,params)
+            #res@units=""
             res})
-setMethod("gascuel", signature(params="FLPar",age="FLPar"),
-          function(params,age,...){   
-            res=gascuelFn(params,age)
-            res@units=""
+setMethod("gascuel", signature(age="FLPar",params="FLPar"),
+          function(age,params,...){   
+            res=gascuelFn(age,params)
+            #res@units=""
             res})
-setMethod("gascuel", signature(params="numeric",age="numeric"),
-          function(params,age,...) 
-            gascuelFn(params,age))
-setMethod("gascuel", signature(params="numeric",age="FLQuant"),
-          function(params,age,...) { 
-            res=gascuelFn(FLPar(params),age)
-            res@units=""
+setMethod("gascuel", signature(age="numeric",params="FLPar"),
+          function(age,params,...) 
+            gascuelFn(age,params))
+setMethod("gascuel", signature(age="FLQuant",params="missing"),
+          function(age,params,...) {
+            gascuelFn(age,params=FLPar(a=37.8,b=8.93,c=137.0,
+                                       d=8.93,e=0.808,f=7.49))})
+setMethod("gascuel", signature(age="FLPar",params="missing"),
+          function(age,params,...) {
+            gascuelFn(age,params=FLPar(a=37.8,b=8.93,c=137.0,
+                                       d=8.93,e=0.808,f=7.49))})
+setMethod("gascuel", signature(age="numeric",params="missing"),
+          function(age,params,...) {
+            gascuelFn(age,params=FLPar(a=37.8,b=8.93,c=137.0,
+                                       d=8.93,e=0.808,f=7.49))})
+setMethod("gascuel", signature(age="missing",params="FLPar"),
+          function(age,params,length,...){   
+            res=invGascuelFn(length,params,...)
             res})
-setMethod("gascuel", signature(params="FLPar",age="missing"),
-          function(params,age,length,...){   
-            res=invGascuelFn(params,length)
-            res@units=""
+setMethod("gascuel", signature(age="missing",params="missing"),
+          function(age,params,length,...){   
+            res=invGascuelFn(length,params=FLPar(a=37.8,b=8.93,c=137.0,
+                                                 d=8.93,e=0.808,f=7.49),...)
             res})
+
+
+# .expr2 <- 1-exp(t)
+# .value <- .expr2^f
+# 
+# -(1-exp(t)^(f-1)*(f *exp(t)))
+
+gascuelFn=function(age,params)
+  params["a"]+
+  params["b"]*age+
+  (params["c"]-params["d"]*age)*
+  (1-exp(- params["e"]*age))^params["f"]
+
+deriv(l~a+b*age+(c-d*age)*(1-exp(-e*age))^f,"age")
+
+dldt<-function(age,params){
+  c=params["c"]
+  b=params["b"]
+  d=params["d"]
+  e=params["e"]
+  f=params["f"]
+  
+  .expr4 <- c - d * age
+  .expr7 <- exp(-e * age)
+  .expr8 <- 1 - .expr7
+  .expr9 <- .expr8^f
+  
+  b+(.expr4*(.expr8^(f-1)*(f*(.expr7*e)))-d*.expr9)
+}
+
+invGascuelFn<-function(length,
+                       params=FLPar(a=37.8,b=8.93,c=137.0,
+                                    d=8.93,e=0.808,f=7.49),
+                       age_limits=c(0,15),
+                       timing    =0,
+                       tol       =0.000001) {  
+  
+  names(params)=tolower(names(params))
+  
+  fn<-function(age,length,params,timing)
+    (length-gascuel(age+timing,params))^2
+  
+  age=aaply(length, 1, function(x) 
+    optimize(fn, age_limits,length=x,params=params,timing=-timing)$minimum)
+  
+  names(age)=names(length)
+  
+  age}
+
+sliceGascuel<-function(length,
+                       params=FLPar(a=37.8,b=8.93,c=137.0,
+                                    d=8.93,e=0.808,f=7.49), 
+                       age_limits=c(0,15),
+                       timing=0.5,
+                       tol   =0.000001) {  
+  
+  age=invGascuelFn(length,params,age_limits,timing,tol) 
+  
+  age=pmax(pmin(age, age_limits[2]), age_limits[1])
+  age=as.integer(age)
+  age}
 

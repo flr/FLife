@@ -1,5 +1,4 @@
 #' mdd
-#' 
 #'
 #' Lorenzen natural mortality relationship where M is a function of weight, modified to 
 #' explicitly included M as a function of numbers in a cohort, i.e. density dependence
@@ -28,9 +27,11 @@
 #'    
 #' @param wt  mass at which M is to be predicted
 #' @param params an \code{FLPar} with two values; i.e. a equal to M at unit mass and b a power term; defaults are a=0.3 and b=-0.288
+#' @param scale reference 
+#' @param k rate of change in density dependence
 #' @param ... other arguments, such as scale, e.g. stock numbers now relative to a reference level, e.g. at virgin biomass and k steepness of relationship
 #' 
-#' @aliases mdd,FLQuant,FLPar-method
+#' @aliases mdd mdd-method mdd,FLQuant,FLPar-method
 #' 
 #' @export
 #' @docType methods
@@ -56,16 +57,13 @@
 #' m=mdd(stock.wt(stk),par,scale)
 #' ggplot(as.data.frame(m,drop=TRUE))+geom_line(aes(age,data,group=year,col=factor(year)))+theme(legend.position="none")
 #' }
-setGeneric('mdd', function(wt,params,...)
-  standardGeneric('mdd'))
+setMethod('mdd', signature(wt='FLQuant',params='FLPar'),
+          function(wt,params,scale,k=1) { 
+            res=mddFn(wt,params,scale,k)
+            res})
 
 mddFn=function(wt,params,scale,k=1){
   
   map=(2/(1+exp(-k*scale)))
   
   (map%*%params["m1"])%*%(wt%^%params["m2"])}
-
-setMethod('mdd', signature(wt='FLQuant',params='FLPar'),
-          function(wt,params,scale,k=1) { 
-            res=mddFn(wt,params,scale,k)
-            res})

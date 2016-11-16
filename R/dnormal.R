@@ -4,11 +4,10 @@
 #' Double normal ogive
 #' 
 #' @param age FLQuant or FLCohort 
-#' @param params \code{FLPar} with parameters \code{a1} age at maximum, \code{sl} SD for lefthand limb and 
-#' \code{sr} SD for righthand limb. 
+#' @param params \code{FLPar} with parameters \code{a1} age at maximum, \code{sl} SD for lefthand limb and \code{sr} SD for righthand limb. 
 #' @param ... any other arguments
 #' 
-#' @aliases dnormal-method dnormal,FLQuant,FLPar-method dnormal,FLPar,FLPar-method dnormal,numeric,numeric-method dnormal,FLQuant,numeric-method
+#' @aliases dnormal dnormal-method dnormal,FLQuant,FLPar-method dnormal,FLPar,FLPar-method dnormal,numeric,numeric-method dnormal,FLQuant,numeric-method
 #'                     
 #' @return Depends on the value of \code{age} 
 #'  
@@ -23,9 +22,6 @@
 #' params=FLPar(a1=1,sl=3,sr=500)
 #' wt2len(params,FLQuant(10))
 #' }
-setGeneric('dnormal', function(age,params,...)
-  standardGeneric('dnormal'))
-
 setMethod("dnormal", signature(age="FLQuant",params="FLPar"),
 function(age,params,...){   
   res=dnormalFn(age,params)

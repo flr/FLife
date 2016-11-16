@@ -6,7 +6,7 @@
 #' @param params \code{FLPar} object with parameters \code{linf}, \code{k} and \code{t0}
 #' @param ... other arguments
 #' 
-#' @aliases vonB,FLPar,FLPar-method vonB,FLQuant,FLPar-method vonB,FLQuant,numeric-method vonB,missing,FLPar-method vonB,numeric,numeric-method
+#' @aliases vonB vonB-method vonB,FLPar,FLPar-method vonB,FLQuant,FLPar-method vonB,FLQuant,numeric-method vonB,missing,FLPar-method vonB,numeric,numeric-method
 #' 
 #' @return an object the same type supplied as \code{age} 
 #' 
@@ -14,7 +14,8 @@
 #' @docType methods
 #' @rdname vonB
 #' 
-#' @seealso \code{\link{gascuel}}  
+#' 
+#' @seealso \code{\link{gompertz}} \code{\link{gascuel}}
 #' 
 #' @examples
 #' \dontrun{
@@ -25,24 +26,6 @@
 #' #inverse growth curve
 #' age=vonB(params,length=len)
 #' }
-setGeneric('vonB', function(age,params,...)
-  standardGeneric('vonB'))
-
-vonBFn=function(age,params){
- 
-  dimnames(params)[[1]]=tolower(dimnames(params)[[1]])
-  
-  res=params["linf"]%*%(1.0-exp((-params["k"])%*%(age%-%params["t0"])))
-  
-  dimnames(res)[1:5]=dimnames(age)[1:5]
-  res}
-
-invVonBFn=function(length,params){
-  res=log(1-(length%/%params["linf"]))%/% (-params["k"])%+%params["t0"]
-
-  #dimnames(res)=dimnames(length)
-  res}
-
 setMethod("vonB", signature(age="FLQuant",params="FLPar"),
           function(age,params,...){   
             res=vonBFn(age,params)
@@ -67,6 +50,21 @@ setMethod("vonB", signature(age="missing",params="FLPar"),
             res=invVonBFn(length=length,params=params)
             res@units=""
             res})
+
+vonBFn=function(age,params){
+  
+  dimnames(params)[[1]]=tolower(dimnames(params)[[1]])
+  
+  res=params["linf"]%*%(1.0-exp((-params["k"])%*%(age%-%params["t0"])))
+  
+  dimnames(res)[1:5]=dimnames(age)[1:5]
+  res}
+
+invVonBFn=function(length,params){
+  res=log(1-(length%/%params["linf"]))%/% (-params["k"])%+%params["t0"]
+  
+  #dimnames(res)=dimnames(length)
+  res}
 
 # library(numDeriv)
 # params=FLPar(linf=318.9,k=0.093,t0=-0.970)

@@ -125,43 +125,6 @@ elasticity2=function(par,sel,fn){
             
    return(res[,c("Year","Quantity","Type","Parameter","value")])}
 
-
-setMethod('sv', signature(x='FLPar', model='character'),
-          function(x, model, spr0=NA){
-            
-            a=x["a"]
-            b=x["b"]
-            s=FLPar(a=1,dimnames=dimnames(a))  
-            v=FLPar(b=1,dimnames=dimnames(a))  
-            spr0=FLPar(spr0,dimnames=dimnames(a))  
-            
-            if ("spr0" %in% dimnames(x)$params)
-              spr0=x["spr0"] 
-            
-            c=FLPar(c=1,dimnames=dimnames(a))  
-            d=FLPar(d=1,dimnames=dimnames(a))  
-            if (("c" %in% dimnames(x)$params))  c=x["c"]
-            if (("d" %in% dimnames(x)$params))  d=x["d"]
-            
-            v <- v*spr2v(model, spr0, a, b, c, d)
-            s <- s*srr2s(model, ssb=v*.2, a=a, b=b, c=c, d=d) / srr2s(model, ssb=v, a=a, b=b, c=c, d=d)
-            
-            res=rbind(s, v, spr0)
-            
-            if ("c" %in% dimnames(x)$params)
-              res=rbind(res, c)
-            
-            if ("d" %in% dimnames(x)$params)
-              res=rbind(res, d)
-            
-            res=rbind(res, spr0)
-            
-            return(res)})
-
-#x=FLPar(s=0.75,v=1500,spr0=12)
-#sv(ab(x,"bevholt"),"bevholt")
-
-
 doIt=function(what,par,dynamic=FALSE,fbar=FLQuant(c(seq(0,.75,length.out=21),seq(.75,.0,length.out=21)[-1]),dimnames=list(year=1:41))){
   
   #require(reshape)

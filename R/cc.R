@@ -1,5 +1,4 @@
 #' cc
-#' 
 #'
 #' Catch curve analysis
 #' 
@@ -7,7 +6,7 @@
 #' @param n   frequency
 #' @param ... any other arguments
 #' 
-#' @aliases cc-method cc,numeric,numeric-method cc,missing,FLQuant-method cc,FLQuant,missing-method
+#' @aliases cc cc-method cc,numeric,numeric-method cc,missing,FLQuant-method cc,FLQuant,missing-method
 #' 
 #' @return Depends on the value of \code{data} 
 #' 
@@ -24,30 +23,26 @@
 #' len=vonB(params,age)
 #' age=vonB(params,length=len)
 #' }
-setGeneric('cc', function(age,n,...)
-  standardGeneric('cc'))
-
 setMethod("cc", signature(age="numeric",n="numeric"),
-          function(age,n,...){   
+          function(age,n,...){  
             res=ccFn(age,n)
             res})
 
 setMethod("cc", signature(age="missing",n="FLQuant"),
-          function(n){   
+          function(age,n){   
             dat=data.frame(n)
             res=with(dat,ccFn(age,data))
             res@units=""
             res})
 
 setMethod("cc", signature(age="FLQuant",n="missing"),
-          function(age){   
+          function(age,n){   
             dat=data.frame(age)
             res=with(dat,ccFn(age,data))
             res@units=""
             res})
 ccFn=function(age,n){
-  freq=freq/sum(freq)
-  lm  =lm(log(freq)~age)
+  lm  =lm(log(n)~age)
   hat =exp(predict(lm))
-  sel =(freq/hat)/max(freq/hat)
-  data.frame(age=age,obs=freq,hat=hat,sel=sel)}
+  sel =(n/hat)/max(n/hat)
+  data.frame(age=age,obs=n,hat=hat,sel=sel)}

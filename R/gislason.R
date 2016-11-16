@@ -1,18 +1,18 @@
 #' gislason
-#' 
-#'
-#' gislason natural mortality relatoinship estimate M as a function of weight. 
+#' @description 
+#' gislason natural mortality relatoinship estimate M as a function of length. 
 #' M=a*length^b; 
 #' 
 #' @param length  mass at which M is to be predicted
 #' @param params \code{FLPar} with two values; i.e. a equal to M at unit mass 
 #' and b a power term; defaults are a=0.3 and b=-0.288
+#' @param a 0.55
+#' @param b 1.44
+#' @param c -1.61
 #' @param ... any other arguments
 #' 
-#' @aliases gislason-method gislason,FLQuant,FLPar-method gislason,FLQuant,missing-method gislason,FLQuant,numeric-method
+#' @aliases  gislason gislason-method gislason,FLQuant,FLPar-method gislason,FLQuant,missing-method gislason,FLQuant,numeric-method
 #'
-#' @import FLCore 
-#' 
 #' @export
 #' @docType methods
 #' @rdname gislason
@@ -26,31 +26,26 @@
 #'              dimnames=list(age=1:16))
 #' gislason(mass)
 #' }
-setGeneric('gislason', function(length,params,...)
-  standardGeneric('gislason'))
-
-gislasonFn<-function(length,params) {
-  
-  # Natural mortality parameters from Model 2, Table 1 gislason 2010
-  if (!all(c("m1","m2")%in%dimnames(params)$params))
-    param=FLCore::rbind(params,FLPar(m1= 0.55*(params["linf"]^1.44)%*%params["k"], iter=dims(params)$iter),
-                               FLPar(m2=-1.61                                  , iter=dims(params)$iter))
-  
-  params["m1"]%*%(exp(log(length)%*%params["m2"]))}
-
-setMethod('gislason', signature(length='FLQuant',params='missing'),
-      function(length,...) { 
-          res=gislasonFn(length,params)
-          res@units='yr^-1'
-          res})
 setMethod('gislason', signature(length='FLQuant',params='numeric'),
-      function(length,params,...) { 
+      function(length,params,a=0.55,b=1.44,c=-1.61,...) { 
           res=gislasonFn(length,params)
           res@units='yr^-1'
           res})
 setMethod('gislason', signature(length='FLQuant',params='FLPar'),
-      function(length,params,...){   
+      function(length,params,a=0.55,b=1.44,c=-1.61,...){   
           res=gislasonFn(length,params)
           res@units='yr^-1'
           res})
+
+gislasonFn<-function(length,params,a=0.55,b=1.44,c=-1.61) {
+  
+  # Natural mortality parameters from Model 2, Table 1 gislason 2010
+  if (!all(c("m1","m2")%in%dimnames(params)$params)){
+    
+    m1=FLPar(m1= a*(params["linf"]^b)%*%params["k"], iter=dims(params)$iter)
+    m2=FLPar(m2=c                           ,          iter=dims(params)$iter)
+    params=rbind(params,m1,m2)
+  }
+  
+  params["m1"]%*%(exp(log(length)%*%params["m2"]))}
 

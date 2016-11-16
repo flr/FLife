@@ -6,7 +6,7 @@
 #' @param params \code{FLPar}
 #' @param ... any other arguments
 #' 
-#' @aliases  sigmoid-method sigmoid,FLPar,FLPar-method sigmoid,FLQuant,FLPar-method sigmoid,FLQuant,numeric-method sigmoid,numeric,numeric-method
+#' @aliases sigmoid sigmoid-method sigmoid,FLPar,FLPar-method sigmoid,FLQuant,FLPar-method sigmoid,FLQuant,numeric-method sigmoid,numeric,numeric-method
 #' 
 #' @return Depends on the type of \code{age} 
 #' 
@@ -28,9 +28,6 @@
 #' len=sigmoid(age,params)
 #' age=sigmoid(params,length=len)
 #' }
-setGeneric('sigmoid', function(age,params,...)
-  standardGeneric('sigmoid'))
-
 setMethod("sigmoid", signature(age="FLQuant",params="FLPar"),
           function(age,params,...){   
             res=sigmoidFn(age,params)
@@ -53,9 +50,9 @@ setMethod("sigmoid", signature(age="FLQuant",params="numeric"),
 sigmoidFn<-function(age,params) { #x,a50,ato95,asym=1.0){  
 
   if (!("asym"%in%dimnames(params)$params))
-    params=FLCore::rbind(params,FLPar("asym" =1, iter=dims(params)$iter))
+    params=rbind(params,FLPar("asym" =1, iter=dims(params)$iter))
   if (!("ato95"%in%dimnames(params)$params))
-    params=FLCore::rbind(params,FLPar("ato95"=1, iter=dims(params)$iter))
+    params=rbind(params,FLPar("ato95"=1, iter=dims(params)$iter))
 
   res<-params["asym"]%/%(1.0+pow(19.0,(params["a50"]%-%age)%/%params["ato95"]))
   asym=FLQuant(1,dimnames=dimnames(age))%*%params["asym"]
