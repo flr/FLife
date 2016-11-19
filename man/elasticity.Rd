@@ -4,7 +4,7 @@
 \name{elasticity}
 \alias{elasticity}
 \alias{elasticity-method}
-\title{elasticity}
+\title{Elasticity analysis for reference points}
 \usage{
 elasticity(params, sel, fn)
 }
@@ -16,7 +16,7 @@ elasticity(params, sel, fn)
 \item{fn}{user supplied function}
 }
 \value{
-\code{FLPar}
+\code{FLPar} with elasticity of reference points by input parameters
 }
 \description{
 Estimates elasticity
@@ -34,6 +34,6 @@ lsl=leslie(eql,fbar=c(refpts(eql)["crash","harvest"]))
 }
 }
 \seealso{
-\code{\link{lhPar}}
+\code{\link{lhPar}},  \code{\link{lhEql}},  \code{\link{lhRef}}
 }
 

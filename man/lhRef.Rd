@@ -3,12 +3,12 @@
 \docType{methods}
 \name{lhRef}
 \alias{lhRef}
-\title{lhRef}
+\title{Reference points based on life histories}
 \usage{
 lhRef(params, m = function(length, params) exp(0.55) * (length^-1.61) \%*\%
   (params["linf"]^1.44) \%*\% params["k"], sr = "bevholt", range = c(min =
   0, max = 40, minfbar = 1, maxfbar = 40, plusgroup = 40), what = c("r",
-  "lopt", "rc", "sk", "lro"))
+  "lopt", "rc", "sk", "spr0"))
 }
 \arguments{
 \item{params}{\code{FLPar}}
@@ -19,23 +19,24 @@ lhRef(params, m = function(length, params) exp(0.55) * (length^-1.61) \%*\%
 
 \item{range}{ages used i.e. c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40)}
 
-\item{what}{quantities to calculate "r","lopt","rc","sk","lro"}
+\item{what}{quantities to calculate "r","lopt","rc","sk","spr0"}
 }
 \value{
-Depends on the value of \code{data}
+object of class \code{FLPar} with reference points, i.e r, rc, sk, lopt,
 }
 \description{
-Von Bertalanffy growth equation
+\code{lhRef} calculates a variety of reference points i.e.  population growth rate at small 
+population sizs (r), and at Bmsy (rc), ratio of virgin biomass to Bmsy (sk), life 
+time reproductive output (srp0) and reproductive output at $B_{MSY}$ ($srp_{msy}$)
 }
 \examples{
 \dontrun{
 params=FLPar(linf=100,t0=0,k=.4)
-age=FLQuant(1:10,dimnames=list(age=1:10))
-len=vonB(age,params)
-age=vonB(params,length=len)
+params=lhPar(params)
+lhRef(params)
 }
 }
 \seealso{
-\code{\link{gascuel}}
+\code{\link{lhPar}}, \code{\link{lhEql}}
 }
 

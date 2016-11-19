@@ -3,7 +3,7 @@
 \docType{methods}
 \name{lhPar}
 \alias{lhPar}
-\title{lhPar}
+\title{Generates life history parameters}
 \usage{
 lhPar(params, t0 = -0.1, a = 3e-04, b = 3, ato95 = 1, sl = 2,
   sr = 5000, s = 0.9, v = 1000)
@@ -31,18 +31,21 @@ from life history theory, as are the following args.}
 \item{v}{virgin biomass}
 }
 \value{
-An \code{FLPar} object with parameters
+object of class \code{FLPar} with missing parameters calculated from life history theory
 }
 \description{
-Selectivity by default is set so age at peak selectivity is the same as age at 50/% mature (a50) As a minimum all `lhPar` requires is `linf` the asymptotic length of the von Bertalannfy growth equation.
-}
-\details{
-Uses life history theory to derive parameters for biological relationships, i.e. or growth, maturity, natural mortality
+Uses life history theory to derive parameters for biological relationships, i.e. or growth, 
+maturity, natural mortality. Selectivity by default is set so age at peak selectivity is the 
+same as age at 50/% mature (a50) As a minimum all `lhPar` requires is `linf` the asymptotic 
+length of the von Bertalannfy growth equation.
 }
 \examples{
 \dontrun{
 lhPar(FLPar(linf=200))
 }
 
+}
+\seealso{
+\code{\link{r}}, \code{\link{loptAge}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}}
 }
 

@@ -1,5 +1,6 @@
-#' sv
-#'
+#' @title Calculates steepness and virgin biomass
+#' 
+#' @description 
 #' Calculates steepness and virgin biomass given a and b for a Beverton and Holt SRR
 #' 
 #' @param x \code{FLPar} with a and b
@@ -7,7 +8,7 @@
 #' @param spr0 \code{} spawner per recruit at F=0
 #' @param ... any other arguments
 #'  
-#' @return  \code{FLPar} 
+#' @return  \code{FLPar} with values for steepness (s) and virgin biomass (v) 
 #' @export
 #' @docType methods
 #' @rdname sv
@@ -15,8 +16,9 @@
 #' 
 #' @examples
 #' \dontrun{
+#' #bug
 #' params=FLPar(a=37.8,b=8.93)
-#' sv(params)
+#' sv(params,.4)
 #' }
 #
 setMethod('sv', signature(x='FLPar', model='character'),

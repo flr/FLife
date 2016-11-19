@@ -1,33 +1,36 @@
-#' lhRef
-#'
-#' Von Bertalanffy growth equation
+#' @title Reference points based on life histories
 #' 
+#' @description 
+#' \code{lhRef} calculates a variety of reference points i.e.  population growth rate at small 
+#' population sizs (r), and at B~{MSY} (rc), ratio of virgin biomass to B~{MSY} (sk), life 
+#' time reproductive output (srp0) and reproductive output at B~{MSY} (sprmsy)
+ #' 
 #' @param params \code{FLPar}
 #' @param m function for natural mortality
 #' @param sr \code{character} with stock recruitment relationship, e.g. "bevholt","ricker",...
 #' @param range ages used i.e. c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40)
-#' @param what quantities to calculate "r","lopt","rc","sk","lro"
+#' @param what quantities to calculate "r","lopt","rc","sk","spr0"
 #' 
-#' @return Depends on the value of \code{data} 
+#' @return object of class \code{FLPar} with reference points, i.e r, rc, sk, lopt,
 #' 
 #' @export
 #' @docType methods
 #' @rdname lhRef
 #' 
-#' @seealso \code{\link{gascuel}}  
+#' @seealso \code{\link{lhPar}}, \code{\link{lhEql}}  
 #' 
 #' @examples
 #' \dontrun{
+#' #bug
 #' params=FLPar(linf=100,t0=0,k=.4)
-#' age=FLQuant(1:10,dimnames=list(age=1:10))
-#' len=vonB(age,params)
-#' age=vonB(params,length=len)
+#' params=lhPar(params)
+#' lhRef(params)
 #' }
 lhRef<-function(params,
                  m=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
                  sr="bevholt",
                  range=c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40),
-                 what=c("r","lopt","rc","sk","lro")){
+                 what=c("r","lopt","rc","sk","spr0")){
   
   eql=lhEql(params,m=m,sr=sr,range=range)
   
@@ -62,18 +65,18 @@ lhRef<-function(params,
     res=cbind(res,"sk"   =c(sk))
     }
   
-  if ("lro"%in%what){
+  if ("spr0"%in%what){
     rfs=refpts(eql)[c("f0.1","virgin")]
     dimnames(rfs)[[1]][1]="ref"
     rfs["ref",-1]=NA
-    lro=eql
-    params(lro)=params(eql)["a"]/params(eql)["a"]
-    model( lro)=geomean()$model
-    refpts(lro)=rfs
-    lro        =computeRefpts(lro)
-    lro        =c(lro["ref","ssb"]/lro["virgin","ssb"])
+    spr0=eql
+    params(spr0)=params(eql)["a"]/params(eql)["a"]
+    model( spr0)=geomean()$model
+    refpts(spr0)=rfs
+    spr0        =computeRefpts(spr0)
+    spr0        =c(spr0["ref","ssb"]/spr0["virgin","ssb"])
   
-    res=cbind(res,"lro"    =c(lro))}
+    res=cbind(res,"spr0"    =c(spr0))}
 
     res}
 
@@ -157,10 +160,10 @@ tmp=d_ply(scen,.(juve,dome,steep,m,species), with, {
                         0.55*(length^-1.66)%*%(params["linf"]^1.44)%*%params["k"]}
                    )}
   
-  lro=eql
-  params(lro)=params(eql)["a"]/params(eql)["a"]
-  model( lro)=geomean()$model
-  lro        =computeRefpts(lro)
+  spr0=eql
+  params(spr0)=params(eql)["a"]/params(eql)["a"]
+  model( spr0)=geomean()$model
+  spr0        =computeRefpts(spr0)
   
   res=data.frame("juve"   =juve,
                  "dome"   =dome,
@@ -173,7 +176,7 @@ tmp=d_ply(scen,.(juve,dome,steep,m,species), with, {
                  "rc"     =c(ratec),
                  "lopt"   =c(lop),
                  "sk"     =c(ref["msy","ssb"]/ref["virgin","ssb"]),
-                 "lro"    =c(lro["msy","ssb"]/lro["virgin","ssb"]))
+                 "spr0"    =c(spr0["msy","ssb"]/spr0["virgin","ssb"]))
 
   dbWriteTable(con,"res",res,append=TRUE)})
   }

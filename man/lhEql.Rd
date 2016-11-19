@@ -5,14 +5,11 @@
 \alias{lhEql}
 \alias{lhEql,FLPar-method}
 \alias{lhEql-method}
-\title{lhEql}
+\title{Derives an \code{FLBRP} from life history parameters}
 \usage{
 \S4method{lhEql}{FLPar}(params, growth = FLife::vonB, m = function(length,
   params) exp(0.55) * (length^-1.61) \%*\% (params["linf"]^1.44) \%*\%
-  params["k"], mat = function(age, params) {     a50 =
-  FLQuant(ceiling(rep(c(params["a50"]), each = dim(age)[1])), dimnames =
-  dimnames(age))     res = FLQuant(0.5, dimnames = dimnames(age))     res[age >
-  a50] = 1     res[age < a50] = 0     res }, sel = FLife::dnormal,
+  params["k"], mat = knife(age, params), sel = FLife::dnormal,
   sr = "bevholt", range = c(min = 0, max = 40, minfbar = 1, maxfbar = 40,
   plusgroup = 40), spwn = c(params["a50"] - floor(params["a50"])),
   fish = 0.5, units = if ("units" \%in\% names(attributes(params)))
@@ -42,7 +39,7 @@
 \item{...}{any other arguments}
 }
 \value{
-\code{FLBRP}
+\code{FLBRP} object
 }
 \description{
 Takes an \code{FLPar} object with life history and selectivity parameters
@@ -55,6 +52,8 @@ par=lhSim(FLPar(linf=100))
 
 }
 \seealso{
+\code{\link{lhPar}}, \code{\link{lhRef}}
+
 \code{\link{vonB}} \code{\link{lorenzen}} \code{\link{sigmoid}}
 }
 

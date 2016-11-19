@@ -5,7 +5,7 @@
 \alias{moment}
 \alias{moment,numeric-method}
 \alias{moment-method}
-\title{moment}
+\title{Calculates moments of a distribution}
 \usage{
 \S4method{moment}{numeric}(object, n = rep(1, length(object)), na.rm = T)
 }
@@ -22,7 +22,7 @@
 a \code{vector} with the inter-annual variation each time step
 }
 \description{
-aaa
+The calculates moments of a distribution, i.e. mean, standard deviation, skew and kurtosis
 }
 \examples{
 x=1

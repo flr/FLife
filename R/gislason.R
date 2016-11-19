@@ -17,14 +17,15 @@
 #' @docType methods
 #' @rdname gislason
 #' 
-#' @seealso \code{\link{gislason}}
+#' @seealso \code{\link{lorenzen}}
 #'  
 #' @examples
 #' \dontrun{
+#' #bug
 #' length=FLQuant(c( 1.90, 4.23, 7.47,11.48,16.04,20.96,26.07,31.22,
 #'                36.28,41.17,45.83,50.20,54.27,58.03,61.48,64.62),
 #'              dimnames=list(age=1:16))
-#' gislason(mass)
+#' gislason(length)
 #' }
 setMethod('gislason', signature(length='FLQuant',params='numeric'),
       function(length,params,a=0.55,b=1.44,c=-1.61,...) { 

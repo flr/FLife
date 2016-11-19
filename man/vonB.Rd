@@ -9,7 +9,7 @@
 \alias{vonB,missing,FLPar-method}
 \alias{vonB,numeric,numeric-method}
 \alias{vonB-method}
-\title{vonB}
+\title{von Bertalanffy growth curve}
 \usage{
 \S4method{vonB}{FLQuant,FLPar}(age, params, ...)
 }
@@ -21,7 +21,7 @@
 \item{...}{other arguments}
 }
 \value{
-an object the same type supplied as \code{age}
+Returns an object of same class as \code{age}
 }
 \description{
 Von Bertalanffy growth equation
@@ -37,6 +37,6 @@ age=vonB(params,length=len)
 }
 }
 \seealso{
-\code{\link{gompertz}} \code{\link{gascuel}}
+\code{\link{gompertz}}, \code{\link{gascuel}}
 }
 

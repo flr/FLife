@@ -1,6 +1,6 @@
-#' dnormal
+#' @title Double normal ogive
 #' 
-#'
+#' @description 
 #' Double normal ogive
 #' 
 #' @param age FLQuant or FLCohort 
@@ -9,18 +9,18 @@
 #' 
 #' @aliases dnormal dnormal-method dnormal,FLQuant,FLPar-method dnormal,FLPar,FLPar-method dnormal,numeric,numeric-method dnormal,FLQuant,numeric-method
 #'                     
-#' @return Depends on the value of \code{age} 
-#'  
+#' @return Returns an object of same class as \code{age} e.g. \code{FLQuant}
+#' 
 #' @export
 #' @docType methods
 #' @rdname dnormal
 #' 
-#' @seealso \code{\link{vonB}}  
+#' @seealso \code{\link{sigmoid}}, \code{\link{dnormal}}, \code{\link{logistic}}
 #' 
 #' @examples
 #' \dontrun{
-#' params=FLPar(a1=1,sl=3,sr=500)
-#' wt2len(params,FLQuant(10))
+#' params=FLPar(a1=4,sl=2,sr=5000)
+#' dnormal(FLQuant(1:10,dimnames=list(age=1:10)),params)
 #' }
 setMethod("dnormal", signature(age="FLQuant",params="FLPar"),
 function(age,params,...){   

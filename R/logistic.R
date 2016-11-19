@@ -16,9 +16,9 @@
 #' 
 #' @examples
 #' \dontrun{
-#' params=lhPar(FLPar(linf=100))
+#' params=FLPar(a50=4,ato95=1,asym=1.0)
 #' age=FLQuant(1:10,dimnames=list(age=1:10))
-#' mat=logistic(params,age)
+#' logistic(age,params)
 #' }
 setMethod('logistic', signature(age='FLQuant',params='FLPar'),
           function(age,params,...) { 

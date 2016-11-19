@@ -7,7 +7,11 @@ utils::globalVariables(c("rbind.fill","data","FLBRP2biodyn","quantity","optimise
   "FLPar",
   "lh","fbar<-","FLBRP","brp","refpts","refpts<-","as",
   "computeRefpts","computeRefpts","catch.obs",
-  "fwdWindow"))
+  "fwdWindow","aaply","invGascuelFn","laply","lambda",
+  "asym","ddply",".","year","a","b","grad","ddply",".","x",'aaply',"invgompertzFn",
+  "spr2v","srr2s","fwd","jacobian","melt",
+  "fwd","jacobian","melt","maply","jacobian","br","melt","maply","lambda","mdply","jacobian"))
+
 
 setGeneric('knife', function(age,params,...) standardGeneric('knife'))
 setGeneric('sigmoid', function(age,params,...) standardGeneric('sigmoid'))

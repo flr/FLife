@@ -1,6 +1,5 @@
-globalVariables(c("invgompertzFn"))
-
-#' @title{gompertz growth equation}
+#' @title Gompertz growth equation
+#' 
 #' @description  
 #' gompertz growth equation
 #' 
@@ -13,17 +12,19 @@ globalVariables(c("invgompertzFn"))
 #' gompertz,FLQuant,FLPar-method g
 #' gompertz,FLPar,FLPar-method gompertz,FLQuant,numeric-method gompertz,missing,FLPar-method gompertz,numeric,numeric-method
 #' 
-#' @return Depends on the value of \code{data} 
+#' @return Returns an object of same class as \code{age} e.g. \code{FLQuant}
 #' 
 #' @exportMethod gompertz
 #' @docType methods
 #' @rdname gompertz
+#'
+#' @seealso \code{\link{gascuel}}, \code{\link{vonB}}
 #' 
 #' @examples
 #' \dontrun{
-#' par=FLPar(linf=100,t0=0,k=.4)
+#' params=FLPar(linf=100,a=2,b=.4)
 #' age=FLQuant(1:10,dimnames=list(age=1:10))
-#' len=gompertz(par,age)
+#' gompertz(age,params)
 #' }
 #' 
 setMethod("gompertz", signature(age="FLQuant",params="FLPar"),
@@ -51,7 +52,7 @@ setMethod("gompertz", signature(age="missing",params="FLPar"),
             res@units=""
             res})
 
-gompertzFn=function(params,age) 
-   params["linf"]%*%exp(-params["a"]%*%params["b"]%^%age)
+gompertzFn=function(age,params) 
+   params["linf"]%*%exp(-params["a"]%*%exp(log(params["b"])%*%age))
 
 

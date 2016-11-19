@@ -1,22 +1,10 @@
-globalVariables("asym")
-
-mf2FLPar=function(x){
-  dmns=dimnames(x)[2:1]
-  names(dmns)=c("params","iter")
-  x=t(as.matrix(x))
-  
-  FLPar(array(x,dim=dim(x),dimnames=dmns),units="")}
-
-addpar<-function(params,name,val)
-  rbind(params,FLPar(array(val, dim=c(1, dims(params)$iter),dimnames=list(params=name, iter=seq(dims(params)$iter)))))
-
-#' lhPar
+#' @title Generates life history parameters
 #' 
-#' Uses life history theory to derive parameters for biological relationships, i.e. or growth, maturity, natural mortality
-#' 
-#' @description
-#'     
-#' Selectivity by default is set so age at peak selectivity is the same as age at 50/% mature (a50) As a minimum all `lhPar` requires is `linf` the asymptotic length of the von Bertalannfy growth equation. 
+#' @description 
+#' Uses life history theory to derive parameters for biological relationships, i.e. or growth, 
+#' maturity, natural mortality. Selectivity by default is set so age at peak selectivity is the 
+#' same as age at 50/% mature (a50) As a minimum all `lhPar` requires is `linf` the asymptotic 
+#' length of the von Bertalannfy growth equation. 
 #'  
 #' @param   params \code{FLPar} object with parameters for life history equations and selection pattern.
 #' Need Linfinity to estimate other parameters, if any other parameters supplied in \code{code} then
@@ -33,10 +21,12 @@ addpar<-function(params,name,val)
 #' 
 #' @export
 #' 
+#' @seealso \code{\link{r}}, \code{\link{loptAge}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}}
+#' 
 #' @import methods
 #' @docType methods
 #' @rdname lhPar
-#' @return An \code{FLPar} object with parameters
+#' @return object of class \code{FLPar} with missing parameters calculated from life history theory 
 #' @examples
 #' \dontrun{
 #' lhPar(FLPar(linf=200))
@@ -117,6 +107,17 @@ lhPar=function(params,t0=-0.1,a=0.0003,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
   order=c(order,dimnames(params)[[1]][!(dimnames(params)[[1]]%in%order)])
 
   return(params[order])}
+
+mf2FLPar=function(x){
+  dmns=dimnames(x)[2:1]
+  names(dmns)=c("params","iter")
+  x=t(as.matrix(x))
+  
+  FLPar(array(x,dim=dim(x),dimnames=dmns),units="")}
+
+addpar<-function(params,name,val)
+  rbind(params,FLPar(array(val, dim=c(1, dims(params)$iter),dimnames=list(params=name, iter=seq(dims(params)$iter)))))
+
 
 setUnits=function(res, par){
 

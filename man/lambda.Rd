@@ -5,7 +5,7 @@
 \alias{r,FLPar,missing-method}
 \alias{r,FLPar-method}
 \alias{r-method}
-\title{r}
+\title{Population growth rate}
 \usage{
 \S4method{r}{FLPar,missing}(m, fec, ...)
 }
@@ -17,7 +17,7 @@
 \item{...}{any other arguments}
 }
 \value{
-\code{FLPar}
+\code{FLPar} with growth rate a small population size
 }
 \description{
 Estimates population growth rate for a Leslie matrix
@@ -35,6 +35,6 @@ lambda(lsl)
 }
 }
 \seealso{
-\code{\link{leslie}}
+\code{\link{leslie}}, \code{\link{lhRef}}
 }
 

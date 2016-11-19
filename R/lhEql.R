@@ -1,7 +1,6 @@
-globalVariables(c("spr2v","srr2s"))
-
-#' lhEql
-#'
+#' @title Derives an \code{FLBRP} from life history parameters
+#' 
+#' @description 
 #' Takes an \code{FLPar} object with life history and selectivity parameters
 #' and generates an corresponding \code{FLBRP} object. Can uses a range of functional forms
 #'
@@ -19,35 +18,31 @@ globalVariables(c("spr2v","srr2s"))
 #' 
 #' @aliases lhEql lhEql-method lhEql,FLPar-method
 #' 
-#' @return \code{FLBRP}
+#' @return \code{FLBRP} object
+#'
+#' @seealso \code{\link{lhPar}}, \code{\link{lhRef}}
 #'
 #' @export
 #' @docType methods
 #' @rdname lhEql
 #'
-#' @seealso \code{\link{vonB}} \code{\link{lorenzen}} \code{\link{sigmoid}}
+#' @seealso  \code{\link{vonB}} \code{\link{lorenzen}} \code{\link{sigmoid}}
 #'
 #' @examples
 #' \dontrun{
-#' par=lhSim(FLPar(linf=100))
+#' eql=lhEql(lhPar(FLPar(linf=100)))
 #' }
 #' 
 setMethod("lhEql", signature(params='FLPar'),
           function(params,
-            growth        =FLife::vonB,
+            growth     =FLife::vonB,
             m          =function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
-            mat        =function(age,params) {
-              a50=FLQuant(ceiling(rep(c(params["a50"]),each=dim(age)[1])),
-                          dimnames=dimnames(age))
-              res=FLQuant(0.5,dimnames=dimnames(age))
-              res[age> a50]=1
-              res[age< a50]=0
-              res},
-            sel          =FLife::dnormal,
-            sr           ="bevholt",
-            range        =c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40),
-            spwn         =c(params["a50"]-floor(params["a50"])),
-            fish         = 0.5, # proportion of year when fishing happens
+            mat        =FLife::knife,
+            sel        =FLife::dnormal,
+            sr         ="bevholt",
+            range      =c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40),
+            spwn       =c(params["a50"]-floor(params["a50"])),
+            fish       = 0.5, # proportion of year when fishing happens
             units=if("units" %in% names(attributes(params))) attributes(params)$units else NULL,
             ...){
 
@@ -211,3 +206,11 @@ refpts(res)=propagate(refpts(res)[c("virgin","msy","crash","f0.1","fmax")],dims(
 #    res=rbind(res, spr0)
 #
 #    return(res)})
+
+matFn=function(age,params) {
+  a50=FLQuant(ceiling(rep(c(params["a50"]),each=dim(age)[1])),
+              dimnames=dimnames(age))
+  res=FLQuant(0.5,dimnames=dimnames(age))
+  res[age> a50]=1
+  res[age< a50]=0
+  res}

@@ -39,6 +39,8 @@
 #' 
 #' @examples 
 #' \dontrun{
+#' #bug
+#' 
 #' library(FLBRP)
 #' library(FLife)
 #' 

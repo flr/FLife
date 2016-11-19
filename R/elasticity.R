@@ -1,9 +1,6 @@
-globalVariables(c("fwd","jacobian","melt"))
-globalVariables(c("fwd","jacobian","melt"))
-globalVariables(c("maply","jacobian","br","melt","maply","lambda","mdply","jacobian"))
-    
-
-#' elasticity
+#' @title Elasticity analysis for reference points
+#' 
+#' @description 
 #'
 #' Estimates elasticity
 #'  
@@ -13,24 +10,17 @@ globalVariables(c("maply","jacobian","br","melt","maply","lambda","mdply","jacob
 #' 
 #' @aliases elasticity-method
 #' 
-#' @return \code{FLPar} 
+#' @return \code{FLPar} with elasticity of reference points by input parameters
 #' 
 #' @export
 #' @docType methods
 #' @rdname elasticity
 #'   
-#' @seealso \code{\link{lhPar}}  
+#' @seealso \code{\link{lhPar}},  \code{\link{lhEql}},  \code{\link{lhRef}}    
 #'  
 #' @examples
 #' \dontrun{
-#' library(ggplot2)
-#' library(FLCore)
-#' library(FLBRP)
-#' library(FLife)
-#' data(pars)
-#' pms=lhSim(pars[[1]])
-#' eql=lh(pms,range = c(min=0,max=8, minfbar=1,maxfbar=8,plusgroup=8))
-#' lsl=leslie(eql,fbar=c(refpts(eql)["crash","harvest"]))
+#' #bug
 #' }
 elasticity=function(params,sel,fn){
 

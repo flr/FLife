@@ -1,5 +1,4 @@
-globalVariables(c("ddply",".","year"))
-                
+              
 #' rod
 #' 
 #'
@@ -19,12 +18,13 @@ globalVariables(c("ddply",".","year"))
 #' 
 #' @examples
 #' \dontrun{
-#'     object=rlnorm(1,FLQuant(0,dimnames=list(year=1:30)),.3)
-#'     pg=rod(object) 
-#'     plot(object) +
-#'        geom_polygon(aes(year,data,group=regime),
-#'        fill="lavender",col="blue",
-#'        lwd=.25,data=pg,alpha=.2)
+#'  #bug   
+#'  object=rlnorm(1,FLQuant(0,dimnames=list(year=1:30)),.3)
+#'  pg=rod(object) 
+#'  plot(object) +
+#'      geom_polygon(aes(year,data,group=regime),
+#'      fill="lavender",col="blue",
+#'      lwd=.25,data=pg,alpha=.2)
 #' }
 #' 
 setMethod("rod", signature(object="FLQuant"),

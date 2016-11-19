@@ -1,5 +1,6 @@
-#' vonB
+#' @title von Bertalanffy growth curve
 #'
+#' @description 
 #' Von Bertalanffy growth equation
 #' 
 #' @param age FLQuant, FLPar or numeric object with values corresponding to ages 
@@ -8,14 +9,14 @@
 #' 
 #' @aliases vonB vonB-method vonB,FLPar,FLPar-method vonB,FLQuant,FLPar-method vonB,FLQuant,numeric-method vonB,missing,FLPar-method vonB,numeric,numeric-method
 #' 
-#' @return an object the same type supplied as \code{age} 
+#' @return Returns an object of same class as \code{age}  e.g. \code{FLQuant}
 #' 
 #' @export
 #' @docType methods
 #' @rdname vonB
 #' 
 #' 
-#' @seealso \code{\link{gompertz}} \code{\link{gascuel}}
+#' @seealso \code{\link{gompertz}}, \code{\link{gascuel}}
 #' 
 #' @examples
 #' \dontrun{
@@ -24,7 +25,8 @@
 #' vonB(age,params)
 #' 
 #' #inverse growth curve
-#' age=vonB(params,length=len)
+#' #bug
+#' age=vonB(params=params,length=len)
 #' }
 setMethod("vonB", signature(age="FLQuant",params="FLPar"),
           function(age,params,...){   

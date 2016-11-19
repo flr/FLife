@@ -6,22 +6,20 @@
 \alias{ages,FLCohort-method}
 \alias{ages,FLQuant-method}
 \alias{ages-method}
-\title{ages}
+\title{Fills an \code{FLQuant} with ages}
 \usage{
-\S4method{ages}{FLQuant}(object, season = NULL)
+\S4method{ages}{FLQuant}(object)
 }
 \arguments{
 \item{object}{\code{FLQuant} or \code{FLCohort}}
 
-\item{season}{the season dim}
-
 \item{...}{any other arguments}
 }
 \value{
-\code{FLQuant} or \code{FLCohort}
+\code{FLQuant} or \code{FLCohort} depending on what the first argument was
 }
 \description{
-Creates FLQuant/FLCohort with ages as entries
+Creates \code{FLQuant} and \code{FLCohort} with ages as entries
 }
 \examples{
 \dontrun{

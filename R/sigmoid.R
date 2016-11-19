@@ -1,18 +1,21 @@
-#' sigmoid
+#' @title Sigmoid ogive
 #' 
+#' @description 
 #' sigmoid ogive
 #' 
 #' @param age FLQuant, FLPar or numeric with ages 
-#' @param params \code{FLPar}
+#' @param params \code{FLPar} with age at whick probability is 0.5 (\code{a50}) and offset to 0.95 (\code{ato95})
 #' @param ... any other arguments
 #' 
 #' @aliases sigmoid sigmoid-method sigmoid,FLPar,FLPar-method sigmoid,FLQuant,FLPar-method sigmoid,FLQuant,numeric-method sigmoid,numeric,numeric-method
 #' 
-#' @return Depends on the type of \code{age} 
+#' @return returns an object of same type as \code{age} e.g. \code{FLQuant}
 #' 
 #' @export
 #' @docType methods
 #' @rdname sigmoid
+#' 
+#' @seealso \code{\link{knife}}, \code{\link{dnormal}}, \code{\link{logistic}}
 #' 
 #' @details
 #' 
@@ -23,10 +26,9 @@
 #' 
 #' @examples
 #' \dontrun{
-#' params=FLPar(linf=100,t0=0,k=.4)
+#' params=FLPar(a50=4,ato95=1)
 #' age=FLQuant(1:10,dimnames=list(age=1:10))
-#' len=sigmoid(age,params)
-#' age=sigmoid(params,length=len)
+#' sigmoid(age,params)
 #' }
 setMethod("sigmoid", signature(age="FLQuant",params="FLPar"),
           function(age,params,...){   

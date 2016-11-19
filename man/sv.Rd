@@ -3,7 +3,7 @@
 \docType{methods}
 \name{sv,FLPar,character-method}
 \alias{sv,FLPar,character-method}
-\title{sv}
+\title{Calculates steepness and virgin biomass}
 \usage{
 \S4method{sv}{FLPar,character}(x, model, spr0 = NA)
 }
@@ -17,7 +17,7 @@
 \item{...}{any other arguments}
 }
 \value{
-\code{FLPar}
+\code{FLPar} with values for steepness (s) and virgin biomass (v)
 }
 \description{
 Calculates steepness and virgin biomass given a and b for a Beverton and Holt SRR

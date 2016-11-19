@@ -1,6 +1,3 @@
-globalVariables(c("grad"))
-
-
 ## calculates slope at origin of Yield/Stock curve
 calcR=function(object,val=0.01){
     gradYS=function(x,rp) {

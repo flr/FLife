@@ -4,7 +4,7 @@
 \name{leslie,FLBRP-method}
 \alias{leslie,FLBRP-method}
 \alias{leslie-method}
-\title{leslie}
+\title{Leslie matrix}
 \usage{
 \S4method{leslie}{FLBRP}(object, fbar = FLQuant(0), numbers = TRUE, ...)
 }
@@ -21,7 +21,7 @@
 \code{matrix}
 }
 \description{
-Creates a Leslie Matrix
+Creates a Leslie Matrix from a \code{FLBRP} object that represents a population at equilibrium
 }
 \examples{
 \dontrun{
@@ -36,6 +36,6 @@ lsl=leslie(eql,fbar=c(refpts(eql)["crash","harvest"]))
 }
 }
 \seealso{
-\code{\link{lh}}
+\code{\link{r}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}}
 }
 

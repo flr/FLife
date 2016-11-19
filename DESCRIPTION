@@ -18,7 +18,8 @@ Depends:
 Imports:
     methods
 Suggests:
-    ggplotFL
+    ggplotFL,
+    FLBRP
 Collate:
     generic.R
     vonB.R

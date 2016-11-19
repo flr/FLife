@@ -10,7 +10,7 @@
 \alias{gompertz,missing,FLPar-method}
 \alias{gompertz,numeric,numeric-method}
 \alias{gompertz-method}
-\title{{gompertz growth equation}}
+\title{Gompertz growth equation}
 \usage{
 \S4method{gompertz}{FLQuant,FLPar}(age, params, ...)
 }
@@ -22,7 +22,7 @@
 \item{...}{any other arguments}
 }
 \value{
-Depends on the value of \code{data}
+Returns an object of same class as \code{age}
 }
 \description{
 gompertz growth equation
@@ -34,5 +34,8 @@ age=FLQuant(1:10,dimnames=list(age=1:10))
 len=gompertz(par,age)
 }
 
+}
+\seealso{
+\code{\link{gascuel}}, \code{\link{vonB}}
 }
 

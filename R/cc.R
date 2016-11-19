@@ -1,5 +1,6 @@
-#' cc
+#' @title Catch curve analysis
 #'
+#' @description 
 #' Catch curve analysis
 #' 
 #' @param age age
@@ -8,7 +9,9 @@
 #' 
 #' @aliases cc cc-method cc,numeric,numeric-method cc,missing,FLQuant-method cc,FLQuant,missing-method
 #' 
-#' @return Depends on the value of \code{data} 
+#' @return Returns an object of same class \code{age} 
+#' 
+#' @seealso \code{\link{powh}}
 #' 
 #' @export
 #' @docType methods
@@ -18,10 +21,7 @@
 #' 
 #' @examples
 #' \dontrun{
-#' params=FLPar(linf=100,t0=0,k=.4)
-#' age=FLQuant(1:10,dimnames=list(age=1:10))
-#' len=vonB(params,age)
-#' age=vonB(params,length=len)
+#' #bug
 #' }
 setMethod("cc", signature(age="numeric",n="numeric"),
           function(age,n,...){  

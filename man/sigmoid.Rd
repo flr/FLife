@@ -8,7 +8,7 @@
 \alias{sigmoid,FLQuant,numeric-method}
 \alias{sigmoid,numeric,numeric-method}
 \alias{sigmoid-method}
-\title{sigmoid}
+\title{Sigmoid ogive}
 \usage{
 \S4method{sigmoid}{FLQuant,FLPar}(age, params, ...)
 }
@@ -20,7 +20,7 @@
 \item{...}{any other arguments}
 }
 \value{
-Depends on the type of \code{age}
+Returns a class of same type as \code{length}
 }
 \description{
 sigmoid ogive
@@ -38,6 +38,8 @@ age=sigmoid(params,length=len)
 }
 }
 \seealso{
+\code{\link{knife}}, \code{\link{dnormal}}, \code{\link{logistic}}
+
 \code{\link{dnormal},\link{knife}}
 }
 

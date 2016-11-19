@@ -1,6 +1,7 @@
-#' @title knife
+#' @title knife edge ogive
+#' 
 #' @description 
-#' knife edge ogive
+#' A method to simulate a knife edge ogive where at a given age the proportion chnages from 0 to 1
 #' 
 #' @import FLCore 
 #' 
@@ -9,7 +10,9 @@
 #' @param ... any other arguments
 #' 
 #' @aliases knife knife-method knife,FLQuant,FLPar-method knife,FLPar,FLPar-method knife,numeric,numeric-method knife,FLQuant,numeric-method
-#' @return Depends on the value of \code{data} 
+#' @return returns an object of same type as \code{age} e.g. \code{FLQuant}
+#' 
+#' @seealso \code{\link{sigmoid}},  \code{\link{dnormal}}, \code{\link{logistic}}
 #' 
 #' @exportMethod knife
 #' @docType methods
@@ -17,15 +20,17 @@
 #' 
 #' @details
 #' The knife ogive is an S-shaped or knife curve or knifeal functions, 
-#' Verhulst hypothesizes that small populations increase geometrically, because the supply of resources exceeds demand. Then, as supply and demand balance, population growth is constant. Finally, as demand exceeds supply, population growth decreases at the same rate that it had increased. Verhulst describes this process with an equation that enables him to predict when a population will reach any given size (see Verhulst's Figure):
-#' 
+#' Verhulst hypothesizes that small populations increase geometrically, because the supply of 
+#' resources exceeds demand. Then, as supply and demand balance, population growth is constant. 
+#' Finally, as demand exceeds supply, population growth decreases at the same rate that it had 
+#' increased. Verhulst describes this process with an equation that enables him to predict when 
+#' a population will reach any given size (see Verhulst's Figure):
 #' 
 #' @examples
 #' \dontrun{
-#' params=FLPar(linf=100,t0=0,k=.4)
+#' params=FLPar(a1=4)
 #' age=FLQuant(1:10,dimnames=list(age=1:10))
-#' len=knife(age,params)
-#' age=knife(params,length=len)
+#' knife(age,params)
 #' }
 setMethod("knife", signature(age="FLQuant",params="FLPar"),
           function(age,params,...){   

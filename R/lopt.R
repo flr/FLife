@@ -1,11 +1,7 @@
-globalVariables(c("aaply"))
-
-
-#' lopt
+#' @title Length at maximum biomass
 #'
 #' @description Finds length at maximum biomass, assuminmg natural mortality is a function of
 #'  mass-at-age, i.e. Lorenzen. 
-#' 
 #' 
 #' @param params FLPar
 #' @param m A function, i.e. gislason
@@ -13,7 +9,7 @@ globalVariables(c("aaply"))
 #' 
 #' @aliases lopt lopt-method lopt,FLPar-method
 #' 
-#' @return FLPar with length at maximum biomass 
+#' @return \code{FLPar} with length at maximum biomass of a cohort 
 #' 
 #' @details There are several ways to calculate \deqn{L_{opt}}, i.e.
 #' i) \deqn{{2/3}^{rds}  L_{\infty}}
@@ -25,12 +21,12 @@ globalVariables(c("aaply"))
 #' @docType methods
 #' @rdname lopt
 #' 
-#' @seealso \code{\link{vonB}}  
+#' @seealso \code{\link{loptAge}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}},  
 #' 
 #' @examples
 #' \dontrun{
-#' data(pars)
-#' lopt(pars[[1]])
+#' params=lhPar(FLPar(linf=100))
+#' lopt(params)
 #' }
 setMethod("lopt", signature(params="FLPar"),
        function(params,
@@ -86,7 +82,7 @@ loptFn=function(x,params,
 
 loptFn2<-function(params) params["linf"]*3/(3+exp(params["m2"])/params["k"])
 
-#' loptAge
+#' @title Age at maximum biomass
 #'
 #' @description Finds length at maximum biomass
 #' 
@@ -98,7 +94,7 @@ loptFn2<-function(params) params["linf"]*3/(3+exp(params["m2"])/params["k"])
 #' 
 #' @aliases loptAge loptAge-method loptAge,FLPar-method
 #' 
-#' @return FLPar with length at maximum biomass 
+#' @return \code{FLPar} with length at maximum biomass of a cohort 
 #' 
 #' @details There are several ways to calculate \deqn{L_{opt}}, i.e.
 #' i) \deqn{{2/3}^{rds}  L_{\infty}}
@@ -110,12 +106,12 @@ loptFn2<-function(params) params["linf"]*3/(3+exp(params["m2"])/params["k"])
 #' @docType methods
 #' @rdname loptAge
 #' 
-#' @seealso \code{\link{vonB}}  
+#' @seealso \code{\link{loptAge}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}},  
 #' 
 #' @examples
 #' \dontrun{
-#' data(pars)
-#' lopt(pars[[1]])
+#' params=lhPar(FLPar(linf=100))
+#' loptAge(params)
 #' }
 setMethod("loptAge", signature(params="FLPar"),
     function(params,

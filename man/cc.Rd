@@ -7,7 +7,7 @@
 \alias{cc,missing,FLQuant-method}
 \alias{cc,numeric,numeric-method}
 \alias{cc-method}
-\title{cc}
+\title{Catch curve analysis}
 \usage{
 \S4method{cc}{numeric,numeric}(age, n, ...)
 }
@@ -19,7 +19,7 @@
 \item{...}{any other arguments}
 }
 \value{
-Depends on the value of \code{data}
+Returns an object of same class \code{age}
 }
 \description{
 Catch curve analysis
@@ -33,6 +33,8 @@ age=vonB(params,length=len)
 }
 }
 \seealso{
+\code{\link{powh}}
+
 \code{\link{powh}}
 }
 

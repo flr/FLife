@@ -5,7 +5,7 @@
 \alias{noise}
 \alias{noise,numeric,FLQuant-method}
 \alias{noise-method}
-\title{noise}
+\title{Random noise with different frequencies}
 \usage{
 \S4method{noise}{numeric,FLQuant}(n = n, len = len, sd = 0.3, b = 0,
   burn = 0, trunc = 0, what = c("year", "cohort", "age"))
@@ -28,7 +28,7 @@
 \item{...}{any other arguments}
 }
 \value{
-A vector with autocorrelation equal to B.
+A \code{FLQuant} with autocorrelation equal to B.
 }
 \description{
 A noise generator

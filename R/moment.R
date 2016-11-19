@@ -1,7 +1,7 @@
-#' moment
+#' @title Calculates moments of a distribution
 #' 
 #' @description 
-#'   aaa 
+#'   The calculates moments of a distribution, i.e. mean, standard deviation, skew and kurtosis
 #'          
 #' @param object a vector holding a time series
 #' @param n number of observations equal to length og object by default
@@ -17,7 +17,12 @@
 #' @aliases moment-method moment,numeric-method 
 #' 
 #' @examples
-#' x=1
+#' \dontrun{
+#' x=rlnorm(100)
+#' moment(x)
+#' }
+#' 
+
 
 setMethod("moment", signature(object='numeric'),
           function(object,n=rep(1,length(object)),na.rm=T) { 

@@ -5,7 +5,7 @@
 \alias{loptAge}
 \alias{loptAge,FLPar-method}
 \alias{loptAge-method}
-\title{loptAge}
+\title{Age at maximum biomass}
 \usage{
 \S4method{loptAge}{FLPar}(params, m = function(length, params) params["m1"]
   \%*\% (exp(log(length) \%*\% params["m2"])), growth = vonB, ...)
@@ -20,7 +20,7 @@
 \item{...}{any other arguments}
 }
 \value{
-FLPar with length at maximum biomass
+\code{FLPar} with length at maximum biomass of a cohort
 }
 \description{
 Finds length at maximum biomass
@@ -39,6 +39,6 @@ lopt(pars[[1]])
 }
 }
 \seealso{
-\code{\link{vonB}}
+\code{\link{loptAge}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}},
 }
 

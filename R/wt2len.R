@@ -1,5 +1,6 @@
-#' wt2len
+#' @title Mass to length conversion
 #'
+#' @description 
 #' converts weight to length
 #' 
 #' @param wt FLQuant, FLPar or numeric with length 
@@ -8,7 +9,7 @@
 #' 
 #' @aliases wt2len wt2len-method wt2len,FLCohort,FLPar-method wt2len,FLQuant,FLPar-method wt2len,numeric,FLPar-method
 #' 
-#' @return Depends on the value of \code{wt} 
+#' @return Returns an object of same class as \code{wt}  e.g. \code{FLQuant}
 #' 
 #' @export
 #' @docType methods
@@ -18,7 +19,7 @@
 #' 
 #' @examples
 #' \dontrun{
-#' params=FLPar(a=1,b=3)
+#' params=FLPar(a=0.1,b=3)
 #' wt2len(FLQuant(10),params)
 #' }
 setMethod("wt2len", signature(wt="FLQuant", params="FLPar"),function(wt,params,...)  (wt/params["a"])^(1/params["b"]))

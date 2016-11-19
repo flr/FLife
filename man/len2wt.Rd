@@ -7,7 +7,7 @@
 \alias{len2wt,FLQuant,FLPar-method}
 \alias{len2wt,numeric,FLPar-method}
 \alias{len2wt-method}
-\title{len2wt}
+\title{Length to weight conversion}
 \usage{
 \S4method{len2wt}{FLQuant,FLPar}(length, params)
 }
@@ -19,10 +19,10 @@
 \item{...}{any other arguments}
 }
 \value{
-Depends on the value of \code{length}
+Returns a class of same type as \code{length}
 }
 \description{
-converts length to weight
+Converts length to weight based on $W=aL^b$
 }
 \examples{
 \dontrun{

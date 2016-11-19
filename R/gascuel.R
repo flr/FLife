@@ -1,7 +1,6 @@
-globalVariables(c("invGascuelFn"))
-
-#' gascuel
-#'
+#' @title Gascuel growth curve
+#' 
+#' @description 
 #' Gascuel growth equation
 #' 
 #' @param age FLQuant, FLPar or numeric with ages 
@@ -17,11 +16,14 @@ globalVariables(c("invGascuelFn"))
 #' gascuel,missing,FLPar-method 
 #' gascuel,missing,missing-method
 #' 
-#' @return Depends on the value of \code{data} 
+#' @return Returns a class of same type as \code{age} e.g. \code{FLQuant}
+
 #' @export
 #' @docType methods
 #' @rdname gascuel
 #' 
+#' @seealso \code{\link{gompertz}}, \code{\link{vonB}} 
+#'
 #' @details 
 #' Gascuel D., Fonteneau, A., and Capisano, C. (1992).
 #' Modelisation d'une croissance en deux stances chez  #l'albacore (Thunnus albacares) de l'Atlantique Est. 
@@ -29,9 +31,7 @@ globalVariables(c("invGascuelFn"))
 #'  
 #' @examples
 #' \dontrun{
-#' params=FLPar(a=37.8,b=8.93,c=137.0,
-#'              d=8.93,e=0.808,f=7.49)
-#' len=gascuel(params,age)
+#' gascuel(10)
 #' }
 #
 setMethod("gascuel", signature(age="FLQuant",params="FLPar"),

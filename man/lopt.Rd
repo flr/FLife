@@ -5,7 +5,7 @@
 \alias{lopt}
 \alias{lopt,FLPar-method}
 \alias{lopt-method}
-\title{lopt}
+\title{Length at maximum biomass}
 \usage{
 \S4method{lopt}{FLPar}(params, m = function(length, params) exp(0.55) *
   (length^-1.61) \%*\% (params["linf"]^1.44) \%*\% params["k"], ...)
@@ -18,7 +18,7 @@
 \item{...}{any other arguments}
 }
 \value{
-FLPar with length at maximum biomass
+\code{FLPar} with length at maximum biomass of a cohort
 }
 \description{
 Finds length at maximum biomass, assuminmg natural mortality is a function of
@@ -38,6 +38,6 @@ lopt(pars[[1]])
 }
 }
 \seealso{
-\code{\link{vonB}}
+\code{\link{loptAge}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}},
 }
 

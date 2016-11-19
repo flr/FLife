@@ -8,7 +8,7 @@
 \alias{dnormal,FLQuant,numeric-method}
 \alias{dnormal,numeric,numeric-method}
 \alias{dnormal-method}
-\title{dnormal}
+\title{Double normal ogive}
 \usage{
 \S4method{dnormal}{FLQuant,FLPar}(age, params, ...)
 }
@@ -20,7 +20,7 @@
 \item{...}{any other arguments}
 }
 \value{
-Depends on the value of \code{age}
+Returns an object of same class as \code{age}
 }
 \description{
 Double normal ogive
@@ -32,6 +32,6 @@ wt2len(params,FLQuant(10))
 }
 }
 \seealso{
-\code{\link{vonB}}
+\code{\link{sigmoid}}, \code{\link{dnormal}}, \code{\link{logistic}}
 }
 

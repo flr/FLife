@@ -1,7 +1,4 @@
-
-
-##############################################################
-#' noise
+#' @title Random noise with different frequencies
 #' 
 #' @description A noise generator
 #' 
@@ -22,7 +19,7 @@
 #'
 #' @importFrom methods is
 #'
-#' @return A vector with autocorrelation equal to B.
+#' @return A \code{FLQuant} with autocorrelation equal to B.
 #' 
 #' @references Ranta and Kaitala 2001 Proc. R. Soc.
 #' vt = b * vt-1 + s * sqrt(1 - b^2)
@@ -32,6 +29,7 @@
 #' 
 #' @examples
 #' \dontrun{
+#' #bug
 #' white <- noise(1000,sd=.3,b=0)
 #' plot(white)
 #' acf(white)
@@ -72,7 +70,6 @@
 # trunc=0
 setMethod("noise", signature(n='numeric', len="FLQuant"),
     function(n=n,len=len,sd=0.3,b=0,burn=0,trunc=0,what=c("year","cohort","age")) {
-      
       len=propagate(len,n)
       switch(what[1],
              "cohort"={object=as(len,"FLCohort")

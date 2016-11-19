@@ -8,7 +8,7 @@
 \alias{knife,FLQuant,numeric-method}
 \alias{knife,numeric,numeric-method}
 \alias{knife-method}
-\title{knife}
+\title{knife edge ogive}
 \usage{
 \S4method{knife}{FLQuant,FLPar}(age, params, ...)
 }
@@ -20,21 +20,27 @@
 \item{...}{any other arguments}
 }
 \value{
-Depends on the value of \code{data}
+returns an object of same type as \code{age}
 }
 \description{
-knife edge ogive
+A method to simulate a knife edge ogive where at a given age the proportion chnages from 0 to 1
 }
 \details{
 The knife ogive is an S-shaped or knife curve or knifeal functions, 
-Verhulst hypothesizes that small populations increase geometrically, because the supply of resources exceeds demand. Then, as supply and demand balance, population growth is constant. Finally, as demand exceeds supply, population growth decreases at the same rate that it had increased. Verhulst describes this process with an equation that enables him to predict when a population will reach any given size (see Verhulst's Figure):
+Verhulst hypothesizes that small populations increase geometrically, because the supply of 
+resources exceeds demand. Then, as supply and demand balance, population growth is constant. 
+Finally, as demand exceeds supply, population growth decreases at the same rate that it had 
+increased. Verhulst describes this process with an equation that enables him to predict when 
+a population will reach any given size (see Verhulst's Figure):
 }
 \examples{
 \dontrun{
 params=FLPar(linf=100,t0=0,k=.4)
 age=FLQuant(1:10,dimnames=list(age=1:10))
 len=knife(age,params)
-age=knife(params,length=len)
 }
+}
+\seealso{
+\code{\link{sigmoid}},  \code{\link{dnormal}}, \code{\link{logistic}}
 }
 

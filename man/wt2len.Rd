@@ -7,7 +7,7 @@
 \alias{wt2len,FLQuant,FLPar-method}
 \alias{wt2len,numeric,FLPar-method}
 \alias{wt2len-method}
-\title{wt2len}
+\title{Mass to length conversion}
 \usage{
 \S4method{wt2len}{FLQuant,FLPar}(wt, params, ...)
 }
@@ -19,7 +19,7 @@
 \item{...}{any other arguments}
 }
 \value{
-Depends on the value of \code{wt}
+Returns an object of same class as \code{wt}
 }
 \description{
 converts weight to length

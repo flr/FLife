@@ -1,9 +1,7 @@
-globalVariables(c("laply","lambda"))
-
-
-#' leslie
-#'
-#' Creates a Leslie Matrix
+#' @title Leslie matrix
+#' 
+#' @description
+#' Creates a Leslie Matrix from a \code{FLBRP} object that represents a population at equilibrium
 #'  
 #' @param object \code{FLBRP}
 #' @param fbar \code{numeric} F at whicj survival calculated
@@ -12,31 +10,26 @@ globalVariables(c("laply","lambda"))
 #' 
 #' @aliases leslie-method leslie,FLBRP-method
 #' 
-#' @return \code{matrix} 
+#' @return \code{matrix}  
 #' 
 #' @export
 #' @docType methods
 #' @rdname leslie
 #' 
-#' @seealso \code{\link{lh}}  
+#' @seealso \code{\link{r}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}}
+#'  
 #' 
 #' @examples
 #' \dontrun{
-#' library(ggplot2)
-#' library(FLCore)
-#' library(FLBRP)
-#' library(FLife)
-#' data(pars)
-#' pms=lhSim(pars[[1]])
-#' eql=lh(pms,range = c(min=0,max=8, minfbar=1,maxfbar=8,plusgroup=8))
-#' lsl=leslie(eql,fbar=c(refpts(eql)["crash","harvest"]))
+#' eql=lhEql(lhPar(FLPar(linf=100)))
+#' leslie(eql)
 #' }
 setMethod("leslie", signature(object="FLBRP"),
   function(object,fbar=FLQuant(0),numbers=TRUE,...){
 
   fbar(object)=fbar
   object=brp(object)
-  names(dimnames(fbar(object)))[1]=names(dimnames(m(object)))[1]
+  names(dimnames(fbar(object)))[1]=names(dimnames(object@m))[1]
 
   ages=dims(object)$min:dims(object)$max
   
@@ -44,7 +37,7 @@ setMethod("leslie", signature(object="FLBRP"),
               dimnames=list(age =ages,age=ages,
                             iter=seq(dims(stock(object))$iter)))
   #survivorship
-  z=exp(-(m(object)))
+  z=exp(-(object@m))
   for (i in seq(dims(object)$iter)){
     diag(mx[-1,-length(ages),i]) =FLCore::iter(z[-length(ages)],i)
     if (range(object)["plusgroup"]==range(object)["max"])
@@ -79,8 +72,8 @@ setMethod("leslie", signature(object="FLBRP"),
   
   return(mx)})
 
-#' r
-#'
+#' @title Population growth rate
+#' @description 
 #' Estimates population growth rate for a Leslie matrix
 #'  
 #' @param m \code{FLPar}
@@ -89,26 +82,22 @@ setMethod("leslie", signature(object="FLBRP"),
 #' 
 #' @aliases r-method r,FLPar-method
 #' 
-#' @return \code{FLPar} 
+#' @return \code{FLPar} with growth rate a small population size
 #' 
 #' @export
 #' @docType methods
 #' @rdname lambda
 #' 
-#' @seealso \code{\link{leslie}}
+#' @seealso \code{\link{leslie}}, \code{\link{lhRef}}
 #' 
 #' @examples
 #' \dontrun{
-#' library(ggplot2)
-#' library(FLBRP)
-#' library(FLife)
-#' data(pars)
-#' pms=lhSim(pars[[1]])
-#' eql=lh(pms)
-#' lsl=leslie(eql)
-#' lambda(lsl)
+#' #bug
+#' library(popbio)
+#' eql=lhEql(lhPar(FLPar(linf=100)))
+#' L=leslie(eql)
+#' lambda(L)
 #' }
-
 setMethod("r", signature(m="FLPar",fec="missing"),
           function(m,...){
 

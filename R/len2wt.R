@@ -1,7 +1,7 @@
-#' len2wt
+#' @title Length to weight conversion
 #' 
-#' 
-#' converts length to weight
+#' @description  
+#' Converts length to weight based on $W=aL^b$
 #' 
 #' @param length age FLQuant, FLPar or numeric 
 #' @param params \code{FLPar}
@@ -9,8 +9,7 @@
 #' 
 #' @aliases len2wt len2wt-method len2wt,FLCohort,FLPar-method len2wt,FLQuant,FLPar-method len2wt,numeric,FLPar-method
 #' 
-#' @return Depends on the value of \code{length} 
-#' 
+#' @return Returns a class of same type as \code{length} e.g. \code{FLQuant}
 #' @export
 #' @docType methods
 #' @rdname len2wt
@@ -20,7 +19,7 @@
 #' @examples
 #' \dontrun{
 #' params=FLPar(a=1,b=3)
-#' len2wt(params,FLQuant(10))
+#' len2wt(FLQuant(10),params)
 #' }
 ## converts wt to len using condition factor
 setMethod("len2wt", signature(length="FLQuant",params="FLPar"),

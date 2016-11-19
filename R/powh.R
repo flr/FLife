@@ -1,9 +1,6 @@
-globalVariables(c("ddply",".","x"))
-
-#' powh
+#' @title Powell Weatherall method for estimating Z and Linfinity 
 #' 
 #' @description 
-#' 
 #' Estimates growth and mortality parameters from length frequency data.
 #'  
 #' @param len vector with length distribution
@@ -17,7 +14,7 @@ globalVariables(c("ddply",".","x"))
 #'
 #' @aliases powh powh-method powh,numeric,numeric-method
 #'  
-#' @return a \code{data.frame} \code{mn} (mean), \code{diff} (difference), 
+#' @return a \code{data.frame} with \code{mn} (mean), \code{diff} (difference), 
 #' \code{len} (length) and \code{n} (frequency)
 #'  
 #' @details
@@ -88,8 +85,11 @@ globalVariables(c("ddply",".","x"))
 #' @docType methods
 #' @rdname powh
 #' 
+#' @seealso \code{\link{cc}}
+#' 
 #' @examples
 #' \dontrun{
+#' #bug
 #' data(bonLn)
 #' rslt=with(subset(bonLn,year==2013), powh(len,n))
 #' }
@@ -150,7 +150,7 @@ setMethod("powh", signature(len='numeric', n="numeric"),
   return(list(params=params,data=data.frame(dat,hat=predict)))})
 
 
-#' unbin
+#' @title unbin frequency distributions
 #' 
 #' @description 
 #'  For a vector with labels corresponding to intervals i.e. \code{"(0,10]"}

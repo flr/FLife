@@ -6,7 +6,7 @@
 \alias{powh,numeric,numeric-method}
 \alias{powh-method}
 \alias{unbin}
-\title{powh}
+\title{Powell Weatherall method for estimating Z and Linfinity}
 \usage{
 \S4method{powh}{numeric,numeric}(len, n, weights = FALSE, fromMode = FALSE,
   linf = 0)
@@ -29,7 +29,7 @@ unbin(x)
 \item{...}{any other argument, i.e. weights =TRUE, fromMode =FALSE}
 }
 \value{
-a \code{data.frame} \code{mn} (mean), \code{diff} (difference), 
+a \code{data.frame} with \code{mn} (mean), \code{diff} (difference), 
 \code{len} (length) and \code{n} (frequency)
 
 a \code{data.frame} with left and right boundaries and mid points.
@@ -105,5 +105,8 @@ R. Beverton and S. Holt. Review of method for estimating mortality rates in
  Estimating growth and mortality in steady-state fish stocks from
  length-frequency data.
  \emph{ICLARM Conf. Proc}, pages 53--74, 1987.
+}
+\seealso{
+\code{\link{cc}}
 }
 

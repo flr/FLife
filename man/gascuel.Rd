@@ -15,7 +15,7 @@
 \alias{gascuel,numeric,missing-method}
 \alias{gascuel,numeric,numeric-method}
 \alias{gascuel-method}
-\title{gascuel}
+\title{Gascuel growth curve}
 \usage{
 \S4method{gascuel}{FLQuant,FLPar}(age, params, ...)
 }
@@ -27,7 +27,7 @@
 \item{...}{any other arguments}
 }
 \value{
-Depends on the value of \code{data}
+Returns a class of same type as \code{age}
 }
 \description{
 Gascuel growth equation
@@ -43,5 +43,8 @@ params=FLPar(a=37.8,b=8.93,c=137.0,
              d=8.93,e=0.808,f=7.49)
 len=gascuel(params,age)
 }
+}
+\seealso{
+\code{\link{gompertz}}, \code{\link{vonB}}
 }
 
