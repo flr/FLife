@@ -131,11 +131,11 @@ params=FLPar(a=0.1,b=3)
 testObjects[["wt2len"]]=wt2len(FLQuant(10),params)
 
 #sv
-params=FLPar(a=37.8,b=8.93)
-testObjects[["sv"]]=sv(params,"bevholt",.4)
+#params=FLPar(a=37.8,b=8.93)
+#testObjects[["sv"]]=sv(params,"bevholt",.4)
 
 #rod
 object=rlnorm(1,FLQuant(0,dimnames=list(year=1:30)),.3)
-rod=FLife:::rodFn
 testObjects[["rod"]]=rod(object) 
 
+save("testObjects",file="/home/laurie/Desktop/flr/FLife/tests/testthat/FLife-test.RData")
