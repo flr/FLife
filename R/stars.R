@@ -1,4 +1,95 @@
-              
+
+rodFn=function(data,year=NULL,plot=FALSE){
+  
+  if (is.null(year)) year=seq(length(data))
+  
+  #==set the assumed minimum regime length==
+  rgLN=10
+  
+  #== 'sig' should be based on an appropriate t-distribution given
+  #== the number of observations in the series (but I didn't do that here)
+  #== this significance level is roughly equal to p<0.1
+  sig=1.68
+  
+  #==iteration for finding all the shifts in a time series==
+  Shift=rep(NA,100)							# vector for recording shifts
+  if(length(data)>rgLN)
+  {
+    try(Shift[1]<-ROregimeSHFT(regLN=rgLN,sig=1.68,series=data),TRUE)
+    counts=2
+    if(is.na(Shift[counts-1])==FALSE) 
+    {
+      while(Shift[counts-1]>0 & (Shift[counts-1]+rgLN+rgLN-1)<length(data))
+      {
+        Shift[counts]=ROregimeSHFT(rgLN,sig,data,(Shift[counts-1]+rgLN-1))
+        counts=counts+1
+      }
+    }
+  }   
+  
+  #===plot results=== 
+  
+  ShiftsVec=Shift[!is.na(Shift)]
+  
+  if (plot)
+    plot(data,type="l")
+  
+  mn=NULL
+  sd=NULL
+  ln=NULL
+  
+  for(i in 1:length(ShiftsVec))
+  {
+    if(i==1){  
+      regMean=mean(data[1:(Shift[i]+rgLN-1)])
+      regSD=sd(data[1:(Shift[i]+rgLN-1)])
+      mn=c(mn,regMean)
+      sd=c(sd,regSD)
+      ln=c(ln,Shift[i]+rgLN-1)
+      
+      if (plot)
+        polygon(x=c(1,Shift[i]+rgLN-1,Shift[i]+rgLN-1,1),
+                y=c(regMean+regSD,regMean+regSD,regMean-regSD,regMean-regSD),
+                border=NA,col="#0000ff55")
+    }
+    
+    if(i>1){
+      endInd=ShiftsVec[i]+rgLN-1
+      if(is.na(ShiftsVec[i+1]))
+      {endInd=length(data)}
+      
+      regMean=mean(data[(Shift[i-1]+rgLN):endInd])
+      regSD  =sd(  data[(Shift[i-1]+rgLN):endInd])
+      mn=c(mn,regMean)
+      sd=c(sd,regSD)
+      ln=c(ln,endInd)
+      
+      if (plot)
+        polygon(x=c(Shift[i-1]+rgLN,
+                    endInd,
+                    endInd,         
+                    Shift[i-1]+rgLN),
+                y=c(regMean+regSD,
+                    regMean+regSD,
+                    regMean-regSD,
+                    regMean-regSD),
+                border=NA,col="#0000ff55")}
+    
+    #print(ln)
+  }
+  
+  ## regimes
+  minyear=c(year[1],year[rev(rev(ln)[-1])]+1)
+  maxyear=min(year)+ln-1
+  
+  dat=data.frame(mn=mn,sd=sd,i=factor(seq(length(mn))),
+                 ln=ln,minyear=minyear,maxyear=maxyear)
+  dat=data.frame(regime=dat$i,
+                 data  =with(dat,c(mn+sd,  mn-sd,  mn-sd,  mn+sd)),
+                 year  =with(dat,c(minyear,minyear,maxyear,maxyear)))
+  #dat[do.call(order,dat),]
+}
+
 #' rod
 #' 
 #'
@@ -30,7 +121,7 @@
 #' 
 setMethod("rod", signature(object="FLQuant"),
           function(object, ...) 
-            ddply(as.data.frame(object),.(iter), with, rodFn(data,year)))
+            ddply(as.data.frame(object),.(iter), with, FLife:::rodFn(data,year)))
 
 #==Cody Szuwalski, 10/18,2012
 #==this function identifies the first regime shift in a series given a significance level
@@ -117,95 +208,4 @@ ROregimeSHFT=function(regLN,sig,series,shift=0){
 # val   =c(rnorm(12,valMean,valSD1),rnorm(12,valMean2,valSD2),rnorm(12,valMean,valSD1))			
 # plot(val,type="l")
 # 
-
-rodFn=function(data,year=NULL,plot=FALSE){
-  
-  if (is.null(year)) year=seq(length(data))
-  
-  #==set the assumed minimum regime length==
-  rgLN=10
-  
-  #== 'sig' should be based on an appropriate t-distribution given
-  #== the number of observations in the series (but I didn't do that here)
-  #== this significance level is roughly equal to p<0.1
-  sig=1.68
-  
-  #==iteration for finding all the shifts in a time series==
-  Shift=rep(NA,100)							# vector for recording shifts
-   if(length(data)>rgLN)
-   {
-    try(Shift[1]<-ROregimeSHFT(regLN=rgLN,sig=1.68,series=data),TRUE)
-    counts=2
-    if(is.na(Shift[counts-1])==FALSE) 
-    {
-     while(Shift[counts-1]>0 & (Shift[counts-1]+rgLN+rgLN-1)<length(data))
-      {
-       Shift[counts]=ROregimeSHFT(rgLN,sig,data,(Shift[counts-1]+rgLN-1))
-       counts=counts+1
-      }
-     }
-    }   
-  
-  #===plot results=== 
-  
-  ShiftsVec=Shift[!is.na(Shift)]
-  
-  if (plot)
-    plot(data,type="l")
-  
-  mn=NULL
-  sd=NULL
-  ln=NULL
-  
-  for(i in 1:length(ShiftsVec))
-    {
-    if(i==1){  
-       regMean=mean(data[1:(Shift[i]+rgLN-1)])
-       regSD=sd(data[1:(Shift[i]+rgLN-1)])
-       mn=c(mn,regMean)
-       sd=c(sd,regSD)
-       ln=c(ln,Shift[i]+rgLN-1)
-       
-       if (plot)
-         polygon(x=c(1,Shift[i]+rgLN-1,Shift[i]+rgLN-1,1),
-       y=c(regMean+regSD,regMean+regSD,regMean-regSD,regMean-regSD),
-       border=NA,col="#0000ff55")
-      }
-  
-    if(i>1){
-      endInd=ShiftsVec[i]+rgLN-1
-      if(is.na(ShiftsVec[i+1]))
-         {endInd=length(data)}
-       
-      regMean=mean(data[(Shift[i-1]+rgLN):endInd])
-      regSD  =sd(  data[(Shift[i-1]+rgLN):endInd])
-      mn=c(mn,regMean)
-      sd=c(sd,regSD)
-      ln=c(ln,endInd)
-       
-      if (plot)
-        polygon(x=c(Shift[i-1]+rgLN,
-                 endInd,
-                 endInd,         
-                 Shift[i-1]+rgLN),
-             y=c(regMean+regSD,
-                 regMean+regSD,
-                 regMean-regSD,
-                 regMean-regSD),
-      border=NA,col="#0000ff55")}
-      
-  #print(ln)
-  }
-
-  ## regimes
-  minyear=c(year[1],year[rev(rev(ln)[-1])]+1)
-  maxyear=min(year)+ln-1
-  
-  dat=data.frame(mn=mn,sd=sd,i=factor(seq(length(mn))),
-                 ln=ln,minyear=minyear,maxyear=maxyear)
-  dat=data.frame(regime=dat$i,
-                 data  =with(dat,c(mn+sd,  mn-sd,  mn-sd,  mn+sd)),
-                 year  =with(dat,c(minyear,minyear,maxyear,maxyear)))
-  #dat[do.call(order,dat),]
-  }
 

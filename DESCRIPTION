@@ -19,7 +19,8 @@ Imports:
     methods
 Suggests:
     ggplotFL (>= 2.5),
-    FLBRP (>= 2.5)
+    FLBRP (>= 2.5),
+    testthat
 Collate:
     generic.R
     data.R
