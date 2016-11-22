@@ -21,6 +21,7 @@ Suggests:
     ggplotFL (>= 2.5),
     FLBRP (>= 2.5),
     testthat
+Additional_repositories: http://flr-project.org/R
 Collate:
     generic.R
     data.R
