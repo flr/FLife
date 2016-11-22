@@ -13,13 +13,13 @@ Description: Many studies have shown the relationships between life history
 LazyData: true
 License: GPL (>= 2)
 Depends:
-    R(>=3.3.1),
-    FLCore(>=2.6)
+    R (>=3.3.1),
+    FLCore (>=2.6)
 Imports:
     methods
 Suggests:
-    ggplotFL(>=2.5),
-    FLBRP(>= 2.5)
+    ggplotFL (>=2.5),
+    FLBRP (>= 2.5)
 Collate:
     generic.R
     data.R
