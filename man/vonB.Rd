@@ -21,7 +21,7 @@
 \item{...}{other arguments}
 }
 \value{
-Returns an object of same class as \code{age}
+Returns an object of same class as \code{age}  e.g. \code{FLQuant}
 }
 \description{
 Von Bertalanffy growth equation
@@ -30,10 +30,10 @@ Von Bertalanffy growth equation
 \dontrun{
 params=FLPar(linf=100,t0=0,k=.4)
 age=FLQuant(1:10,dimnames=list(age=1:10))
-vonB(age,params)
+len=vonB(age,params)
 
 #inverse growth curve
-age=vonB(params,length=len)
+vonB(params=params,length=len)
 }
 }
 \seealso{

@@ -8,7 +8,7 @@
 lhRef(params, m = function(length, params) exp(0.55) * (length^-1.61) \%*\%
   (params["linf"]^1.44) \%*\% params["k"], sr = "bevholt", range = c(min =
   0, max = 40, minfbar = 1, maxfbar = 40, plusgroup = 40), what = c("r",
-  "lopt", "rc", "sk", "spr0"))
+  "lopt", "rc", "sk", "spr0", "sprmsy"), msy = "msy")
 }
 \arguments{
 \item{params}{\code{FLPar}}
@@ -19,18 +19,21 @@ lhRef(params, m = function(length, params) exp(0.55) * (length^-1.61) \%*\%
 
 \item{range}{ages used i.e. c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40)}
 
-\item{what}{quantities to calculate "r","lopt","rc","sk","spr0"}
+\item{what}{quantities to calculate "r","lopt","rc","sk","spr0","sprmsy"}
+
+\item{msy, }{\code{character} with "msy", "f0.1", ...}
 }
 \value{
 object of class \code{FLPar} with reference points, i.e r, rc, sk, lopt,
 }
 \description{
 \code{lhRef} calculates a variety of reference points i.e.  population growth rate at small 
-population sizs (r), and at Bmsy (rc), ratio of virgin biomass to Bmsy (sk), life 
-time reproductive output (srp0) and reproductive output at $B_{MSY}$ ($srp_{msy}$)
+population sizs (r), and at B~{MSY} (rc), ratio of virgin biomass to B~{MSY} (sk), life 
+time reproductive output (srp0) and reproductive output at B~{MSY} (sprmsy)
 }
 \examples{
 \dontrun{
+library(FLBRP)
 params=FLPar(linf=100,t0=0,k=.4)
 params=lhPar(params)
 lhRef(params)

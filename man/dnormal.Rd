@@ -20,15 +20,15 @@
 \item{...}{any other arguments}
 }
 \value{
-Returns an object of same class as \code{age}
+Returns an object of same class as \code{age} e.g. \code{FLQuant}
 }
 \description{
 Double normal ogive
 }
 \examples{
 \dontrun{
-params=FLPar(a1=1,sl=3,sr=500)
-wt2len(params,FLQuant(10))
+params=FLPar(a1=4,sl=2,sr=5000)
+dnormal(FLQuant(1:10,dimnames=list(age=1:10)),params)
 }
 }
 \seealso{

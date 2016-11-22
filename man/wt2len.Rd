@@ -19,14 +19,14 @@
 \item{...}{any other arguments}
 }
 \value{
-Returns an object of same class as \code{wt}
+Returns an object of same class as \code{wt}  e.g. \code{FLQuant}
 }
 \description{
 converts weight to length
 }
 \examples{
 \dontrun{
-params=FLPar(a=1,b=3)
+params=FLPar(a=0.1,b=3)
 wt2len(FLQuant(10),params)
 }
 }

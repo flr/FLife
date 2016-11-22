@@ -18,7 +18,7 @@
 #' \dontrun{
 #' #bug
 #' params=FLPar(a=37.8,b=8.93)
-#' sv(params,.4)
+#' sv(params,"bevholt",.4)
 #' }
 #
 setMethod('sv', signature(x='FLPar', model='character'),
@@ -26,15 +26,19 @@ setMethod('sv', signature(x='FLPar', model='character'),
  
    a=x["a"]
    b=x["b"]
-   s=FLPar(a=1,dimnames=dimnames(a))  
-   v=FLPar(b=1,dimnames=dimnames(a))  
-   spr0=FLPar(spr0,dimnames=dimnames(a))  
+   dmns=dimnames(x["a"])
+   dmns[[1]]="s"
+   s=FLPar(1,dimnames=dmns)
+   dmns[[1]]="v"
+   v=FLPar(1,dimnames=dmns)  
+   dmns[[1]]="spr0"
+   spr0=FLPar(spr0,dimnames=dmns)  
 
    if ("spr0" %in% dimnames(x)$params)
      spr0=x["spr0"] 
 
-   c=FLPar(c=1,dimnames=dimnames(a))  
-   d=FLPar(d=1,dimnames=dimnames(a))  
+   c=FLPar(1,dimnames=dimnames(a))  
+   d=FLPar(1,dimnames=dimnames(a))  
    if (("c" %in% dimnames(x)$params))  c=x["c"]
    if (("d" %in% dimnames(x)$params))  d=x["d"]
 
@@ -83,3 +87,17 @@ abPars. <- function(x,spr0=NA,model){
 
   res <- c(a=a, b=b)
   return(res[!is.null(res)])}
+
+spr2v <- function(model, spr, a=NULL, b=NULL, c=NULL, d=NULL){
+  # SSB as function of ssb/rec
+  return(switch(model,
+                "bevholt"  = a*(spr)-b,
+                "ricker"   = log(a*spr)/b,
+                "cushing"  = (1/(a*spr))^(1/(b-1)),
+                "shepherd" = b*(a*spr-1)^(1/c),
+                "segreg"   = ifelse(ssb <= b, a/(spr), 0),
+                "mean"     = a/(spr),
+                "dersh"    = ssb*a*(1-b*c*ssb)^c,
+                "pellat"   = 1/(a/ssb-a/ssb*(ssb/b)^c),
+                NULL))}
+  

@@ -24,12 +24,14 @@ Returns a data.frame
 }
 \examples{
 \dontrun{
-    object=rlnorm(1,FLQuant(0,dimnames=list(year=1:30)),.3)
-    pg=rod(object) 
-    plot(object) +
-       geom_polygon(aes(year,data,group=regime),
-       fill="lavender",col="blue",
-       lwd=.25,data=pg,alpha=.2)
+ object=rlnorm(1,FLQuant(0,dimnames=list(year=1:30)),.3)
+ pg=rod(object) 
+ ggplot(object) +
+     geom_polygon(aes(year,data,group=regime),
+         fill="lavender",col="blue",
+         lwd=.25,data=pg,alpha=.75)+
+     geom_point(aes(year,data))+
+     geom_line(aes(year,data))
 }
 
 }

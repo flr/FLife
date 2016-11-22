@@ -84,10 +84,6 @@ of $L_{infinity}$ and Z/K from
 If K is known Z can also be esimated
 }
 \examples{
-\dontrun{
-data(bonLn)
-rslt=with(subset(bonLn,year==2013), powh(len,n))
-}
 x=summary(cut(runif(100),seq(0,1,.1)))
 unbin(x)
 }

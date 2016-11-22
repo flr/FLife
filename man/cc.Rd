@@ -26,10 +26,10 @@ Catch curve analysis
 }
 \examples{
 \dontrun{
-params=FLPar(linf=100,t0=0,k=.4)
-age=FLQuant(1:10,dimnames=list(age=1:10))
-len=vonB(params,age)
-age=vonB(params,length=len)
+data(ple4)
+ctc=as.data.frame(catch.n(ple4))
+dat=cc(age=ctc$age,n=ctc$data)
+head(dat)
 }
 }
 \seealso{

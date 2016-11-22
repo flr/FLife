@@ -27,7 +27,7 @@
 \item{...}{any other arguments}
 }
 \value{
-Returns a class of same type as \code{age}
+Returns a class of same type as \code{age} e.g. \code{FLQuant}
 }
 \description{
 Gascuel growth equation
@@ -39,9 +39,7 @@ Aquat. Living Resour. 5: 155-172.
 }
 \examples{
 \dontrun{
-params=FLPar(a=37.8,b=8.93,c=137.0,
-             d=8.93,e=0.808,f=7.49)
-len=gascuel(params,age)
+gascuel(10)
 }
 }
 \seealso{

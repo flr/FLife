@@ -1,24 +1,24 @@
-#' lengths
+#' cas
 #'
 #' A dataset containing lengths by year
 #'
 #' @docType data
-#' @rdname lengths
+#' @rdname cas
 #' 
-#' @seealso \code{\link{teleosts}}
+#' @seealso \code{\link{teleost}}
 #' 
-#' @format A data frame with 139 rows (i.e. species) and 13 variables:
+#' @format A data frame with catch-at-length data:
 #' \describe{
-#'   \item{length}{}
-#'   \item{year}{}   
-#'   \item{data}{}   
+#'   \item{year}{ of capture}
+#'   \item{len}{ at capture}   
+#'   \item{n}{ frequency}   
 #' }
 #' @source \url{http://iccat.int/en/accesingdb.htm}
 #' @examples
 #' \dontrun{
-#' data(lengths)
-#' head(lengths)} 
-"lengths"
+#' data(cas)
+#' head(cas)} 
+"cas"
 
 #' teleost
 #'

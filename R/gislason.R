@@ -21,11 +21,11 @@
 #'  
 #' @examples
 #' \dontrun{
-#' #bug
-#' length=FLQuant(c( 1.90, 4.23, 7.47,11.48,16.04,20.96,26.07,31.22,
+#' params=lhPar(FLPar(linf=111))
+#' len=FLQuant(c( 1.90, 4.23, 7.47,11.48,16.04,20.96,26.07,31.22,
 #'                36.28,41.17,45.83,50.20,54.27,58.03,61.48,64.62),
 #'              dimnames=list(age=1:16))
-#' gislason(length)
+#' gislason(length,params)
 #' }
 setMethod('gislason', signature(length='FLQuant',params='numeric'),
       function(length,params,a=0.55,b=1.44,c=-1.61,...) { 
@@ -44,7 +44,7 @@ gislasonFn<-function(length,params,a=0.55,b=1.44,c=-1.61) {
   if (!all(c("m1","m2")%in%dimnames(params)$params)){
     
     m1=FLPar(m1= a*(params["linf"]^b)%*%params["k"], iter=dims(params)$iter)
-    m2=FLPar(m2=c                           ,          iter=dims(params)$iter)
+    m2=FLPar(m2=c                           ,        iter=dims(params)$iter)
     params=rbind(params,m1,m2)
   }
   

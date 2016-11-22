@@ -9,11 +9,11 @@
 \usage{
 \S4method{lhEql}{FLPar}(params, growth = FLife::vonB, m = function(length,
   params) exp(0.55) * (length^-1.61) \%*\% (params["linf"]^1.44) \%*\%
-  params["k"], mat = knife(age, params), sel = FLife::dnormal,
-  sr = "bevholt", range = c(min = 0, max = 40, minfbar = 1, maxfbar = 40,
-  plusgroup = 40), spwn = c(params["a50"] - floor(params["a50"])),
-  fish = 0.5, units = if ("units" \%in\% names(attributes(params)))
-  attributes(params)$units else NULL, ...)
+  params["k"], mat = FLife::knife, sel = FLife::dnormal, sr = "bevholt",
+  range = c(min = 0, max = 40, minfbar = 1, maxfbar = 40, plusgroup = 40),
+  spwn = c(params["a50"] - floor(params["a50"])), fish = 0.5, units = if
+  ("units" \%in\% names(attributes(params))) attributes(params)$units else NULL,
+  ...)
 }
 \arguments{
 \item{params}{an \code{FLPar} object with life history parameters}
@@ -47,7 +47,7 @@ and generates an corresponding \code{FLBRP} object. Can uses a range of function
 }
 \examples{
 \dontrun{
-par=lhSim(FLPar(linf=100))
+eql=lhEql(lhPar(FLPar(linf=100)))
 }
 
 }

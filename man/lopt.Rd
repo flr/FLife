@@ -33,8 +33,8 @@ iv) from an FLBRP object by fishing at F=0 and finding age where biomass is a ma
 }
 \examples{
 \dontrun{
-data(pars)
-lopt(pars[[1]])
+params=lhPar(FLPar(linf=100))
+lopt(params)
 }
 }
 \seealso{

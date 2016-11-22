@@ -9,7 +9,8 @@
 #' @param m function for natural mortality
 #' @param sr \code{character} with stock recruitment relationship, e.g. "bevholt","ricker",...
 #' @param range ages used i.e. c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40)
-#' @param what quantities to calculate "r","lopt","rc","sk","spr0"
+#' @param what quantities to calculate "r","lopt","rc","sk","spr0","sprmsy"
+#' @param msy, \code{character} with "msy", "f0.1", ...
 #' 
 #' @return object of class \code{FLPar} with reference points, i.e r, rc, sk, lopt,
 #' 
@@ -21,7 +22,7 @@
 #' 
 #' @examples
 #' \dontrun{
-#' #bug
+#' library(FLBRP)
 #' params=FLPar(linf=100,t0=0,k=.4)
 #' params=lhPar(params)
 #' lhRef(params)
@@ -30,54 +31,54 @@ lhRef<-function(params,
                  m=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
                  sr="bevholt",
                  range=c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40),
-                 what=c("r","lopt","rc","sk","spr0")){
+                 what=c("r","lopt","rc","sk","spr0","sprmsy"),
+                 msy="msy"){
   
+   
   eql=lhEql(params,m=m,sr=sr,range=range)
-  
+
   res=NULL
   if ("r"%in%what){
     fcrash=FLQuant(refpts(eql)["crash","harvest",drop=T],
                    dimnames=list(iter=seq( dims(eql)$iter)))
     fcrash[is.na(fcrash)]=4
-    rate =r(leslie(eql,fbar=fcrash))
+    rate =r(eql,fbar=fcrash)
   
     res=cbind(res,"r"=c(rate))
     }
-  
+
   if ("rc"%in%what){
-    f0.1  =FLQuant(refpts(eql)["f0.1","harvest",drop=T],
+    fmsy  =FLQuant(refpts(eql)[msy,"harvest",drop=T],
                  dimnames=list(iter=seq( dims(eql)$iter)))
 
-    ratec=r(leslie(eql,fbar=f0.1))
+    ratec=r(eql,fbar=fmsy)
     
     res=cbind(res,"rc"     =c(ratec))
     }
   
   if ("lopt"%in%what){
-    lop  =loptAge(params,m=m)
+    lopt=loptAge(params,m=m)
     
-    res=cbind(res,"lopt"   =c(lop))
+    res=cbind(res,"lopt"   =c(lopt))
     }
   
   if ("sk"%in%what){
-    sk   =refpts(eql)["msy","ssb"]/refpts(eql)["virgin","ssb"]
+    sk   =refpts(eql)[msy,"ssb"]/refpts(eql)["virgin","ssb"]
     
     res=cbind(res,"sk"   =c(sk))
     }
-  
-  if ("spr0"%in%what){
-    rfs=refpts(eql)[c("f0.1","virgin")]
-    dimnames(rfs)[[1]][1]="ref"
-    rfs["ref",-1]=NA
-    spr0=eql
-    params(spr0)=params(eql)["a"]/params(eql)["a"]
-    model( spr0)=geomean()$model
-    refpts(spr0)=rfs
-    spr0        =computeRefpts(spr0)
-    spr0        =c(spr0["ref","ssb"]/spr0["virgin","ssb"])
-  
-    res=cbind(res,"spr0"    =c(spr0))}
 
+  if ("spr0"%in%what){
+   spr0=refpts(eql)["virgin","ssb"]/refpts(eql)["virgin","rec"]
+  
+   res=cbind(res,"spr0"    =c(spr0))}
+
+  
+  if ("sprmsy"%in%what){
+    spr0=refpts(eql)[msy,"ssb"]/refpts(eql)[msy,"rec"]
+    
+    res=cbind(res,"sprmsy"    =c(spr0))}
+  
     res}
 
 

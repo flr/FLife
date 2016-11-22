@@ -22,16 +22,16 @@
 \item{...}{any other arguments}
 }
 \value{
-Returns an object of same class as \code{age}
+Returns an object of same class as \code{age} e.g. \code{FLQuant}
 }
 \description{
 gompertz growth equation
 }
 \examples{
 \dontrun{
-par=FLPar(linf=100,t0=0,k=.4)
+params=FLPar(linf=100,a=2,b=.4)
 age=FLQuant(1:10,dimnames=list(age=1:10))
-len=gompertz(par,age)
+gompertz(age,params)
 }
 
 }

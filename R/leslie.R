@@ -92,17 +92,15 @@ setMethod("leslie", signature(object="FLBRP"),
 #' 
 #' @examples
 #' \dontrun{
-#' #bug
 #' library(popbio)
 #' eql=lhEql(lhPar(FLPar(linf=100)))
 #' L=leslie(eql)
-#' lambda(L)
+#' lambda(L[drop=TRUE])
 #' }
 setMethod("r", signature(m="FLPar",fec="missing"),
           function(m,...){
 
     object=m        
-    #require(popbio)
     
     dmns=dimnames(object)[-2]
     dmns[1]="r"

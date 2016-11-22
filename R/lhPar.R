@@ -69,7 +69,7 @@ lhPar=function(params,t0=-0.1,a=0.0003,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
     #m=(length^-1.61)%*%(exp(0.55)*params["linf"]^1.44)%*%params["k"]
     
     params=addpar(params,"m1", exp(0.55)*(params["linf"]^1.44)%*%params["k"])
-    params=addpar(params,"m2", 1.61)
+    params=addpar(params,"m2", -1.61)
     }
 
   if (!("ato95" %in% dimnames(params)$params)) params=addpar(params,"ato95",ato95)  #rbind(params,FLPar("ato95" =ato95, iter=dims(params)$iter))

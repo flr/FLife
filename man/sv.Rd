@@ -24,8 +24,9 @@ Calculates steepness and virgin biomass given a and b for a Beverton and Holt SR
 }
 \examples{
 \dontrun{
+#bug
 params=FLPar(a=37.8,b=8.93)
-sv(params)
+sv(params,"bevholt",.4)
 }
 }
 

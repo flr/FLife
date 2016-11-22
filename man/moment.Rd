@@ -25,6 +25,10 @@ a \code{vector} with the inter-annual variation each time step
 The calculates moments of a distribution, i.e. mean, standard deviation, skew and kurtosis
 }
 \examples{
-x=1
+\dontrun{
+x=rlnorm(100)
+moment(x)
+}
+
 }
 

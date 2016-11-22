@@ -25,14 +25,8 @@ Creates a Leslie Matrix from a \code{FLBRP} object that represents a population 
 }
 \examples{
 \dontrun{
-library(ggplot2)
-library(FLCore)
-library(FLBRP)
-library(FLife)
-data(pars)
-pms=lhSim(pars[[1]])
-eql=lh(pms,range = c(min=0,max=8, minfbar=1,maxfbar=8,plusgroup=8))
-lsl=leslie(eql,fbar=c(refpts(eql)["crash","harvest"]))
+eql=lhEql(lhPar(FLPar(linf=100)))
+leslie(eql)
 }
 }
 \seealso{

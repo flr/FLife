@@ -22,11 +22,10 @@
 #' \dontrun{
 #' params=FLPar(linf=100,t0=0,k=.4)
 #' age=FLQuant(1:10,dimnames=list(age=1:10))
-#' vonB(age,params)
+#' len=vonB(age,params)
 #' 
 #' #inverse growth curve
-#' #bug
-#' age=vonB(params=params,length=len)
+#' vonB(params=params,length=len)
 #' }
 setMethod("vonB", signature(age="FLQuant",params="FLPar"),
           function(age,params,...){   

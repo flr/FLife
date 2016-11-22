@@ -15,12 +15,12 @@
 \arguments{
 \item{age}{FLQuant, FLPar or numeric with ages}
 
-\item{params}{\code{FLPar}}
+\item{params}{\code{FLPar} with age at whick probability is 0.5 (\code{a50}) and offset to 0.95 (\code{ato95})}
 
 \item{...}{any other arguments}
 }
 \value{
-Returns a class of same type as \code{length}
+returns an object of same type as \code{age} e.g. \code{FLQuant}
 }
 \description{
 sigmoid ogive
@@ -31,10 +31,9 @@ Verhulst hypothesizes that small populations increase geometrically, because the
 }
 \examples{
 \dontrun{
-params=FLPar(linf=100,t0=0,k=.4)
+params=FLPar(a50=4,ato95=1)
 age=FLQuant(1:10,dimnames=list(age=1:10))
-len=sigmoid(age,params)
-age=sigmoid(params,length=len)
+sigmoid(age,params)
 }
 }
 \seealso{

@@ -19,7 +19,7 @@
 \item{...}{any other arguments}
 }
 \value{
-Returns a class of same type as \code{length}
+Returns a class of same type as \code{length} e.g. \code{FLQuant}
 }
 \description{
 Converts length to weight based on $W=aL^b$
@@ -27,7 +27,7 @@ Converts length to weight based on $W=aL^b$
 \examples{
 \dontrun{
 params=FLPar(a=1,b=3)
-len2wt(params,FLQuant(10))
+len2wt(FLQuant(10),params)
 }
 }
 \seealso{

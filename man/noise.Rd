@@ -4,6 +4,7 @@
 \name{noise,numeric,FLQuant-method}
 \alias{noise}
 \alias{noise,numeric,FLQuant-method}
+\alias{noise,numeric,missing-method}
 \alias{noise-method}
 \title{Random noise with different frequencies}
 \usage{
@@ -35,20 +36,17 @@ A noise generator
 }
 \examples{
 \dontrun{
-white <- noise(1000,sd=.3,b=0)
+flq=FLQuant(1:100)
+white <- noise(1000,flq,sd=.3,b=0)
 plot(white)
 acf(white)
 
-red <- noise(1000,sd=.3,b=0.8)
+red <- noise(1000,flq,sd=.3,b=0.7)
 plot(red)
-acf(white)
-
-blue <- noise(1000,sd=.3,b=-0.8)
-plot(blue)
-acf(blue)
+acf(red)
 
 data(ple4)
-res=noise(4,m(ple4),burn=10,b=0.9)
+res=noise(1000,flq,sd=.3,b=0)
 
 ggplot()+
 geom_point(aes(year,age,size= data),

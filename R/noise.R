@@ -11,7 +11,7 @@
 #' @param what returns time series for year, cohort or age"
 #' @param ... any other arguments
 #' 
-#' @aliases noise noise-method noise,numeric,FLQuant-method
+#' @aliases noise noise-method noise,numeric,FLQuant-method noise,numeric,missing-method
 #' 
 #' @export
 #' @docType methods
@@ -29,21 +29,17 @@
 #' 
 #' @examples
 #' \dontrun{
-#' #bug
-#' white <- noise(1000,sd=.3,b=0)
+#' flq=FLQuant(1:100)
+#' white <- noise(1000,flq,sd=.3,b=0)
 #' plot(white)
 #' acf(white)
 #' 
-#' red <- noise(1000,sd=.3,b=0.8)
+#' red <- noise(1000,flq,sd=.3,b=0.7)
 #' plot(red)
-#' acf(white)
+#' acf(red)
 #' 
-#' blue <- noise(1000,sd=.3,b=-0.8)
-#' plot(blue)
-#' acf(blue)
-#'
 #' data(ple4)
-#' res=noise(4,m(ple4),burn=10,b=0.9)
+#' res=noise(1000,flq,sd=.3,b=0)
 #' 
 #' ggplot()+
 #' geom_point(aes(year,age,size= data),
@@ -85,6 +81,9 @@ setMethod("noise", signature(n='numeric', len="FLQuant"),
                        res=as.FLQuant(res,dimnames=dimnames(len))}
              )})
 
+setMethod("noise", signature(n='numeric', len="missing"),
+          function(n=n,len=len,sd=0.3,b=0,burn=0,trunc=0,what=c("year","cohort","age")) {
+             noiseFn(n,sd,b,burn,trunc)})
 
 noiseFn<-function(len,sd=0.3,b=0,burn=0,trunc=0){
   

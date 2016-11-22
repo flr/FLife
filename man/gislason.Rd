@@ -32,13 +32,14 @@ M=a*length^b;
 }
 \examples{
 \dontrun{
-length=FLQuant(c( 1.90, 4.23, 7.47,11.48,16.04,20.96,26.07,31.22,
+params=lhPar(FLPar(linf=111))
+len=FLQuant(c( 1.90, 4.23, 7.47,11.48,16.04,20.96,26.07,31.22,
                36.28,41.17,45.83,50.20,54.27,58.03,61.48,64.62),
              dimnames=list(age=1:16))
-gislason(mass)
+gislason(length,params)
 }
 }
 \seealso{
-\code{\link{gislason}}
+\code{\link{lorenzen}}
 }
 

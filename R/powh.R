@@ -89,10 +89,22 @@
 #' 
 #' @examples
 #' \dontrun{
-#' #bug
-#' data(bonLn)
-#' rslt=with(subset(bonLn,year==2013), powh(len,n))
-#' }
+#' data(cas)
+#' pw=ddply(subset(cas), .(year), 
+#'   function(cas) powh(cas$len,cas$n)$data)
+#'   
+#'   pw=transform(pw, lustrum=(year%/%5)*5,
+#'         yr    =year-(year%/%5)*5,
+#'         weight=ifelse(len>=100&len<=200,1,0))
+#'         
+#' ggplot(pw)+
+#'   geom_line(aes(len,diff,colour=factor(yr),group=year))+
+#'   scale_x_continuous(limits=c(0,300)) +
+#'   xlab("Length (cm)")+
+#'   ylab("Difference between Length and Mean Size")+
+#'   geom_smooth(aes(len,diff,weight=weight),
+#'   method="lm",col="red",size=1.25,alpha=.1)+
+#'   theme_bw()+theme(legend.position="none")
 setMethod("powh", signature(len='numeric', n="numeric"),
           function(len,n,weights=FALSE,fromMode=FALSE,linf=0){
   

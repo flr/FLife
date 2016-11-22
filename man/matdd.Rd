@@ -46,6 +46,8 @@ Combining the two functions gives
 }
 \examples{
 \dontrun{
+#bug
+
 library(FLBRP)
 library(FLife)
 

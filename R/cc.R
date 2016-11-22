@@ -21,7 +21,10 @@
 #' 
 #' @examples
 #' \dontrun{
-#' #bug
+#' data(ple4)
+#' ctc=as.data.frame(catch.n(ple4))
+#' dat=cc(age=ctc$age,n=ctc$data)
+#' head(dat)
 #' }
 setMethod("cc", signature(age="numeric",n="numeric"),
           function(age,n,...){  

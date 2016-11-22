@@ -20,7 +20,7 @@
 \item{...}{any other arguments}
 }
 \value{
-returns an object of same type as \code{age}
+returns an object of same type as \code{age} e.g. \code{FLQuant}
 }
 \description{
 A method to simulate a knife edge ogive where at a given age the proportion chnages from 0 to 1
@@ -35,9 +35,9 @@ a population will reach any given size (see Verhulst's Figure):
 }
 \examples{
 \dontrun{
-params=FLPar(linf=100,t0=0,k=.4)
+params=FLPar(a1=4)
 age=FLQuant(1:10,dimnames=list(age=1:10))
-len=knife(age,params)
+knife(age,params)
 }
 }
 \seealso{
