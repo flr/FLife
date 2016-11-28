@@ -1,3 +1,26 @@
+spr2v <- function(model, spr, a=NULL, b=NULL, c=NULL, d=NULL){
+  # SSB as function of ssb/rec
+  return(switch(model,
+                "bevholt"  = a*(spr)-b,
+                "ricker"   = log(a*spr)/b,
+                "cushing"  = (1/(a*spr))^(1/(b-1)),
+                "shepherd" = b*(a*spr-1)^(1/c),
+                "segreg"   = ifelse(ssb <= b, a/(spr), 0),
+                "mean"     = a/(spr),
+                "dersh"    = ssb*a*(1-b*c*ssb)^c,
+                "pellat"   = 1/(a/ssb-a/ssb*(ssb/b)^c),
+                NULL))}
+
+srr2s <- function(model, ssb=NULL, spr=NULL, a=NULL, b=NULL, c=1, d=NULL)
+{
+  #recruits as function of ssb or ssb/rec
+  if (is.null(ssb) & !is.null(spr))
+    ssb <- spr2v(model, spr, a, b, c, d)
+  
+  eval(as.list(do.call(model, list())$model)[[3]], envir=list(ssb=ssb, spr0=spr, a=a, b=b, c=c, d=d))
+} # }}}
+
+
 #' @title Calculates steepness and virgin biomass
 #' 
 #' @description 
@@ -32,7 +55,7 @@ setMethod('sv', signature(x='FLPar', model='character'),
    dmns[[1]]="v"
    v=FLPar(1,dimnames=dmns)  
    dmns[[1]]="spr0"
-   spr0=FLPar(spr0,dimnames=dmns)  
+   spr0=FLPar(spr0[drop=T],dimnames=dmns)  
 
    if ("spr0" %in% dimnames(x)$params)
      spr0=x["spr0"] 
@@ -52,8 +75,6 @@ setMethod('sv', signature(x='FLPar', model='character'),
  
    if ("d" %in% dimnames(x)$params)
      res=rbind(res, d)
- 
-   res=rbind(res, spr0)
  
    return(res)})
 
@@ -87,17 +108,3 @@ abPars. <- function(x,spr0=NA,model){
 
   res <- c(a=a, b=b)
   return(res[!is.null(res)])}
-
-spr2v <- function(model, spr, a=NULL, b=NULL, c=NULL, d=NULL){
-  # SSB as function of ssb/rec
-  return(switch(model,
-                "bevholt"  = a*(spr)-b,
-                "ricker"   = log(a*spr)/b,
-                "cushing"  = (1/(a*spr))^(1/(b-1)),
-                "shepherd" = b*(a*spr-1)^(1/c),
-                "segreg"   = ifelse(ssb <= b, a/(spr), 0),
-                "mean"     = a/(spr),
-                "dersh"    = ssb*a*(1-b*c*ssb)^c,
-                "pellat"   = 1/(a/ssb-a/ssb*(ssb/b)^c),
-                NULL))}
-  

@@ -31,10 +31,9 @@ lhRef<-function(params,
                  m=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
                  sr="bevholt",
                  range=c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40),
-                 what=c("r","lopt","rc","sk","spr0","sprmsy"),
+                 what=c("r","rc","msy","lopt","sk","spr0","sprmsy"),
                  msy="msy"){
   
-   
   eql=lhEql(params,m=m,sr=sr,range=range)
 
   res=NULL
@@ -42,19 +41,26 @@ lhRef<-function(params,
     fcrash=FLQuant(refpts(eql)["crash","harvest",drop=T],
                    dimnames=list(iter=seq( dims(eql)$iter)))
     fcrash[is.na(fcrash)]=4
-    rate =r(eql,fbar=fcrash)
-  
-    res=cbind(res,"r"=c(rate))
+    rate =log(lambda(leslie(eql,fbar=fcrash)))
+
+        res=cbind(res,"r"=c(rate))
     }
 
   if ("rc"%in%what){
     fmsy  =FLQuant(refpts(eql)[msy,"harvest",drop=T],
                  dimnames=list(iter=seq( dims(eql)$iter)))
 
-    ratec=r(eql,fbar=fmsy)
+    ratec=log(lambda(leslie(eql,fbar=fmsy)))
     
     res=cbind(res,"rc"     =c(ratec))
     }
+ 
+  if ("msy"%in%what){
+    msy. =FLQuant(refpts(eql)[msy,"yield",drop=T],
+                   dimnames=list(iter=seq( dims(eql)$iter)))
+    
+    res=cbind(res,"msy"     =c(msy.))
+  }
   
   if ("lopt"%in%what){
     lopt=loptAge(params,m=m)
@@ -73,11 +79,10 @@ lhRef<-function(params,
   
    res=cbind(res,"spr0"    =c(spr0))}
 
-  
   if ("sprmsy"%in%what){
-    spr0=refpts(eql)[msy,"ssb"]/refpts(eql)[msy,"rec"]
+    sprmsy=refpts(eql)[msy,"ssb"]/refpts(eql)[msy,"rec"]
     
-    res=cbind(res,"sprmsy"    =c(spr0))}
+    res=cbind(res,"sprmsy"    =c(sprmsy))}
   
     res}
 

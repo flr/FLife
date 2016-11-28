@@ -1,3 +1,25 @@
+dnormalFn_<-function(age,params){
+  func<- function(age,a1,sl,sr){
+    if (age < a1)
+      return(pow(2.0,-((age-a1)/sl*(age-a1)/sl)))
+    else
+      return(pow(2.0,-((age-a1)/sr*(age-a1)/sr)))}
+  
+  sapply(age,func,params["a1"],params["sl"],params["sr"])}
+
+dnormalFn<-function(age,params){
+  
+  a1=FLQuant(1,dimnames=dimnames(age))%*%params["a1"]
+  s =FLQuant(1,dimnames=dimnames(age))%*%params["sl"]
+  sr=FLQuant(1,dimnames=dimnames(age))%*%params["sr"]
+  
+  if (dims(age)$iter==1 &  dims(a1)$iter>1)
+    age=propagate(age,dims(a1)$iter)
+  
+  s[age>=a1]=sr[age>=a1]
+  
+  res=2.0^(-((age%-%a1)%/%s%*%(age%-%a1)%/%s))}
+
 #' @title Double normal ogive
 #' 
 #' @description 
@@ -40,26 +62,3 @@ setMethod("dnormal", signature(age="FLQuant",params="numeric"),
             res=dnormalFn(FLPar(params),age)
             res@units=""
             res})
-
-dnormalFn_<-function(age,params){
-  func<- function(age,a1,sl,sr){
-    if (age < a1)
-      return(pow(2.0,-((age-a1)/sl*(age-a1)/sl)))
-    else
-      return(pow(2.0,-((age-a1)/sr*(age-a1)/sr)))}
-  
-  sapply(age,func,params["a1"],params["sl"],params["sr"])}
-
-
-dnormalFn<-function(age,params){
-  
-  a1=FLQuant(1,dimnames=dimnames(age))%*%params["a1"]
-  s =FLQuant(1,dimnames=dimnames(age))%*%params["sl"]
-  sr=FLQuant(1,dimnames=dimnames(age))%*%params["sr"]
-  
-  if (dims(age)$iter==1 &  dims(a1)$iter>1)
-    age=propagate(age,dims(a1)$iter)
-  
-  s[age>=a1]=sr[age>=a1]
-  
-  res=2.0^(-((age%-%a1)%/%s%*%(age%-%a1)%/%s))}
