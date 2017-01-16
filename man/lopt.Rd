@@ -5,39 +5,48 @@
 \alias{lopt}
 \alias{lopt,FLPar-method}
 \alias{lopt-method}
-\title{Length at maximum biomass}
+\title{Lopt}
 \usage{
 \S4method{lopt}{FLPar}(params, m = function(length, params) exp(0.55) *
-  (length^-1.61) \%*\% (params["linf"]^1.44) \%*\% params["k"], ...)
+  (length^-1.61) \%*\% (params["linf"]^1.44) \%*\% params["k"],
+  growth = FLife:::vonB, ...)
 }
 \arguments{
-\item{params}{FLPar}
+\item{params}{an \code{FLPar} object with parameter values for the natural mortality and growth 
+functions, and the exponent \code{b} of the length/weight relationship.}
 
-\item{m}{A function, i.e. gislason}
+\item{m}{natural mortality function, by default Gislason}
+
+\item{growth}{length or weight-at-age function, by default von Bertalanffy}
 
 \item{...}{any other arguments}
 }
 \value{
-\code{FLPar} with length at maximum biomass of a cohort
+\code{FLPar} with $L_{opt}$ the length at which a cohort achives its maximum biomass
 }
 \description{
-Finds length at maximum biomass, assuminmg natural mortality is a function of
- mass-at-age, i.e. Lorenzen.
+Lopt, the length at which a cohort achives its maximum biomass, can be used as a
+reference point to identify growth over- or underfishing. Since taking fish below or above 
+this size results in potential loss of yield. The total biomass of a cohort changes through
+time as a result of gains due to an increase in mean size-at-age and losses due to natural 
+mortality. Lopt can therefore be estimated from the natural mortality and weight-at-age vectors.
 }
 \details{
-There are several ways to calculate \deqn{L_{opt}}, i.e.
-i) \deqn{{2/3}^{rds}  L_{\infty}}
-ii) \deqn{L_{\infty}\frac{3}{3+k/m}}
-iii) by maximising the biomass of
-iv) from an FLBRP object by fishing at F=0 and finding age where biomass is a maximum
+Lopt is a function of growth and natural mortality-at-age and there are several 
+approximations such as \eqn{2/3 L_{\infty}} and \eqn{L_{\infty}\frac{3}{3+k/m}}. If the life
+history parameters and relationships are known then $L_{opt}$ can be found by finding the 
+time (t) and hence length at which the maximum biomass is achieved i.e.
+ \eqn{L(T)^a e^{\int_0^T m(t)}}
+where \eqn{m(t)} can be found from the relationship of mortality at length using the relationship 
+of Gislason, assuming the von Bertalanffy growth curve.
 }
 \examples{
 \dontrun{
-params=lhPar(FLPar(linf=100))
+params=lhPar(FLPar(linf=100,k=0.1,t0=-0.1,b=3))
 lopt(params)
 }
 }
 \seealso{
-\code{\link{loptAge}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}},
+\code{\link{gislason}}, \code{\link{vonB}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}},
 }
 

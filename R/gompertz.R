@@ -4,7 +4,7 @@
 #' gompertz growth equation
 #' 
 #' @param age FLQuant, FLPar or numeric with ages 
-#' @param params \code{FLPar} with parameters for \code{linf, a, b}
+#' @param params \code{FLPar} with parameters for \code{linf, a, k}
 #' @param ... any other arguments
 #' 
 #' @aliases gompertz 
@@ -52,7 +52,11 @@ setMethod("gompertz", signature(age="missing",params="FLPar"),
             res@units=""
             res})
 
+# bigeye FLPar(linf=179.13,k=0.4088,a=1.7268)                      
+
+#linf*exp(-aexp(-kt))
+
 gompertzFn=function(age,params) 
-   params["linf"]%*%exp(-params["a"]%*%exp(log(params["b"])%*%age))
+   params["linf"]%*%exp(-params["a"]%*%exp(log(params["k"])%*%age))
 
 

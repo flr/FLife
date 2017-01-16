@@ -5,13 +5,10 @@
 \alias{powh}
 \alias{powh,numeric,numeric-method}
 \alias{powh-method}
-\alias{unbin}
 \title{Powell Weatherall method for estimating Z and Linfinity}
 \usage{
 \S4method{powh}{numeric,numeric}(len, n, weights = FALSE, fromMode = FALSE,
   linf = 0)
-
-unbin(x)
 }
 \arguments{
 \item{len}{vector with length distribution}
@@ -24,21 +21,14 @@ unbin(x)
 
 \item{linf}{allows linf to be fixed if >0}
 
-\item{x}{a vector of with intervals as names}
-
 \item{...}{any other argument, i.e. weights =TRUE, fromMode =FALSE}
 }
 \value{
 a \code{data.frame} with \code{mn} (mean), \code{diff} (difference), 
 \code{len} (length) and \code{n} (frequency)
-
-a \code{data.frame} with left and right boundaries and mid points.
 }
 \description{
 Estimates growth and mortality parameters from length frequency data.
-
-For a vector with labels corresponding to intervals i.e. \code{"(0,10]"}
- returns a data.frame with left and right boundaries and mid point.
 }
 \details{
 Beverton and Holt (1956) developed a method to estimate population parameters 
@@ -84,8 +74,24 @@ of $L_{infinity}$ and Z/K from
 If K is known Z can also be esimated
 }
 \examples{
-x=summary(cut(runif(100),seq(0,1,.1)))
-unbin(x)
+\dontrun{
+data(cas)
+pw=ddply(subset(cas), .(year), 
+  function(cas) powh(cas$len,cas$n)$data)
+  
+  pw=transform(pw, lustrum=(year\%/\%5)*5,
+        yr    =year-(year\%/\%5)*5,
+        weight=ifelse(len>=100&len<=200,1,0))
+        
+ggplot(pw)+
+  geom_line(aes(len,diff,colour=factor(yr),group=year))+
+  scale_x_continuous(limits=c(0,300)) +
+  xlab("Length (cm)")+
+  ylab("Difference between Length and Mean Size")+
+  geom_smooth(aes(len,diff,weight=weight),
+  method="lm",col="red",size=1.25,alpha=.1)+
+  theme_bw()+theme(legend.position="none")
+  }
 }
 \references{
 R. Beverton and S. Holt. Review of method for estimating mortality rates in 

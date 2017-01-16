@@ -17,7 +17,7 @@
 \arguments{
 \item{age}{FLQuant, FLPar or numeric with ages}
 
-\item{params}{\code{FLPar} with parameters for \code{linf, a, b}}
+\item{params}{\code{FLPar} with parameters for \code{linf, a, k}}
 
 \item{...}{any other arguments}
 }

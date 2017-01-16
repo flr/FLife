@@ -100,15 +100,16 @@ dldt<-function(age,params){
 
 invGascuelFn<-function(length,
                        params=FLPar(a=37.8,b=8.93,c=137.0,
+                                    
                                     d=8.93,e=0.808,f=7.49),
                        age_limits=c(0,15),
-                       timing    =0,
+                       timing    =0.5,
                        tol       =0.000001) {  
   
   names(params)=tolower(names(params))
   
   fn<-function(age,length,params,timing)
-    (length-gascuel(age+timing,params))^2
+    (length-gascuel(age-timing,params))^2
   
   age=aaply(length, 1, function(x) 
     optimize(fn, age_limits,length=x,params=params,timing=-timing)$minimum)

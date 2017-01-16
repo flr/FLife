@@ -14,6 +14,9 @@
 #' 
 #' @return object of class \code{FLPar} with reference points, i.e r, rc, sk, lopt,
 #' 
+#' @importFrom FLBRP refpts
+#' @importFrom FLBRP refpts
+#' 
 #' @export
 #' @docType methods
 #' @rdname lhRef
@@ -40,17 +43,24 @@ lhRef<-function(params,
   if ("r"%in%what){
     fcrash=FLQuant(refpts(eql)["crash","harvest",drop=T],
                    dimnames=list(iter=seq( dims(eql)$iter)))
-    fcrash[is.na(fcrash)]=4
-    rate =log(lambda(leslie(eql,fbar=fcrash)))
+    
 
-        res=cbind(res,"r"=c(rate))
+    fcrash<<-fcrash
+    eql   <<-eql
+    
+    fcrash[is.na(fcrash)]=4
+    rate =maply(dimnames(params)$iter, function(iter) 
+               log(lambda(leslie(iter(eql,iter),fbar=iter(fcrash,iter))[,,1,drop=T])))
+
+    res=cbind(res,"r"=c(rate))
     }
 
   if ("rc"%in%what){
     fmsy  =FLQuant(refpts(eql)[msy,"harvest",drop=T],
                  dimnames=list(iter=seq( dims(eql)$iter)))
 
-    ratec=log(lambda(leslie(eql,fbar=fmsy)))
+    ratec =maply(dimnames(params)$iter, function(iter) 
+      log(lambda(leslie(iter(eql,iter),fbar=iter(fmsy,iter))[,,1,drop=T])))
     
     res=cbind(res,"rc"     =c(ratec))
     }
@@ -84,7 +94,9 @@ lhRef<-function(params,
     
     res=cbind(res,"sprmsy"    =c(sprmsy))}
   
-    res}
+  res=t(res)
+  names(dimnames(res))=c("params","iter")
+  FLPar(res)}
 
 
 if (FALSE){

@@ -14,12 +14,13 @@ LazyData: true
 License: GPL (>= 2)
 Depends:
   	R(>= 3.1),
-    FLCore (>= 2.6)
+    FLCore (>= 2.6),
 Imports:
-    methods
+    FLBRP,
+    methods,
+    popbio
 Suggests:
     ggplotFL (>= 2.5),
-    FLBRP (>= 2.5),
     testthat
 Additional_repositories: http://flr-project.org/R
 Collate:
@@ -61,4 +62,5 @@ Collate:
     sbt-mse.R
     calcR.R
     RcppExports.R 
+    richards.R
 RoxygenNote: 5.0.1

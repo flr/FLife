@@ -85,6 +85,7 @@ setMethod("leslie", signature(object="FLBRP"),
 #' @return \code{FLPar} with growth rate a small population size
 #' 
 #' @export
+#' @importFrom popbio lambda
 #' @docType methods
 #' @rdname lambda
 #' 

@@ -1,4 +1,4 @@
-#' @title Derives an \code{FLBRP} from life history parameters
+  #' @title Derives an \code{FLBRP} from life history parameters
 #' 
 #' @description 
 #' Takes an \code{FLPar} object with life history and selectivity parameters
@@ -14,6 +14,7 @@
 #' @param spwn A \code{numeric} give propotion of year when spawning occurs, by default is params["a50"]-floor(params["a50"])
 #' @param fish A \code{numeric} give propotion of year when fishing occurs, by default 0.5        
 #' @param units A\code{character} for vectors in \code{FLBRP} returned by method
+#' @param midyear when growth measured, default 0.5
 #' @param ... any other arguments 
 #' 
 #' @aliases lhEql lhEql-method lhEql,FLPar-method
@@ -44,6 +45,7 @@ setMethod("lhEql", signature(params='FLPar'),
             spwn       =c(params["a50"]-floor(params["a50"])),
             fish       = 0.5, # proportion of year when fishing happens
             units=if("units" %in% names(attributes(params))) attributes(params)$units else NULL,
+            midyear    =0.5,
             ...){
 
   # Check that spwn and fish are [0, 1]
@@ -68,7 +70,7 @@ setMethod("lhEql", signature(params='FLPar'),
   # Get the lengths through different times of the year
   slen   <- growth(age+m.spwn,params) # slen is length at spawning time
   clen   <- growth(age+fish,  params) # clen is length when fishing happens
-  midyearlen <- growth(age+0.5,params) # midyear length used for natural mortality
+  midyearlen <- growth(age+midyear,params) # midyear length used for natural mortality
 
   # Corresponding weights
   swt=FLife::len2wt(slen,params)
@@ -81,7 +83,7 @@ setMethod("lhEql", signature(params='FLPar'),
     if ("length" %in% names(formals(m)))
       m.   =m(length=midyearlen,params=params) # natural mortality is always based on mid year length
     else if ("age" %in% names(formals(m))){
-      m.   =m(age=age+0.5,params=params) # natural mortality is always based on mid year length
+      m.   =m(age=age+midyear,params=params) # natural mortality is always based on mid year length
     }else if ("wt" %in% names(formals(m)))
       m.   =m(wt=swt,params[c("m1","m2")])
 

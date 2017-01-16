@@ -105,6 +105,7 @@
 #'   geom_smooth(aes(len,diff,weight=weight),
 #'   method="lm",col="red",size=1.25,alpha=.1)+
 #'   theme_bw()+theme(legend.position="none")
+#'   }
 setMethod("powh", signature(len='numeric', n="numeric"),
           function(len,n,weights=FALSE,fromMode=FALSE,linf=0){
   
@@ -173,7 +174,7 @@ setMethod("powh", signature(len='numeric', n="numeric"),
 #' @return a \code{data.frame} with left and right boundaries and mid points.
 #' @export
 #' @docType methods
-#' @rdname powh
+#' @rdname unbin
 #' 
 #' @examples
 #' x=summary(cut(runif(100),seq(0,1,.1)))

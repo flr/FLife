@@ -16,22 +16,10 @@
   \item{temp}{temperature}    
   \item{habit}{e.g. pelagic or demeresal}   
 }}
-\source{
-\url{http://www.fishbase.org/}
-}
-\usage{
-teleost
-}
 \description{
 A dataset containing life history parameters for a range of teleost species
 }
-\examples{
-\dontrun{
-data(teleost)
-head(teleost)} 
-}
 \seealso{
-\code{\link{lengths}}
+\code{\link{cas}}
 }
-\keyword{datasets}
 

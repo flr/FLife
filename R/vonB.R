@@ -45,6 +45,14 @@ setMethod("vonB", signature(age="FLQuant",params="numeric"),
             res=vonBFn(FLPar(params),age)
             res@units=""
             res})
+setMethod("vonB", signature(age="numeric",params="numeric"),
+          function(age,params,...) { 
+            res=c(vonB(FLQuant(age),FLPar(params)))
+            res})
+setMethod("vonB", signature(age="numeric",params="FLPar"),
+          function(age,params,...) { 
+            res=c(vonB(FLQuant(age),params))
+            res})
 
 setMethod("vonB", signature(age="missing",params="FLPar"),
           function(age,params,length,...){  

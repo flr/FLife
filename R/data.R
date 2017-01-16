@@ -1,33 +1,31 @@
 #' cas
-#'
+#' 
 #' A dataset containing lengths by year
-#'
+#' 
 #' @docType data
 #' @rdname cas
 #' 
 #' @seealso \code{\link{teleost}}
 #' 
-#' @format A data frame with catch-at-length data:
+#' @format An \code{data.frame} object
 #' \describe{
 #'   \item{year}{ of capture}
 #'   \item{len}{ at capture}   
 #'   \item{n}{ frequency}   
 #' }
-#' @source \url{http://iccat.int/en/accesingdb.htm}
-#' @examples
-#' \dontrun{
-#' data(cas)
-#' head(cas)} 
-"cas"
+#' 
+#' @name cas
+#' @docType data
+#' 
+NULL
 
 #' teleost
 #'
 #' A dataset containing life history parameters for a range of teleost species
 #' 
 #' @docType data
-#' @rdname teleost
 #' 
-#' @seealso \code{\link{lengths}}
+#' @seealso \code{\link{cas}}
 #' 
 #' @format A data frame with 139 rows (i.e. species) and 13 variables:
 #' \describe{
@@ -41,9 +39,6 @@
 #'   \item{temp}{temperature}    
 #'   \item{habit}{e.g. pelagic or demeresal}   
 #' }
-#' @source \url{http://www.fishbase.org/}
-#' @examples
-#' \dontrun{
-#' data(teleost)
-#' head(teleost)} 
-"teleost"
+#' @name teleost
+#' 
+NULL

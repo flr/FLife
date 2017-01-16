@@ -21,9 +21,10 @@ setGeneric('logistic', function(age,params,...) standardGeneric('logistic'))
 setGeneric('gislason', function(length,params,...) standardGeneric('gislason'))
 setGeneric('lorenzen', function(wt,params,...) standardGeneric('lorenzen'))
 
-setGeneric('vonB', function(age,params,...) standardGeneric('vonB'))
-setGeneric('gascuel', function(age,params,...) standardGeneric('gascuel'))
+setGeneric('vonB',     function(age,params,...) standardGeneric('vonB'))
+setGeneric('gascuel',  function(age,params,...) standardGeneric('gascuel'))
 setGeneric('gompertz', function(age,params,...) standardGeneric('gompertz'))
+setGeneric('richards', function(age,params,...) standardGeneric('richards'))
 
 setGeneric('ages', function(object, ...) standardGeneric('ages'))
 setGeneric('len2wt', function(length,params,...) standardGeneric('len2wt'))

@@ -4,28 +4,16 @@
 \name{cas}
 \alias{cas}
 \title{cas}
-\format{A data frame with catch-at-length data:
+\format{An \code{data.frame} object
 \describe{
   \item{year}{ of capture}
   \item{len}{ at capture}   
   \item{n}{ frequency}   
 }}
-\source{
-\url{http://iccat.int/en/accesingdb.htm}
-}
-\usage{
-cas
-}
 \description{
 A dataset containing lengths by year
-}
-\examples{
-\dontrun{
-data(cas)
-head(cas)} 
 }
 \seealso{
 \code{\link{teleost}}
 }
-\keyword{datasets}
 
