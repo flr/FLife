@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEncoding{UTF-8}
-bibliography: /home/laurie/bib/refs.bib
+bibliography: ref.bib
 tags: FLPKG FLR
 license: Creative Commons Attribution-ShareAlike 4.0 International
 ---
@@ -20,8 +20,8 @@ opts_chunk$set(echo    =!TRUE,
                prompt  =FALSE,
                comment =NA,
                message =FALSE,
+               warning =FALSE,
                tidy    =FALSE,
-               warnings=FALSE,
                fig.height=4.5,
                fig.width =4.5)
 
@@ -30,7 +30,6 @@ iFig=0
 
 
 ```{r, pkgs, echo=FALSE, message=FALSE}
-sink(NULL)
 warn=options()$warn
 options(warn=-1)
 library(ggplot2)
@@ -39,7 +38,6 @@ library(`FLife`)
 theme_set(theme_bw())
 options(digits=3)
 options(warn=warn)
-sink()
 ```
 
 [](#top)
@@ -71,7 +69,7 @@ Many studies have shown the relationships between life history traits for proces
 The simplest way to obtain `FLife` is to install it from the `FLR` repository via the R console:
 
 ```{r install,echo=TRUE,eval=FALSE}
-install.packages("FLLife", repos = "http://cloud.r-project.org/")
+install.packages("FLife", repos = "http://flr-project.org/R")
 ```
 
 The repos options can be changed depending on personal preferences and includes options such as choosing the directories in which to install the packages see help(install.packages) for more details.
@@ -145,7 +143,7 @@ vectors=FLQuants(Growth   =vonB(age,alb),
                  Maturity =logistic(age,alb),
                  Selection=dnormal(age,alb))
 
-ggplot(vectors)+
+ggplot(vectors) +
   geom_line(aes(age,data))+
   facet_wrap(~qname,scale="free")
 ```
