@@ -2,7 +2,9 @@
 title: "Life History Relationships"
 author: "Laurence Kell"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: rmarkdown:::html_document
+output:
+  html_vignette: default
+  pdf_document: default
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{Vignette Title}
