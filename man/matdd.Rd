@@ -64,7 +64,7 @@ fbar(eql)=fbar(eql)[,1]
 scale=(stock.n(stk)\%-\%stock.n(eql))\%/\%stock.n(eql)
 par=lhPar(FLPar(linf=100))
 
-scale=exp(noise(1,m(stk),sd=.2,b=0.75))
+scale=exp(rnoise(1,m(stk),sd=.2,b=0.75))
  
 ggplot(as.data.frame(mat,drop=TRUE))+
    geom_line(aes(age,data,group=year,col=factor(year)))+

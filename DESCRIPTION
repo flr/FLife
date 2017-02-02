@@ -59,8 +59,9 @@ Collate:
     util.R
     leslie.R
     pidVaughan.R
-    sbt-mse.R
     calcR.R
-    RcppExports.R 
-    richards.R
+    refs.R
+    len-index.R
+    sbt-mse.R
+    power.R
 RoxygenNote: 5.0.1

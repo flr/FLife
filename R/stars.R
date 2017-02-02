@@ -121,7 +121,7 @@ rodFn=function(data,year=NULL,plot=FALSE){
 #' 
 setMethod("rod", signature(object="FLQuant"),
           function(object, ...) 
-            ddply(as.data.frame(object),.(iter), with, rodFn(data,year)))
+            ddply(as.data.frame(object),.(iter), with, FLife:::rodFn(data,year)))
 
 #==Cody Szuwalski, 10/18,2012
 #==this function identifies the first regime shift in a series given a significance level

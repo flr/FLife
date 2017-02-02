@@ -42,7 +42,8 @@ setGeneric('rod', function(object, ...) standardGeneric('rod'))
 
 setGeneric('powh', function(len,n,...) standardGeneric('powh'))
 
-setGeneric('noise', function(n,len,...) standardGeneric('noise'))
+setGeneric('rnoise',  function(n,len,...) standardGeneric('rnoise'))
+setGeneric('rlnoise', function(n,len,...) standardGeneric('rlnoise'))
 
 setGeneric('moment', function(object,...) standardGeneric('moment'))
 setGeneric('sv', function(x,model, ...) standardGeneric('sv'))

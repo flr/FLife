@@ -9,13 +9,13 @@
 #' @param burn gets rid of 1st values i series
 #' @param trunc get rid of values > abs(trunc)
 #' @param what returns time series for year, cohort or age"
-#' @param ... any other arguments
-#' 
-#' @aliases noise noise-method noise,numeric,FLQuant-method noise,numeric,missing-method
+#' @param ... anyl
+#' @aliases rnoise rnoise-method rnoise,numeric,FLQuant-method rnoise,numeric,missing-method
+#' @aliases rlnoise rlnoise-method rlnoise,numeric,FLQuant-method rlnoise,numeric,missing-method
 #' 
 #' @export
 #' @docType methods
-#' @rdname noise
+#' @rdname rnoise
 #'
 #' @importFrom methods is
 #'
@@ -30,16 +30,16 @@
 #' @examples
 #' \dontrun{
 #' flq=FLQuant(1:100)
-#' white <- noise(1000,flq,sd=.3,b=0)
+#' white <- rnoise(1000,flq,sd=.3,b=0)
 #' plot(white)
 #' acf(white)
 #' 
-#' red <- noise(1000,flq,sd=.3,b=0.7)
+#' red <- rnoise(1000,flq,sd=.3,b=0.7)
 #' plot(red)
 #' acf(red)
 #' 
 #' data(ple4)
-#' res=noise(1000,flq,sd=.3,b=0)
+#' res=rnoise(1000,flq,sd=.3,b=0)
 #' 
 #' ggplot()+
 #' geom_point(aes(year,age,size= data),
@@ -49,7 +49,7 @@
 #' scale_size_area(max_size=4, guide="none")+
 #' facet_wrap(~iter)
 #' 
-#' res=noise(4,m(ple4),burn=10,b=0.9,cohort=TRUE)
+#' res=rnoise(4,m(ple4),burn=10,b=0.9,cohort=TRUE)
 #' ggplot()+
 #' geom_point(aes(year,age,size= data),
 #'           data=subset(as.data.frame(res),data>0))+
@@ -64,7 +64,7 @@
 # b  =0
 # sd =0.3
 # trunc=0
-setMethod("noise", signature(n='numeric', len="FLQuant"),
+setMethod("rnoise", signature(n='numeric', len="FLQuant"),
     function(n=n,len=len,sd=0.3,b=0,burn=0,trunc=0,what=c("year","cohort","age")) {
       len=propagate(len,n)
       switch(what[1],
@@ -79,12 +79,18 @@ setMethod("noise", signature(n='numeric', len="FLQuant"),
                        res=as.FLQuant(aperm(res,c(2,1,3:6)),dimnames=dimnames(len))},
              "age"   ={res=apply(len,c(2:6), function(x) noiseFn(length(x),sd,b,burn,trunc))
                        res=as.FLQuant(res,dimnames=dimnames(len))}
-             )})
+             )
+      
+      len+res})
 
-setMethod("noise", signature(n='numeric', len="missing"),
+setMethod("rnoise", signature(n='numeric', len="missing"),
           function(n=n,len=len,sd=0.3,b=0,burn=0,trunc=0,what=c("year","cohort","age")) {
              noiseFn(n,sd,b,burn,trunc)})
 
+setMethod("rlnoise", signature(n='numeric', len="FLQuant"),
+        function(n=n,len=len,sd=0.3,b=0,burn=0,trunc=0,what=c("year","cohort","age")) {
+          exp(rnoise(n,len,sd,b,burn,trunc,what))})
+                      
 noiseFn<-function(len,sd=0.3,b=0,burn=0,trunc=0){
   
   if (burn<0) error("burn must be >=0")

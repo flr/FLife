@@ -50,7 +50,6 @@ setMethod("leslie", signature(object="FLBRP"),
   #mx[1,,]=(rec(object)[,1]%*%tmp%/%tmp2)%/%stock.n(object)[,1]
   
   # a/b slope at orign for bevholt
-  #mx[1,,]=(params(object)["a"]/params(object)["b"])%*%(mat(object)%*%stock.wt(object))
   mx[1,,]=(rec(object)[,1]%/%ssb(object)[,1])%*%(mat(object)%*%stock.wt(object))
 
   #Mass

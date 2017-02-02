@@ -20,11 +20,11 @@ hcrSBT1=function(cpue,tac,k1=1.5,k2=3,gamma=1,nyrs=5,lag=1,interval=3){
 
 ####
 mseSBT1<-function(om,eql,srDev,
-                        start=dims(om)$maxyear,end=start+20,lag=1,interval=3,
-                        k1=1.5,k2=3.0,gamma=1,nyrs=5,   
-                        seed=7890,   nits=100,
-                        uCV =0.3,
-                        monitor=FALSE){
+                  start=dims(om)$maxyear,end=start+20,lag=1,interval=3,
+                  k1=1.5,k2=3.0,gamma=1,nyrs=5,   
+                  seed=7890,   nits=100,
+                  uCV =0.3,
+                  monitor=FALSE){
   
   set.seed(seed)
   
