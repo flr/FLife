@@ -1,4 +1,4 @@
-fn=function(year,object,sigma) {
+fn=function(year,object,sigma,niter=100) {
   n  =as.data.frame(stock.n(object)[,year]^(1/3),drop=TRUE)
   len=c((stock.wt(object)[,year])^(1/3))
   len=exp(rmvnorm(n=niter, mean=log(len), sigma=sigma))
@@ -38,6 +38,7 @@ stk=fwd(lhEql(par))[,ac(10:90)]
 stk=setPlusGroup(stk,8)[-1,]
 stk=propagate(stk,10)
 
+plot(stk)
 idx=ldex(stk)
 
 ggplot(as.data.frame(idx[[1]]))+
