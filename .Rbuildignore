@@ -5,11 +5,3 @@ Makefile
 ^appveyor\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^data/ach\.RData$
-^data/fec\.RData$
-^data/herring\.RData$
-^data/lengths\.RData$
-^data/pel\.RData$
-^data/scom\.RData$
-^data/scombrid\.RData$
-^data/teleost\.RData$
