@@ -1,7 +1,7 @@
-fn=function(year,object,sigma,niter=100) {
+fn=function(year,object,sigma,nsample=100) {
   n  =as.data.frame(stock.n(object)[,year]^(1/3),drop=TRUE)
   len=c((stock.wt(object)[,year])^(1/3))
-  len=exp(rmvnorm(n=niter, mean=log(len), sigma=sigma))
+  len=exp(rmvnorm(n=nsample, mean=log(len), sigma=sigma))
   len=melt(len)
   names(len)=c("iter","age","length")
   res=merge(len,n,by="age")
@@ -13,17 +13,19 @@ fn=function(year,object,sigma,niter=100) {
   idx =transform(idx,p=V1/sum(V1))
   idx}
 
-fn2<-function(object,cv=0.3,n=100){
+fn2<-function(object,cv=0.3,nsample=100){
   
   sigma=matrix(0, ncol=dim(m(object))[1],nrow=dim(m(object))[1])
   diag(sigma)=cv
 
-  mdply(data.frame(year=dimnames(m(object))$year),fn,object=object,sigma=sigma)}
+  mdply(data.frame(year=dimnames(m(object))$year),fn,object=object,sigma=sigma,nsample=nsample)}
   
-ldex<-function(object,cv=0.3,n=100){
+ldex<-function(object,cv=0.3,nsample=100){
   
-  idx=mdply(data.frame(iter=seq(dim(stk)[6])), function(iter) fn2(iter(object,iter),cv=cv,n))
-  idx=FLQuants(dlply(idx,.(bin),with, as.FLQuant(data.frame(year=as.numeric(ac(year)),iter=iter,data=p))))
+  idx=mdply(data.frame(iter=seq(dim(stk)[6])), 
+            function(iter) fn2(iter(object,iter),cv=cv,nsample=nsample))
+  idx=FLQuants(dlply(idx,.(bin),with, 
+            as.FLQuant(data.frame(year=as.numeric(ac(year)),iter=iter,data=p))))
   idx}
 
 if (FALSE){
@@ -44,7 +46,7 @@ idx=ldex(stk)
 ggplot(as.data.frame(idx[[1]]))+
   geom_boxplot(aes(as.factor(year),data))
 
-ggplot(as.data.frame(idx[[2]]))+
+ggplot(as.data.frame(idx[[2]]+idx[[2]]))+
   geom_boxplot(aes(as.factor(year),data))
 
 ggplot(as.data.frame(idx[[3]]))+

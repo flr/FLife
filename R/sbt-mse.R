@@ -61,7 +61,7 @@ mseSBT1<-function(om,eql,srDev,
     #tac=hcrSBT1(log(cpue),tac,k1,k2,gamma,nyrs,lag,interval)
     tac=hcrSBT1((cpue%/%mn),tac,k1,k2,gamma,nyrs,lag,interval)
     
-    om <-fwd(om,catch=tac,sr=eql,maxF=maxF,sr.residuals=srDev)
+    om <-FLash:::fwd(om,catch=tac,sr=eql,maxF=maxF,sr.residuals=srDev)
     tac=tac[,interval]}
   
   return(window(om,end=end))}
