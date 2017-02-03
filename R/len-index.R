@@ -26,7 +26,9 @@ ldex<-function(object,cv=0.3,nsample=100){
             function(iter) fn2(iter(object,iter),cv=cv,nsample=nsample))
   idx=FLQuants(dlply(idx,.(bin),with, 
             as.FLQuant(data.frame(year=as.numeric(ac(year)),iter=iter,data=p))))
-  idx}
+  
+  idx[[2]]=idx[[2]]+idx[[3]]
+  names(idx)=c("immature","mature","mega")}
 
 if (FALSE){
   library(ggplot2)
