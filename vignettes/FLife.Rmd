@@ -1,31 +1,26 @@
 ---
 title: "Life History Relationships"
-author: "Laurence Kell"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output:
-  html_vignette: default
-  pdf_document: default
-vignette: >
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEncoding{UTF-8}
+github_document:
+    mathjax: TRUE
 bibliography: ref.bib
 tags: FLPKG FLR
-license: Creative Commons Attribution-ShareAlike 4.0 International
+license: Creative Commons Attribution-ShareAlike 4.0 International Public License
 ---
 
 ```{r knitr_init, echo=FALSE, results="hide"}
 library(knitr)
 ## Global options
-opts_chunk$set(echo    =!TRUE,
-               eval    =TRUE,
-               prompt  =FALSE,
-               comment =NA,
-               message =FALSE,
-               warning =FALSE,
-               tidy    =FALSE,
-               fig.height=4.5,
-               fig.width =4.5)
+opts_chunk$set(echo      =!TRUE,
+               eval      =TRUE,
+               prompt    =FALSE,
+               comment   =NA,
+               message   =FALSE,
+               warning   =FALSE,
+               tidy      =FALSE,
+               fig.height=6,
+               fig.width =8,
+               cache     =TRUE)
 
 iFig=0
 ```
@@ -35,7 +30,7 @@ iFig=0
 warn=options()$warn
 options(warn=-1)
 library(ggplot2)
-library(`FLife`)
+library(FLife)
 
 theme_set(theme_bw())
 options(digits=3)
@@ -46,15 +41,11 @@ options(warn=warn)
 
 [Introduction](#Introduction)
 
-[Installation](#Installation)
-
-[Quick Start](#QuickStart)
-
-[Catch curves](#Catch curves)
+[Quick Start](#Quick Start)
 
 [Methods](#Methods)
 
-[Simulation](#Simulation)
+[Estimation](#Estimation)
 
 [More information](#More information)
 
@@ -62,63 +53,56 @@ options(warn=warn)
 
 # Introduction {#Introduction}
 
-Many studies have shown the relationships between life history traits for processes such as growth, maturity and natural mortality. Life history has been used to develop priors in stock assesments and to parameterise ecological models. The `FLife` package has a variety of methods for modelling life history traits and processes for use in fish stock assessment and Management Strategy Evaluation (MSE). 
+Many studies have shown the relationships between life history traits for processes such as growth, maturity and natural mortality. The **FLife** package has a variety of methods for modelling life history traits and functional forms for processes for use in fish stock assessment and for conducting Management Strategy Evaluation (MSE). 
 
-[Back to Top](#top)
-
-# Installation {#Installation}
-
-The simplest way to obtain `FLife` is to install it from the `FLR` repository via the R console:
-
-```{r install,echo=TRUE,eval=FALSE}
-install.packages("FLife", repos = "http://flr-project.org/R")
-```
-
-The repos options can be changed depending on personal preferences and includes options such as choosing the directories in which to install the packages see help(install.packages) for more details.
+These relationships have many uses, for example in age-structured population models, functional relationships for these processes allow the calculation of the population growth rate and have been used to to develop priors in stock assesments and to parameterise ecological models. 
 
 [Back to Top](#top)
 
 # Quick Start {#QuickStart}
 
-This section provide a quick overview of what functions are available, potential usage, and where to seek help. More details are given in later sections.
+This section provide a quick way to get running and overview of what functions are available, their potential use, and where to seek help. More details are given in later sections.
 
-First, load the `FLife` package:
+The simplest way to obtain **FLife** is to install it from the `FLR` repository via the R console:
 
+```{r install,echo=TRUE,eval=FALSE}
+install.packages("FLife", repos = "http://flr-project.org/R")
+```
+
+See help(install.packages) for more details.
+
+After installing the **FLife** package, you need to load it
 ```{r lib,echo=TRUE}
 library(FLife)
 ```
 
-There is an example teleost dataset, used for illustration and as a test dataset, alternatively users can load their own data.
+There is an example teleost dataset used for illustration and as a test dataset, alternatively you can load your own data.
 
-```{r data-yft,echo=TRUE}
+```{r data,echo=TRUE}
 data(teleost)
 ```
 
-The dataset contains life history parameters i.e. von Bertalanffy growth parameters ($L_{\infty}, k, t_0$), length at 50\% mature ($L_{50}$), and for the length weight relationship ($a, b$) for a range of bony fish species and families.  
+The dataset contains life history parameters for a range of bony fish species and families, i.e. von Bertalanffy growth parameters ($L_{\infty}, k, t_0$), length at 50\% mature ($L_{50}$), and the length weight relationship ($a, b$). 
 
-```{r data-yft2,echo=TRUE}
-head(teleost)
+When loading a new dataset it is always a good idea to run a sanity check e.g.
+
+```{r data-2,echo=TRUE}
+is(teleost)
+```
+
+
+The `teleost` object can be used to create `vectors` or other `objects with values by age using **FLife** methods, e.g. to construct a growth curve for hutchen (*Hucho hucho*)
+```{r data-3,echo=TRUE}
+vonB(1:10,teleost[,"Hucho hucho"])
 ```
 
 ### Plotting
 
-In the package plotting is done using `ggplot2` which provides a powerful alternative paradigm for creating both simple and complex plots in R using the ideas the *Grammar of Graphics* ^[Wilkinson, L. 1999. *The Grammar of Graphics*, Springer. [doi 10.1007/978-3-642-21551-3_13](http://dx.doi.org/10.1007/978-3-642-21551-3_13).] The idea of the grammar is to specify the individual building blocks of a plot and then to combine them to create the graphic desired^[<http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html>].
+Plotting is done using **ggplot2** which provides a powerful alternative paradigm for creating both simple and complex plots in R using the *Grammar of Graphics* ^[Wilkinson, L. 1999. *The Grammar of Graphics*, Springer. [doi 10.1007/978-3-642-21551-3_13](http://dx.doi.org/10.1007/978-3-642-21551-3_13).] The idea of the grammar is to specify the individual building blocks of a plot and then to combine them to create the desired graphic^[<http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html>].
 
-The `ggplot` functions expects a `data.frame` for its first argument, `data`; then a geometric object `geom` that specifies the actual marks put on to a plot and an aesthetic that is "something you can see" have to be provided. Examples of geometic Objects (geom) include points (geom_point, for scatter plots, dot plots, etc), lines (geom_line, for time series, trend lines, etc) and boxplot (geom_boxplot, for, well, boxplots!). Aesthetic mappings are set with the aes() function and, examples include, position (i.e., on the x and y axes), color ("outside" color), fill ("inside" color), shape (of points), linetype and size. 
+The **ggplot** methods expects a `data.frame` for its first argument, `data` (this has been overloaded by **ggplotFL** to also accept FLR objects); then a geometric object `geom` that specifies the actual marks put on to a plot and an aesthetic that is "something you can see" have to be provided. Examples of geometic Objects (geom) include points (geom_point, for scatter plots, dot plots, etc), lines (geom_line, for time series, trend lines, etc) and boxplot (geom_boxplot, for, well, boxplots!). Aesthetic mappings are set with the aes() function and, examples include, position (i.e., on the x and y axes), color ("outside" color), fill ("inside" color), shape (of points), linetype and size. 
 
-
-```{r}
-library(reshape2)
-library(ggplotFL)
-
-ggplot(melt(model.frame(teleost[c("linf","k","b","l50")])))+
-  geom_histogram(aes(x=value))+
-  facet_wrap(~variable,scale="free")
-```
-
-**Figure `r iFig=iFig+1; iFig`.** Life history parameters in teleost dataset.
-
-```{r}
+```{r, echo=TRUE, fig.cap="Von Bertalanffy growth curves."}
 age=FLQuant(1:20,dimnames=list(age=1:20))
 len=vonB(age,teleost)
 
@@ -127,19 +111,90 @@ ggplot(as.data.frame(len))+
   theme(legend.position="none")
 ```
 
-**Figure `r iFig=iFig+1; iFig`.** Von Bertalanffy growth curve. 
+[Back to Top](#top)
+
+
+# Methods {#Methods}
+
+There are relationships between the life history parameters and size, growth, maturation, natural mortality and productivity, as seen in the following plot.
+
+```{r, fig.cap="Relationship between life history traits"}
+library(GGally)
+
+habitat=ifelse(attributes(teleost)$habitat=="demersal","Demersal","Other")
+
+my_smooth <- function(data,mapping,...){
+  ggplot(data=data,mapping=mapping)+
+  geom_point(...,size=.5)+
+  geom_smooth(...,method="lm",se=FALSE)}
+
+my_density <- function(data,mapping,...){
+  ggplot(data=data,mapping=mapping)+
+  geom_density(...,lwd=1)}
+
+ggpairs(cbind(log(model.frame(teleost)[,-c(3,5:7)]),"habitat"=habitat),
+  mapping = ggplot2::aes(color=habitat),
+  lower = list(continuous = wrap(my_smooth)),
+  diag=list(continuous=wrap(my_density,alpha=0.2)),
+  title = "")+
+  theme(legend.position ="none",
+  panel.grid.major =element_blank(),
+  axis.ticks       =element_blank(),
+  axis.text.x      =element_blank(),
+  axis.text.y      =element_blank(),
+  panel.border     =element_rect(linetype = 1, colour="black", fill=NA))
+```
+
+At a given length a large species will grow faster than a small species, for example consider the von Bertalanffy growth equation
+
+$$ L_t = L_\infty (1 - e^{(-kt-t_0)})$$
+
+where $L_\infty$ is the asymptotic maximum length, $k$ is the growth coefficient, $L_t$ is length at time t, and $t_0$ the time at which an individual would, if it possible, be zero length. There is also an empirical relationship between $t_0$ and $L_{\infty}$ and $k$   i.e.
+
+$$log(-t_0) = -0.3922 - 0.2752 log(L_{\infty}) - 1.038 log(k)$$ 
+
+Therefore for a value of $L_{\infty}$ or even $L_{max}$ the maximum size observered as $L_{\infty} ~ 0.95\L_{max}$, all the growth parameters can be recovered.
+
+For larger species securing sufficient food to maintain a fast growth rate may entail exposure to a higher natural mortality (M). In addition, many small demersal species seem to be partly protected against predation by hiding, cryptic behaviour, being flat or by possessing spines. In their analyses of empirical estimates of natural mortality of fish, Griffiths and Harrod (2007) found species that were cryptic, hid in burrows, or had morphological defences against predators to have the lowest rates of natural mortality. Hence, at a given length individuals belonging to species with a high $L_{\infty}$ may generally
+be exposed to a higher M than individuals belonging to species with a low $L_{\infty}$.
+
+$$ log(M) = 0.55-1.61log(L) + 1.44log(L_{\infty}) + log(k)$$
+## Functional forms
+
+There are methods for creating growth curves, maturity ogives, natural mortality vectors and selection patterns.
+
+Generation of missing life history relationships
+
+```{r, echo=TRUE}
+par=lhPar(FLPar(linf=100))
+par
+```
+
+Simulation of equilibrium values and reference points
+
+```{r, echo=TRUE, fig.cap="Age-vectors of growthm natural mortality, maturity and selection pattern"}
+library(FLBRP)
+eql=lhEql(par)
+
+ggplot(FLQuants(eql,"m","catch.sel","mat","catch.wt"))+
+  geom_line(aes(age,data))+
+  facet_wrap(~qname,scale="free")
+```
+
+```{r, fig.cap="Equilibrium curves and reference points."}
+plot(eql)
+```
+
+```{r}
+lhRef(par)
+```
 
 [Back to Top](#top)
 
 
-[Catch curves](#Catch curves)
+# Estimation {#Estimation}
 
-```{r}
-data(ple4)
-ctc=as.data.frame(catch.n(ple4))
-dat=cc(age=ctc$age,n=ctc$data)
-head(dat)
-```
+Life history parameters can also be used to estimate quantities of use in stock assessment
 
 @beverton1956review developed a method to estimate life history and population parameters length data. e.g. 
 
@@ -156,6 +211,14 @@ The Beverton and Holt methods assumes good estimates for K and $L_{\infty}$, whi
 Therefore plotting $\overline{L}-L^\prime$ against $L^\prime$ therefore provides an estimate of $L_{\infty}$ and Z/K
 
 Plotting $\overline{L}-L^\prime$ against $L^\prime$ provides an estimate of $L_{\infty}$ and Z/k, since $L_{\infty}=-a/b$ and $Z/k=\frac{-1-b}{b}$. If k is known then it also provides an estimate of Z (\textbf{Figure} \ref{fig:15}).
+
+```{r}
+data(ple4)
+ctc=as.data.frame(catch.n(ple4))
+dat=cc(age=ctc$age,n=ctc$data)
+head(dat)
+```
+
 
 ```{r}
 library(plyr)
@@ -179,70 +242,444 @@ ggplot(pw)+
    theme_bw()+theme(legend.position="none")
 ```
 
-
 [Back to Top](#top)
 
-[Methods](#Methods)
+# Simulation {#Simulation}
 
-There are a variety of methods for creating growth curves, maturity ogives, natural mortality vectors and selection patterns.
+```{r fig2}
+data(teleost)
+#teleost=with(teleost,l50linf=l50/linf)
+teleost=rbind(teleost,l50linf=teleost["l50"]/teleost["linf"])
+dimnames(teleost)[[1]][7]="l50linf"
 
 
-```{r}
-alb=teleost[,attributes(teleost)$species=="Thunnus alalunga"]
-
-vectors=FLQuants(Growth   =vonB(age,alb),
-                 M        =gislason(age,alb),
-                 Maturity =logistic(age,alb),
-                 Selection=dnormal(age,alb))
-
-ggplot(vectors) +
-  geom_line(aes(age,data))+
-  facet_wrap(~qname,scale="free")
+alb=FLPar(unlist(teleost[,"Thunnus alalunga",
+        c("linf","k","t0","l50","a","b")]))
+alb=lhPar(rbind(alb,FLPar(m1=0.15,m2=-0.288,s=0.75)))
 ```
 
-**Figure `r iFig=iFig+1; iFig`.** Age-vectors of growthm natural mortality, maturity and selection pattern.
 
-## Life History
+```{r fig3,fig.cap="Stock recruitment relationships for a steepness of 0.75 and vigin biomass of 1000"}
+srr=FLBRPs("Beverton and Holt"     =lhEql(alb,sr="bevholt"),
+           "Ricker"                =lhEql(alb,sr="ricker"),
+           "Cushing"               =lhEql(alb,sr="cushing"),
+           "Shepherd"              =lhEql(rbind(alb,FLPar(c=1.5)),sr="shepherd"),
+           "Segmented \nRegression"=lhEql(alb,sr="segreg"))
 
-Generation of missing life history relationships
+srr=
+  ldply(srr,function(x) {
+  refpts(x)=refpts(x)["msy"]
+  fbar(x)=seq(0,1,length.out=501)
+  res=brp(x)
+  subset(model.frame(FLQuants(res,"ssb","rec","catch"),drop=TRUE),ssb>=0)})
 
-```{r}
-par=lhPar(FLPar(linf=100))
-par
+ggplot(melt(srr[,-5],id=c("year","ssb",".id")))+
+  geom_vline(aes(xintercept=200))+
+  geom_line(aes(ssb,value,col=.id))+
+  theme_bw()+theme(legend.position="bottom")+
+  scale_colour_manual("Stock Recruit \n Relationship",
+                      values=c("red","green","yellow","blue","pink"))+
+  xlab("Spawning Stock Biomass")+ylab("Recruits")
+i=0
 ```
 
-Simulation of equilibrium values and reference points
+```{r fig4,fig.cap="Production curves, Yield v SSB, for a steepness of 0.75 and vigin biomass of 1000."}
+ggplot(melt(srr[,-4],id=c("year","ssb",".id")))+
+  geom_path(aes(ssb,value,col=.id))+
+  theme_bw()+theme(legend.position="bottom")+
+  scale_colour_manual("Stock Recruit \n Relationship",
+                      values=c("red","green","yellow","blue","pink"))+
+  xlab("Spawning Stock Biomass")+ylab("Yield")
+```
+
+
+```{r fig5,eval=!TRUE,fig.height=3,fig.width=6}
+par=lhPar(teleost[c("linf","k","t0","l50","a","b")])
+
+mGislason=function(length,params) 
+   0.55*(length^-1.66)%*%(params["linf"]^1.44)%*%params["k"]
+ref=mdply(seq(dim(par)[2]),function(i,par) lhRef(par[,i],m=mGislason),par=par)
+
+dat=ref[dimnames(ref[!is.na(ref[,"rc"]),])[[1]],]
+           
+pc=princomp(dat[-122,c("r","rc","lopt","sk")],
+            cor=TRUE,use="pairwise.complete.obs")
+gg=ggbiplot(pc, obs.scale=1, var.scale=1, 
+                ellipse=TRUE, ellipse.prob=.5, circle=FALSE,
+         groups=factor(family[-122,"what"]) )+
+  kobe:::theme_ms(12,legend.position="bottom")
+
+gg=gg+geom_point(aes(xvar,yvar),data=gg$data[130,],size=3)
+
+#gg$layers[[2]]=NULL
+#gg$layers[[2]]$mapping$colour=NULL
+#gg$layers[[3]]$mapping$colour=NULL
+gg+theme(legend.position="none")
+```
 
 ```{r}
+#alb["t0"]=-alb["t0"]
+## Beverton and Holt recruitment
+bh      =lhEql(alb,m=lorenzen)
+refpts(bh)=refpts(bh)["msy",]
+p=plot(bh)+theme_bw()+theme(legend.position="bottom")+
+  scale_colour_manual("",values="red",label="MSY")
+```
+
+```{r DD, eval=FALSE}
+alb=teleost[c("linf","k","t0","l50","a","b"),"Thunnus alalunga"]
+alb=lhPar(rbind(alb,FLPar(m1=0.15,m2=-0.288,s=0.75)))
+
+## Beverton and Holt recruitment
+bh      =lhEql(alb,m=lorenzen)
+
+fbar(bh)=FLQuant(c(seq(0,4,length.out=101)))*
+              refpts(bh)["msy","harvest"]
+names(dimnames(fbar(bh)))[1]="age"
+stk=FLStocks("SRR"=as(bh,"FLStock"))
+stk[["SRR"]]=fwd(stk[["SRR"]],f=fbar(bh)[,-1],sr=bh)
+
+## Cushing recruitment
+#sr=fmle(as.FLSR(stk[[1]][,1:10],model="geomean"))
+cu        =lhEql(alb,m=lorenzen,sr="cushing")
+fbar(cu)  =fbar(bh)
+names(dimnames(fbar(cu)))[1]="age"
+stk[["M"]]        =as(cu,"FLStock")
+stk[["M"]]        =fwd(stk[["M"]],f=fbar(cu)[,-1],sr=cu)
+stk[["Fecundity"]]=stk[["M"]]
+
+eql=FLBRPs("Beverton Holt"=bh,"Cushing"=cu)
+rm(bh,cu)
+
+y  =eql[["Cushing"]]
+ref=stock.n(y)[,1]
+n  =stock.n(y)[,1]
+m  =m(y)
+
+mDD=mdply(data.frame(i=seq(dims(fbar(eql[["Cushing"]]))$year)),
+          function(i){
+         
+  repeat{
+      scale=(stock.n(y)[,i]%-%ref)%/%ref
+      m(y)[] =mdd(stock.wt(y),alb,scale,k=.9)
+    
+    if(sum((m-m(y))^2)<1e-6){break}
+    m=m(y)}          
+    
+  subset(model.frame(FLQuants(y,"catch","ssb"),drop=TRUE),
+         year==i)})
+
+p=ggplot(mDD)+geom_line(aes(ssb,catch))
+
+y  =eql[["Cushing"]]
+ref=stock.n(y)[,1]
+n  =stock.n(y)[,1]
+mat=mat(y)#[,max(i-1,dims(m(y))$year)]    
+
+matDD=mdply(data.frame(i=seq(dims(fbar(eql[["Cushing"]]))$year)[-1]),
+          function(i){
+            
+  repeat{
+      scale=(stock.n(y)[,i]%-%ref)%/%ref
+      mat(y)[] =matdd(ages(scale),alb,scale,k=.9)
+  
+    if(sum((mat-mat(y))^2)<1e-6){break}
+    mat=mat(y)}
+  
+  subset(model.frame(FLQuants(y,"catch","ssb"),drop=TRUE),
+         year==i)})
+```
+
+
+```{r fig6,fig.height=5,fig.width=6,eval=FALSE}
+data=rbind.fill(
+     cbind("Form"="M",mDD),cbind("Form"="Fecundity",matDD),
+     cbind("Form"="Stock-recruit",model.frame(FLQuants(eql[["Cushing"]],"catch","ssb"),drop=TRUE)))
+
+ggplot(data)+
+   geom_line(aes(ssb,catch,colour=Form))+theme_bw()+theme(legend.position="bottom")+
+  scale_colour_manual("",values=c("red","green","blue"))+
+  xlab("Biomass")+ylab("Yield")
+```
+
+```{r fig7,fig.height=6,eval=FALSE}
+library(FLash)
+library(FLife)
+
+k   =1
+sr  ="cushing"
+s   =0.7
+alb  =teleost[c("linf","k","t0","l50","a","b"),"Thunnus alalunga"]
+alb  =lhPar(rbind(alb,FLPar(m1=0.3,m2=-0.288,s=s)))
+eq      =lhEql(alb,m=lorenzen,sr=sr)
+fbar(eq)=FLQuant(c(seq(0,5,length.out=51)*
+                 refpts(eq)["msy","harvest"]))
+f       =fbar(eq)[,-1]
+
+stkr=as(eq,"FLStock")
+stkr=fwd(stkr,f=f,sr=eq)
+ref =stock.n(eq)[,1]
+
+stkm=stkr
+m(  stkm)=mdd(stock.wt(stkm),alb,(stock.n(stkm)%-%ref)%/%ref,k) 
+stkm=fwd(stkm,f=f,sr=eq)
+
+stkf=stkr
+mat(stkf)=matdd(ages(stock.wt(stkf)),alb,
+                (stock.n(stkf)%-%ref)%/%ref,k,TRUE) 
+stkf=fwd(stkf,f=f,sr=eq)
+
+for (i in seq(dims(fbar(eq))$year)[2:50]){
+  scale =(stock.n(stkm)[,i]%-%ref)%/%ref
+  m(stkm)[,i]=mdd(stock.wt(stkm)[,i],alb,scale,k)
+            
+  stkm=fwd(stkm,f=f[,i],sr=eq)}
+
+for (i in seq(dims(fbar(eq))$year)[2:50]){
+  scale =(stock.n(stkf)[,i]%-%ref)%/%ref
+  mat(stkf)[,i]=matdd(ages(scale),alb,scale,k,TRUE)
+            
+  stkf=FLash:::fwd(stkf,f=f[,i],sr=eq)}
+
+plot(FLStocks("SRR"=stkr[,-(1:1)],
+              "M"  =stkm[,-(1:1)],
+              "Fecundity"=stkf[,-(1:1)]))+
+  theme_bw()+
+  theme(legend.position="bottom")
+
+p=ggplot(as.data.frame(FLQuants("SRR"=ssb(stkr),
+                              "M"=ssb(stkm),
+                              "Fecundity"=ssb(stkf))))+
+  geom_line(aes(year,data,col=qname))+
+  theme_bw()+
+  theme(legend.position="bottom")
+```
+
+
+```{r fig8,fig.height=6,echo=FALSE,eval=FALSE}
+k   =1
+sr  ="cushing"
+s   =0.7
+alb  =FLPar(unlist(teleost[teleost$species=="Thunnus alalunga",
+             c("linf","k","t0","l50","a","b")]))
+alb  =lhPar(rbind(alb,FLPar(m1=0.3,m2=-0.288,s=s)))
+eq      =lhEql(alb,m=lorenzen,sr=sr)
+fbar(eq)=FLQuant(c(seq(5,.5,length.out=51)*
+                 refpts(eq)["msy","harvest"]))
+f       =fbar(eq)[,-1]
+
+stkr=as(eq,"FLStock")
+stkr=fwd(stkr,f=f,sr=eq)
+ref =stock.n(eq)[,1]
+
+stkm=stkr
+m(  stkm)=mdd(stock.wt(stkm),alb,(stock.n(stkm)%-%ref)%/%ref,k) 
+stkm=fwd(stkm,f=f,sr=eq)
+
+stkf=stkr
+mat(stkf)=matdd(ages(stock.wt(stkf)),alb,
+                (stock.n(stkf)%-%ref)%/%ref,k,TRUE) 
+stkf=fwd(stkf,f=f,sr=eq)
+
+for (i in seq(dims(fbar(eq))$year)[2:50]){
+  scale =(stock.n(stkm)[,i]%-%ref)%/%ref
+  m(stkm)[,i]=mdd(stock.wt(stkm)[,i],alb,scale,k)
+            
+  stkm=fwd(stkm,f=f[,i],sr=eq)}
+
+for (i in seq(dims(fbar(eq))$year)[2:50]){
+  scale =(stock.n(stkf)[,i]%-%ref)%/%ref
+  mat(stkf)[,i]=matdd(ages(scale),alb,scale,k,TRUE)
+            
+  stkf=fwd(stkf,f=f[,i],sr=eq)}
+
+plot(FLStocks("SRR"=stkr[,-(1:1)],
+              "M"  =stkm[,-(1:1)],
+              "Fecundity"=stkf[,-(1:1)]))+
+  theme_bw()+
+  theme(legend.position="bottom")
+
+p=ggplot(as.data.frame(FLQuants("SRR"=ssb(stkr),
+                              "M"=ssb(stkm),
+                              "Fecundity"=ssb(stkf))))+
+  geom_line(aes(year,data,col=qname),size=2)+
+  theme(legend.position="bottom")
+```
+
+```{r fig9}
+data(ple4)
+res=rnoise(4,m(ple4)[1:8,ac(1980:2008)],burn=10,b=0.9,what="age")
+ggplot()+
+  geom_point(aes(year,age,size= data),
+             data=subset(as.data.frame(res),data>0))+
+  geom_point(aes(year,age,size=-data),
+             data=subset(as.data.frame(res),data<=0),colour="red")+
+  scale_size_area(max_size=4, guide="none")+
+  facet_wrap(~iter)+theme_bw()
+```
+
+```{r fig10}
+res=rnoise(4,m(ple4)[1:8,ac(1980:2008)],burn=10,b=0.9,what="cohort")
+ggplot()+
+  geom_point(aes(year,age,size= data),
+             data=subset(as.data.frame(res),
+                         data>0))+
+  geom_point(aes(year,age,size=-data),
+             data=subset(as.data.frame(res),
+                         data<=0),colour="red")+
+  scale_size_area(max_size=4,  guide="none")+
+  facet_wrap(~iter)+theme_bw()  
+```
+
+```{r fig11, fig.height=6,fig.width=10,eval=FALSE}
+k   =1
+sr  ="cushing"
+s   =0.7
+alb  =teleost[c("linf","k","t0","l50","a","b"),"Thunnus alalunga"]
+alb  =lhPar(rbind(alb,FLPar(m1=0.3,m2=-0.288,s=s)))
+eq      =lhEql(alb,m=lorenzen,sr=sr)
+fbar(eq)=FLQuant(rep(1,1001)*refpts(eq)["msy","harvest"])
+f       =fbar(eq)[,-1]
+f       =propagate(fbar(eq)[,-1],3)
+f[,,,,,2]=0
+f[,,,,,3]=f[,,,,,1]*4
+
+stkr=as(eq,"FLStock")
+stkr=fwd(stkr,f=f,sr=eq)
+ref =stock.n(eq)[,1]
+
+scale=rnoise(1,stock.wt(stkr),sd=0.3,b=0.9,what="cohort")
+stkm=stkr
+
+m(  stkm)=mdd(iter(stock.wt(stkm),1),alb,scale,k) 
+stkm=fwd(stkm,f=f,sr=eq)
+
+scale=rnoise(1,stock.wt(stkm),sd=0.3,b=0.9,what="cohort")
+stkf=stkr
+mat(stkf)=matdd(ages(stock.wt(stkf)),alb,scale,k,TRUE) 
+stkf=fwd(stkf,f=f,sr=eq)
+stkr=fwd(stkr,f=f,sr=eq,sr.residuals=rlnorm(1,iter(f,1)*0,.3))
+dat =as.data.frame(FLQuants("SRR"=ssb(stkr),
+                              "M"=ssb(stkm),
+                              "Fecundity"=ssb(stkf)))
+fishMat=ddply(subset(dat,year>50),.(iter,qname), transform, val=data/mean(data))
+
+k   =1
+sr  ="cushing"
+s   =0.7
+alb  =FLPar(unlist(teleost[teleost$species=="Thunnus alalunga",
+             c("linf","k","t0","l50","a","b")]))
+alb  =lhPar(rbind(alb,FLPar(m1=0.3,m2=-0.288,s=s)))
+alb[c("a1","sr")]=c(0,5000)
+eq      =lhEql(alb,m=lorenzen,sr=sr)
+fbar(eq)=FLQuant(rep(1,1001)*refpts(eq)["msy","harvest"])
+f       =fbar(eq)[,-1]
+f       =propagate(fbar(eq)[,-1],3)
+f[,,,,,2]=0
+f[,,,,,3]=f[,,,,,1]*4
+
+stkr=as(eq,"FLStock")
+stkr=fwd(stkr,f=f,sr=eq)
+ref =stock.n(eq)[,1]
+
+scale=rnoise(1,stock.wt(stkr),sd=0.3,b=0.9,what="cohort")
+
+stkm=stkr
+m(  stkm)=mdd(iter(stock.wt(stkm),1),alb,scale,k) 
+stkm=fwd(stkm,f=f,sr=eq)
+scale=rnoise(1,stock.wt(stkm),sd=0.3,b=0.9,what="cohort")
+stkf=stkr
+mat(stkf)=matdd(ages(stock.wt(stkf)),alb,scale,k,TRUE) 
+stkf=fwd(stkf,f=f,sr=eq)
+stkr=fwd(stkr,f=f,sr=eq,sr.residuals=rlnorm(1,iter(f,1)*0,.3))
+dat =as.data.frame(FLQuants("SRR"=ssb(stkr),
+                            "M"=ssb(stkm),
+                            "Fecundity"=ssb(stkf)))
+fishJuv=ddply(subset(dat,year>50),.(iter,qname), transform, val=data/mean(data))
+
+dat=rbind(cbind("Selection"="Juvenile",fishJuv),
+          cbind("Selection"="Mature",  fishMat))
+dat=transform(dat,F=factor(paste("F times",c(0,1,3))[iter]))
+
+ggplot(dat)+
+  geom_line(aes(year,val,col=qname))+
+  theme_bw()+
+  theme(legend.position="bottom")+
+  facet_grid(F~Selection,scale="free_y")+
+  scale_x_continuous(limits=c(500,700))+
+  xlab("Time (year)")+ylab("")
+```
+
+
+```{r fig12,fig.width=6,fig.height=6,eval=FALSE,fig.cap="Year effects"}
+dat=rbind(cbind("Selection"="Juvenile",fishJuv),
+          cbind("Selection"="Mature",  fishMat))
+dat=transform(dat,F=factor(paste("F times",c(0,1,3))[iter]))
+
+dat=ddply(dat,.(Selection,qname,F), with, 
+#          as.data.frame(spectrum(data, spans = c(7,13), log = "dB", ci = 0.8,plot=FALSE)[c("freq","spec")]))
+          as.data.frame(spectrum(data, log = "dB", ci = 0.8,plot=FALSE)[c("freq","spec")]))
+
+dat=ddply(subset(dat,freq>0.05),.(F,Selection,qname),transform,val=spec/max(spec))
+ggplot(dat,aes(freq,val,col=qname))+
+  geom_smooth(se=FALSE)+
+  facet_grid(F~Selection,scale="free_y")+
+  theme_bw()+
+  theme(legend.position="bottom")
+```
+
+
+```{r fig13, fig.width=10,fig.height=4,eval=FALSE,fig.cap="Cohort Effects"}
+library(FLAssess)
+
+stk   =iter(stkm[,101:250],1)
+m(stk)=iter(m(stkr),1)[,101:250]
+vpa    =stk+VPA(stk)
+
+p=plot(FLStocks("Actual"=stk,"Model Estimate"=vpa))
+p$data=subset(p$data,qname%in%c("SSB","Rec"))
+names(p$data)[8]="data"
+p$data=ddply(p$data,.(qname), transform, val=data/mean(data))
+ggplot(subset(p$data,year>50))+
+  geom_line(aes(year,val,col=qname))+
+  facet_grid(qname~stock,scale="free")+
+  theme_bw()+
+  theme(legend.position="none")+
+  xlab("Year")+ylab("")
+```
+
+
+```{r fig14, fig.width=6,fig.height=8,fig.cap="MSE using empirical HCR"}
+library(FLife)
+library(FLash)
 library(FLBRP)
+  
+par=lhPar(FLPar(linf=100))  
 eql=lhEql(par)
-
-ggplot(FLQuants(eql,"m","catch.sel","mat","catch.wt"))+
-  geom_line(aes(age,data))+
-  facet_wrap(~qname,scale="free")
+mou=as(eql,"FLStock")
+mou=FLash:::fwd(mou,f=fbar(eql)[,-1]/4,sr=eql)
+  
+srDev=rlnorm(100,FLQuant(rep(0,136)),0.3)
+  
+om=FLife:::mseSBT1(mou,eql,srDev,
+             start=dims(mou)$maxyear,end=dims(mou)$maxyear+20,lag=1,interval=3,
+             k1=1.5,k2=3.0,gamma=1,nyrs=5,   
+             seed=7890,nits=100,
+             uCV =0.2) 
+  
+ggplot()+
+    geom_line(aes(year,data,col=iter),
+              data=as.data.frame(FLQuants(iter(om[,ac(95:120)],5:7),c("Rec"=rec,"SSB"=ssb,
+                                                      "Catch"=catch,"Harvest"=fbar)),drop=T))+
+    facet_grid(qname~.,scale="free")+
+    theme_bw()+xlab("")+ylab("")+
+  theme(legend.position="bottom")
 ```
 
-**Figure `r iFig=iFig+1; iFig`.** Age-vectors of growthm natural mortality, maturity and selection pattern.
-
-```{r}
-plot(eql)
-```
-
-**Figure `r iFig=iFig+1; iFig`.** Equilibrium curves and reference points.
-
-```{r}
-lhRef(par)
-```
-
-**Figure `r iFig=iFig+1; iFig`.** Population parameters.
 
 [Back to Top](#top)
 
-[Simulation](#Simulation)
-
-[Back to Top](#top)
-
-[More information](#More information)
+# More information {#More information}
 
 * You can submit bug reports, questions or suggestions on `FLPKG` at the `FLPKG` issue page ^[<https://github.com/flr/FLPKG/issues>], or on the *FLR* mailing list.
 * Or send a pull request to <https://github.com/flr/FLPKG/>
