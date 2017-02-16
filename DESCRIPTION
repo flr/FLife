@@ -64,4 +64,5 @@ Collate:
     len-index.R
     sbt-mse.R
     power.R
+    t0.R
 RoxygenNote: 5.0.1

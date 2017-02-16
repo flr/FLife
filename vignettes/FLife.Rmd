@@ -113,7 +113,7 @@ ggplot(as.data.frame(len))+
 
 # Methods {#Methods}
 
-There are relationships between the life history parameters and size, growth, maturation, natural mortality and productivity, as seen in the following plot.
+There are relationships between the life history parameters and size, growth, maturation, natural mortality and productivity, as seen in the following.
 
 
 ## Function Forms
@@ -145,11 +145,44 @@ lopt, loptAge
 ### Density Dependence
 matdd, mdd
 
+```{r, echo=TRUE, m-density-dependence,fig.cap="Density Dependence in M"}
+library(FLBRP)
+
+par=teleost[,"Hucho hucho"]
+par=lhPar(par)
+hutchen=lhEql(par)
+ 
+scale=stock.n(hutchen)[,25]%*%stock.wt(hutchen)
+scale=(stock.n(hutchen)%*%stock.wt(hutchen)%-%scale)%/%scale
+ 
+m=mdd(stock.wt(hutchen),par=FLPar(m1=.2,m2=-0.288),scale,k=.5)   
+
+ggplot(as.data.frame(m))+
+   geom_line(aes(age,data,col=factor(year)))+
+   theme(legend.position="none")+
+    scale_x_continuous(limits=c(0,15))
+```
+
+```{r, echo=TRUE, Maturity-density-dependence,fig.cap="Density Dependence in M"}
+scale=stock.n(hutchen)[,25]%*%stock.wt(hutchen)
+scale=(stock.n(hutchen)%*%stock.wt(hutchen)%-%scale)%/%scale
+
+mat=matdd(ages(scale),par,scale,k=.5)   
+ 
+ggplot(as.data.frame(mat))+
+    geom_line(aes(age,data,col=factor(year)))+
+    theme(legend.position="none")+
+    scale_x_continuous(limits=c(0,15))
+```
+
 ### Parameter estination
 moment, powh 
 
 ### Stationarity
 rod
+
+### Random variables
+rnoise
 
 ## Life History Parameters
 
@@ -224,60 +257,6 @@ plot(eql)
 lhRef(par)
 ```
 
-[Back to Top](#top)
-
-
-# Estimation {#Estimation}
-
-Life history parameters can also be used to estimate quantities of use in stock assessment
-
-@beverton1956review developed a method to estimate life history and population parameters length data. e.g. 
-
-\begin{equation}Z=K\frac{L_{\infty}-\overline{L}}{\overline{L}-L^\prime} \end{equation}
-Based on which @powell1979estimation developed a method, extended by @wetherall1987estimating, to estimate growth and mortality parameters. This assumes that the right hand tail of a length frequency distribution was determined by the asymptotic length $L_{\infty}$ and the ratio between Z and the growth rate k. 
-
-The Beverton and Holt methods assumes good estimates for K and $L_{\infty}$, while the Powell-Wetherall method only requires an estimate of K, since $L_{\infty}$ is estimated by the method as well as Z/K.These method therefore provide estimates for each distribution of Z/K, if K is unknown and Z if K is known.  
-%As well as assuming that growth follows the von Bertalanffy growth function, it is also assumed that the population is in a steady state with constant exponential mortality, no changes in selection pattern of the fishery and constant recruitment. In the Powell-Wetherall method $L^\prime$ can take any value between the smallest and largest sizes. Equation 1 then provides a series of estimates of Z and since 
-
-\begin{equation}\overline{L}-L^\prime=a+bL^{\prime} \end{equation}
- a and b can be estimated by a regression analysis where 
-\begin{equation}b=\frac{-K}{Z+K} \end{equation}
- \begin{equation}a=-bL_{\infty} \end{equation}
-Therefore plotting $\overline{L}-L^\prime$ against $L^\prime$ therefore provides an estimate of $L_{\infty}$ and Z/K
-
-Plotting $\overline{L}-L^\prime$ against $L^\prime$ provides an estimate of $L_{\infty}$ and Z/k, since $L_{\infty}=-a/b$ and $Z/k=\frac{-1-b}{b}$. If k is known then it also provides an estimate of Z (\textbf{Figure} \ref{fig:15}).
-
-```{r}
-data(ple4)
-ctc=as.data.frame(catch.n(ple4))
-dat=cc(age=ctc$age,n=ctc$data)
-head(dat)
-```
-
-
-```{r}
-library(plyr)
-library(dplyr)
-
-data(cas)
-pw=ddply(subset(cas), .(year), 
-   function(cas) powh(cas$len,cas$n)$data)
-   
-   pw=transform(pw, lustrum=(year%/%5)*5,
-         yr    =year-(year%/%5)*5,
-         weight=ifelse(len>=100&len<=200,1,0))
-         
-ggplot(pw)+
-   geom_line(aes(len,diff,colour=factor(yr),group=year))+
-   scale_x_continuous(limits=c(0,300)) +
-   xlab("Length (cm)")+
-   ylab("Difference between Length and Mean Size")+
-   geom_smooth(aes(len,diff,weight=weight),
-   method="lm",col="red",size=1.25,alpha=.1)+
-   theme_bw()+theme(legend.position="none")
-```
-
-[Back to Top](#top)
 
 # Simulation {#Simulation}
 
@@ -574,6 +553,61 @@ ggplot()+
   theme(legend.position="bottom")
 ```
 
+
+[Back to Top](#top)
+
+[Back to Top](#top)
+
+
+# Estimation {#Estimation}
+
+Life history parameters can also be used to estimate quantities of use in stock assessment
+
+@beverton1956review developed a method to estimate life history and population parameters length data. e.g. 
+
+\begin{equation}Z=K\frac{L_{\infty}-\overline{L}}{\overline{L}-L^\prime} \end{equation}
+Based on which @powell1979estimation developed a method, extended by @wetherall1987estimating, to estimate growth and mortality parameters. This assumes that the right hand tail of a length frequency distribution was determined by the asymptotic length $L_{\infty}$ and the ratio between Z and the growth rate k. 
+
+The Beverton and Holt methods assumes good estimates for K and $L_{\infty}$, while the Powell-Wetherall method only requires an estimate of K, since $L_{\infty}$ is estimated by the method as well as Z/K.These method therefore provide estimates for each distribution of Z/K, if K is unknown and Z if K is known.  
+%As well as assuming that growth follows the von Bertalanffy growth function, it is also assumed that the population is in a steady state with constant exponential mortality, no changes in selection pattern of the fishery and constant recruitment. In the Powell-Wetherall method $L^\prime$ can take any value between the smallest and largest sizes. Equation 1 then provides a series of estimates of Z and since 
+
+\begin{equation}\overline{L}-L^\prime=a+bL^{\prime} \end{equation}
+ a and b can be estimated by a regression analysis where 
+\begin{equation}b=\frac{-K}{Z+K} \end{equation}
+ \begin{equation}a=-bL_{\infty} \end{equation}
+Therefore plotting $\overline{L}-L^\prime$ against $L^\prime$ therefore provides an estimate of $L_{\infty}$ and Z/K
+
+Plotting $\overline{L}-L^\prime$ against $L^\prime$ provides an estimate of $L_{\infty}$ and Z/k, since $L_{\infty}=-a/b$ and $Z/k=\frac{-1-b}{b}$. If k is known then it also provides an estimate of Z (\textbf{Figure} \ref{fig:15}).
+
+```{r}
+data(ple4)
+ctc=as.data.frame(catch.n(ple4))
+dat=cc(age=ctc$age,n=ctc$data)
+head(dat)
+```
+
+
+```{r}
+library(plyr)
+library(dplyr)
+
+data(cas)
+pw=ddply(subset(cas), .(year), 
+   function(cas) powh(cas$len,cas$n)$data)
+   
+   pw=transform(pw, lustrum=(year%/%5)*5,
+         yr    =year-(year%/%5)*5,
+         weight=ifelse(len>=100&len<=200,1,0))
+         
+ggplot(pw)+
+   geom_line(aes(len,diff,colour=factor(yr),group=year))+
+   scale_x_continuous(limits=c(0,300)) +
+   xlab("Length (cm)")+
+   ylab("Difference between Length and Mean Size")+
+   geom_smooth(aes(len,diff,weight=weight),
+   method="lm",col="red",size=1.25,alpha=.1)+
+   theme_bw()+theme(legend.position="none")
+```
 
 [Back to Top](#top)
 

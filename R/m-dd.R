@@ -44,18 +44,20 @@
 #' library(FLBRP)
 #' library(FLife)
 #' 
-#' data(ple4)
+#' data(teleost)
+#' par=teleost[,"Hucho hucho"]
+#' par=lhPar(par)
+#' hutchen=lhEql(par)
 #' 
-#' eql=brp(FLBRP(ple4))
-#' fbar(eql)=FLQuant(c(seq(0,4,length.out=101)*refpts(eql)["msy","harvest"]))
-#' stk=as(eql,"FLStock")
+#' scale=stock.n(hutchen)[,25]%*%stock.wt(hutchen)
+#' scale=(stock.n(hutchen)%*%stock.wt(hutchen)%-%scale)%/%scale
 #' 
-#' fbar(eql)=fbar(eql)[,1] 
-#' scale=(stock.n(stk)%-%stock.n(eql))%/%stock.n(eql)
-#' par=FLPar(m1=.2,m2=-0.288)
+#' m=mdd(stock.wt(hutchen),par=FLPar(m1=.2,m2=-0.288),scale,k=.5)   
 #' 
-#' m=mdd(stock.wt(stk),par,scale)
-#' ggplot(as.data.frame(m,drop=TRUE))+geom_line(aes(age,data,group=year,col=factor(year)))+theme(legend.position="none")
+#' ggplot(as.data.frame(m))+
+#'    geom_line(aes(age,data,col=factor(year)))+
+#'    theme(legend.position="none")+
+#'    scale_x_continuous(limits=c(0,15))
 #' }
 setMethod('mdd', signature(wt='FLQuant',params='FLPar'),
           function(wt,params,scale,k=1) { 
