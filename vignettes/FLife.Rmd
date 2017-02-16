@@ -4,7 +4,7 @@ date: "`r format(Sys.time(), '%d %B, %Y')`"
 github_document:
     mathjax: TRUE
 bibliography: ref.bib
-tags: FLPKG FLR
+tags: FLife FLR
 license: Creative Commons Attribution-ShareAlike 4.0 International Public License
 ---
 
@@ -41,6 +41,8 @@ options(digits=3)
 [Quick Start](#Quick Start)
 
 [Methods](#Methods)
+
+[Simulation](#Simulation)
 
 [Estimation](#Estimation)
 
@@ -333,7 +335,7 @@ gg=gg+geom_point(aes(xvar,yvar),data=gg$data[130,],size=3)
 gg+theme(legend.position="none")
 ```
 
-```{r}
+```{r,eval=FALSE}
 #alb["t0"]=-alb["t0"]
 ## Beverton and Holt recruitment
 bh      =lhEql(alb,m=lorenzen)
@@ -609,17 +611,27 @@ ggplot(pw)+
    theme_bw()+theme(legend.position="none")
 ```
 
+### Catch curve analysis
+```{r, echo=TRUE}
+data(ple4)
+ctc=as.data.frame(catch.n(ple4))
+ctc=ddply(ctc,.(year), with, FLife:::cc(age=age,n=data))
+ctc=ddply(transform(ctc,decade=factor(10*(year%/%10))),.(decade,age),with,data.frame(sel=mean(sel)))
+ggplot(ctc)+
+  geom_line(aes(age,sel,colour=decade))
+```
+
 [Back to Top](#top)
 
 # More Information {#More}
 
-* You can submit bug reports, questions or suggestions on `FLPKG` at the `FLPKG` issue page ^[<https://github.com/flr/FLPKG/issues>], or on the *FLR* mailing list.
-* Or send a pull request to <https://github.com/flr/FLPKG/>
+* You can submit bug reports, questions or suggestions on `FLife` at the `FLife` issue page ^[<https://github.com/lauriekell/FLife/issues>], or on the *FLR* mailing list.
+* Or send a pull request to <https://github.com/lauriekell/FLife/>
 * For more information on the FLR Project for Quantitative Fisheries Science in R, visit the FLR webpage ^[<http://flr-project.org>].
-* The latest version of `FLPKG` can always be installed using the `devtools` package, by calling
+* The latest version of `FLife` can always be installed using the `devtools` package, by calling
 ```{r, devtools, echo=TRUE, eval=FALSE}
 	library(devtools)
-	install_github('flr/FLPKG')
+	install_github("lauriekell/FLife")
 ```
 `
 
@@ -627,7 +639,7 @@ ggplot(pw)+
 
 * `r version$version.string`
 * FLCore: `r packageVersion('FLCore')`
-* FLPKG: `r # packageVersion('FLPKG')`
+* FLife: `r # packageVersion('FLife')`
 * **Compiled**: `r date()`
 * **Git Hash**: `r system("git log --pretty=format:'%h' -n 1", intern=TRUE)`
 
