@@ -36,8 +36,6 @@ options(digits=3)
 
 [](#top)
 
-[Introduction](#Introduction)
-
 [Quick Start](#Quick Start)
 
 [Methods](#Methods)
@@ -50,9 +48,8 @@ options(digits=3)
 
 [References](#References)
 
-# Introduction {#Introduction}
 
-Many studies have shown the relationships between life history traits for processes such as growth, maturity and natural mortality. The **FLife** package has a variety of methods for modelling life history traits and functional forms for processes for use in fish stock assessment and for conducting Management Strategy Evaluation (MSE). 
+Life history traits include growth rate; age and size at sexual maturity; the temporal pattern or schedule of reproduction; the number, size, and sex ratio of offspring; the distribution of intrinsic or extrinsic mortality rates (e.g., patterns of senescence); and patterns of dormancy and dispersal. These traits contribute directly to age-specific survival and reproductive functions.^[http://www.oxfordbibliographies.com/view/document/obo-9780199830060/obo-9780199830060-0016.xml] The **FLife** package has a variety of methods for modelling life history traits and functional forms for processes for use in fish stock assessment and for conducting Management Strategy Evaluation (MSE). 
 
 These relationships have many uses, for example in age-structured population models, functional relationships for these processes allow the calculation of the population growth rate and have been used to to develop priors in stock assesments and to parameterise ecological models. 
 
@@ -555,11 +552,7 @@ ggplot()+
   theme(legend.position="bottom")
 ```
 
-
 [Back to Top](#top)
-
-[Back to Top](#top)
-
 
 # Estimation {#Estimation}
 
@@ -615,7 +608,7 @@ ggplot(pw)+
 ```{r, echo=TRUE}
 data(ple4)
 ctc=as.data.frame(catch.n(ple4))
-ctc=ddply(ctc,.(year), with, FLife:::cc(age=age,n=data))
+ctc=ddply(ctc,.(year), with, cc(age=age,n=data))
 ctc=ddply(transform(ctc,decade=factor(10*(year%/%10))),.(decade,age),with,data.frame(sel=mean(sel)))
 ggplot(ctc)+
   geom_line(aes(age,sel,colour=decade))
@@ -639,7 +632,7 @@ ggplot(ctc)+
 
 * `r version$version.string`
 * FLCore: `r packageVersion('FLCore')`
-* FLife: `r # packageVersion('FLife')`
+* FLife: `r packageVersion('FLife')`
 * **Compiled**: `r date()`
 * **Git Hash**: `r system("git log --pretty=format:'%h' -n 1", intern=TRUE)`
 
