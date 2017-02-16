@@ -11,7 +11,8 @@ license: Creative Commons Attribution-ShareAlike 4.0 International Public Licens
 ```{r knitr_init, echo=FALSE, results="hide"}
 library(knitr)
 ## Global options
-opts_chunk$set(echo      =!TRUE,
+opts_chunk$set(cache     =!TRUE,
+               echo      =!TRUE,
                eval      =TRUE,
                prompt    =FALSE,
                comment   =NA,
@@ -19,22 +20,18 @@ opts_chunk$set(echo      =!TRUE,
                warning   =FALSE,
                tidy      =FALSE,
                fig.height=6,
-               fig.width =8,
-               cache     =TRUE)
+               fig.width =8)
 
 iFig=0
 ```
 
 
 ```{r, pkgs, echo=FALSE, message=FALSE}
-warn=options()$warn
-options(warn=-1)
 library(ggplot2)
 library(FLife)
 
 theme_set(theme_bw())
 options(digits=3)
-options(warn=warn)
 ```
 
 [](#top)
@@ -47,7 +44,7 @@ options(warn=warn)
 
 [Estimation](#Estimation)
 
-[More information](#More information)
+[More Information](#More)
 
 [References](#References)
 
@@ -118,6 +115,44 @@ ggplot(as.data.frame(len))+
 
 There are relationships between the life history parameters and size, growth, maturation, natural mortality and productivity, as seen in the following plot.
 
+
+## Function Forms
+
+These methods are used to create FLQuants
+
+### Growth
+gascuel, gompertz, richards, vonB
+
+### Ogives
+dnormal, knife, logistic, sigmoid
+
+### Natural Mortality
+gislason, lorenzen
+
+### Conversions
+len2wt, wt2len, ages
+
+## Population dynamics
+### Ecological
+leslie, r
+
+### Simulation
+lhPar, lhEql
+
+### Reference points
+lopt, loptAge
+
+### Density Dependence
+matdd, mdd
+
+### Parameter estination
+moment, powh 
+
+### Stationarity
+rod
+
+## Life History Parameters
+
 ```{r, fig.cap="Relationship between life history traits"}
 library(GGally)
 
@@ -153,7 +188,7 @@ where $L_\infty$ is the asymptotic maximum length, $k$ is the growth coefficient
 
 $$log(-t_0) = -0.3922 - 0.2752 log(L_{\infty}) - 1.038 log(k)$$ 
 
-Therefore for a value of $L_{\infty}$ or even $L_{max}$ the maximum size observered as $L_{\infty} ~ 0.95\L_{max}$, all the growth parameters can be recovered.
+Therefore for a value of $L_{\infty}$ or even $L_{max}$ the maximum size observered as $L_{\infty} ~ 0.95L_{max}$, all the growth parameters can be recovered.
 
 For larger species securing sufficient food to maintain a fast growth rate may entail exposure to a higher natural mortality (M). In addition, many small demersal species seem to be partly protected against predation by hiding, cryptic behaviour, being flat or by possessing spines. In their analyses of empirical estimates of natural mortality of fish, Griffiths and Harrod (2007) found species that were cryptic, hid in burrows, or had morphological defences against predators to have the lowest rates of natural mortality. Hence, at a given length individuals belonging to species with a high $L_{\infty}$ may generally
 be exposed to a higher M than individuals belonging to species with a low $L_{\infty}$.
@@ -170,7 +205,7 @@ par=lhPar(FLPar(linf=100))
 par
 ```
 
-Simulation of equilibrium values and reference points
+## Simulation of equilibrium values and reference points
 
 ```{r, echo=TRUE, fig.cap="Age-vectors of growthm natural mortality, maturity and selection pattern"}
 library(FLBRP)
@@ -245,6 +280,8 @@ ggplot(pw)+
 [Back to Top](#top)
 
 # Simulation {#Simulation}
+
+Creation of FLBRP objects
 
 ```{r fig2}
 data(teleost)
@@ -326,70 +363,32 @@ p=plot(bh)+theme_bw()+theme(legend.position="bottom")+
   scale_colour_manual("",values="red",label="MSY")
 ```
 
+
+## Density Dependence
+
+Modelling density dependence in natural mortality and fecundity.
+
 ```{r DD, eval=FALSE}
 alb=teleost[c("linf","k","t0","l50","a","b"),"Thunnus alalunga"]
-alb=lhPar(rbind(alb,FLPar(m1=0.15,m2=-0.288,s=0.75)))
+alb=lhPar(alb)
 
 ## Beverton and Holt recruitment
-bh      =lhEql(alb,m=lorenzen)
+eql     =lhEql(alb)
+fbar(eql)=FLQuant(c(seq(0,4,length.out=101)))*
+              refpts(eql)["msy","harvest"]
+names(dimnames(fbar(eql)))[1]="age"
+stk=as(eql,"FLStock")
+stk=fwd(stk,f=fbar(bh)[,-1],sr=eql)
 
-fbar(bh)=FLQuant(c(seq(0,4,length.out=101)))*
-              refpts(bh)["msy","harvest"]
-names(dimnames(fbar(bh)))[1]="age"
-stk=FLStocks("SRR"=as(bh,"FLStock"))
-stk[["SRR"]]=fwd(stk[["SRR"]],f=fbar(bh)[,-1],sr=bh)
-
-## Cushing recruitment
-#sr=fmle(as.FLSR(stk[[1]][,1:10],model="geomean"))
-cu        =lhEql(alb,m=lorenzen,sr="cushing")
-fbar(cu)  =fbar(bh)
-names(dimnames(fbar(cu)))[1]="age"
-stk[["M"]]        =as(cu,"FLStock")
-stk[["M"]]        =fwd(stk[["M"]],f=fbar(cu)[,-1],sr=cu)
-stk[["Fecundity"]]=stk[["M"]]
-
-eql=FLBRPs("Beverton Holt"=bh,"Cushing"=cu)
-rm(bh,cu)
-
-y  =eql[["Cushing"]]
-ref=stock.n(y)[,1]
-n  =stock.n(y)[,1]
-m  =m(y)
-
-mDD=mdply(data.frame(i=seq(dims(fbar(eql[["Cushing"]]))$year)),
-          function(i){
-         
-  repeat{
-      scale=(stock.n(y)[,i]%-%ref)%/%ref
-      m(y)[] =mdd(stock.wt(y),alb,scale,k=.9)
-    
-    if(sum((m-m(y))^2)<1e-6){break}
-    m=m(y)}          
-    
-  subset(model.frame(FLQuants(y,"catch","ssb"),drop=TRUE),
-         year==i)})
-
-p=ggplot(mDD)+geom_line(aes(ssb,catch))
-
-y  =eql[["Cushing"]]
-ref=stock.n(y)[,1]
-n  =stock.n(y)[,1]
-mat=mat(y)#[,max(i-1,dims(m(y))$year)]    
-
-matDD=mdply(data.frame(i=seq(dims(fbar(eql[["Cushing"]]))$year)[-1]),
-          function(i){
-            
-  repeat{
-      scale=(stock.n(y)[,i]%-%ref)%/%ref
-      mat(y)[] =matdd(ages(scale),alb,scale,k=.9)
-  
-    if(sum((mat-mat(y))^2)<1e-6){break}
-    mat=mat(y)}
-  
-  subset(model.frame(FLQuants(y,"catch","ssb"),drop=TRUE),
-         year==i)})
+ref=stock.n(eql)[,1]
+n  =stock.n(eql)[,1]
+m  =m(eql)
 ```
 
+
+```{r mdd,eval=FALSE}
+
+```
 
 ```{r fig6,fig.height=5,fig.width=6,eval=FALSE}
 data=rbind.fill(
@@ -402,110 +401,9 @@ ggplot(data)+
   xlab("Biomass")+ylab("Yield")
 ```
 
-```{r fig7,fig.height=6,eval=FALSE}
-library(FLash)
-library(FLife)
+## Noise
 
-k   =1
-sr  ="cushing"
-s   =0.7
-alb  =teleost[c("linf","k","t0","l50","a","b"),"Thunnus alalunga"]
-alb  =lhPar(rbind(alb,FLPar(m1=0.3,m2=-0.288,s=s)))
-eq      =lhEql(alb,m=lorenzen,sr=sr)
-fbar(eq)=FLQuant(c(seq(0,5,length.out=51)*
-                 refpts(eq)["msy","harvest"]))
-f       =fbar(eq)[,-1]
-
-stkr=as(eq,"FLStock")
-stkr=fwd(stkr,f=f,sr=eq)
-ref =stock.n(eq)[,1]
-
-stkm=stkr
-m(  stkm)=mdd(stock.wt(stkm),alb,(stock.n(stkm)%-%ref)%/%ref,k) 
-stkm=fwd(stkm,f=f,sr=eq)
-
-stkf=stkr
-mat(stkf)=matdd(ages(stock.wt(stkf)),alb,
-                (stock.n(stkf)%-%ref)%/%ref,k,TRUE) 
-stkf=fwd(stkf,f=f,sr=eq)
-
-for (i in seq(dims(fbar(eq))$year)[2:50]){
-  scale =(stock.n(stkm)[,i]%-%ref)%/%ref
-  m(stkm)[,i]=mdd(stock.wt(stkm)[,i],alb,scale,k)
-            
-  stkm=fwd(stkm,f=f[,i],sr=eq)}
-
-for (i in seq(dims(fbar(eq))$year)[2:50]){
-  scale =(stock.n(stkf)[,i]%-%ref)%/%ref
-  mat(stkf)[,i]=matdd(ages(scale),alb,scale,k,TRUE)
-            
-  stkf=FLash:::fwd(stkf,f=f[,i],sr=eq)}
-
-plot(FLStocks("SRR"=stkr[,-(1:1)],
-              "M"  =stkm[,-(1:1)],
-              "Fecundity"=stkf[,-(1:1)]))+
-  theme_bw()+
-  theme(legend.position="bottom")
-
-p=ggplot(as.data.frame(FLQuants("SRR"=ssb(stkr),
-                              "M"=ssb(stkm),
-                              "Fecundity"=ssb(stkf))))+
-  geom_line(aes(year,data,col=qname))+
-  theme_bw()+
-  theme(legend.position="bottom")
-```
-
-
-```{r fig8,fig.height=6,echo=FALSE,eval=FALSE}
-k   =1
-sr  ="cushing"
-s   =0.7
-alb  =FLPar(unlist(teleost[teleost$species=="Thunnus alalunga",
-             c("linf","k","t0","l50","a","b")]))
-alb  =lhPar(rbind(alb,FLPar(m1=0.3,m2=-0.288,s=s)))
-eq      =lhEql(alb,m=lorenzen,sr=sr)
-fbar(eq)=FLQuant(c(seq(5,.5,length.out=51)*
-                 refpts(eq)["msy","harvest"]))
-f       =fbar(eq)[,-1]
-
-stkr=as(eq,"FLStock")
-stkr=fwd(stkr,f=f,sr=eq)
-ref =stock.n(eq)[,1]
-
-stkm=stkr
-m(  stkm)=mdd(stock.wt(stkm),alb,(stock.n(stkm)%-%ref)%/%ref,k) 
-stkm=fwd(stkm,f=f,sr=eq)
-
-stkf=stkr
-mat(stkf)=matdd(ages(stock.wt(stkf)),alb,
-                (stock.n(stkf)%-%ref)%/%ref,k,TRUE) 
-stkf=fwd(stkf,f=f,sr=eq)
-
-for (i in seq(dims(fbar(eq))$year)[2:50]){
-  scale =(stock.n(stkm)[,i]%-%ref)%/%ref
-  m(stkm)[,i]=mdd(stock.wt(stkm)[,i],alb,scale,k)
-            
-  stkm=fwd(stkm,f=f[,i],sr=eq)}
-
-for (i in seq(dims(fbar(eq))$year)[2:50]){
-  scale =(stock.n(stkf)[,i]%-%ref)%/%ref
-  mat(stkf)[,i]=matdd(ages(scale),alb,scale,k,TRUE)
-            
-  stkf=fwd(stkf,f=f[,i],sr=eq)}
-
-plot(FLStocks("SRR"=stkr[,-(1:1)],
-              "M"  =stkm[,-(1:1)],
-              "Fecundity"=stkf[,-(1:1)]))+
-  theme_bw()+
-  theme(legend.position="bottom")
-
-p=ggplot(as.data.frame(FLQuants("SRR"=ssb(stkr),
-                              "M"=ssb(stkm),
-                              "Fecundity"=ssb(stkf))))+
-  geom_line(aes(year,data,col=qname),size=2)+
-  theme(legend.position="bottom")
-```
-
+Methods to simulate random noise with autocorrelation, e.g. by age or cohort 
 ```{r fig9}
 data(ple4)
 res=rnoise(4,m(ple4)[1:8,ac(1980:2008)],burn=10,b=0.9,what="age")
@@ -648,7 +546,7 @@ ggplot(subset(p$data,year>50))+
   xlab("Year")+ylab("")
 ```
 
-
+## MSE using empirical HCR
 ```{r fig14, fig.width=6,fig.height=8,fig.cap="MSE using empirical HCR"}
 library(FLife)
 library(FLash)
@@ -679,7 +577,7 @@ ggplot()+
 
 [Back to Top](#top)
 
-# More information {#More information}
+# More Information {#More}
 
 * You can submit bug reports, questions or suggestions on `FLPKG` at the `FLPKG` issue page ^[<https://github.com/flr/FLPKG/issues>], or on the *FLR* mailing list.
 * Or send a pull request to <https://github.com/flr/FLPKG/>

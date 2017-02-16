@@ -88,6 +88,7 @@ setMethod("lhEql", signature(params='FLPar'),
       m.   =m(wt=swt,params[c("m1","m2")])
 
   names(dimnames(m.))[1]="age"}
+  
   mat. =mat(age + m.spwn,params) # maturity is biological therefore + m.spwn
 
   sel. =sel(age + fish,  params) # selectivty is fishery  based therefore + fish

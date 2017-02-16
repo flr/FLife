@@ -13,6 +13,7 @@
 #' @aliases rnoise rnoise-method rnoise,numeric,FLQuant-method rnoise,numeric,missing-method
 #' @aliases rlnoise rlnoise-method rlnoise,numeric,FLQuant-method rlnoise,numeric,missing-method
 #' 
+#' 
 #' @export
 #' @docType methods
 #' @rdname rnoise

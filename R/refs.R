@@ -1,11 +1,26 @@
 #' @title refs
 #' 
 #' @description 
+#' 
+#' Returns a variety of reference points based on spawner per recruit (S/R) and stock recruitment
+#' relationships.
+#' 
+#' $F_{MSY}$ corresponds to the level of exploitation that provides the maximum, derived from a 
+#' spawner and yield curves combined with a stock recruitment relationship, while $F_{Crash}$ is 
+#' the level of F that will drive the stock to extinction. 
+#' 
+#' Reference points can also be derived from the spawner and yield curves alone. For example
+#' $F_{0.1}$ is a proxy for $F_{MSY}$ and is the fishing mortality that corresponds to a point 
+#' on the yield per recruit curve where the slope is 10\% of that at the origin; $F_{Max}$ is 
+#' the maximum of the yield per recruit and $SPR_O$ is the spawner per recruit at virgin biomass, 
+#' and $SPR_30$ corressponds to the point on the curve where SPR is 30\% of $SPR_0$. In these 
+#' cases the biomass, ssb and yield values are derived by multiplying the per recruit values by 
+#' the average recruitment. 
 #'
 #' @param object \code{FLStock} 
 #' 
 #' @return \code{data.frame} 
-#' ' 
+#' 
 #' @export
 #' @rdname refs
 #' 
@@ -26,6 +41,9 @@
 setGeneric('refs', function(object,...) standardGeneric('refs'))
 setMethod("refs", signature(object="FLStock"),
     function(object,s=0.9){
+  
+  warn=options()$warn
+  options(warn=-1)
   
   ## msy
   eql =FLBRP(object)
@@ -53,9 +71,12 @@ setMethod("refs", signature(object="FLStock"),
   res1=model.frame(refpts(eql1)[c("f0.1","spr.30","spr.0"),c("harvest","yield","rec","ssb","biomass")])
   res=cbind(res[,4:5],res[1:3],res1[,1:3])
   
+  catch(object)=propagate(catch(object),dim(refpts(eql))[["iter"]])
+  dimnames(catch(object))$iter=dimnames(rec(object))$iter
+
   current=as.data.frame(mcf(FLQuants(object,"harvest"=fbar,"yield"=catch,
                                             "rec"    =rec, "ssb"=ssb,
-                                            "biomass"=computeStock)),drop=TRUE)
+                                            "biomass"=computeStock)),drop=TRUE)[,-1]
   current=subset(current,year==max(year)&!is.na(data))[,-1]
   names(current)[names(current)=="data"]="current"
   names(current)[names(current)=="qname"]="quantity"
@@ -71,14 +92,16 @@ setMethod("refs", signature(object="FLStock"),
   r =data.frame(r=r, rc=rc, iter=seq(dim(stock.n(object))[6]))
   
   res=cbind(iter=subset(res,quantity=="ssb")[ ,  1 ],
-            b=subset(res,quantity=="biomass")[,-(1:2)],
-            s=subset(res,quantity=="ssb"    )[,-(1:2)],
-            r=subset(res,quantity=="rec"    )[,-(1:2)],
-            f=subset(res,quantity=="harvest")[,-(1:2)],
-            y=subset(res,quantity=="yield"  )[,-(1:2)])
+            b   =subset(res,quantity=="biomass")[,-(1:2)],
+            s   =subset(res,quantity=="ssb"    )[,-(1:2)],
+            r   =subset(res,quantity=="rec"    )[,-(1:2)],
+            f   =subset(res,quantity=="harvest")[,-(1:2)],
+            y   =subset(res,quantity=="yield"  )[,-(1:2)])
   
   res=transform(merge(res,r,by="iter"),
                  rt=log(b.msy/b.current)/r)
+  
+  options(warn=warn)
   
   res[, !(names(res)%in%c("b.crash","s.crash","r.crash","y.crash",
                           "b.year", "s.year", "r.year", "y.year","f.year",
