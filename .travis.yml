@@ -10,8 +10,6 @@ matrix:
       r: release
     - os: linux
       r: devel
-    - os: osx
-      r: release
 
 sudo: false
 
@@ -24,4 +22,4 @@ notifications:
 
 branches:
   only:
-- master
+    - master
