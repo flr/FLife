@@ -1,6 +1,7 @@
 ---
 title: "Life History Relationships"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
 github_document:
     mathjax: TRUE
 bibliography: ref.bib
@@ -144,36 +145,6 @@ lopt, loptAge
 ### Density Dependence
 matdd, mdd
 
-```{r, echo=TRUE, m-density-dependence,fig.cap="Density Dependence in M"}
-library(FLBRP)
-
-par=teleost[,"Hucho hucho"]
-par=lhPar(par)
-hutchen=lhEql(par)
- 
-scale=stock.n(hutchen)[,25]%*%stock.wt(hutchen)
-scale=(stock.n(hutchen)%*%stock.wt(hutchen)%-%scale)%/%scale
- 
-m=mdd(stock.wt(hutchen),par=FLPar(m1=.2,m2=-0.288),scale,k=.5)   
-
-ggplot(as.data.frame(m))+
-   geom_line(aes(age,data,col=factor(year)))+
-   theme(legend.position="none")+
-    scale_x_continuous(limits=c(0,15))
-```
-
-```{r, echo=TRUE, Maturity-density-dependence,fig.cap="Density Dependence in M"}
-scale=stock.n(hutchen)[,25]%*%stock.wt(hutchen)
-scale=(stock.n(hutchen)%*%stock.wt(hutchen)%-%scale)%/%scale
-
-mat=matdd(ages(scale),par,scale,k=.5)   
- 
-ggplot(as.data.frame(mat))+
-    geom_line(aes(age,data,col=factor(year)))+
-    theme(legend.position="none")+
-    scale_x_continuous(limits=c(0,15))
-```
-
 ### Parameter estination
 moment, powh 
 
@@ -185,7 +156,7 @@ rnoise
 
 ## Life History Parameters
 
-```{r, fig.cap="Relationship between life history traits"}
+```{r, fig.height=8,fig.cap="Relationship between life history traits"}
 library(GGally)
 
 habitat=ifelse(attributes(teleost)$habitat=="demersal","Demersal","Other")
@@ -199,7 +170,8 @@ my_density <- function(data,mapping,...){
   ggplot(data=data,mapping=mapping)+
   geom_density(...,lwd=1)}
 
-ggpairs(cbind(log(model.frame(teleost)[,-c(3,5:7)]),"habitat"=habitat),
+ggpairs(cbind(transform(model.frame(teleost)[,-c(5:7)],linf=log(linf),k=log(k),l50=log(l50)),
+                  "habitat"=habitat),
   mapping = ggplot2::aes(color=habitat),
   lower = list(continuous = wrap(my_smooth)),
   diag=list(continuous=wrap(my_density,alpha=0.2)),
@@ -237,6 +209,9 @@ par=lhPar(FLPar(linf=100))
 par
 ```
 
+
+# Simulation {#Simulation}
+
 ## Simulation of equilibrium values and reference points
 
 ```{r, echo=TRUE, fig.cap="Age-vectors of growthm natural mortality, maturity and selection pattern"}
@@ -245,7 +220,8 @@ eql=lhEql(par)
 
 ggplot(FLQuants(eql,"m","catch.sel","mat","catch.wt"))+
   geom_line(aes(age,data))+
-  facet_wrap(~qname,scale="free")
+  facet_wrap(~qname,scale="free")+
+  scale_x_continuous(limits=c(0,15))
 ```
 
 ```{r, fig.cap="Equilibrium curves and reference points."}
@@ -255,9 +231,6 @@ plot(eql)
 ```{r}
 lhRef(par)
 ```
-
-
-# Simulation {#Simulation}
 
 Creation of FLBRP objects
 
@@ -273,7 +246,7 @@ alb=FLPar(unlist(teleost[,"Thunnus alalunga",
 alb=lhPar(rbind(alb,FLPar(m1=0.15,m2=-0.288,s=0.75)))
 ```
 
-
+## Stock recruitment relationships
 ```{r fig3,fig.cap="Stock recruitment relationships for a steepness of 0.75 and vigin biomass of 1000"}
 srr=FLBRPs("Beverton and Holt"     =lhEql(alb,sr="bevholt"),
            "Ricker"                =lhEql(alb,sr="ricker"),
@@ -346,6 +319,37 @@ p=plot(bh)+theme_bw()+theme(legend.position="bottom")+
 
 Modelling density dependence in natural mortality and fecundity.
 
+
+```{r, echo=TRUE, m-density-dependence,fig.cap="Density Dependence in M"}
+library(FLBRP)
+
+par=teleost[,"Hucho hucho"]
+par=lhPar(par)
+hutchen=lhEql(par)
+ 
+scale=stock.n(hutchen)[,25]%*%stock.wt(hutchen)
+scale=(stock.n(hutchen)%*%stock.wt(hutchen)%-%scale)%/%scale
+ 
+m=mdd(stock.wt(hutchen),par=FLPar(m1=.2,m2=-0.288),scale,k=.5)   
+
+ggplot(as.data.frame(m))+
+   geom_line(aes(age,data,col=factor(year)))+
+   theme(legend.position="none")+
+    scale_x_continuous(limits=c(0,15))
+```
+
+```{r, echo=TRUE, Maturity-density-dependence,fig.cap="Density Dependence in M"}
+scale=stock.n(hutchen)[,25]%*%stock.wt(hutchen)
+scale=(stock.n(hutchen)%*%stock.wt(hutchen)%-%scale)%/%scale
+
+mat=matdd(ages(scale),par,scale,k=.5)   
+ 
+ggplot(as.data.frame(mat))+
+    geom_line(aes(age,data,col=factor(year)))+
+    theme(legend.position="none")+
+    scale_x_continuous(limits=c(0,15))
+```
+
 ```{r DD, eval=FALSE}
 alb=teleost[c("linf","k","t0","l50","a","b"),"Thunnus alalunga"]
 alb=lhPar(alb)
@@ -363,10 +367,6 @@ n  =stock.n(eql)[,1]
 m  =m(eql)
 ```
 
-
-```{r mdd,eval=FALSE}
-
-```
 
 ```{r fig6,fig.height=5,fig.width=6,eval=FALSE}
 data=rbind.fill(
