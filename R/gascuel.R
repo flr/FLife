@@ -22,7 +22,7 @@
 #' @docType methods
 #' @rdname gascuel
 #' 
-#' @seealso \code{\link{gompertz}}, \code{\link{vonB}} 
+#' @seealso \code{\link{gompertz}}, \code{\link{vonB}} , \code{\link{richards}}
 #'
 #' @details 
 #' Gascuel D., Fonteneau, A., and Capisano, C. (1992).

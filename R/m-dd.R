@@ -52,20 +52,20 @@
 #' scale=stock.n(hutchen)[,25]%*%stock.wt(hutchen)
 #' scale=(stock.n(hutchen)%*%stock.wt(hutchen)%-%scale)%/%scale
 #' 
-#' m=mdd(stock.wt(hutchen),par=FLPar(m1=.2,m2=-0.288),scale,k=.5)   
-#' 
+#' m=mdd(wt2len(stock.wt(hutchen),par),params=par,scale,k=.9) 
+#'  
 #' ggplot(as.data.frame(m))+
 #'    geom_line(aes(age,data,col=factor(year)))+
 #'    theme(legend.position="none")+
 #'    scale_x_continuous(limits=c(0,15))
+#' 
+#' m=mdd(stock.wt(hutchen),params=FLPar(m1=3,m2=-0.288),scale,k=1.2,m=lorenzen)   
 #' }
-setMethod('mdd', signature(wt='FLQuant',params='FLPar'),
-          function(wt,params,scale,k=1) { 
-            res=mddFn(wt,params,scale,k)
+setMethod('mdd', signature(object='FLQuant',params='FLPar'),
+          function(object,params,scale,k=1,m=gislason) { 
+            
+            map=(2/(1+exp(-k*scale)))
+            
+            res=map%*%m(object,params)
             res})
 
-mddFn=function(wt,params,scale,k=1){
-  
-  map=(2/(1+exp(-k*scale)))
-  
-  (map%*%params["m1"])%*%(wt%^%params["m2"])}

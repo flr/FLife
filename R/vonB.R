@@ -16,7 +16,7 @@
 #' @rdname vonB
 #' 
 #' 
-#' @seealso \code{\link{gompertz}}, \code{\link{gascuel}}
+#' @seealso \code{\link{gompertz}}, \code{\link{gascuel}}, \code{\link{richards}}
 #' 
 #' @examples
 #' \dontrun{

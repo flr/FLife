@@ -43,6 +43,6 @@ gascuel(10)
 }
 }
 \seealso{
-\code{\link{gompertz}}, \code{\link{vonB}}
+\code{\link{gompertz}}, \code{\link{vonB}} , \code{\link{richards}}
 }
 

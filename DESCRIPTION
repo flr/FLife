@@ -29,6 +29,7 @@ Collate:
     vonB.R
     gascuel.R
     gompertz.R
+    richards.R
     ages.R
     len2wt.R   
     wt2len.R

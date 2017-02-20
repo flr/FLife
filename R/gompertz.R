@@ -18,7 +18,7 @@
 #' @docType methods
 #' @rdname gompertz
 #'
-#' @seealso \code{\link{gascuel}}, \code{\link{vonB}}
+#' @seealso \code{\link{gascuel}}, \code{\link{vonB}}, \code{\link{richards}}
 #' 
 #' @examples
 #' \dontrun{

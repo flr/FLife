@@ -54,7 +54,7 @@ setMethod("knife", signature(age="FLQuant",params="numeric"),
 knifeFn<-function(age,par){
     res=age
     
-    res[age> c(par["a1"])][]=1
-    res[age<=c(par["a1"])][]=0
+    res[age>=c(par["a1"])][]=1
+    res[age< c(par["a1"])][]=0
     
     return(res)}

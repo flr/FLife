@@ -10,11 +10,23 @@ refs(object, ...)
 \item{object}{\code{FLStock}}
 }
 \value{
-\code{data.frame} 
-'
+\code{data.frame}
 }
 \description{
+Returns a variety of reference points based on spawner per recruit (S/R) and stock recruitment
+relationships.
 
+$F_{MSY}$ corresponds to the level of exploitation that provides the maximum, derived from a 
+spawner and yield curves combined with a stock recruitment relationship, while $F_{Crash}$ is 
+the level of F that will drive the stock to extinction. 
+
+Reference points can also be derived from the spawner and yield curves alone. For example
+$F_{0.1}$ is a proxy for $F_{MSY}$ and is the fishing mortality that corresponds to a point 
+on the yield per recruit curve where the slope is 10\% of that at the origin; $F_{Max}$ is 
+the maximum of the yield per recruit and $SPR_O$ is the spawner per recruit at virgin biomass, 
+and $SPR_30$ corressponds to the point on the curve where SPR is 30\% of $SPR_0$. In these 
+cases the biomass, ssb and yield values are derived by multiplying the per recruit values by 
+the average recruitment.
 }
 \examples{
 \dontrun{

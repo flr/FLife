@@ -66,17 +66,21 @@ setMethod("refs", signature(object="FLStock"),
   refpts(eql1)=refpts(eql1)[c("f0.1","spr.30","virgin"),]
   dimnames(refpts(eql1))[[1]][3]="spr.0"
   eql1=brp(eql1)
-  
+ 
   res =model.frame(refpts(eql )[c("msy","crash","virgin"), c("harvest","yield","rec","ssb","biomass")])
   res1=model.frame(refpts(eql1)[c("f0.1","spr.30","spr.0"),c("harvest","yield","rec","ssb","biomass")])
   res=cbind(res[,4:5],res[1:3],res1[,1:3])
   
-  catch(object)=propagate(catch(object),dim(refpts(eql))[["iter"]])
-  dimnames(catch(object))$iter=dimnames(rec(object))$iter
-
+  if (dims(refpts(eql))$iter>1){
+    catch(object)=propagate(catch(object),dims(refpts(eql))$iter)
+    dimnames(catch(object))$iter=dimnames(rec(object))$iter
+    }
+  
   current=as.data.frame(mcf(FLQuants(object,"harvest"=fbar,"yield"=catch,
                                             "rec"    =rec, "ssb"=ssb,
                                             "biomass"=computeStock)),drop=TRUE)[,-1]
+  
+  
   current=subset(current,year==max(year)&!is.na(data))[,-1]
   names(current)[names(current)=="data"]="current"
   names(current)[names(current)=="qname"]="quantity"

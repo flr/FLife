@@ -37,6 +37,6 @@ vonB(params=params,length=len)
 }
 }
 \seealso{
-\code{\link{gompertz}}, \code{\link{gascuel}}
+\code{\link{gompertz}}, \code{\link{gascuel}}, \code{\link{richards}}
 }
 

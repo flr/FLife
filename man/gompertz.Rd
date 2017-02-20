@@ -36,6 +36,6 @@ gompertz(age,params)
 
 }
 \seealso{
-\code{\link{gascuel}}, \code{\link{vonB}}
+\code{\link{gascuel}}, \code{\link{vonB}}, \code{\link{richards}}
 }
 

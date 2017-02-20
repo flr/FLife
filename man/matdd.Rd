@@ -7,7 +7,7 @@
 \alias{matdd-method}
 \title{matdd}
 \usage{
-\S4method{matdd}{FLQuant,FLPar}(age, params, scale, k = 1, flagAge = FALSE)
+\S4method{matdd}{FLQuant,FLPar}(age, params, scale, k = 1, flagAge = TRUE)
 }
 \arguments{
 \item{age}{ages}
@@ -46,30 +46,24 @@ Combining the two functions gives
 }
 \examples{
 \dontrun{
-#bug
-
 library(FLBRP)
 library(FLife)
 
-data(ple4)
+data(teleost)
+par=teleost[,"Hucho hucho"]
+par=lhPar(par)
+hutchen=lhEql(par)
 
-sr=fmle(as.FLSR(ple4,model="bevholtSV"), fixed=list(s=.75,spr0=spr0(FLBRP(ple4))))
-#control=list("silent"=TRUE))
+scale=stock.n(hutchen)[,25]\%*\%stock.wt(hutchen)
+scale=(stock.n(hutchen)\%*\%stock.wt(hutchen)\%-\%scale)\%/\%scale
 
-eql=brp(FLBRP(ple4,sr=ab(sr)))
-fbar(eql)=FLQuant(c(seq(0,4,length.out=101)*refpts(eql)["msy","harvest"]))
-stk=as(eql,"FLStock")
+mat=matdd(ages(scale),par,scale,k=.5)   
 
-fbar(eql)=fbar(eql)[,1]
-scale=(stock.n(stk)\%-\%stock.n(eql))\%/\%stock.n(eql)
-par=lhPar(FLPar(linf=100))
+ggplot(as.data.frame(mat))+
+   geom_line(aes(age,data,col=factor(year)))+
+   theme(legend.position="none")+
+   scale_x_continuous(limits=c(0,15))
 
-scale=exp(rnoise(1,m(stk),sd=.2,b=0.75))
- 
-ggplot(as.data.frame(mat,drop=TRUE))+
-   geom_line(aes(age,data,group=year,col=factor(year)))+
-   theme(legend.position="none")
-   
  }
 }
 \seealso{

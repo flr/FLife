@@ -54,6 +54,8 @@ Life history traits include growth rate; age and size at sexual maturity; the te
 
 These relationships have many uses, for example in age-structured population models, functional relationships for these processes allow the calculation of the population growth rate and have been used to to develop priors in stock assesments and to parameterise ecological models. 
 
+The **FLife** package has methods for modelling functional forms, for simulating equilibrium `FLBRP` and dynamic stock objects `FLStock`.
+
 [Back to Top](#top)
 
 # Quick Start {#QuickStart}
@@ -113,31 +115,240 @@ ggplot(as.data.frame(len))+
 
 # Methods {#Methods}
 
-There are relationships between the life history parameters and size, growth, maturation, natural mortality and productivity, as seen in the following.
+## Life History Parameters
 
+```{r, fig.height=8,fig.cap="Relationship between life history parameters in the teleost dataset."}
+library(GGally)
 
-## Function Forms
+habitat=ifelse(attributes(teleost)$habitat=="demersal","Demersal","Other")
 
-These methods are used to create FLQuants
+my_smooth <- function(data,mapping,...){
+  ggplot(data=data,mapping=mapping)+
+  geom_point(...,size=.5)+
+  geom_smooth(...,method="lm",se=FALSE)}
+
+my_density <- function(data,mapping,...){
+  ggplot(data=data,mapping=mapping)+
+  geom_density(...,lwd=1)}
+
+ggpairs(cbind(transform(model.frame(teleost)[,-c(7)],linf=log(linf),k=log(k),l50=log(l50)),
+                  "habitat"=habitat),
+  mapping = ggplot2::aes(color=habitat),
+  lower = list(continuous = wrap(my_smooth)),
+  diag=list(continuous=wrap(my_density,alpha=0.2)),
+  title = "")+
+  theme(legend.position ="none",
+  panel.grid.major =element_blank(),
+  axis.ticks       =element_blank(),
+  axis.text.x      =element_blank(),
+  axis.text.y      =element_blank(),
+  panel.border     =element_rect(linetype = 1, colour="black", fill=NA))
+```
 
 ### Growth
-gascuel, gompertz, richards, vonB
+Consider the von Bertalanffy growth equation
+
+$$ L_t = L_\infty (1 - e^{(-kt-t_0)})$$
+
+where $L_t$ is length at time t, $L_\infty$ the asymptotic maximum length, $k$ the growth coefficient,  and $t_0$ the time at which an individual would, if it possible, be of zero length. 
+
+As $L_\infty$ increases $k$ declines. in other words at a given length a large species will grow faster than a small species. for example @gislason2008coexistence proposed the relationship 
+
+$$k=3.15L_{\infty}^{-0.64}$$
+
+There also appears to be empirical relationship between $t_0$ and $L_{\infty}$ and $k$   i.e.
+
+$$log(-t_0) = -0.3922 - 0.2752 log(L_{\infty}) - 1.038 log(k)$$ 
+
+Therefore for a value of $L_{\infty}$ or even $L_{max}$ the maximum size observered as 
+$L_{\infty}=0.95L_{max}$ then all the growth parameters can be recovered.
+
+### Maturity
+
+There is also a relationship between $L_{50}$ the length at which 50% of individuals are mature
+
+$$l_{50}=0.72L_{\infty}^{0.93}$$
+
+and even between the length weight relationship
+
+$$W=aL^b$$
+
+### Natural Mortality
+
+For larger species securing sufficient food to maintain a fast growth rate may entail exposure to a higher natural mortality @gislason2008does. While many small demersal species seem to be partly protected against predation by hiding, cryptic behaviour, being flat or by possessing spines have the lowest rates of natural mortality @griffiths2007natural. Hence, at a given length individuals belonging to species with a high $L_{\infty}$ may generally be exposed to a higher M than individuals belonging to species with a low $L_{\infty}$.
+
+$$ log(M) = 0.55-1.61log(L) + 1.44log(L_{\infty}) + log(k)$$
+
+## Functional forms
+
+In **FLIfe** there are methods for creating growth curves, maturity ogives and natural mortality vectors, selection patterns, and other ogives. All these methods are used to create `FLQuant` objects.
+
+### Growth
+gompertz, richards, vonB
+
+```{r growth}
+age=FLQuant(0:10,dimnames=list(age=0:10))
+
+lenV=vonB(age,FLPar(linf=120,k=0.1,t0=-0.1))
+lenR=richards(age,params=FLPar(linf=100,k=.4,b=.1,m=2))
+lenG=gompertz(age,FLPar(linf=100,a=2,k=.4))
+
+ggplot(as.data.frame(FLQuants(Gompertz=lenG,Richards=lenR,"Von Bertalanffy"=lenV)))+
+  geom_line(aes(age,data,col=qname))
+```
 
 ### Ogives
 dnormal, knife, logistic, sigmoid
 
+```{r, echo=TRUE,eval=FALSE}
+dnormal( age,FLPar(a1=4,sl=2,sr=5000))
+knife(   age,FLPar(a1=4))
+logistic(age,FLPar(a50=4,ato95=1,asym=1.0))
+sigmoid( age,FLPar(a50=4,ato95=1))
+```
+
+
 ### Natural Mortality
-gislason, lorenzen
+
+Many estimators have been propose for M, based on growth and reproduction,  see @kenchington2014natural.
+
+### Natural Mortality
+
+Many estimators have been propose for M, based on growth and reproduction,  see @kenchington2014natural.
+
+#### Age at maturity $a_{50}$
+
+Rikhter and Efanov
+
+$$M=\frac{1.521}{a_{50}^{0.72}}-0.155$$
+Jensen
+
+$$M=\frac{1.65}{a_{50}}$$
+
+#### Growth
+
+Jensen
+
+$$M=1.5k$$
+
+Griffiths and Harrod
+
+$$M=1.406W_{\infty}^{-0.096}k^{0.78}$$
+where $W_{\infty}=\alpha L_{\infty}^{\beta}$
+
+Djabali
+
+$$M=1.0661L_{\infty}^{-0.1172}k^{0.5092}$$
+
+#### Growth and length at maturity $L_{50}$ 
+
+Roff
+
+$$M=3kL_{\infty}\frac{(1-\frac{L_{50}}{L_{\infty}})}{L_{50}}$$
+
+Rikhter and Efanov
+
+$$M=\frac{\beta k}{e^{k(a_{50}-t_0)}-1}$$
+where $a_{50}=t_0+\frac{log(1-\frac{L_{50}}{L_{\infty}})}{-k}$
+
+#### Varing by length
+
+Gislason
+
+$$M_L=1.73L^{-1.61}L_{\infty}^{1.44}k$$
+
+Charnov
+
+$$M_L=k\frac{L_{\infty}}{L}^{1.5}$$
+
+#### Varying by weight
+
+Peterson and Wroblewsk
+
+$$M_W=1.28W^{-0.25}$$
+
+Lorenzen
+
+$$M_W=3W^{-0.288}$$
+
+#### Senescence
 
 ### Conversions
-len2wt, wt2len, ages
+
+ages, len2wt, wt2len
+
+```{r ages,eval=FALSE}
+data(ple4)
+ages(m(ple4))
+```
+
+```{r wt2len,eval=FALSE}
+wt2len(stock.wt(ple4),FLPar(a=0.0001,b=3))
+```
+
+Generation of missing life history relationships
+
+```{r, echo=TRUE}
+par=lhPar(FLPar(linf=100))
+par
+```
+
+
+There are relationships between the life history parameters and size, growth, maturation, natural mortality and productivity, as seen in the following.
+
+
+### Simulation
+lhPar, lhEql
+   
+## Function Forms
 
 ## Population dynamics
 ### Ecological
 leslie, r
 
-### Simulation
-lhPar, lhEql
+#### life history traits
+```{r}
+data(teleost)
+teleost
+```
+
+```{r lh, eval=FALSE}
+library(glmnet)
+
+t.=cbind(model.frame(teleost)[,-7],as.data.frame(attributes(teleost)[5:9]))
+
+x=model.matrix(~order+genus+family+habitat,t.[,-1])
+y=log(as.matrix(t.[,"k"])
+
+fit=glmnet::cv.glmnet(x, y)
+plot(fit)
+
+lmb=fit$lambda.1se
+coeffs=coef(fit, s="lambda.1se")
+
+fit = glmnet(x, y)
+plot(fit, xvar = "lambda", label = TRUE)
+```
+
+```
+
+#### Natural Mortality
+```{r m-gislason}
+m=gislason(FLQuant(1:15,dimnames=list(age=1:15)),teleost)
+
+ggplot(as.data.frame(m))+
+    geom_line(aes(age,data,col=factor(iter)))+
+    theme(legend.position="none")+
+    scale_x_continuous(limits=c(0,15))
+```
+
+#### Stock recruitment
+```{r}
+```
+
+#### Fishery 
+```{r}
+```
 
 ### Reference points
 lopt, loptAge
@@ -154,61 +365,13 @@ rod
 ### Random variables
 rnoise
 
-## Life History Parameters
 
-```{r, fig.height=8,fig.cap="Relationship between life history traits"}
-library(GGally)
-
-habitat=ifelse(attributes(teleost)$habitat=="demersal","Demersal","Other")
-
-my_smooth <- function(data,mapping,...){
-  ggplot(data=data,mapping=mapping)+
-  geom_point(...,size=.5)+
-  geom_smooth(...,method="lm",se=FALSE)}
-
-my_density <- function(data,mapping,...){
-  ggplot(data=data,mapping=mapping)+
-  geom_density(...,lwd=1)}
-
-ggpairs(cbind(transform(model.frame(teleost)[,-c(5:7)],linf=log(linf),k=log(k),l50=log(l50)),
-                  "habitat"=habitat),
-  mapping = ggplot2::aes(color=habitat),
-  lower = list(continuous = wrap(my_smooth)),
-  diag=list(continuous=wrap(my_density,alpha=0.2)),
-  title = "")+
-  theme(legend.position ="none",
-  panel.grid.major =element_blank(),
-  axis.ticks       =element_blank(),
-  axis.text.x      =element_blank(),
-  axis.text.y      =element_blank(),
-  panel.border     =element_rect(linetype = 1, colour="black", fill=NA))
-```
-
-At a given length a large species will grow faster than a small species, for example consider the von Bertalanffy growth equation
-
-$$ L_t = L_\infty (1 - e^{(-kt-t_0)})$$
-
-where $L_\infty$ is the asymptotic maximum length, $k$ is the growth coefficient, $L_t$ is length at time t, and $t_0$ the time at which an individual would, if it possible, be zero length. There is also an empirical relationship between $t_0$ and $L_{\infty}$ and $k$   i.e.
-
-$$log(-t_0) = -0.3922 - 0.2752 log(L_{\infty}) - 1.038 log(k)$$ 
-
-Therefore for a value of $L_{\infty}$ or even $L_{max}$ the maximum size observered as $L_{\infty} ~ 0.95L_{max}$, all the growth parameters can be recovered.
-
-For larger species securing sufficient food to maintain a fast growth rate may entail exposure to a higher natural mortality (M). In addition, many small demersal species seem to be partly protected against predation by hiding, cryptic behaviour, being flat or by possessing spines. In their analyses of empirical estimates of natural mortality of fish, Griffiths and Harrod (2007) found species that were cryptic, hid in burrows, or had morphological defences against predators to have the lowest rates of natural mortality. Hence, at a given length individuals belonging to species with a high $L_{\infty}$ may generally
-be exposed to a higher M than individuals belonging to species with a low $L_{\infty}$.
-
-$$ log(M) = 0.55-1.61log(L) + 1.44log(L_{\infty}) + log(k)$$
-## Functional forms
-
-There are methods for creating growth curves, maturity ogives, natural mortality vectors and selection patterns.
-
-Generation of missing life history relationships
-
+### Refetrence points
 ```{r, echo=TRUE}
-par=lhPar(FLPar(linf=100))
-par
+library(FLBRP)
+data(ple4)
+refs(ple4)
 ```
-
 
 # Simulation {#Simulation}
 
@@ -322,7 +485,9 @@ Modelling density dependence in natural mortality and fecundity.
 
 ```{r, echo=TRUE, m-density-dependence,fig.cap="Density Dependence in M"}
 library(FLBRP)
+library(FLife)
 
+data(teleost)
 par=teleost[,"Hucho hucho"]
 par=lhPar(par)
 hutchen=lhEql(par)
@@ -351,32 +516,10 @@ ggplot(as.data.frame(mat))+
 ```
 
 ```{r DD, eval=FALSE}
-alb=teleost[c("linf","k","t0","l50","a","b"),"Thunnus alalunga"]
-alb=lhPar(alb)
-
-## Beverton and Holt recruitment
-eql     =lhEql(alb)
-fbar(eql)=FLQuant(c(seq(0,4,length.out=101)))*
-              refpts(eql)["msy","harvest"]
-names(dimnames(fbar(eql)))[1]="age"
-stk=as(eql,"FLStock")
-stk=fwd(stk,f=fbar(bh)[,-1],sr=eql)
-
-ref=stock.n(eql)[,1]
-n  =stock.n(eql)[,1]
-m  =m(eql)
 ```
 
 
 ```{r fig6,fig.height=5,fig.width=6,eval=FALSE}
-data=rbind.fill(
-     cbind("Form"="M",mDD),cbind("Form"="Fecundity",matDD),
-     cbind("Form"="Stock-recruit",model.frame(FLQuants(eql[["Cushing"]],"catch","ssb"),drop=TRUE)))
-
-ggplot(data)+
-   geom_line(aes(ssb,catch,colour=Form))+theme_bw()+theme(legend.position="bottom")+
-  scale_colour_manual("",values=c("red","green","blue"))+
-  xlab("Biomass")+ylab("Yield")
 ```
 
 ## Noise

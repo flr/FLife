@@ -7,16 +7,16 @@
 \alias{mdd-method}
 \title{mdd}
 \usage{
-\S4method{mdd}{FLQuant,FLPar}(wt, params, scale, k = 1)
+\S4method{mdd}{FLQuant,FLPar}(object, params, scale, k = 1, m = lorenzen)
 }
 \arguments{
-\item{wt}{mass at which M is to be predicted}
-
 \item{params}{an \code{FLPar} with two values; i.e. a equal to M at unit mass and b a power term; defaults are a=0.3 and b=-0.288}
 
 \item{scale}{reference}
 
 \item{k}{rate of change in density dependence}
+
+\item{wt}{mass at which M is to be predicted}
 
 \item{...}{other arguments, such as scale, e.g. stock numbers now relative to a reference level, e.g. at virgin biomass and k steepness of relationship}
 }
@@ -52,18 +52,22 @@ Combining the two functions gives
 library(FLBRP)
 library(FLife)
 
-data(ple4)
+data(teleost)
+par=teleost[,"Hucho hucho"]
+par=lhPar(par)
+hutchen=lhEql(par)
 
-eql=brp(FLBRP(ple4))
-fbar(eql)=FLQuant(c(seq(0,4,length.out=101)*refpts(eql)["msy","harvest"]))
-stk=as(eql,"FLStock")
+scale=stock.n(hutchen)[,25]\%*\%stock.wt(hutchen)
+scale=(stock.n(hutchen)\%*\%stock.wt(hutchen)\%-\%scale)\%/\%scale
 
-fbar(eql)=fbar(eql)[,1] 
-scale=(stock.n(stk)\%-\%stock.n(eql))\%/\%stock.n(eql)
-par=FLPar(m1=.2,m2=-0.288)
+m=mdd(stock.wt(hutchen),par=FLPar(m1=3,m2=-0.288),scale,k=.9) 
+  
+m=mdd(wt2len(stock.wt(hutchen),par),par,scale,k=1.2,m=gislason)   
 
-m=mdd(stock.wt(stk),par,scale)
-ggplot(as.data.frame(m,drop=TRUE))+geom_line(aes(age,data,group=year,col=factor(year)))+theme(legend.position="none")
+ggplot(as.data.frame(m))+
+   geom_line(aes(age,data,col=factor(year)))+
+   theme(legend.position="none")+
+   scale_x_continuous(limits=c(0,15))
 }
 }
 \seealso{

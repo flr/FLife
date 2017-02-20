@@ -9,7 +9,7 @@
 \alias{richards,missing,FLPar-method}
 \alias{richards,numeric,numeric-method}
 \alias{richards-method}
-\title{von Bertalanffy growth curve}
+\title{Richards growth curve}
 \usage{
 \S4method{richards}{FLQuant,FLPar}(age, params, ...)
 }
@@ -24,16 +24,12 @@
 Returns an object of same class as \code{age}  e.g. \code{FLQuant}
 }
 \description{
-Von Bertalanffy growth equation
+Richards growth equation
 }
 \examples{
 \dontrun{
-params=FLPar(linf=100,t0=0,k=.4)
 age=FLQuant(1:10,dimnames=list(age=1:10))
-len=richards(age,params)
-
-#inverse growth curve
-richards(params=params,length=len)
+len=richards(age,FLPar(linf=100,k=.4,b=.1,m=2))
 }
 }
 \seealso{

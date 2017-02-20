@@ -30,7 +30,7 @@ setGeneric('ages', function(object, ...) standardGeneric('ages'))
 setGeneric('len2wt', function(length,params,...) standardGeneric('len2wt'))
 setGeneric('wt2len', function(wt,params,...) standardGeneric('wt2len'))
 
-setGeneric('mdd', function(wt,params,...) standardGeneric('mdd'))
+setGeneric('mdd', function(object,params,...)    standardGeneric('mdd'))
 setGeneric('matdd', function(age,params,...) standardGeneric('matdd'))
 
 setGeneric('lopt', function(params,...) standardGeneric('lopt'))
