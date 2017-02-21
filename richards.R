@@ -1,7 +1,7 @@
-#' @title von Bertalanffy growth curve
+#' @title Richards growth curve
 #'
 #' @description 
-#' Von Bertalanffy growth equation
+#' Richards growth equation
 #' 
 #' @param age FLQuant, FLPar or numeric object with values corresponding to ages 
 #' @param params \code{FLPar} object with parameters \code{linf}, \code{k} and \code{t0}
@@ -15,16 +15,12 @@
 #' @docType methods
 #' @rdname richards
 #' 
-#' @seealso \code{\link{vonB}}, \code{\link{gompertz}}, \code{\link{gascuel}}
+#' @seealso \code{\link{vonB}, \code{\link{gompertz}}, \code{\link{gascuel}}
 #' 
 #' @examples
 #' \dontrun{
-#' params=FLPar(linf=100,t0=0,k=.4)
 #' age=FLQuant(1:10,dimnames=list(age=1:10))
-#' len=richards(age,params)
-#' 
-#' #inverse growth curve
-#' richards(params=params,length=len)
+#' len=richards(age,FLPar(linf=100,k=.4,b=.1,m=2))
 #' }
 setMethod("richards", signature(age="FLQuant",params="FLPar"),
           function(age,params,...){   
@@ -42,12 +38,6 @@ setMethod("richards", signature(age="numeric",params="numeric"),
 setMethod("richards", signature(age="FLQuant",params="numeric"),
           function(age,params,...) { 
             res=richardsFn(FLPar(params),age)
-            res@units=""
-            res})
-
-setMethod("richards", signature(age="missing",params="FLPar"),
-          function(age,params,length,...){  
-            res=invRichardsFn(length=length,params=params)
             res@units=""
             res})
 
