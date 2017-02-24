@@ -54,7 +54,8 @@ Collate:
     noise.R  
     stars.R   
     m-dd.R      
-    mat-dd.R  
+    mat-dd.R      
+    grw-dd.R  
     moment.R  
     pid.R    
     util.R

@@ -1,0 +1,80 @@
+---
+title: "title: Length Base Indicators"
+author: "Laurence Kell"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: rmarkdown:::html_document
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEncoding{UTF-8}
+bibliography: /home/laurie/bib/refs.bib
+tags: FLPKG FLR
+license: Creative Commons Attribution-ShareAlike 4.0 International
+---
+
+```{r knitr_init, echo=FALSE, results="hide"}
+library(knitr)
+## Global options
+opts_chunk$set(echo    =!TRUE,
+               eval    =TRUE,
+               cache   =!FALSE,
+               cache.path="cache/",
+               prompt  =FALSE,
+               comment =NA,
+               message =FALSE,
+               tidy    =FALSE,
+               warning =FALSE,
+               fig.height=4.5,
+               fig.width =4.5,
+               fig.path  ="tex/")
+```
+
+```{r init,fig.height=6,fig.width=8,echo=FALSE, results="hide",fig.cap="Simulated population"}
+library(ggplot2)
+library(ggplotFL)
+library(plyr)
+library(dplyr)
+library(FLBRP)
+library(FLife)
+library(mvtnorm)
+  
+par=lhPar(FLPar(linf=100))
+stk=fwd(lhEql(par))[,ac(10:90)]
+stk=setPlusGroup(stk,8)[-1,]
+stk=propagate(stk,10)
+
+plot(stk)
+```
+
+```{r idex}
+source("/home/laurie/Desktop/flr/FLife/R/len-index.R")
+
+idx=ldex(stk)
+```
+
+```{r idex1,fig.width=8,fig.cap="Index for proportion of immature fish in catch"}
+ggplot(as.data.frame(idx[[1]]))+
+  geom_boxplot(aes(as.factor(year),data))+
+  geom_point(aes(year-9,data,group=1),data=as.data.frame(iter(idx[[1]],1)),col="red")+
+  geom_line( aes(year-9,data,group=1),data=as.data.frame(iter(idx[[1]],1)),col="red")+
+  scale_x_discrete(breaks=seq(10,100,10))+
+  xlab("Year")+ylab(expression(P(Length<L[mat])))
+```
+
+```{r idex2,fig.width=8,fig.cap="Index for proportion of mature fish in stock"}
+ggplot(as.data.frame(idx[[2]]+idx[[3]]))+
+  geom_boxplot(aes(as.factor(year),data))+
+  geom_point(aes(year-9,data,group=1),data=as.data.frame(iter(idx[[2]]+idx[[3]],1)),col="red")+
+  geom_line( aes(year-9,data,group=1),data=as.data.frame(iter(idx[[2]]+idx[[3]],1)),col="red")+
+  scale_x_discrete(breaks=seq(10,100,10))+
+  xlab("Year")+ylab(expression(P(Length>L[mat])))
+```
+
+```{r idex3,fig.width=8,fig.cap="Index for proportion of large mature fish in stock"}
+ggplot(as.data.frame(idx[[3]]))+
+  geom_boxplot(aes(as.factor(year),data))+
+  geom_point(aes(year-9,data,group=1),data=as.data.frame(iter(idx[[3]],1)),col="red")+
+  geom_line( aes(year-9,data,group=1),data=as.data.frame(iter(idx[[3]],1)),col="red")+
+  scale_x_discrete(breaks=seq(10,100,10))+
+  xlab("Year")+ylab(expression(P(Length<L[mega])))
+```

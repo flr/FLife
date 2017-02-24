@@ -31,7 +31,9 @@
 #'
 #' @examples
 #' \dontrun{
-#' eql=lhEql(lhPar(FLPar(linf=100)))
+#' data(teleost)
+#' alb=teleost[,"Thunnus alalunga"]
+#' eql=lhEql(lhPar(alb))
 #' }
 #' 
 setMethod("lhEql", signature(params='FLPar'),
@@ -73,10 +75,12 @@ setMethod("lhEql", signature(params='FLPar'),
   midyearlen <- growth(age+midyear,params) # midyear length used for natural mortality
 
   # Corresponding weights
-  swt=FLife::len2wt(slen,params)
   cwt=FLife::len2wt(slen,params)
   if ("bg" %in% dimnames(params)$param)
     swt=exp(log(slen)%*%params["bg"])%*%params["a"]
+  else
+    swt=FLife::len2wt(slen,params)
+  
   #warning("FLPar%*%FLQuant operator sets 1st dim name to quant regardless")
 
   if ("numeric" %in% is(m)) m.=FLQuant(m,dimnames=dimnames(age)) else{

@@ -49,7 +49,9 @@ and generates an corresponding \code{FLBRP} object. Can uses a range of function
 }
 \examples{
 \dontrun{
-eql=lhEql(lhPar(FLPar(linf=100)))
+data(teleost)
+alb=teleost[,"Thunnus alalunga"]
+eql=lhEql(lhPar(alb))
 }
 
 }

@@ -49,7 +49,9 @@ lhPar=function(params,t0=-0.1,a=0.0003,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
   if (!("t0"    %in% dimnames(params)$params)) params=addpar(params,"t0", t0)
   if (!("a"     %in% dimnames(params)$params)) params=addpar(params,"a",   a)
   if (!("b"     %in% dimnames(params)$params)) params=addpar(params,"b",   b)
-  if (!("bg"    %in% dimnames(params)$params)) params=addpar(params,"bg",  b)
+  if (!("bg"    %in% dimnames(params)$params)) {
+    params=rbind(params,params["b"])
+    dimnames(params)[[1]][length(dimnames(params)[[1]])]="bg"}
   if (!("s"     %in% dimnames(params)$params)) params=addpar(params,"s",   s)
   if (!("v"     %in% dimnames(params)$params)) params=addpar(params,"v",   v)
   
