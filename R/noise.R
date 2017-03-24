@@ -77,7 +77,7 @@ setMethod("rnoise", signature(n='numeric', len="FLQuant"),
                       res   =as(FLCohort(res),"FLQuant")
                       },
              "year"  ={res=apply(len,c(1,3:6), function(x) noiseFn(length(x),sd,b,burn,trunc))
-                       res=as.FLQuant(aperm(res,c(2,1,3:6)),dimnames=dimnames(len))},
+                       res=as.FLQuant(res,dimnames=dimnames(len))},
              "age"   ={res=apply(len,c(2:6), function(x) noiseFn(length(x),sd,b,burn,trunc))
                        res=as.FLQuant(res,dimnames=dimnames(len))}
              )

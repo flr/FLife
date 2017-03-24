@@ -64,7 +64,7 @@
 setMethod('mdd', signature(object='FLQuant',params='FLPar'),
           function(object,params,scale,k=1,m=gislason) { 
             
-            map=(2/(1+exp(-k*scale)))
+            map=(2/(1+exp(k*scale)))
             
             res=map%*%m(object,params)
             res})

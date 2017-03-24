@@ -20,13 +20,16 @@ hcrSBT1=function(cpue,tac,k1=1.5,k2=3,gamma=1,nyrs=5,lag=1,interval=3){
 
 ####
 mseSBT1<-function(om,eql,srDev,
-                  start=dims(om)$maxyear,end=start+20,lag=1,interval=3,
                   k1=1.5,k2=3.0,gamma=1,nyrs=5,   
-                  seed=7890,   nits=100,
-                  uCV =0.3,
+                  #seed=7890,   nits=100,
+                  #uCV =0.3,
+                  #years over which to run MSE
+                  start=range(om)["maxyear"]-30,interval=3,end=range(om)["maxyear"]-interval,
+                  
+                  #Stochasticity
+                  uDev =rlnorm(dim(mp)[6],FLQuant(0,dimnames=dimnames(iter(stock(om),1))),0.2),
+                  
                   monitor=FALSE){
-  
-  set.seed(seed)
   
   ## Get number of iterations in OM
   nits=c(om=dims(om)$iter, sr=dims(params(eql))$iter, rsdl=dims(srDev)$iter)
@@ -40,8 +43,7 @@ mseSBT1<-function(om,eql,srDev,
   #### Observation Error (OEM) setup #######################
   ## Random variation for CPUE
   
-  uDev=rlnorm(nits,FLQuant(0,dimnames=list(year=(dims(om)$minyear:(end+interval)))),uCV)
-  cpue=window(computeStock(om),end=start)*window(uDev,end=start)
+  cpue=window(computeStock(om),end=start)%*%window(uDev,end=start)
   
   mn=apply(cpue,6,mean)
   sd=apply(cpue,6,sd)

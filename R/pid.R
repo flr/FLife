@@ -25,9 +25,9 @@ abline(h=setPt,col="red")
 
 Error[1:50] = index[1:50] - setPt
 
-k1=0.01
-k2=0.005
-k3=0.01
+k1=0.02
+k2=0.05
+k3=0.02
 biomass[50]=biomass[50-1]-catch[50]+production(biomass[50-1])
 
 for (i in 51:100){

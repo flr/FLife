@@ -32,6 +32,7 @@
 #'  library(ggplotFL)
 #'  library(FLife)
 #'  library(popbio)
+#'  library(plyr)
 #'  
 #'  data(ple4)
 #'  
@@ -40,7 +41,7 @@
 
 setGeneric('refs', function(object,...) standardGeneric('refs'))
 setMethod("refs", signature(object="FLStock"),
-    function(object,s=0.9){
+    function(object,s=NULL){
   
   warn=options()$warn
   options(warn=-1)
@@ -49,28 +50,45 @@ setMethod("refs", signature(object="FLStock"),
   eql =FLBRP(object)
   spr0=mean(spr0(FLBRP(object)))
   srr =as.FLSR(object,model="bevholtSV")
-  upper(srr)[1:2]=1e12
-  srr=fmle(srr,
-           fixed=list(s=s,spr0=spr0),
-           control=list(silent=TRUE),
-           method="Brent")
+  
+  if (!is.null(s)){
+    upper(srr)[1:2]=1e12
+    srr=fmle(srr,
+             fixed=list(s=s,spr0=spr0),
+             control=list(silent=TRUE),
+             method="Brent")}
+  else 
+    srr=fmle(srr,control=list(silent=TRUE))
+  
   model(eql) =bevholt()$model
   params(eql)=ab(params(srr),"bevholt")[c("a","b")]
   eql        =brp(eql)
   
-  ## F0.1
+  ## per recruit regine shift
   eql1=brp(FLBRP(object))
   params(eql1)=propagate(params(eql1),dim(refpts(eql))[3])
   params(eql1)[]=unlist(c(ddply(rod(rec.obs(eql1)),.(iter), function(x)
     mean(subset(x,regime==max(as.numeric(regime)))$data))["V1"]))
-  refpts(eql1)=refpts(eql1)[c("f0.1","spr.30","virgin"),]
-  dimnames(refpts(eql1))[[1]][3]="spr.0"
+  refpts(eql1)=refpts(eql1)[c("f0.1","fmax","spr.30","virgin"),]
+  dimnames(refpts(eql1))[[1]][4]="spr.0"
   eql1=brp(eql1)
- 
-  res =model.frame(refpts(eql )[c("msy","crash","virgin"), c("harvest","yield","rec","ssb","biomass")])
-  res1=model.frame(refpts(eql1)[c("f0.1","spr.30","spr.0"),c("harvest","yield","rec","ssb","biomass")])
-  res=cbind(res[,4:5],res[1:3],res1[,1:3])
   
+  ## per recruit stationarity
+  eql2=brp(FLBRP(object))
+  params(eql2)=propagate(params(eql2),dim(refpts(eql))[3])
+  params(eql2)[]=apply(rec.obs(eql2),6,mean)
+  refpts(eql2)=refpts(eql2)[c("f0.1","fmax","spr.30","virgin"),]
+  dimnames(refpts(eql2))[[1]][4]="spr.0"
+  eql2=brp(eql2)
+  
+  res =model.frame(refpts(eql )[c("msy","crash","virgin"), c("harvest","yield","rec","ssb","biomass")])
+  res1=model.frame(refpts(eql1)[c("f0.1","fmax","spr.30","spr.0"),c("harvest","yield","rec","ssb","biomass")])
+  res2=model.frame(refpts(eql2)[c("f0.1","fmax","spr.30","spr.0"),c("harvest","yield","rec","ssb","biomass")])
+  res=cbind(res[,4:5],res[1:3],res1[,1:4],res2[,1:4])
+  
+  names(res)[rev(length(names(res))-0:3)]=paste(names(res)[rev(length(names(res))-0:3)],"_",sep="")
+
+
   if (dims(refpts(eql))$iter>1){
     catch(object)=propagate(catch(object),dims(refpts(eql))$iter)
     dimnames(catch(object))$iter=dimnames(rec(object))$iter
