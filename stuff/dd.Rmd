@@ -293,3 +293,51 @@ stk.=stk.+VPA(stk.,fratio=1)
 plot(FLStocks(Grw=stkGrw,SRR=stk.))    
 ```
 **Figure `r iFig=iFig+1;iFig`.** VPA v Growth scenario.
+
+
+```{r stochastic, fig.height=8}
+library(FLife)
+stk=fwd(bh9)
+
+set.seed(123456)
+m=exp(rnoise(101,log(m(stk))*0,b=0))
+m[,,,,,1]=1
+
+stk=propagate(stk,101)
+m(stk)=m(stk)*m
+
+###Projections
+stk=fwd(stk,f=fbar(stk[,-1]),sr=bh9)
+
+
+plot(stk)+
+geom_line(data=plot(stk[,,,,,7])$data,col="red")
+```
+**Figure `r iFig=iFig+1;iFig`.** 
+
+
+```{r stochastic2, fig.height=8}
+stkM=fwd(bh9)
+
+set.seed(123456)
+m=exp(rnoise(101,log(m(stkM))*0,b=.75,what="cohort"))
+m[,,,,,1]=1
+
+stkM=propagate(stkM,101)
+
+###Projections
+for (i in seq(dim(fbar(stkM))[2])[-1]){
+  
+  scale=((stock.n(stkM[,i])%*%stock.wt(stkM[,i]))%-%ref)%/%ref
+  
+  m(stkM[,i])=mdd(FLife:::vonB(ages(m(stk)[,i])+0.5,alb),params=alb,scale,k=0.5)*m[,i] 
+  
+  stkM=fwd(stkM,f=fbar(stkM[,i]),sr=bh9)}
+
+plot(stkM)+
+geom_line(data=plot(stkM[,,,,,7])$data,col="red")
+
+```
+**Figure `r iFig=iFig+1;iFig`.** 
+
+
