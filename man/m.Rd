@@ -2,33 +2,33 @@
 % Please edit documentation in R/mFn.R
 \docType{methods}
 \name{roff}
-\alias{charnov}
-\alias{charnov,FLQuant,FLPar-method}
-\alias{charnov-method}
-\alias{djababli}
-\alias{djababli,FLPar-method}
-\alias{djababli-method}
-\alias{griffiths}
-\alias{griffiths,FLPar-method}
-\alias{griffiths-method}
-\alias{jensen}
-\alias{jensen,FLPar-method}
-\alias{jensen-method}
-\alias{jensen2}
-\alias{jensen2,FLPar-method}
-\alias{jensen2-method}
-\alias{petersen}
-\alias{petersen,FLPar-method}
-\alias{petersen-method}
-\alias{rikhter}
-\alias{rikhter,FLPar-method}
-\alias{rikhter-method}
-\alias{rikhter2}
-\alias{rikhter2,FLPar-method}
-\alias{rikhter2-method}
 \alias{roff}
-\alias{roff,FLPar-method}
 \alias{roff-method}
+\alias{roff,FLPar-method}
+\alias{rikhter}
+\alias{rikhter-method}
+\alias{rikhter,FLPar-method}
+\alias{rikhter2}
+\alias{rikhter2-method}
+\alias{rikhter2,FLPar-method}
+\alias{griffiths}
+\alias{griffiths-method}
+\alias{griffiths,FLPar-method}
+\alias{djababli}
+\alias{djababli-method}
+\alias{djababli,FLPar-method}
+\alias{jensen}
+\alias{jensen-method}
+\alias{jensen,FLPar-method}
+\alias{jensen2}
+\alias{jensen2-method}
+\alias{jensen2,FLPar-method}
+\alias{charnov}
+\alias{charnov-method}
+\alias{charnov,FLQuant,FLPar-method}
+\alias{petersen}
+\alias{petersen-method}
+\alias{petersen,FLPar-method}
 \title{Natural mortality}
 \usage{
 roff(params, ...)
@@ -93,4 +93,3 @@ jensen2(params)
 \seealso{
 \code{\link{gislason}},  \code{\link{lorenzen}}, \code{\link{chen}}
 }
-

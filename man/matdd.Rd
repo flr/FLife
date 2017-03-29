@@ -2,8 +2,8 @@
 % Please edit documentation in R/mat-dd.R
 \docType{methods}
 \name{matdd,FLQuant,FLPar-method}
-\alias{matdd}
 \alias{matdd,FLQuant,FLPar-method}
+\alias{matdd}
 \alias{matdd-method}
 \title{matdd}
 \usage{
@@ -69,4 +69,3 @@ ggplot(as.data.frame(mat))+
 \seealso{
 \code{\link{logistic},\link{mdd}}
 }
-

@@ -3,8 +3,8 @@
 \docType{methods}
 \name{r,FLPar,missing-method}
 \alias{r,FLPar,missing-method}
-\alias{r,FLPar-method}
 \alias{r-method}
+\alias{r,FLPar-method}
 \title{Population growth rate}
 \usage{
 \S4method{r}{FLPar,missing}(m, fec, ...)
@@ -33,4 +33,3 @@ lambda(L[drop=TRUE])
 \seealso{
 \code{\link{leslie}}, \code{\link{lhRef}}
 }
-

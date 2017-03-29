@@ -29,4 +29,3 @@ Estimates elasticity
 \seealso{
 \code{\link{lhPar}},  \code{\link{lhEql}},  \code{\link{lhRef}}
 }
-
