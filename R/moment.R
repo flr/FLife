@@ -33,17 +33,7 @@ setMethod("moment", signature(object='numeric'),
   sk= sum(n*((object-mn)/sd)^3,na.rm=na.rm)/sum(n,na.rm=na.rm)
   ku= sum(n*((object-mn)/sd)^4,na.rm=na.rm)/sum(n,na.rm=na.rm)-3
   
-  ## weighted median
-  n=unlist(c(n))
-  object=unlist(c(object))
-  
-  cumn=cumsum(n)/sum(n)
-  max.=max((1:length(n))[cumn<.50])
-  min.=min((1:length(n))[cumn>=.50])
-  
-  me=(x[min.]*n[min.]+x[max.]*n[max.])/(n[min.]+n[max.])
-  
-  return(c(mn=mn,sd=sd,sk=sk,ku=ku,me=me))})
+  return(c(mn=mn,sd=sd,sk=sk,ku=ku))})
 
 moments<-function(x,n,p=1) (sum(x^p*n)/sum(n))^(1/p)
 

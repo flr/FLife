@@ -32,6 +32,10 @@ setMethod("richards", signature(age="FLPar",params="FLPar"),
             res=richardsFn(age,params)
             res@units=""
             res})
+setMethod("richards", signature(age="numeric",params="FLPar"),
+          function(age,params,...){   
+            res=richardsFn(FLQuant(age,dimnames=list(age=seq(length(age)))),params)
+            c(res)})
 setMethod("richards", signature(age="numeric",params="numeric"),
           function(age,params,...) 
             richardsFn(age,params))

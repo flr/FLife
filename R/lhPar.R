@@ -111,8 +111,15 @@ lhPar=function(params,t0=-0.1,a=0.0003,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
   return(params[order])}
 
 mf2FLPar=function(x){
+  
+  if ("iter"%in%names(x)){
+     iters=x[,seq(length(dimnames(x)[[2]]))[dimnames(x)[[2]]=="iter"][1]]
+     x    =x[,seq(length(dimnames(x)[[2]]))[dimnames(x)[[2]]!="iter"]]
+  }else iter=seq(dim(x)[1])
+  
   dmns=dimnames(x)[2:1]
   names(dmns)=c("params","iter")
+  dmns[[2]]=iters
   x=t(as.matrix(x))
   
   FLPar(array(x,dim=dim(x),dimnames=dmns),units="")}
