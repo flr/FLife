@@ -3,8 +3,8 @@ Type: Package
 Title: Methods for modelling life history traits
 Version: 2.1.1
 Date: 2016-04-25
-Author: Laurence Kell
-Maintainer: Laurence Kell <laurie@kell.es>
+Authors@R: c(
+  person("Laurence T.", "Kell", email = "laurie@kell.es", role = c("aut", "cre")))
 Description: Many studies have shown the relationships between life history
     traits for processes such as growth, maturity and natural mortality. Life
     history has been used to develop priors in stock assesments and to parameterise
@@ -21,7 +21,8 @@ Imports:
     popbio
 Suggests:
     ggplotFL (>= 2.5),
-    testthat
+    testthat,
+    plyr
 Additional_repositories: http://flr-project.org/R
 Collate:
     generic.R
@@ -68,4 +69,5 @@ Collate:
     power.R
     spectra.R
     t0.R
-RoxygenNote: 5.0.1
+    spectra.R
+RoxygenNote: 6.0.1

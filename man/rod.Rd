@@ -2,8 +2,8 @@
 % Please edit documentation in R/stars.R
 \docType{methods}
 \name{rod,FLQuant-method}
-\alias{rod}
 \alias{rod,FLQuant-method}
+\alias{rod}
 \alias{rod-method}
 \title{rod}
 \usage{
@@ -35,4 +35,3 @@ Returns a data.frame
 }
 
 }
-

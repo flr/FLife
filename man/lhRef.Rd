@@ -42,4 +42,3 @@ lhRef(params)
 \seealso{
 \code{\link{lhPar}}, \code{\link{lhEql}}
 }
-

@@ -36,10 +36,10 @@ the average recruitment.
  library(ggplotFL)
  library(FLife)
  library(popbio)
+ library(plyr)
  
  data(ple4)
  
  refs(ple4)
 } 
 }
-

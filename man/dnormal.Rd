@@ -2,12 +2,12 @@
 % Please edit documentation in R/dnormal.R
 \docType{methods}
 \name{dnormal,FLQuant,FLPar-method}
-\alias{dnormal}
-\alias{dnormal,FLPar,FLPar-method}
 \alias{dnormal,FLQuant,FLPar-method}
-\alias{dnormal,FLQuant,numeric-method}
-\alias{dnormal,numeric,numeric-method}
+\alias{dnormal}
 \alias{dnormal-method}
+\alias{dnormal,FLPar,FLPar-method}
+\alias{dnormal,numeric,numeric-method}
+\alias{dnormal,FLQuant,numeric-method}
 \title{Double normal ogive}
 \usage{
 \S4method{dnormal}{FLQuant,FLPar}(age, params, ...)
@@ -34,4 +34,3 @@ dnormal(FLQuant(1:10,dimnames=list(age=1:10)),params)
 \seealso{
 \code{\link{sigmoid}}, \code{\link{dnormal}}, \code{\link{logistic}}
 }
-
