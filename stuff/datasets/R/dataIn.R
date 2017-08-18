@@ -10,8 +10,8 @@
 
 library(FLCore)
 
-dirInp="/home/laurie/Desktop/flr/git/FLife/stuff/datasets/inputs"
-dirDat="/home/laurie/Desktop/flr/git/FLife/data"
+dirInp="/home/laurence/Desktop/flr/FLife/stuff/datasets/inputs"
+dirDat="/home/laurence/Desktop/flr/FLife/data"
 
 ## i)   ERA                       ##
 pel=read.table(file=file.path(dirInp,"era.csv"),row.names=NULL,sep=",")
@@ -130,7 +130,7 @@ save(fec,file=file.path(dirDat,"fec.RData"),compress="xz")
 
 ## iv)  Teleost 
 
-load("/home/laurie/Desktop/MEGA/papers/generic/fishnets-master/data/fishbase-web/fishbase-web.RData")
+load("/home/laurence/Desktop/MEGA/papers/generic/fishnets-master/data/fishbase-web/fishbase-web.RData")
 
 names(fb)[14]="l50"
 
@@ -170,12 +170,15 @@ teleost=full
 save(teleost,file=file.path(dirDat,"teleost.RData"),compress="xz")
 
 ## v)  Herring
-load("/home/laurie/Desktop/MEGA/papers/generic/fishnets-master/data/fishbase-web/fishbase-web.RData")
+load("/home/laurence/Desktop/MEGA/papers/generic/fishnets-master/data/fishbase-web/fishbase-web.RData")
 names(fb)[14]="l50"
 nms=names(fb)[c(9:11,14,20:21)]
 
 herring=subset(fb,species==sort(ac(unique(fb$species)))[381])[,nms]
 
 save(herring,file=file.path(dirDat,"herring.RData"),compress="xz")
+
+wklife<-read.csv("/home/laurence/Desktop/flr/FLife/stuff/datasets/inputs/wklife.csv")
+save(wklife,file=file.path(dirDat,"wklife.RData"),compress="xz")
 
 

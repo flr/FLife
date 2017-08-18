@@ -96,6 +96,8 @@ setMethod("lhEql", signature(params='FLPar'),
   mat. =mat(age + m.spwn,params) # maturity is biological therefore + m.spwn
 
   sel. =sel(age + fish,  params) # selectivty is fishery  based therefore + fish
+  
+  sel<<-sel.
   ## create a FLBRP object to   calculate expected equilibrium values and ref pts
   dms=dimnames(m.)
 
