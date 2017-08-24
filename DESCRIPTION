@@ -18,11 +18,12 @@ Depends:
 Imports:
     FLBRP,
     methods,
-    popbio
+    popbio,
+    plyr,
+    reshape
 Suggests:
     ggplotFL (>= 2.5),
-    testthat,
-    plyr
+    testthat
 Additional_repositories: http://flr-project.org/R
 Collate:
     generic.R
