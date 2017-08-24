@@ -41,10 +41,8 @@
 lhPar=function(params,t0=-0.1,a=0.0003,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
  
   if("data.frame"%in%class(params)) params=mf2FLPar(params)
-  
-  #attach(list(t0=-0.1,a=0.001,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000))
  
-  fn<-function(params,t0,a,b,ato95,sl,sr,s,v){
+  fn <- function(params,t0,a,b,ato95,sl,sr,s,v){
     
     names(dimnames(params)) <- tolower(names(dimnames(params)))
     
@@ -107,13 +105,14 @@ lhPar=function(params,t0=-0.1,a=0.0003,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
     attributes(params)$units=c("cm","kg","1000s")
     
     order=c("linf","k","t0","a","b","ato95","a50","asym","bg","m1","m2","a1","sl","sr","s","v")  
-    order=order[order%in%dimnames(params)[[1]]]
+    order=order[order %in% dimnames(params)[[1]]]
     order=c(order,dimnames(params)[[1]][!(dimnames(params)[[1]]%in%order)])
   
     return(params[order])}
   
-  if (dims(params)$iter==1)  
-     return(fn(params,t0,a,b,ato95,sl,sr,s,v))
+  if (dims(params)$iter==1) {
+     return(fn(params[apply(is.na(params), 1, sum) == 0,],t0,a,b,ato95,sl,sr,s,v))
+  }
   else{
     df=subset(as.data.frame(params),!is.na(data))
     
@@ -126,7 +125,7 @@ lhPar=function(params,t0=-0.1,a=0.0003,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
     
     res4=as(res3,"FLPar")
     
-    res4[]=unlist(c(cast(res3,params~iter,value="data")[,-1]))
+    #res4[]=unlist(c(cast(res3,params~iter,value="data")[,-1]))
     
     return(res4)}
   }
@@ -153,7 +152,6 @@ setUnits=function(res, par){
 
     if (is.null(attributes(params)$units)) return(res)
     units=attributes(params)$units
-    #browser()
     allUnits=list("params"=      "",          
                "refpts"=         "",            
                "fbar"=           "",        
