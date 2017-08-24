@@ -42,6 +42,8 @@ lhPar=function(params,t0=-0.1,a=0.0003,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
  
   if("data.frame"%in%class(params)) params=mf2FLPar(params)
   
+  params=params[!is.na(params)]
+  
   #attach(list(t0=-0.1,a=0.001,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000))
  
   fn<-function(params,t0,a,b,ato95,sl,sr,s,v){
@@ -126,7 +128,7 @@ lhPar=function(params,t0=-0.1,a=0.0003,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
     
     res4=as(res3,"FLPar")
     
-    res4[]=unlist(c(cast(res3,params~iter,value="data")[,-1]))
+    #res4[]=unlist(c(cast(res3,params~iter,value="data")[,-1]))
     
     return(res4)}
   }
