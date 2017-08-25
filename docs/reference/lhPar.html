@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -23,17 +23,14 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
 <!-- mathjax -->
-<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
   </head>
 
   <body>
@@ -94,52 +91,33 @@ same as age at 50/<!-- % mature (a50) As a minimum all `lhPar` requires is `linf
 length of the von Bertalannfy growth equation.</p>
     
 
-    <pre class="usage"><span class='fu'>lhPar</span>(<span class='no'>params</span>, <span class='kw'>t0</span> <span class='kw'>=</span> -<span class='fl'>0.1</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>3e-04</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>ato95</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sl</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+    <pre><span class='fu'>lhPar</span>(<span class='no'>params</span>, <span class='kw'>t0</span> <span class='kw'>=</span> -<span class='fl'>0.1</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>3e-04</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>ato95</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sl</span> <span class='kw'>=</span> <span class='fl'>2</span>,
   <span class='kw'>sr</span> <span class='kw'>=</span> <span class='fl'>5000</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>params</th>
-      <td><p><code>FLPar</code> object with parameters for life history equations and selection pattern.
+    <dl class="dl-horizontal">
+      <dt>params</dt>
+      <dd><code>FLPar</code> object with parameters for life history equations and selection pattern.
 Need Linfinity to estimate other parameters, if any other parameters supplied in <code>code</code> then
-these are not provided by the algorithm</p></td>
-    </tr>
-    <tr>
-      <th>t0</th>
-      <td><p>of von Bertalanffy. This is a default that isnt normally derived
-from life history theory, as are the following args.</p></td>
-    </tr>
-    <tr>
-      <th>a</th>
-      <td><p>coefficient of length weight relationship</p></td>
-    </tr>
-    <tr>
-      <th>b</th>
-      <td><p>exponent of length weight relationship</p></td>
-    </tr>
-    <tr>
-      <th>ato95</th>
-      <td><p>age at which 95% of fish are mature, offset to age at which 50% are mature</p></td>
-    </tr>
-    <tr>
-      <th>sl</th>
-      <td><p>selectivity-at-age parameter, standard deviation of lefthand limb of double normal</p></td>
-    </tr>
-    <tr>
-      <th>sr</th>
-      <td><p>stock recruitment relationship</p></td>
-    </tr>
-    <tr>
-      <th>s</th>
-      <td><p>steepness of stock recruitment relationship</p></td>
-    </tr>
-    <tr>
-      <th>v</th>
-      <td><p>virgin biomass</p></td>
-    </tr>
-    </table>
+these are not provided by the algorithm</dd>
+      <dt>t0</dt>
+      <dd>of von Bertalanffy. This is a default that isnt normally derived
+from life history theory, as are the following args.</dd>
+      <dt>a</dt>
+      <dd>coefficient of length weight relationship</dd>
+      <dt>b</dt>
+      <dd>exponent of length weight relationship</dd>
+      <dt>ato95</dt>
+      <dd>age at which 95% of fish are mature, offset to age at which 50% are mature</dd>
+      <dt>sl</dt>
+      <dd>selectivity-at-age parameter, standard deviation of lefthand limb of double normal</dd>
+      <dt>sr</dt>
+      <dd>stock recruitment relationship</dd>
+      <dt>s</dt>
+      <dd>steepness of stock recruitment relationship</dd>
+      <dt>v</dt>
+      <dd>virgin biomass</dd>
+    </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -147,14 +125,13 @@ from life history theory, as are the following args.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code>r</code>, <code><a href='loptAge.html'>loptAge</a></code>, <code><a href='lhRef.html'>lhRef</a></code>, <code>lhPar</code>, <code><a href='lhEql.html'>lhEql</a></code></p>
+    <p><code>r</code>, <code><a href='loptAge,FLPar-method.html'>loptAge</a></code>, <code><a href='lhRef.html'>lhRef</a></code>, <code>lhPar</code>, <code><a href='lhEql,FLPar-method.html'>lhEql</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>lhPar</span>(<span class='fu'>FLPar</span>(<span class='kw'>linf</span><span class='kw'>=</span><span class='fl'>200</span>))
-<span class='co'># }</span><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
+<span class='co'># lhPar(FLPar(linf=200))</span>
+<span class='co'>## ---------------------------------------------</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

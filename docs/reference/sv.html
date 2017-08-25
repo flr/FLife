@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -23,17 +23,14 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
 <!-- mathjax -->
-<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
   </head>
 
   <body>
@@ -91,29 +88,20 @@
     <p>Calculates steepness and virgin biomass given a and b for a Beverton and Holt SRR</p>
     
 
-    <pre class="usage"><span class='co'># S4 method for FLPar,character</span>
+    <pre><span class='co'># S4 method for FLPar,character</span>
 <span class='fu'>sv</span>(<span class='no'>x</span>, <span class='no'>model</span>, <span class='kw'>spr0</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p><code>FLPar</code> with a and b</p></td>
-    </tr>
-    <tr>
-      <th>model</th>
-      <td><p><code>character</code> with name of stock recruitment relationship, by default "bevholt"</p></td>
-    </tr>
-    <tr>
-      <th>spr0</th>
-      <td><p><code></code> spawner per recruit at F=0</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>any other arguments</p></td>
-    </tr>
-    </table>
+    <dl class="dl-horizontal">
+      <dt>x</dt>
+      <dd><code>FLPar</code> with a and b</dd>
+      <dt>model</dt>
+      <dd><code>character</code> with name of stock recruitment relationship, by default &quot;bevholt&quot;</dd>
+      <dt>spr0</dt>
+      <dd><code></code> spawner per recruit at F=0</dd>
+      <dt>...</dt>
+      <dd>any other arguments</dd>
+    </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -121,11 +109,11 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'>#bug</span>
-<span class='no'>params</span><span class='kw'>=</span><span class='fu'>FLPar</span>(<span class='kw'>a</span><span class='kw'>=</span><span class='fl'>37.8</span>,<span class='kw'>b</span><span class='kw'>=</span><span class='fl'>8.93</span>)
-<span class='fu'>sv</span>(<span class='no'>params</span>,<span class='st'>"bevholt"</span>,<span class='fl'>.4</span>)
-<span class='co'># }</span></pre>
+    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
+<span class='co'># #bug</span>
+<span class='co'># params=FLPar(a=37.8,b=8.93)</span>
+<span class='co'># sv(params,"bevholt",.4)</span>
+<span class='co'>## ---------------------------------------------</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

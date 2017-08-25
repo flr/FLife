@@ -1,8 +1,8 @@
 Package: FLife
 Type: Package
 Title: Methods for modelling life history traits
-Version: 2.1.1
-Date: 2016-04-25
+Version: 2.1.1.9001
+Date: 2017-08-24
 Authors@R: c(
   person("Laurence T.", "Kell", email = "laurie@kell.es", role = c("aut", "cre")))
 Description: Many studies have shown the relationships between life history
