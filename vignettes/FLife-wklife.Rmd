@@ -102,7 +102,6 @@ eql=lhEql(par)
 ```
 
 ```{r vectors}
-
 sel<-function(x) 
   catch.sel(x)%/%fapex(catch.sel(x))
 
