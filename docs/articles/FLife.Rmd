@@ -677,7 +677,7 @@ library(FLBRP)
 par=lhPar(FLPar(linf=100))  
 eql=lhEql(par)
 mou=as(eql,"FLStock")
-mou=FLash:::fwd(mou,f=fbar(eql)[,-1]/4,sr=eql)
+mou=FLash::fwd(mou,f=fbar(eql)[,-1]/4,sr=eql)
   
 srDev=rlnorm(100,FLQuant(rep(0,136)),0.3)
   
