@@ -134,3 +134,10 @@ plot(lmsl)
 ```
 
 **Figure `r iFig=iFig+1; iFig`** Simulate a stock with increasing F
+## Acknowledgements
+
+Document and codes was developed under the MyDas project funded by the Irish exchequer and EMFF 2014-2020
+
+The overall aim of the project is to develop and test a range of assessment models and methods to establish Maximum Sustainable Yield (MSY) reference points (or proxy MSY reference points) across the spectrum of data-limited stocks.
+
+
