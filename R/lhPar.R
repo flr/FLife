@@ -125,7 +125,7 @@ lhPar=function(params,t0=-0.1,a=0.0003,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
     
     res4=as(res3,"FLPar")
     
-    #res4[]=unlist(c(cast(res3,params~iter,value="data")[,-1]))
+   res4[]=unlist(c(cast(res3,params~iter,value="data")[,-1]))
     
     return(res4)}
   }
