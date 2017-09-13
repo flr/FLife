@@ -412,6 +412,8 @@ alb=lhPar(rbind(alb,FLPar(m1=0.15,m2=-0.288,s=0.75)))
 
 ## Stock recruitment relationships
 ```{r fig3,fig.cap="Stock recruitment relationships for a steepness of 0.75 and vigin biomass of 1000"}
+library(reshape)
+
 srr=FLBRPs("Beverton and Holt"     =lhEql(alb,sr="bevholt"),
            "Ricker"                =lhEql(alb,sr="ricker"),
            "Cushing"               =lhEql(alb,sr="cushing"),
@@ -680,12 +682,11 @@ mou=as(eql,"FLStock")
 mou=FLash::fwd(mou,f=fbar(eql)[,-1]/4,sr=eql)
   
 srDev=rlnorm(100,FLQuant(rep(0,136)),0.3)
-  
+
 om=FLife:::mseSBT1(mou,eql,srDev,
-             start=dims(mou)$maxyear,end=dims(mou)$maxyear+20,lag=1,interval=3,
+             start=dims(mou)$maxyear,end=dims(mou)$maxyear+20,interval=3,
              k1=1.5,k2=3.0,gamma=1,nyrs=5,   
-             seed=7890,nits=100,
-             uCV =0.2) 
+             uDev =0.2) 
   
 ggplot()+
     geom_line(aes(year,data,col=iter),

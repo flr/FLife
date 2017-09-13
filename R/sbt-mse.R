@@ -8,7 +8,7 @@ hcrSBT1=function(cpue,tac,k1=1.5,k2=3,gamma=1,nyrs=5,lag=1,interval=3){
      lambda=abs(lambda)
   
      res=1+ifelse(flag,-k1,k2)*lambda^ifelse(flag,gamma,1)
-     res=res*tac
+     res=res%*%tac
      
      dmns=dimnames(tac)
      dmns$year=as.integer(dmns$year)+lag+seq(interval)-1
@@ -20,7 +20,8 @@ hcrSBT1=function(cpue,tac,k1=1.5,k2=3,gamma=1,nyrs=5,lag=1,interval=3){
 
 ####
 mseSBT1<-function(om,eql,srDev,
-                  k1=1.5,k2=3.0,gamma=1,nyrs=5,   
+                  k1=1.5,k2=3.0,gamma=1,nyrs=5,  
+                  lag=1,
                   #seed=7890,   nits=100,
                   #uCV =0.3,
                   #years over which to run MSE
@@ -43,8 +44,11 @@ mseSBT1<-function(om,eql,srDev,
   #### Observation Error (OEM) setup #######################
   ## Random variation for CPUE
   
-  cpue=window(computeStock(om),end=start)%*%window(uDev,end=start)
+  if (!("FLQuant"%in%is(uDev)))
+    uDev=rlnoise(nits,window(computeStock(om),end=end)%=%0,uDev)
   
+  cpue=window(computeStock(om),end=start)%*%window(uDev,end=start)
+
   mn=apply(cpue,6,mean)
   sd=apply(cpue,6,sd)
   
@@ -55,7 +59,7 @@ mseSBT1<-function(om,eql,srDev,
   tac=catch(om)[,ac(start-1)]
   for (iYr in seq(start,end,interval)){
     #iYr = (start:(range(om,'maxyear')-2))[1]
-    if (monitor) cat('===================', iYr, '===================\n')
+    if (monitor) cat('iYr, ')
     
     cpue=window(cpue,end=iYr)
     cpue[,ac(iYr-(interval:1)+1)]=stock(om)[,ac(iYr-(interval:1)+1)]*uDev[,ac(iYr-(interval:1)+1)]
@@ -63,7 +67,7 @@ mseSBT1<-function(om,eql,srDev,
     #tac=hcrSBT1(log(cpue),tac,k1,k2,gamma,nyrs,lag,interval)
     tac=hcrSBT1((cpue%/%mn),tac,k1,k2,gamma,nyrs,lag,interval)
     
-    om <-FLash:::fwd(om,catch=tac,sr=eql,maxF=maxF,sr.residuals=srDev)
+    om <-fwd(om,catch=tac,sr=eql,maxF=maxF,sr.residuals=srDev)
     tac=tac[,interval]}
   
   return(window(om,end=end))}
