@@ -70,4 +70,6 @@ Collate:
     power.R
     spectra.R
     t0.R
+    mp.R
+    mse.R
 RoxygenNote: 6.0.1
