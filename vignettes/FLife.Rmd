@@ -1,7 +1,12 @@
 ---
 title: "Life History Relationships"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output:
+output: pdf_document
+vignette: >
+  %\VignetteIndexEntry{diags}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+bibliography: refs.bib
 github_document:
     mathjax: TRUE
 bibliography: ref.bib
@@ -777,20 +782,18 @@ ggplot(ctc)+
 
 * `r version$version.string`
 * FLCore: `r packageVersion('FLCore')`
-* FLife: `r packageVersion('FLife')`
+* FLPKG: `r # packageVersion('FLPKG')`
 * **Compiled**: `r date()`
 * **Git Hash**: `r system("git log --pretty=format:'%h' -n 1", intern=TRUE)`
 
 ## Author information
 
-**Laurence KELL**. laurie@kell.es
+**Laurence KELL**. laurie.kell.es
+
 
 ## Acknowledgements
 
-Document and codes was developed under the MyDas project funded by the Irish exchequer and EMFF 2014-2020
-
-The overall aim of the project is to develop and test a range of assessment models and methods to establish Maximum Sustainable Yield (MSY) reference points (or proxy MSY reference points) across the spectrum of data-limited stocks.
-
+This vignette and many of the methods documented in it were developed under the MyDas project funded by the Irish exchequer and EMFF 2014-2020. The overall aim of MyDas is to develop and test a range of assessment models and methods to establish Maximum Sustainable Yield (MSY) reference points (or proxy MSY reference points) across the spectrum of data-limited stocks.
 
 # References {#References}
 
