@@ -2,7 +2,7 @@
 - Version: 2.1.1
 - Date: 2016-04-25
 - Author: %USER%
-- Maintainer: %USER2% <laurie@kell.es>
+- Maintainer: %USER2% <laurie@seaplusplus.co.uk>
 - Repository: <https://github.com/flr/FLife/>
 - Bug reports: <https://github.com/flr/FLife/issues>
 
@@ -35,5 +35,5 @@ You are welcome to:
 
 - Submit suggestions and bug-reports at: <https://github.com/flr/FLife/issues>
 - Send a pull request on: <https://github.com/flr/FLife/>
-- Compose a friendly e-mail to: <laurie@kell.es>
+- Compose a friendly e-mail to: <laurie@seaplusplus.co.uk>
 
