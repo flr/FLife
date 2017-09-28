@@ -6,7 +6,7 @@ author: "Laurence Kell"
 output: rmarkdown:::pdf_document
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{FLife-WKLife}
   %\VignetteEncoding{UTF-8}
 bibliography: refs.bib
 tags: FLPKG FLR

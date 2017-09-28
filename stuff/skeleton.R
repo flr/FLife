@@ -18,6 +18,6 @@ Rcpp.package.skeleton(name          = "FLife",
                       module        = FALSE,
                       author        = "Laurence Kell",
                       maintainer    = "Laurence Kell",
-                      email         = "laurie.kell@iccat.int",
+                      email         = "laurie@seaplusplus.co.uk",
                       license       = "GPL (>= 2)")
 
