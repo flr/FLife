@@ -6,10 +6,9 @@ vignette: >
   %\VignetteIndexEntry{diags}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
-bibliography: refs.bib
 github_document:
     mathjax: TRUE
-bibliography: ref.bib
+bibliography: refs.bib
 tags: FLife FLR
 license: Creative Commons Attribution-ShareAlike 4.0 International Public License
 ---

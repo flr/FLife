@@ -1,6 +1,6 @@
 Package: FLife
 Type: Package
-Title: Methods for modelling life history traits
+Title: Methods for Modelling Life History Traits
 Version: 2.1.2
 Date: 2017-09-18
 Authors@R: c(
@@ -23,8 +23,10 @@ Imports:
     reshape
 Suggests:
     ggplotFL (>= 2.5),
-    testthat
+    testthat,
+    knitr
 Additional_repositories: http://flr-project.org/R
+VignetteBuilder: knitr
 Collate:
     generic.R
     data.R
