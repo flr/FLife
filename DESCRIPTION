@@ -1,10 +1,10 @@
 Package: FLife
 Type: Package
-Title: Methods for modelling life history traits
-Version: 2.1.1.9001
-Date: 2017-08-24
+Title: Methods for Modelling Life History Traits
+Version: 2.1.2
+Date: 2017-09-18
 Authors@R: c(
-  person("Laurence T.", "Kell", email = "laurie@kell.es", role = c("aut", "cre")))
+  person("Laurence T.", "Kell", email = "laurie@seaplusplus.co.uk", role = c("aut", "cre")))
 Description: Many studies have shown the relationships between life history
     traits for processes such as growth, maturity and natural mortality. Life
     history has been used to develop priors in stock assesments and to parameterise
@@ -23,8 +23,10 @@ Imports:
     reshape
 Suggests:
     ggplotFL (>= 2.5),
-    testthat
+    testthat,
+    knitr
 Additional_repositories: http://flr-project.org/R
+VignetteBuilder: knitr
 Collate:
     generic.R
     data.R

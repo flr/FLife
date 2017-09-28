@@ -6,9 +6,12 @@ vignette: >
   %\VignetteIndexEntry{FLife}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
-bibliography: refs.bib
 github_document:
     mathjax: TRUE
+<<<<<<< HEAD
+=======
+bibliography: refs.bib
+>>>>>>> 5bec50df30996c58713296de425f75402570216f
 tags: FLife FLR
 license: Creative Commons Attribution-ShareAlike 4.0 International Public License
 ---
@@ -787,8 +790,7 @@ ggplot(ctc)+
 
 ## Author information
 
-**Laurence KELL**. laurie.kell.es
-
+**Laurence KELL**. laurie@seaplusplus.co.uk
 
 ## Acknowledgements
 
