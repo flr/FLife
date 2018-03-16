@@ -24,8 +24,8 @@ mseEMP<-function(
   start=range(om)["maxyear"]-30,interval=3,end=range(om)["maxyear"]-interval,
   
   #Stochasticity, either by default or suppliedas args
-  srDev=FLife:::rlnoise(dim(om)[6],FLQuant(0,dimnames=list(year=start:end)),0.3), 
-  uDev =FLife:::rlnoise(dim(mp)[6],FLQuant(0,dimnames=dimnames(iter(stock.n(om),1))),0.2),
+  srDev=rlnoise(dim(om)[6],FLQuant(0,dimnames=list(year=start:end)),0.3), 
+  uDev =rlnoise(dim(mp)[6],FLQuant(0,dimnames=dimnames(iter(stock.n(om),1))),0.2),
   
   #Capacity, i.e. F in OM can not be greater than this
   maxF=1.5){ 

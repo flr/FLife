@@ -117,14 +117,14 @@ lhPar=function(params,t0=-0.1,a=0.0003,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
   }else{
      df=subset(as.data.frame(params),!is.na(data))
     
-    res1=dlply(df,.(iter),function(x) as(x[,c("data","params")],"FLPar")[,1])
+     res1=dlply(df,.(iter),function(x) as(x[,c("data","params")],"FLPar")[,1])
     
-    res2=mlply(data.frame(iter=seq(length(res1))),function(iter,v1,v2,v3,v4,v5,v6,v7,v8) 
-      fn(res1[[iter]],v1,v2,v3,v4,v5,v6,v7,v8),v1=t0,v2=a,v3=b,v4=ato95,v5=sl,v6=sr,v7=s,v8=v)
+     res2=mlply(data.frame(iter=seq(length(res1))),function(iter,v1,v2,v3,v4,v5,v6,v7,v8) 
+        fn(res1[[iter]],v1,v2,v3,v4,v5,v6,v7,v8),v1=t0,v2=a,v3=b,v4=ato95,v5=sl,v6=sr,v7=s,v8=v)
     
-    res3=mdply(data.frame(iter=seq(length(res1))),function(iter) cbind(iter=iter,as.data.frame(iter(res2[[iter]],1))[,-2]))
+     res3=mdply(data.frame(iter=seq(length(res1))),function(iter) cbind(iter=iter,as.data.frame(iter(res2[[iter]],1))[,-2]))
     
-    res4=as(res3,"FLPar")
+      res4=as(res3,"FLPar")
     
     #res4[]=unlist(c(cast(res3,params~iter,value="data")[,-1]))
     

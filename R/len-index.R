@@ -1,3 +1,26 @@
+# fn: no visible global function definition for ‘rmvnorm’
+# fn: no visible binding for global variable ‘bin’
+# fn: no visible binding for global variable ‘V1’
+# ldex: no visible binding for global variable ‘bin’
+# ldex: no visible binding for global variable ‘p’
+# mseEMP: no visible binding for global variable ‘mp’
+# mseSBT1: no visible binding for global variable ‘mp’
+# power : <anonymous>: no visible global function definition for
+# ‘powertrend’
+# power : <anonymous>: no visible binding for global variable ‘R’
+# power : <anonymous>: no visible binding for global variable ‘yrs’
+# power: no visible binding for global variable ‘pse’
+# power: no visible binding for global variable ‘increase’
+# power : <anonymous>: no visible global function definition for
+# ‘interpp’
+# refs,FLStock : <anonymous>: no visible binding for global variable
+# ‘regime’
+# refs,FLStock: no visible binding for global variable ‘b.msy’
+# refs,FLStock: no visible binding for global variable ‘b.current’
+# spectra,FLStock: no visible global function definition for ‘spectraFLQ’
+# Undefined global functions or variables:
+ 
+
 fn=function(year,object,sigma,nsample=100) {
   n  =as.data.frame(stock.n(object)[,year]^(1/3),drop=TRUE)
   len=c((stock.wt(object)[,year])^(1/3))

@@ -152,6 +152,38 @@ setMethod("loptAge", signature(params="FLPar"),
       vonB(as(FLPar(array(res,dim=c(1, dm[-1]),dimnames=dmns)),"FLQuant"),params)
       })
 
+
+setMethod("genTime", signature(params="FLPar"),
+          function(params,
+                   m     =function(length,params) params["m1"]%*%(exp(log(length)%*%params["m2"])),
+                   growth=vonB,
+                   ...){   
+            
+            loptFn=function(x,params,m){
+              
+              age   =0:ceiling(x)
+              dmns  =list(age=age)
+              length=vonB(age=FLQuant(pmin(age+0.5,x),dimnames=dmns),params=params)
+              m.    =FLQuant(m(length,params),    dimnames=dmns)
+              mCum  =FLQuant(aaply(m.,6,sum))
+              n     =exp(-mCum)
+              c(n*FLife::len2wt(length[ac(ceiling(x))],params))}
+            
+            dmns=dimnames(params)
+            dmns$params="lopt"
+            dm  =dim(params)
+            
+            res=aaply(params,seq(length(dm))[-1],function(x){
+              x.=FLPar(x)
+              rtn=try(optimise(loptFn,c(0,40),params=x.,maximum=TRUE,m=m)$maximum)
+              if ("character" %in% mode(rtn)) rtn=NA
+              rtn})
+            
+
+            res}
+          
+          )
+
 if (FALSE){
 library(FLife)
 library(FLBRP)

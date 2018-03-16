@@ -139,7 +139,7 @@ mf2FLPar=function(x){
   
   dmns=dimnames(x)[2:1]
   names(dmns)=c("params","iter")
-  dmns[[2]]=iters
+  dmns[[2]]=seq(dim(x)[1])
   x=t(as.matrix(x))
   
   FLPar(array(x,dim=dim(x),dimnames=dmns),units="")}

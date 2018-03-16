@@ -1,7 +1,7 @@
 power<-function(freq=1,cv=seq(0.2,0.4,0.1),nyr=30,pr=500,trend=2){
   
-  require(fishmethods)
-  require(akima)
+  #require(fishmethods)
+  #require(akima)
   
   pwr=mdply(expand.grid(pse=cv,yrs=seq(nyr)), function(pse,yrs) {
     t.=powertrend(trend=trend,A1=1,PSE=pse,maxyrs=yrs,step=1,graph=FALSE,pR=pr)
