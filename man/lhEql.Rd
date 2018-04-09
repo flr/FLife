@@ -5,7 +5,7 @@
 \alias{lhEql,FLPar-method}
 \alias{lhEql}
 \alias{lhEql-method}
-\title{Derives an \code{FLBRP} from life history parameters}
+\title{Derives an \code{FLRP} from life history parameters}
 \usage{
 \S4method{lhEql}{FLPar}(params, growth = FLife::vonB, m = function(length,
   params) exp(0.55) * (length^-1.61) \%*\% (params["linf"]^1.44) \%*\%
@@ -34,18 +34,18 @@
 
 \item{fish}{A \code{numeric} give propotion of year when fishing occurs, by default 0.5}
 
-\item{units}{A\code{character} for vectors in \code{FLBRP} returned by method}
+\item{units}{A\code{character} for vectors in \code{FLRP} returned by method}
 
 \item{midyear}{when growth measured, default 0.5}
 
 \item{...}{any other arguments}
 }
 \value{
-\code{FLBRP} object
+\code{FLRP} object
 }
 \description{
 Takes an \code{FLPar} object with life history and selectivity parameters
-and generates an corresponding \code{FLBRP} object. Can uses a range of functional forms
+and generates an corresponding \code{FLRP} object. Can uses a range of functional forms
 }
 \examples{
 \dontrun{

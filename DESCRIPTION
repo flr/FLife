@@ -1,7 +1,7 @@
 Package: FLife
 Type: Package
 Title: Methods for Modelling Life History Traits
-Version: 2.1.2
+Version: 3.0.0
 Date: 2017-09-18
 Author: c(person(given = "Laurence", family = "Kell", role = c("aut", "cre"),
   email = "laurie@seaplusplus.co.uk"))
@@ -17,14 +17,18 @@ Depends:
     R(>= 3.1),
     FLCore (>= 2.6),
 Imports:
-    FLBRP,
+    FLRP,
     methods,
     popbio,
     plyr
 Suggests:
+    ggplot2,
+    FLash,
     ggplotFL (>= 2.5),
     testthat,
-    knitr
+    knitr,
+    GGally, 
+    reshape
 Additional_repositories: http://flr-project.org/R
 VignetteBuilder: knitr
 Collate:
@@ -79,5 +83,6 @@ Collate:
     pMeasure.R
     sim.R
     knifeEdgeMsy.R
-    netSel.r
+    netSel.R
+    fbar.R
 RoxygenNote: 6.0.1

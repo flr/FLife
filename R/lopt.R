@@ -110,7 +110,7 @@ loptFn2<-function(params) params["linf"]*3/(3+exp(params["m2"])/params["k"])
 #' i) \eqn{{2/3}^{rds}  L_{\infty}}
 #' ii) \eqn{L_{\infty}\frac{3}{3+k/m}}
 #' iii) by maximising the biomass of
-#' iv) from an FLBRP object by fishing at F=0 and finding age where biomass is a maximum
+#' iv) from an FLRP object by fishing at F=0 and finding age where biomass is a maximum
 #' 
 #' @export
 #' @docType methods
@@ -186,7 +186,7 @@ setMethod("genTime", signature(params="FLPar"),
 
 if (FALSE){
 library(FLife)
-library(FLBRP)
+library(FLRP)
 #source('~/Desktop/flr/FLife/R/vonB.R')
 #source('~/Desktop/flr/FLife/R/dnormal.R')
 #source('~/Desktop/flr/FLife/R/len2wt.R')

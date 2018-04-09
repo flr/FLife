@@ -1,5 +1,5 @@
 library(FLCore)
-library(FLBRP)
+library(FLRP)
 library(biodyn)
 library(Rcpp)
 library(roxygen2)

@@ -14,8 +14,8 @@
 #' 
 #' @return object of class \code{FLPar} with reference points, i.e r, rc, sk, lopt,
 #' 
-#' @importFrom FLBRP refpts
-#' @importFrom FLBRP refpts
+#' @importFrom FLRP refpts
+#' @importFrom FLRP refpts
 #' 
 #' @export
 #' @docType methods
@@ -25,7 +25,7 @@
 #' 
 #' @examples
 #' \dontrun{
-#' library(FLBRP)
+#' library(FLRP)
 #' params=FLPar(linf=100,t0=0,k=.4)
 #' params=lhPar(params)
 #' lhRef(params)
@@ -103,7 +103,7 @@ if (FALSE){
 
 library(ggplot2)
 library(FLCore)
-library(FLBRP)
+library(FLRP)
 library(FLife)
 library(popbio)
 library(ggplotFL)

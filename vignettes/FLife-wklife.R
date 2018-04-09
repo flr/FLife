@@ -60,7 +60,7 @@ attributes(wkpar)[names(wklife)[1:5]]=wklife[,1:5]
 par=lhPar(wkpar)
 
 ## ----eqls----------------------------------------------------------------
-library(FLBRP)
+library(FLRP)
 
 eql=lhEql(par)
 

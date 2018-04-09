@@ -36,9 +36,9 @@ iFig=0
 
 ```{r, pkgs, message=FALSE}
 library(ggplot2)
-library(FLife)
 library(plyr)
 library(reshape)
+library(FLife)
 ```
 
 ```{r, theme, echo=FALSE}
@@ -96,13 +96,15 @@ par=lhPar(wkpar)
 
 and then to derive vectors for processses such as natural mortality 
  
-```{r eqls}
-library(FLBRP)
+```{r eqls,eval=FALSE}
+#source('~/Desktop/flr/FLife/R/spr0.R')
+#source('~/Desktop/flr/FLife/R/fbar.R')
 
+library(FLRP)
 eql=lhEql(par)
 ```
 
-```{r vectors}
+```{r vectors,eval=FALSE}
 sel<-function(x) 
   catch.sel(x)%/%fapex(catch.sel(x))
 
@@ -117,7 +119,7 @@ ggplot(FLQuants(eql,"m","catch.sel"=sel,"mat","catch.wt"))+
 
 and estimate equilibrium dynamics and reference points, e.g. for lemon sole
 
-```{r eql}
+```{r eql,eval=FALSE}
 plot(iter(eql,7))
 ```
 
@@ -127,7 +129,7 @@ plot(iter(eql,7))
 
 Create a forward projection, i.e. an `FLStock` from an equilibrium object
 
-```{r eql-lmsl}
+```{r eql-lmsl, eval=FALSE}
 lmsl=as(iter(eql,7),"FLStock")
 
 plot(lmsl)

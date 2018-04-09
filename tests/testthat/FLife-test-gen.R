@@ -60,7 +60,7 @@ testObjects[["lhEql"]]=refpts(lhEql(lhPar(FLPar(linf=100))))["msy","yield"]
 testObjects[["lhPar"]]=lhPar(FLPar(linf=200))
 
 #lhRef
-library(FLBRP)
+library(FLRP)
 params=FLPar(linf=100,t0=0,k=.4)
 params=lhPar(params)
 testObjects[["lhRef"]]=lhRef(params)
@@ -87,7 +87,6 @@ testObjects[["lorenzen"]]=lorenzen(mass)
 #matdd
 testObjects[["matdd"]]=NULL
   
-
 #mdd
 eql=brp(FLBRP(ple4))
 fbar(eql)=FLQuant(c(seq(0,4,length.out=101)*refpts(eql)["msy","harvest"]))

@@ -133,12 +133,12 @@ ggplot(as.data.frame(m))+
 ## ------------------------------------------------------------------------
 
 ## ---- echo=TRUE----------------------------------------------------------
-library(FLBRP)
+library(FLRP)
 data(ple4)
 refs(ple4)
 
 ## ---- echo=TRUE, fig.cap="Age-vectors of growthm natural mortality, maturity and selection pattern"----
-library(FLBRP)
+library(FLRP)
 eql=lhEql(par)
 
 ggplot(FLQuants(eql,"m","catch.sel","mat","catch.wt"))+
@@ -166,7 +166,7 @@ alb=lhPar(rbind(alb,FLPar(m1=0.15,m2=-0.288,s=0.75)))
 ## ----fig3,fig.cap="Stock recruitment relationships for a steepness of 0.75 and vigin biomass of 1000"----
 library(reshape)
 
-srr=FLBRPs("Beverton and Holt"     =lhEql(alb,sr="bevholt"),
+srr=FLRPs("Beverton and Holt"     =lhEql(alb,sr="bevholt"),
            "Ricker"                =lhEql(alb,sr="ricker"),
            "Cushing"               =lhEql(alb,sr="cushing"),
            "Shepherd"              =lhEql(rbind(alb,FLPar(c=1.5)),sr="shepherd"),
@@ -228,7 +228,7 @@ ggplot(melt(srr[,-4],id=c("year","ssb",".id")))+
 #    scale_colour_manual("",values="red",label="MSY")
 
 ## ---- echo=TRUE, m-density-dependence,fig.cap="Density Dependence in M"----
-library(FLBRP)
+library(FLRP)
 library(FLife)
 
 data(teleost)
@@ -401,7 +401,7 @@ ggplot()+
 ## ----fig14, fig.width=6,fig.height=8,fig.cap="MSE using empirical HCR"----
 library(FLife)
 library(FLash)
-library(FLBRP)
+library(FLRP)
   
 par=lhPar(FLPar(linf=100))  
 eql=lhEql(par)

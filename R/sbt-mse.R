@@ -159,7 +159,7 @@ mseSBT2<-function(om,eql,srDev,yrAdult,yrJuve,refJuve=-(1:5),tarCatch,
 if (FALSE){
   library(FLife)
   library(FLash)
-  library(FLBRP)
+  library(FLRP)
   
   par=lhPar(FLPar(linf=100))  
   eql=lhEql(par)

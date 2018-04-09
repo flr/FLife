@@ -1,5 +1,5 @@
 library(FLife)
-library(FLBRP)
+library(FLRP)
 
 par=FLPar(teleost[c("linf","k","t0","l50","a","b"),"Thunnus alalunga"])
 par=lhPar(par)

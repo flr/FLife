@@ -7,8 +7,13 @@
 #' @param params \code{FLPar} object with parameters \code{linf}, \code{k} and \code{t0}
 #' @param ... other arguments
 #' 
-#' @aliases richards richards-method richards,FLPar,FLPar-method richards,FLQuant,FLPar-method richards,FLQuant,numeric-method richards,missing,FLPar-method richards,numeric,numeric-method #'          richards numeric,FLPar-method    
-
+#' @aliases richards richards-method 
+#'          richards,FLPar,FLPar-method 
+#'          richards,FLQuant,FLPar-method 
+#'          richards,FLQuant,numeric-method 
+#'          richards,missing,FLPar-method 
+#'          richards,numeric,numeric-method
+#'          richards,numeric,FLPar-method    
 #' 
 #' @return Returns an object of same class as \code{age}  e.g. \code{FLQuant}
 #' 

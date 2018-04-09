@@ -69,7 +69,7 @@
 # lhPar(FLPar(linf=200))
 # 
 # #lhRef
-# library(FLBRP)
+# library(FLRP)
 # params=FLPar(linf=100,t0=0,k=.4)
 # params=lhPar(params)
 # lhRef(params)
@@ -159,7 +159,7 @@
 # ## Not run: 
 # #bug
 # 
-# library(FLBRP)
+# library(FLRP)
 # library(FLife)
 # 
 # data(ple4)
@@ -199,7 +199,7 @@
 # ### ** Examples
 # 
 # ## Not run: 
-# library(FLBRP)
+# library(FLRP)
 # library(FLife)
 # 
 # data(ple4)

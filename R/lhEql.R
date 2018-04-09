@@ -1,8 +1,8 @@
-  #' @title Derives an \code{FLBRP} from life history parameters
+  #' @title Derives an \code{FLRP} from life history parameters
 #' 
 #' @description 
 #' Takes an \code{FLPar} object with life history and selectivity parameters
-#' and generates an corresponding \code{FLBRP} object. Can uses a range of functional forms
+#' and generates an corresponding \code{FLRP} object. Can uses a range of functional forms
 #'
 #' @param params an \code{FLPar} object with life history parameters
 #' @param growth A function that takes an \code{FLPar} oject with parameters, by default \code{vonB}
@@ -13,13 +13,13 @@
 #' @param range A \code{numeric} with age range by default from 0 to 40
 #' @param spwn A \code{numeric} give propotion of year when spawning occurs, by default is params["a50"]-floor(params["a50"])
 #' @param fish A \code{numeric} give propotion of year when fishing occurs, by default 0.5        
-#' @param units A\code{character} for vectors in \code{FLBRP} returned by method
+#' @param units A\code{character} for vectors in \code{FLRP} returned by method
 #' @param midyear when growth measured, default 0.5
 #' @param ... any other arguments 
 #' 
 #' @aliases lhEql lhEql-method lhEql,FLPar-method
 #' 
-#' @return \code{FLBRP} object
+#' @return \code{FLRP} object
 #'
 #' @seealso \code{\link{lhPar}}, \code{\link{lhRef}}
 #'
@@ -49,7 +49,6 @@ setMethod("lhEql", signature(params='FLPar'),
             units=if("units" %in% names(attributes(params))) attributes(params)$units else NULL,
             midyear    =0.5,
             ...){
-
   # Check that spwn and fish are [0, 1]
   if (spwn > 1 | spwn < 0 | fish > 1 | fish < 0)
     stop("spwn and fish must be in the range 0 to 1\n")
@@ -65,7 +64,6 @@ setMethod("lhEql", signature(params='FLPar'),
     harvest.spwn =args[["harvest.spwn"]]
   else
     harvest.spwn=FLQuant(spwn, dimnames=list(age=range["min"]:range["max"]))
-
   age=FLQuant(range["min"]:range["max"],
               dimnames=list(age =range["min"]:range["max"],
                             iter=dimnames(params)$iter))
@@ -82,7 +80,6 @@ setMethod("lhEql", signature(params='FLPar'),
     swt=FLife::len2wt(slen,params)
   
   #warning("FLPar%*%FLQuant operator sets 1st dim name to quant regardless")
-
   if ("numeric" %in% is(m)) m.=FLQuant(m,dimnames=dimnames(age)) else{
     if ("length" %in% names(formals(m)))
       m.   =m(length=midyearlen,params=params) # natural mortality is always based on mid year length
@@ -98,7 +95,7 @@ setMethod("lhEql", signature(params='FLPar'),
   sel. =sel(age + fish,  params) # selectivty is fishery  based therefore + fish
   
   sel<<-sel.
-  ## create a FLBRP object to   calculate expected equilibrium values and ref pts
+  ## create a FLRP object to   calculate expected equilibrium values and ref pts
   dms=dimnames(m.)
 
   res=FLBRP(stock.wt       =swt,
@@ -114,13 +111,14 @@ setMethod("lhEql", signature(params='FLPar'),
             m.spwn         =FLQuant(m.spwn,    dimnames=dimnames(m.)),
             availability   =FLQuant(1,    dimnames=dimnames(m.)),
             range          =range)
+
   ## FApex
   #if (!("range" %in% names(args))) range(res,c("minfbar","maxfbar"))[]<-as.numeric(dimnames(landings.sel(res)[landings.sel(res)==max(landings.sel(res))][1])$age)
 
   ## replace any slot passed in as an arg
   for (slt in names(args)[names(args) %in% names(getSlots("FLBRP"))[names(getSlots("FLBRP"))!="fbar"]])
     slot(res, slt)<-args[[slt]]
-
+  
   params(res)=propagate(params(res),dims(res)$iter)
 
   ## Stock recruitment relationship
@@ -136,7 +134,6 @@ setMethod("lhEql", signature(params='FLPar'),
     par.[dimnames(params)$params]=params
     par.["c"]=1
     params=par.}
-
   if (dims(params)$iter>1) {
     warning("Scarab, iters dont work for SRR:sv/ab etc")
     warning("Should be no need to specify mode of FLPar element")
@@ -153,9 +150,9 @@ setMethod("lhEql", signature(params='FLPar'),
       params(res)[,i][]=unlist(c(FLCore::ab(params[c("s","v"),i],sr,spr0=FLCore::iter(spr0(res),i))[c("a","b")]))
 
     warning("iter(params(res),i)=ab(params[c(s,v),i],sr,spr0=iter(spr0(res),i))[c(a,b)] assignment doesnt work")
-    warning("iter(FLBRP,i) doesn't work")
+    warning("iter(FLRP,i) doesn't work")
   }else{
-
+    
     if (sr=="shepherd"){
       params(res)=FLCore::ab(params[c("s","v","c")],sr,spr0=spr0(res))[c("a","b","c")]
       }else{
@@ -163,9 +160,9 @@ setMethod("lhEql", signature(params='FLPar'),
       }
     }
 
-refpts(res)=propagate(refpts(res)[c("virgin","msy","crash","f0.1","fmax")],dims(params)$iter)
+  refpts(res)=propagate(refpts(res)[c("virgin","msy","crash","f0.1","fmax")],dims(params)$iter)
   res=brp(res)
-
+  
   if ("fbar" %in% names(args))
     fbar(res)<-args[["fbar"]] else
       if (any((!is.nan(refpts(res)["crash","harvest"]))))
@@ -173,7 +170,7 @@ refpts(res)=propagate(refpts(res)[c("virgin","msy","crash","f0.1","fmax")],dims(
 
   names(dimnames(fbar(res)))[1]="age"
   res=brp(res)
-
+  
   if (!("units" %in% names(attributes(params))))  return(res)
   if (all(is.na(attributes(params)$units)))  return(res)
 

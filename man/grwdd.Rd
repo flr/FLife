@@ -51,7 +51,7 @@ Combining the two functions gives
 }
 \examples{
 \dontrun{
-library(FLBRP)
+library(FLRP)
 library(FLife)
 
 data(teleost)

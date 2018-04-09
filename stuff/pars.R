@@ -1,6 +1,6 @@
 library(ggplot2)
 library(FLCore)
-library(FLBRP)
+library(FLRP)
 library(ggplotFL)
 
 source('~/Desktop/flr/git/FLife/R/lh-growth.R')
@@ -79,7 +79,7 @@ yft=lhSim(pars[["Yellowfin"]])
 yft=lh(yft,growth=gascuel,fnM=lorenzen)
 
 eql=FLBRPs(Bigeye   =bet,
-           Skipjack =skj,
-           Yellowfin=yft)
+          Skipjack =skj,
+          Yellowfin=yft)
 
 save(eql,file="/home/laurie/Desktop/flr/git/FLife/data/eql.RData",compress="xz")
