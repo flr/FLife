@@ -18,7 +18,8 @@
 #' the average recruitment. 
 #'
 #' @param object \code{FLStock} 
-#' 
+#' @param ... other arguments
+#' @aliases refs refs-method refs,FLStock-method
 #' @return \code{data.frame} 
 #' 
 #' @export

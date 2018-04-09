@@ -9,6 +9,8 @@
 \alias{richards,FLQuant,numeric-method}
 \alias{richards,missing,FLPar-method}
 \alias{richards,numeric,numeric-method}
+\alias{#'}
+\alias{numeric,FLPar-method}
 \title{Richards growth curve}
 \usage{
 \S4method{richards}{FLQuant,FLPar}(age, params, ...)

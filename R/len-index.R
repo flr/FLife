@@ -1,25 +1,20 @@
-# fn: no visible global function definition for ‘rmvnorm’
-# fn: no visible binding for global variable ‘bin’
-# fn: no visible binding for global variable ‘V1’
-# ldex: no visible binding for global variable ‘bin’
-# ldex: no visible binding for global variable ‘p’
-# mseEMP: no visible binding for global variable ‘mp’
-# mseSBT1: no visible binding for global variable ‘mp’
-# power : <anonymous>: no visible global function definition for
-# ‘powertrend’
-# power : <anonymous>: no visible binding for global variable ‘R’
-# power : <anonymous>: no visible binding for global variable ‘yrs’
-# power: no visible binding for global variable ‘pse’
-# power: no visible binding for global variable ‘increase’
-# power : <anonymous>: no visible global function definition for
-# ‘interpp’
-# refs,FLStock : <anonymous>: no visible binding for global variable
-# ‘regime’
-# refs,FLStock: no visible binding for global variable ‘b.msy’
-# refs,FLStock: no visible binding for global variable ‘b.current’
-# spectra,FLStock: no visible global function definition for ‘spectraFLQ’
-# Undefined global functions or variables:
- 
+utils::globalVariables(c("rmvnorm"))
+utils::globalVariables(c("bin"))
+utils::globalVariables(c("V1"))
+utils::globalVariables(c("bin"))
+utils::globalVariables(c("p"))
+utils::globalVariables(c("mp"))
+utils::globalVariables(c("mp"))
+utils::globalVariables(c("powertrend"))
+utils::globalVariables(c("R"))
+utils::globalVariables(c("yrs"))
+utils::globalVariables(c("pse"))
+utils::globalVariables(c("increase"))
+utils::globalVariables(c("interpp"))
+utils::globalVariables(c("regime"))
+utils::globalVariables(c("b.msy"))
+utils::globalVariables(c("b.current"))
+utils::globalVariables(c("spectraFLQ"))
 
 fn=function(year,object,sigma,nsample=100) {
   n  =as.data.frame(stock.n(object)[,year]^(1/3),drop=TRUE)
@@ -35,6 +30,8 @@ fn=function(year,object,sigma,nsample=100) {
   idx =ddply(idx,.(bin),with,sum(data))
   idx =transform(idx,p=V1/sum(V1))
   idx}
+
+utils::globalVariables(c("adply"))
 
 fn2<-function(object,cv=0.3,nsample=100){
   

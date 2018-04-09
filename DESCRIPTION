@@ -14,14 +14,13 @@ Description: Many studies have shown the relationships between life history
 LazyData: true
 License: GPL (>= 2)
 Depends:
-  	R(>= 3.1),
+    R(>= 3.1),
     FLCore (>= 2.6),
 Imports:
     FLBRP,
     methods,
     popbio,
-    plyr,
-    reshape
+    plyr
 Suggests:
     ggplotFL (>= 2.5),
     testthat,
@@ -79,4 +78,6 @@ Collate:
     getScriptPath.R
     pMeasure.R
     sim.R
+    knifeEdgeMsy.R
+    netSel.r
 RoxygenNote: 6.0.1

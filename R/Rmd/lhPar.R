@@ -21,7 +21,7 @@
 #' 
 #' @export
 #' 
-#' @seealso \code{\link{r}}, \code{\link{loptAge}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}}
+#' @seealso \code{\link{loptAge}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}}
 #' 
 #' @import methods
 #' @docType methods

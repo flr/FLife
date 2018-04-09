@@ -1,3 +1,5 @@
+utils::globalVariables(c("adply"))
+
 setGeneric('spectra', function(object,...)  standardGeneric('spectra'))
 
 #Spectral analysis function

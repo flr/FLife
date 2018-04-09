@@ -1,5 +1,5 @@
 
-rodFn=function(data,year=NULL,plot=FALSE){
+rodFn<-function(data,year=NULL,plot=FALSE){
   
   if (is.null(year)) year=seq(length(data))
   

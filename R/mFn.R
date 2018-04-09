@@ -15,7 +15,7 @@
 #'          jensen jensen-method jensen,FLPar-method
 #'          jensen2 jensen2-method jensen2,FLPar-method
 #'          charnov charnov-method charnov,FLQuant,FLPar-method
-#'          petersen petersen-method petersen,FLPar-method
+#'          petersen petersen-method petersen,FLPar-method petersen,FLQuant,FLPar-method
 #'          
 #' @return returns an object of \code{FLQuant}
 #' 
@@ -55,7 +55,7 @@
 #' 
 #' Varing by length, weight or age
 #' 
-#' @seealso \code{\link{gislason}},  \code{\link{lorenzen}}, \code{\link{chen}}
+#' @seealso \code{\link{gislason}},  \code{\link{lorenzen}}
 #' 
 #' @examples
 #' \dontrun{

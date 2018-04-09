@@ -18,6 +18,8 @@
 
 \item{k}{rate of change in density dependence}
 
+\item{fn}{function with growth model, with args age params}
+
 \item{...}{other arguments, such as scale, e.g. stock numbers now relative to a reference level, e.g. at virgin biomass and k steepness of relationship}
 }
 \description{

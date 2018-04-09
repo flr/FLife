@@ -8,7 +8,7 @@
 #' @param numbers \code{boolean} numbers or biomass, numbers bt default
 #' @param ... any other arguments
 #' 
-#' @aliases leslie-method leslie,FLBRP-method
+#' @aliases leslie leslie-method leslie,FLBRP-method
 #' 
 #' @return \code{matrix}  
 #' 
@@ -16,7 +16,7 @@
 #' @docType methods
 #' @rdname leslie
 #' 
-#' @seealso \code{\link{r}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}}
+#' @seealso \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}}
 #'  
 #' 
 #' @examples

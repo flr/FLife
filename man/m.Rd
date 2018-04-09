@@ -29,6 +29,7 @@
 \alias{petersen}
 \alias{petersen-method}
 \alias{petersen,FLPar-method}
+\alias{petersen,FLQuant,FLPar-method}
 \title{Natural mortality}
 \usage{
 roff(params, ...)
@@ -91,5 +92,5 @@ jensen2(params)
 }
 }
 \seealso{
-\code{\link{gislason}},  \code{\link{lorenzen}}, \code{\link{chen}}
+\code{\link{gislason}},  \code{\link{lorenzen}}
 }

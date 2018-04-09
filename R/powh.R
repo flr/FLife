@@ -80,7 +80,8 @@
 #'  \emph{ICLARM Conf. Proc}, pages 53--74, 1987.
 #'   
 #' @aliases powh-method powh,numeric,numeric-method
-#'  
+#' @importFrom plyr ddply .
+#' 
 #' @export
 #' @docType methods
 #' @rdname powh

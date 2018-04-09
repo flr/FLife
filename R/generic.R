@@ -5,7 +5,7 @@ utils::globalVariables(c("rbind.fill","data","FLBRP2biodyn","quantity","optimise
   "dmns","rho","stk","aaply","maply","alply","laply","error",
   "%^%","%*%","%-%","%+%","pow",
   "FLPar",
-  "lh","fbar<-","FLBRP","brp","refpts","refpts<-","as",
+  "fbar<-","FLBRP","brp","refpts","refpts<-","as",
   "computeRefpts","computeRefpts","catch.obs",
   "fwdWindow","aaply","invGascuelFn","laply","lambda",
   "asym","ddply",".","year","a","b","grad","ddply",".","x",'aaply',"invgompertzFn",

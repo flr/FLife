@@ -8,8 +8,8 @@
 \title{Lopt}
 \usage{
 \S4method{lopt}{FLPar}(params, m = function(length, params) exp(0.55) *
-  (length^-1.61) \%*\% (params["linf"]^1.44) \%*\% params["k"],
-  growth = FLife:::vonB, ...)
+  (length^-1.61) \%*\% (params["linf"]^1.44) \%*\% params["k"], growth = vonB,
+  ...)
 }
 \arguments{
 \item{params}{an \code{FLPar} object with parameter values for the natural mortality and growth 

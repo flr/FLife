@@ -153,9 +153,9 @@ tmp=d_ply(scen,.(juve,dome,steep,m,species), with, {
   p["sr",]=ifelse(dome,5,5000)
   
   if (m=="Gislason"){
-    eql=lh(p)
+    eql=lhEql(p)
   }else{
-    eql=lh(p,m=function(params,length){
+    eql=lhEql(p,m=function(params,length){
       length[]=params["l50"]
       0.55*(length^-1.66)%*%(params["linf"]^1.44)%*%params["k"]})}
   

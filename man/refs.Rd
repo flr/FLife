@@ -2,12 +2,16 @@
 % Please edit documentation in R/refs.R
 \name{refs}
 \alias{refs}
+\alias{refs-method}
+\alias{refs,FLStock-method}
 \title{refs}
 \usage{
 refs(object, ...)
 }
 \arguments{
 \item{object}{\code{FLStock}}
+
+\item{...}{other arguments}
 }
 \value{
 \code{data.frame}

@@ -8,10 +8,7 @@ vignette: >
   \usepackage[utf8]{inputenc}
 github_document:
     mathjax: TRUE
-<<<<<<< HEAD
-=======
 bibliography: refs.bib
->>>>>>> 5bec50df30996c58713296de425f75402570216f
 tags: FLife FLR
 license: Creative Commons Attribution-ShareAlike 4.0 International Public License
 ---
@@ -163,6 +160,7 @@ where $L_t$ is length at time t, $L_\infty$ the asymptotic maximum length, $k$ t
 As $L_\infty$ increases $k$ declines. in other words at a given length a large species will grow faster than a small species. for example @gislason2008coexistence proposed the relationship 
 
 $$k=3.15L_{\infty}^{-0.64}$$
+
 
 There also appears to be empirical relationship between $t_0$ and $L_{\infty}$ and $k$   i.e.
 
@@ -378,6 +376,7 @@ rnoise
 ```{r, echo=TRUE}
 library(FLBRP)
 data(ple4)
+rodFn=FLife:::rodFn
 refs(ple4)
 ```
 

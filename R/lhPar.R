@@ -1,3 +1,8 @@
+utils::globalVariables(c("dlply"))
+utils::globalVariables(c("mlply"))
+utils::globalVariables(c("cast"))
+
+
 #' @title Generates life history parameters
 #' 
 #' @description 
@@ -21,7 +26,7 @@
 #' 
 #' @export
 #' 
-#' @seealso \code{\link{r}}, \code{\link{loptAge}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}}
+#' @seealso \code{\link{loptAge}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}}
 #' 
 #' @import methods
 #' @docType methods

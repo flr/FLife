@@ -9,6 +9,7 @@
 \alias{vonB,FLQuant,numeric-method}
 \alias{vonB,missing,FLPar-method}
 \alias{vonB,numeric,numeric-method}
+\alias{vonB,numeric,FLPar-method}
 \title{von Bertalanffy growth curve}
 \usage{
 \S4method{vonB}{FLQuant,FLPar}(age, params, ...)

@@ -10,13 +10,15 @@
 \S4method{mdd}{FLQuant,FLPar}(object, params, scale, k = 1, m = gislason)
 }
 \arguments{
+\item{object}{mass at which M is to be predicted}
+
 \item{params}{an \code{FLPar} with two values; i.e. a equal to M at unit mass and b a power term; defaults are a=0.3 and b=-0.288}
 
 \item{scale}{reference}
 
 \item{k}{rate of change in density dependence}
 
-\item{wt}{mass at which M is to be predicted}
+\item{m}{function with mortality model, by default gisalson}
 
 \item{...}{other arguments, such as scale, e.g. stock numbers now relative to a reference level, e.g. at virgin biomass and k steepness of relationship}
 }

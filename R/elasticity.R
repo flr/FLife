@@ -127,7 +127,7 @@ doIt=function(what,par,dynamic=FALSE,fbar=FLQuant(c(seq(0,.75,length.out=21),seq
     par["M2"] =-par["M2"]
     units(par)=unt  
     
-    res=lh(par)
+    res=lhEql(par)
     
     fbar(res)=fbar
     res      =brp(res)
@@ -175,7 +175,7 @@ cvIt=function(what,par,dynamic=FALSE,fbar=FLQuant(c(seq(0,.75,length.out=21),seq
   func=function(x,par,fbar,dynamic=TRUE,what) {
     
     par[] =x
-    res=lh(par)
+    res=lhEql(par)
     
     fbar(res)=fbar
     res      =brp(res)
