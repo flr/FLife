@@ -76,4 +76,7 @@ Collate:
     mp.R
     mse.R
     extendPlusGroup.R
+    getScriptPath.R
+    pMeasure.R
+    sim.R
 RoxygenNote: 6.0.1

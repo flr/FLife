@@ -1,15 +1,17 @@
----
+  ---
 title: "Life History Relationships"
 date: "28 septiembre, 2017"
 output: pdf_document
 vignette: >
-  %\VignetteIndexEntry{diags}
+  %\VignetteIndexEntry{FLife}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
-bibliography: refs.bib
 github_document:
     mathjax: TRUE
-bibliography: ref.bib
+<<<<<<< HEAD
+=======
+bibliography: refs.bib
+>>>>>>> 5bec50df30996c58713296de425f75402570216f
 tags: FLife FLR
 license: Creative Commons Attribution-ShareAlike 4.0 International Public License
 ---
@@ -533,13 +535,12 @@ ggplot(ctc)+
 * R version 3.4.1 (2017-06-30)
 * FLCore: 2.6.5
 * FLPKG: 
-* **Compiled**: Thu Sep 28 15:14:14 2017
-* **Git Hash**: 3b299a8
+* **Compiled**: Thu Sep 28 17:56:40 2017
+* **Git Hash**: 0bee1ca
 
 ## Author information
 
-**Laurence KELL**. laurie.kell.es
-
+**Laurence KELL**. laurie@seaplusplus.co.uk
 
 ## Acknowledgements
 
