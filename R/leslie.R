@@ -33,9 +33,9 @@ setMethod("leslie", signature(object="FLBRP"),
 
   ages=dims(object)$min:dims(object)$max
   
-  mx=array(0, dim     =c(length(ages),length(ages),dims(stock(object))$iter),
+  mx=array(0, dim     =c(length(ages),length(ages),dims(ssb(object))$iter),
               dimnames=list(age =ages,age=ages,
-                            iter=seq(dims(stock(object))$iter)))
+                            iter=seq(dims(ssb(object))$iter)))
   #survivorship
   z=exp(-(object@m))
   for (i in seq(dims(object)$iter)){
@@ -84,7 +84,7 @@ setMethod("leslie", signature(object="FLBRP"),
 #' @return \code{FLPar} with growth rate a small population size
 #' 
 #' @export
-#' @importFrom popbio lambda
+#' 
 #' @docType methods
 #' @rdname lambda
 #' 

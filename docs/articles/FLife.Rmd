@@ -551,7 +551,7 @@ ggplot()+
   facet_wrap(~iter)+theme_bw()  
 ```
 
-```{r fig11, fig.height=6,fig.width=10,eval=FALSE}
+```{r fig11, fig.height=6,fig.width=10}
 k   =1
 sr  ="cushing"
 s   =0.7
