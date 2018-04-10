@@ -95,15 +95,18 @@ setMethod("refs", signature(object="FLStock"),
   
   names(res)[rev(length(names(res))-0:3)]=paste(names(res)[rev(length(names(res))-0:3)],"_",sep="")
   res=transform(res,iter=as.numeric(iter))
+  names(res)[names(res)=="quant"]="quantity"
   
   if (dims(refpts(eql))$iter>1){
     catch(object)=propagate(catch(object),dims(refpts(eql))$iter)
     dimnames(catch(object))$iter=dimnames(rec(object))$iter
   }
   
-  current=as.data.frame(mcf(FLQuants(object,"harvest"=fbar,"yield"=catch,
-                                     "rec"    =rec, "ssb"=ssb,
-                                     "biomass"=computeStock)),drop=TRUE)[,-1]
+  current=as.data.frame(mcf(FLQuants(object,"harvest"=FLCore:::fbar,
+                                            "yield"  =catch,
+                                            "rec"    =rec, 
+                                            "ssb"    =ssb,
+                                            "biomass"=computeStock)),drop=TRUE)[,-1]
   
   current=subset(current,year==max(year)&!is.na(data))[,-1]
   names(current)[names(current)=="data"]="current"
@@ -120,7 +123,7 @@ setMethod("refs", signature(object="FLStock"),
   r =log(aaply(leslie(eql, f=c(refpts(eql)["crash","harvest"])),3,
                function(x) lambda(x[drop=T])))
   names(r)=dimnames(refpts(eql))$iter
-  
+
   rc=log(aaply(leslie(eql, f=c(refpts(eql)["msy","harvest"])),3,
                function(x)   lambda(x[drop=T])))
   names(rc)=dimnames(refpts(eql))$iter
@@ -143,6 +146,7 @@ setMethod("refs", signature(object="FLStock"),
                               "b.year", "s.year", "r.year", "y.year","f.year",
                               "f.virgin","f.spr.100","f.spr.100_","y.virgin","y.spr.100"))]
   
-  mf2FLPar(res)})
+  
+  FLife:::mf2FLPar(res)})
 
 

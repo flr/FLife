@@ -14,8 +14,7 @@
 #' 
 #' @return object of class \code{FLPar} with reference points, i.e r, rc, sk, lopt,
 #' 
-#' @importFrom FLRP refpts
-#' @importFrom FLRP refpts
+#' @import FLRP
 #' 
 #' @export
 #' @docType methods
@@ -43,10 +42,6 @@ lhRef<-function(params,
   if ("r"%in%what){
     fcrash=FLQuant(refpts(eql)["crash","harvest",drop=T],
                    dimnames=list(iter=seq( dims(eql)$iter)))
-    
-
-    fcrash<<-fcrash
-    eql   <<-eql
     
     fcrash[is.na(fcrash)]=4
     rate =maply(dimnames(params)$iter, function(iter) 

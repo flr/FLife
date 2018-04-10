@@ -16,7 +16,7 @@ license: Creative Commons Attribution-ShareAlike 4.0 International Public Licens
 ```{r knitr_init, echo=FALSE, results="hide"}
 library(knitr)
 ## Global options
-opts_chunk$set(cache     =TRUE,
+opts_chunk$set(cache     =!TRUE,
                echo      =!TRUE,
                eval      =TRUE,
                prompt    =FALSE,
@@ -33,8 +33,10 @@ iFig=0
 
 ```{r, pkgs, echo=FALSE, message=FALSE}
 library(ggplot2)
+library(FLRP)
 library(FLife)
 library(plyr)
+library(popbio)
 
 theme_set(theme_bw())
 options(digits=3)
@@ -106,7 +108,7 @@ Plotting is done using **ggplot2** which provides a powerful alternative paradig
 
 The **ggplot** methods expects a `data.frame` for its first argument, `data` (this has been overloaded by **ggplotFL** to also accept FLR objects); then a geometric object `geom` that specifies the actual marks put on to a plot and an aesthetic that is "something you can see" have to be provided. Examples of geometic Objects (geom) include points (geom_point, for scatter plots, dot plots, etc), lines (geom_line, for time series, trend lines, etc) and boxplot (geom_boxplot, for, well, boxplots!). Aesthetic mappings are set with the aes() function and, examples include, position (i.e., on the x and y axes), color ("outside" color), fill ("inside" color), shape (of points), linetype and size. 
 
-```{r, echo=TRUE, fig.cap="Von Bertalanffy growth curves."}
+```{r, length, echo=TRUE, fig.cap="Von Bertalanffy growth curves."}
 age=FLQuant(1:20,dimnames=list(age=1:20))
 len=vonB(age,teleost)
 
@@ -122,7 +124,7 @@ ggplot(as.data.frame(len))+
 
 ## Life History Parameters
 
-```{r, fig.height=8,fig.cap="Relationship between life history parameters in the teleost dataset."}
+```{r, pair-plot, fig.height=8,fig.cap="Relationship between life history parameters in the teleost dataset."}
 library(GGally)
 
 habitat=ifelse(attributes(teleost)$habitat=="demersal","Demersal","Other")
@@ -206,7 +208,7 @@ ggplot(as.data.frame(FLQuants(Gompertz=lenG,Richards=lenR,"Von Bertalanffy"=lenV
 ### Ogives
 dnormal, knife, logistic, sigmoid
 
-```{r, echo=TRUE,eval=FALSE}
+```{r, ogives, echo=TRUE}
 dnormal( age,FLPar(a1=4,sl=2,sr=5000))
 knife(   age,FLPar(a1=4))
 logistic(age,FLPar(a50=4,ato95=1,asym=1.0))
@@ -283,12 +285,12 @@ $$M_W=3W^{-0.288}$$
 
 ages, len2wt, wt2len
 
-```{r ages,eval=FALSE}
+```{r ages}
 data(ple4)
 ages(m(ple4))
 ```
 
-```{r wt2len,eval=FALSE}
+```{r wt2len}
 wt2len(stock.wt(ple4),FLPar(a=0.0001,b=3))
 ```
 
@@ -372,9 +374,12 @@ rod
 rnoise
 
 
-### Refetrence points
-```{r, echo=TRUE, eval=FALSE}
-library(FLRP)
+### Reference points
+```{r, refs, echo=TRUE}
+source('~/Desktop/flr/FLRP/R/spr.R')
+source('~/Desktop/flr/FLife/R/lhEql.R')
+source('~/Desktop/flr/FLife/R/leslie.R')
+
 data(ple4)
 rodFn=FLife:::rodFn
 refs(ple4)
@@ -384,7 +389,7 @@ refs(ple4)
 
 ## Simulation of equilibrium values and reference points
 
-```{r, echo=TRUE, fig.cap="Age-vectors of growthm natural mortality, maturity and selection pattern",eval=FALSE}
+```{r, eql, echo=TRUE, fig.cap="Age-vectors of growthm natural mortality, maturity and selection pattern"}
 library(FLRP)
 eql=lhEql(par)
 
@@ -394,17 +399,17 @@ ggplot(FLQuants(eql,"m","catch.sel","mat","catch.wt"))+
   scale_x_continuous(limits=c(0,15))
 ```
 
-```{r, fig.cap="Equilibrium curves and reference points.",eval=FALSE}
+```{r, plot, fig.cap="Equilibrium curves and reference points."}
 plot(eql)
 ```
 
-```{r,eval=FALSE}
+```{r}
 lhRef(par)
 ```
 
 Creation of FLBRP objects
 
-```{r fig2,eval=FALSE}
+```{r fig2}
 data(teleost)
 #teleost=with(teleost,l50linf=l50/linf)
 teleost=rbind(teleost,l50linf=teleost["l50"]/teleost["linf"])
@@ -417,19 +422,19 @@ alb=lhPar(rbind(alb,FLPar(m1=0.15,m2=-0.288,s=0.75)))
 ```
 
 ## Stock recruitment relationships
-```{r fig3,fig.cap="Stock recruitment relationships for a steepness of 0.75 and vigin biomass of 1000",eval=FALSE}
+```{r fig3,fig.cap="Stock recruitment relationships for a steepness of 0.75 and vigin biomass of 1000"}
 library(reshape)
 
-srr=FLBRPs("Beverton and Holt"     =lhEql(alb,sr="bevholt"),
-           "Ricker"                =lhEql(alb,sr="ricker"),
-           "Cushing"               =lhEql(alb,sr="cushing"),
-           "Shepherd"              =lhEql(rbind(alb,FLPar(c=1.5)),sr="shepherd"),
-           "Segmented \nRegression"=lhEql(alb,sr="segreg"))
+srr=as(list("Beverton and Holt"     =lhEql(alb,sr="bevholt"),
+            "Ricker"                =lhEql(alb,sr="ricker"),
+            "Cushing"               =lhEql(alb,sr="cushing"),
+            "Shepherd"              =lhEql(rbind(alb,FLPar(c=1.5)),sr="shepherd"),
+            "Segmented \nRegression"=lhEql(alb,sr="segreg")),"FLBRPs")
 
 srr=
   ldply(srr,function(x) {
   refpts(x)=refpts(x)["msy"]
-  fbar(x)=seq(0,1,length.out=501)
+  fbar(x)=FLQuant(seq(0,1,length.out=501))
   res=brp(x)
   subset(model.frame(FLQuants(res,"ssb","rec","catch"),drop=TRUE),ssb>=0)})
 
@@ -443,7 +448,7 @@ ggplot(melt(srr[,-5],id=c("year","ssb",".id")))+
 i=0
 ```
 
-```{r fig4,fig.cap="Production curves, Yield v SSB, for a steepness of 0.75 and vigin biomass of 1000.",eval=FALSE}
+```{r fig4,fig.cap="Production curves, Yield v SSB, for a steepness of 0.75 and vigin biomass of 1000."}
 ggplot(melt(srr[,-4],id=c("year","ssb",".id")))+
   geom_path(aes(ssb,value,col=.id))+
   theme_bw()+theme(legend.position="bottom")+
@@ -453,7 +458,7 @@ ggplot(melt(srr[,-4],id=c("year","ssb",".id")))+
 ```
 
 
-```{r fig5,eval=!TRUE,fig.height=3,fig.width=6,eval=FALSE}
+```{r fig5,eval=!TRUE,fig.height=3,fig.width=6}
 par=lhPar(teleost[c("linf","k","t0","l50","a","b")])
 
 mGislason=function(length,params) 
@@ -477,13 +482,17 @@ gg=gg+geom_point(aes(xvar,yvar),data=gg$data[130,],size=3)
 gg+theme(legend.position="none")
 ```
 
-```{r,eval=FALSE}
+```{r}
+source('~/Desktop/flr/FLRP/R/plots.R')
+
 #alb["t0"]=-alb["t0"]
 ## Beverton and Holt recruitment
 bh      =lhEql(alb,m=lorenzen)
 refpts(bh)=refpts(bh)["msy",]
-p=plot(bh)+theme_bw()+theme(legend.position="bottom")+
-  scale_colour_manual("",values="red",label="MSY")
+p=plot(bh)+
+   theme_bw()+
+   theme(legend.position="bottom")+
+   scale_colour_manual("",values="red",label="MSY")
 ```
 
 
@@ -492,7 +501,7 @@ p=plot(bh)+theme_bw()+theme(legend.position="bottom")+
 Modelling density dependence in natural mortality and fecundity.
 
 
-```{r, echo=TRUE, m-density-dependence,fig.cap="Density Dependence in M",eval=FALSE}
+```{r, echo=TRUE, m-density-dependence,fig.cap="Density Dependence in M"}
 library(FLRP)
 library(FLife)
 
@@ -512,7 +521,7 @@ ggplot(as.data.frame(m))+
     scale_x_continuous(limits=c(0,15))
 ```
 
-```{r, echo=TRUE, Maturity-density-dependence,fig.cap="Density Dependence in M",eval=FALSE}
+```{r, echo=TRUE, Maturity-density-dependence,fig.cap="Density Dependence in M"}
 scale=stock.n(hutchen)[,25]%*%stock.wt(hutchen)
 scale=(stock.n(hutchen)%*%stock.wt(hutchen)%-%scale)%/%scale
 
@@ -534,7 +543,7 @@ ggplot(as.data.frame(mat))+
 ## Noise
 
 Methods to simulate random noise with autocorrelation, e.g. by age or cohort 
-```{r fig9,eval=FALSE}
+```{r fig9}
 data(ple4)
 res=rnoise(4,m(ple4)[1:8,ac(1980:2008)],burn=10,b=0.9,what="age")
 ggplot()+
@@ -546,7 +555,7 @@ ggplot()+
   facet_wrap(~iter)+theme_bw()
 ```
 
-```{r fig10,eval=FALSE}
+```{r fig10}
 res=rnoise(4,m(ple4)[1:8,ac(1980:2008)],burn=10,b=0.9,what="cohort")
 ggplot()+
   geom_point(aes(year,age,size= data),
@@ -559,7 +568,7 @@ ggplot()+
   facet_wrap(~iter)+theme_bw()  
 ```
 
-```{r fig11, fig.height=6,fig.width=10,eval=FALSE}
+```{r fig11, fig.height=6,fig.width=10, eval=FALSE}
 k   =1
 sr  ="cushing"
 s   =0.7
@@ -639,7 +648,7 @@ ggplot(dat)+
 ```
 
 
-```{r fig12,fig.width=6,fig.height=6,eval=FALSE,fig.cap="Year effects",eval=FALSE}
+```{r fig12,fig.width=6,fig.height=6,fig.cap="Year effects", eval=FALSE}
 dat=rbind(cbind("Selection"="Juvenile",fishJuv),
           cbind("Selection"="Mature",  fishMat))
 dat=transform(dat,F=factor(paste("F times",c(0,1,3))[iter]))
@@ -657,7 +666,7 @@ ggplot(dat,aes(freq,val,col=qname))+
 ```
 
 
-```{r fig13, fig.width=10,fig.height=4,eval=FALSE,fig.cap="Cohort Effects",eval=FALSE}
+```{r fig13, fig.width=10,fig.height=4,fig.cap="Cohort Effects", eval=FALSE}
 library(FLAssess)
 
 stk   =iter(stkm[,101:250],1)
@@ -677,7 +686,7 @@ ggplot(subset(p$data,year>50))+
 ```
 
 ## MSE using empirical HCR
-```{r fig14, fig.width=6,fig.height=8,fig.cap="MSE using empirical HCR",eval=FALSE}
+```{r fig14, fig.width=6,fig.height=8,fig.cap="MSE using empirical HCR", eval=FALSE}
 library(FLife)
 library(FLash)
 library(FLRP)
@@ -725,7 +734,7 @@ Therefore plotting $\overline{L}-L^\prime$ against $L^\prime$ therefore provides
 
 Plotting $\overline{L}-L^\prime$ against $L^\prime$ provides an estimate of $L_{\infty}$ and Z/k, since $L_{\infty}=-a/b$ and $Z/k=\frac{-1-b}{b}$. If k is known then it also provides an estimate of Z (\textbf{Figure} \ref{fig:15}).
 
-```{r,eval=FALSE}
+```{r}
 data(ple4)
 ctc=as.data.frame(catch.n(ple4))
 dat=cc(age=ctc$age,n=ctc$data)
@@ -733,9 +742,8 @@ head(dat)
 ```
 
 
-```{r,eval=FALSE}
+```{r}
 library(plyr)
-library(dplyr)
 
 data(cas)
 pw=ddply(subset(cas), .(year), 
@@ -756,7 +764,7 @@ ggplot(pw)+
 ```
 
 ### Catch curve analysis
-```{r, echo=TRUE,eval=FALSE}
+```{r, echo=TRUE}
 data(ple4)
 ctc=as.data.frame(catch.n(ple4))
 ctc=ddply(ctc,.(year), with, cc(age=age,n=data))

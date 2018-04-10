@@ -19,7 +19,6 @@ Depends:
 Imports:
     FLRP,
     methods,
-    popbio,
     plyr
 Suggests:
     ggplot2,
@@ -28,7 +27,8 @@ Suggests:
     testthat,
     knitr,
     GGally, 
-    reshape
+    reshape,
+    popbio
 Additional_repositories: http://flr-project.org/R
 VignetteBuilder: knitr
 Collate:
@@ -85,4 +85,7 @@ Collate:
     knifeEdgeMsy.R
     netSel.R
     fbar.R
+    funcs-MSE.R
+    funcs-indicators.R
+    plot-bivariate.R
 RoxygenNote: 6.0.1

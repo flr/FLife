@@ -26,8 +26,6 @@ hcrSBT1<-function(cpue,tac,k1=2.0,k2=3.0,gamma=1,nyrs=5,lag=1,interval=3){
   flag  =lambda<0
   lambda=abs(lambda)
   
-  flag<<-flag
-  
   #res=1+ifelse(flag,-k1,k2)*lambda^ifelse(flag,gamma,1)
   res=1+ifelse(flag,-k1,k2)*exp(log(lambda)*ifelse(flag,gamma,1))
   

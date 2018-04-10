@@ -431,7 +431,6 @@ head(dat)
 
 ## ------------------------------------------------------------------------
 library(plyr)
-library(dplyr)
 
 data(cas)
 pw=ddply(subset(cas), .(year), 

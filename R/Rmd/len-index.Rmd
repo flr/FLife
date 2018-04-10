@@ -33,7 +33,6 @@ opts_chunk$set(echo    =!TRUE,
 library(ggplot2)
 library(ggplotFL)
 library(plyr)
-library(dplyr)
 library(FLBRP)
 library(FLife)
 library(mvtnorm)

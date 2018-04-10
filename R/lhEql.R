@@ -28,7 +28,7 @@
 #' @rdname lhEql
 #'
 #' @seealso  \code{\link{vonB}} \code{\link{lorenzen}} \code{\link{sigmoid}}
-#'
+#' 
 #' @examples
 #' \dontrun{
 #' data(teleost)
@@ -50,7 +50,7 @@ setMethod("lhEql", signature(params='FLPar'),
             midyear    =0.5,
             ...){
   # Check that spwn and fish are [0, 1]
-  if (spwn > 1 | spwn < 0 | fish > 1 | fish < 0)
+  if (any(spwn > 1) | any(spwn < 0) | any(fish > 1) | any(fish < 0))
     stop("spwn and fish must be in the range 0 to 1\n")
 
   args<-list(...)
@@ -64,6 +64,7 @@ setMethod("lhEql", signature(params='FLPar'),
     harvest.spwn =args[["harvest.spwn"]]
   else
     harvest.spwn=FLQuant(spwn, dimnames=list(age=range["min"]:range["max"]))
+  
   age=FLQuant(range["min"]:range["max"],
               dimnames=list(age =range["min"]:range["max"],
                             iter=dimnames(params)$iter))
@@ -94,7 +95,6 @@ setMethod("lhEql", signature(params='FLPar'),
 
   sel. =sel(age + fish,  params) # selectivty is fishery  based therefore + fish
   
-  sel<<-sel.
   ## create a FLRP object to   calculate expected equilibrium values and ref pts
   dms=dimnames(m.)
 
@@ -134,21 +134,24 @@ setMethod("lhEql", signature(params='FLPar'),
     par.[dimnames(params)$params]=params
     par.["c"]=1
     params=par.}
+  
   if (dims(params)$iter>1) {
+
     warning("Scarab, iters dont work for SRR:sv/ab etc")
     warning("Should be no need to specify mode of FLPar element")
-
+  
     if (sr=="shepherd")
       params(res)=FLPar(c(a=as.numeric(NA),b=as.numeric(NA),c=as.numeric(NA)),iter=dims(params)$iter)
     else
       params(res)=FLPar(c(a=as.numeric(NA),b=as.numeric(NA)),iter=dims(params)$iter)
-
+   
     for (i in seq(dims(params)$iter))
       if (sr=="shepherd")
         params(res)[,i][]=unlist(c(FLCore::ab(params[c("s","v","c"),i],sr,spr0=FLCore::iter(spr0(res),i))[c("a","b","c")]))
-    else
-      params(res)[,i][]=unlist(c(FLCore::ab(params[c("s","v"),i],sr,spr0=FLCore::iter(spr0(res),i))[c("a","b")]))
-
+      else
+        params(res)[,i][]=unlist(c(FLCore::ab(params[c("s","v"),i],sr,spr0=FLCore::iter(spr0(res),i))[c("a","b")]))
+    print(1)    
+    
     warning("iter(params(res),i)=ab(params[c(s,v),i],sr,spr0=iter(spr0(res),i))[c(a,b)] assignment doesnt work")
     warning("iter(FLRP,i) doesn't work")
   }else{
