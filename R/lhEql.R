@@ -1,4 +1,5 @@
-  #' @title Derives an \code{FLRP} from life history parameters
+
+#' @title Derives an \code{FLRP} from life history parameters
 #' 
 #' @description 
 #' Takes an \code{FLPar} object with life history and selectivity parameters

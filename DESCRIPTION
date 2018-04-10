@@ -68,7 +68,6 @@ Collate:
     pid.R    
     util.R
     leslie.R
-    pidVaughan.R
     calcR.R
     refs.R
     len-index.R
@@ -84,7 +83,6 @@ Collate:
     sim.R
     knifeEdgeMsy.R
     netSel.R
-    fbar.R
     funcs-MSE.R
     funcs-indicators.R
     plot-bivariate.R

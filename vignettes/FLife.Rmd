@@ -97,7 +97,7 @@ is(teleost)
 ```
 
 
-The `teleost` object can be used to create `vectors` or other `objects with values by age using **FLife** methods, e.g. to construct a growth curve for hutchen (*Hucho hucho*)
+The `teleost` object can be used to create vectors or other objects with values by age using **FLife** methods, e.g. to construct a growth curve for hutchen (*Hucho hucho*)
 ```{r data-3,echo=TRUE}
 vonB(1:10,teleost[,"Hucho hucho"])
 ```
@@ -376,10 +376,6 @@ rnoise
 
 ### Reference points
 ```{r, refs, echo=TRUE}
-source('~/Desktop/flr/FLRP/R/spr.R')
-source('~/Desktop/flr/FLife/R/lhEql.R')
-source('~/Desktop/flr/FLife/R/leslie.R')
-
 data(ple4)
 rodFn=FLife:::rodFn
 refs(ple4)
@@ -483,8 +479,6 @@ gg+theme(legend.position="none")
 ```
 
 ```{r}
-source('~/Desktop/flr/FLRP/R/plots.R')
-
 #alb["t0"]=-alb["t0"]
 ## Beverton and Holt recruitment
 bh      =lhEql(alb,m=lorenzen)
