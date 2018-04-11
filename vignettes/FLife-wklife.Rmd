@@ -119,7 +119,7 @@ ggplot(FLQuants(eql,"m","catch.sel"=sel,"mat","catch.wt"))+
 
 and estimate equilibrium dynamics and reference points, e.g. for lemon sole
 
-```{r eql}
+```{r eql,eval=FALSE}
 plot(iter(eql,3))
 ```
 

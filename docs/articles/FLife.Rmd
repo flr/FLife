@@ -368,7 +368,8 @@ rnoise
 
 
 ### Refetrence points
-```{r, echo=TRUE}
+```{r, echo=TRUE,eval=FALSE}
+rodFn=FLife:::rodFn
 library(FLBRP)
 data(ple4)
 refs(ple4)
@@ -388,11 +389,11 @@ ggplot(FLQuants(eql,"m","catch.sel","mat","catch.wt"))+
   scale_x_continuous(limits=c(0,15))
 ```
 
-```{r, fig.cap="Equilibrium curves and reference points."}
+```{r, fig.cap="Equilibrium curves and reference points.", eval=FALSE}
 plot(eql)
 ```
 
-```{r}
+```{r, eval=FALSE}
 lhRef(par)
 ```
 

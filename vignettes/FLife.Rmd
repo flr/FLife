@@ -16,7 +16,7 @@ license: Creative Commons Attribution-ShareAlike 4.0 International Public Licens
 ```{r knitr_init, echo=FALSE, results="hide"}
 library(knitr)
 ## Global options
-opts_chunk$set(cache     =!TRUE,
+opts_chunk$set(cache     =TRUE,
                echo      =!TRUE,
                eval      =TRUE,
                prompt    =FALSE,
@@ -375,7 +375,7 @@ rnoise
 
 
 ### Reference points
-```{r, refs, echo=TRUE}
+```{r, refs, echo=TRUE, eval=FALSE}
 data(ple4)
 rodFn=FLife:::rodFn
 refs(ple4)
@@ -454,7 +454,7 @@ ggplot(melt(srr[,-4],id=c("year","ssb",".id")))+
 ```
 
 
-```{r fig5,eval=!TRUE,fig.height=3,fig.width=6}
+```{r fig5,fig.height=3,fig.width=6,eval=FALSE}
 par=lhPar(teleost[c("linf","k","t0","l50","a","b")])
 
 mGislason=function(length,params) 
@@ -562,7 +562,9 @@ ggplot()+
   facet_wrap(~iter)+theme_bw()  
 ```
 
-```{r fig11, fig.height=6,fig.width=10, eval=FALSE}
+```{r fig11, fig.height=6,fig.width=10}
+library(FLash)
+
 k   =1
 sr  ="cushing"
 s   =0.7
@@ -578,7 +580,9 @@ f[,,,,,3]=f[,,,,,1]*4
 stkr=as(eq,"FLStock")
 stkr=fwd(stkr,f=f,sr=eq)
 ref =stock.n(eq)[,1]
+```
 
+```{r fig11b, fig.height=6,fig.width=10}
 scale=rnoise(1,stock.wt(stkr),sd=0.3,b=0.9,what="cohort")
 stkm=stkr
 
@@ -594,16 +598,18 @@ dat =as.data.frame(FLQuants("SRR"=ssb(stkr),
                               "M"=ssb(stkm),
                               "Fecundity"=ssb(stkf)))
 fishMat=ddply(subset(dat,year>50),.(iter,qname), transform, val=data/mean(data))
+```
 
+```{r fig11c, fig.height=6,fig.width=10}
 k   =1
 sr  ="cushing"
 s   =0.7
-alb  =FLPar(unlist(teleost[teleost$species=="Thunnus alalunga",
-             c("linf","k","t0","l50","a","b")]))
+alb  =teleost[c("linf","k","t0","l50","a","b"),"Thunnus alalunga"]
 alb  =lhPar(rbind(alb,FLPar(m1=0.3,m2=-0.288,s=s)))
 alb[c("a1","sr")]=c(0,5000)
 eq      =lhEql(alb,m=lorenzen,sr=sr)
 fbar(eq)=FLQuant(rep(1,1001)*refpts(eq)["msy","harvest"])
+
 f       =fbar(eq)[,-1]
 f       =propagate(fbar(eq)[,-1],3)
 f[,,,,,2]=0
@@ -612,7 +618,9 @@ f[,,,,,3]=f[,,,,,1]*4
 stkr=as(eq,"FLStock")
 stkr=fwd(stkr,f=f,sr=eq)
 ref =stock.n(eq)[,1]
+```
 
+```{r fig11d, fig.height=6,fig.width=10}
 scale=rnoise(1,stock.wt(stkr),sd=0.3,b=0.9,what="cohort")
 
 stkm=stkr
@@ -631,7 +639,9 @@ fishJuv=ddply(subset(dat,year>50),.(iter,qname), transform, val=data/mean(data))
 dat=rbind(cbind("Selection"="Juvenile",fishJuv),
           cbind("Selection"="Mature",  fishMat))
 dat=transform(dat,F=factor(paste("F times",c(0,1,3))[iter]))
+```
 
+```{r fig11e, fig.height=6,fig.width=10}
 ggplot(dat)+
   geom_line(aes(year,val,col=qname))+
   theme_bw()+
@@ -642,7 +652,7 @@ ggplot(dat)+
 ```
 
 
-```{r fig12,fig.width=6,fig.height=6,fig.cap="Year effects", eval=FALSE}
+```{r fig12,fig.width=6,fig.height=6,fig.cap="Year effects"}
 dat=rbind(cbind("Selection"="Juvenile",fishJuv),
           cbind("Selection"="Mature",  fishMat))
 dat=transform(dat,F=factor(paste("F times",c(0,1,3))[iter]))
@@ -660,7 +670,7 @@ ggplot(dat,aes(freq,val,col=qname))+
 ```
 
 
-```{r fig13, fig.width=10,fig.height=4,fig.cap="Cohort Effects", eval=FALSE}
+```{r fig13, fig.width=10,fig.height=4,fig.cap="Cohort Effects"}
 library(FLAssess)
 
 stk   =iter(stkm[,101:250],1)
@@ -669,8 +679,7 @@ vpa    =stk+VPA(stk)
 
 p=plot(FLStocks("Actual"=stk,"Model Estimate"=vpa))
 p$data=subset(p$data,qname%in%c("SSB","Rec"))
-names(p$data)[8]="data"
-p$data=ddply(p$data,.(qname), transform, val=data/mean(data))
+p$data=ddply(p$data,.(qname), transform, val=`50%`/mean(`50%`))
 ggplot(subset(p$data,year>50))+
   geom_line(aes(year,val,col=qname))+
   facet_grid(qname~stock,scale="free")+
@@ -680,7 +689,7 @@ ggplot(subset(p$data,year>50))+
 ```
 
 ## MSE using empirical HCR
-```{r fig14, fig.width=6,fig.height=8,fig.cap="MSE using empirical HCR", eval=FALSE}
+```{r fig14, fig.width=6,fig.height=8,fig.cap="MSE using empirical HCR"}
 library(FLife)
 library(FLash)
 library(FLRP)

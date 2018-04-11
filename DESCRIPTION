@@ -1,7 +1,7 @@
 Package: FLife
 Type: Package
 Title: Methods for Modelling Life History Traits
-Version: 3.0.0
+Version: 3.1.0
 Date: 2017-09-18
 Author: c(person(given = "Laurence", family = "Kell", role = c("aut", "cre"),
   email = "laurie@seaplusplus.co.uk"))
@@ -15,15 +15,15 @@ LazyData: true
 License: GPL (>= 2)
 Depends:
     R(>= 3.1),
-    FLCore (>= 2.6),
+    FLCore (>= 2.6.6.9006),
 Imports:
-    FLRP,
+    FLRP(>= 0.0.3),
     methods,
     plyr
 Suggests:
     ggplot2,
-    FLash,
-    ggplotFL (>= 2.5),
+    FLash(>= 2.5.7),
+    ggplotFL (>= 2.5.9.9003),
     testthat,
     knitr,
     GGally, 
