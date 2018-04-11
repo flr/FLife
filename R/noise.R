@@ -118,7 +118,7 @@ noiseFn<-function(len,sd=0.3,b=0,burn=0,trunc=0){
 if (FALSE){
   library(FLCore)
   library(ggplotFL)
-  data(ple4)
+  #data(ple4)
   res=noise(4,m(ple4),burn=10,b=0.9)
   ggplot()+
     geom_point(aes(year,age,size= data),

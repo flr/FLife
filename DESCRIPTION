@@ -14,17 +14,17 @@ Description: Many studies have shown the relationships between life history
 LazyData: true
 License: GPL (>= 2)
 Depends:
-    R(>= 3.1),
-    FLCore (>= 2.6.6.9006),
-Imports:
-    FLRP(>= 0.0.3),
-    methods,
-    plyr
-Suggests:
-    ggplot2,
-    FLash(>= 2.5.7),
-    ggplotFL (>= 2.5.9.9003),
-    FLAssess,
+      R(>= 3.1),
+      FLCore (>= 2.6.6.9006),
+  Imports:
+      FLRP(>= 0.0.3),
+      methods,
+      plyr
+  Suggests:
+      ggplot2,
+      FLash(>= 2.5.7),
+      ggplotFL (>= 2.5.9.9003),
+      FLAssess,
     testthat,
     knitr,
     GGally, 

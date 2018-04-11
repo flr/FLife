@@ -65,7 +65,7 @@ netSelAge<-function(len,params){
 
 
 if(FALSE){
-   data(ple4)
+   #data(ple4)
    
    params=FLPar(l50=35,sr=5,t0=-.5,k=0.2,linf=100)
    netSel(ages(mat(ple4)),params)
