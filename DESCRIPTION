@@ -24,6 +24,7 @@ Suggests:
     ggplot2,
     FLash(>= 2.5.7),
     ggplotFL (>= 2.5.9.9003),
+    FLAssess,
     testthat,
     knitr,
     GGally, 
