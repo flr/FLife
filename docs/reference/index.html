@@ -11,26 +11,32 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
+<meta property="og:title" content="Function reference" />
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,190 +87,246 @@
       <div class="row">
   <div class="col-md-9">
     <div class="page-header">
-      <h1>Function reference</h1>
-      <h4>version&nbsp;2.1.1.9001</h4>
+      <h1>
+        Reference
+        <small>version&nbsp;3.0.0</small>
+      </h1>
     </div>
 
     <div class="contents">
-      <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-      <p class="section-desc"></p>
+      <table class="ref-index">
 
-      
-      <p><a href="ages.html">Fills an </a></p>
-      <ul>
-        <li><code><a href="ages.html">ages,FLQuant-method</a></code></li><li><code><a href="ages.html">ages</a></code></li><li><code><a href="ages.html">ages-method</a></code></li><li><code><a href="ages.html">ages,FLCohort-method</a></code></li>
-      </ul>
-      
-      <p><a href="cas.html">cas</a></p>
-      <ul>
-        <li><code><a href="cas.html">cas</a></code></li>
-      </ul>
-      
-      <p><a href="cc.html">Catch curve analysis</a></p>
-      <ul>
-        <li><code><a href="cc.html">cc,numeric,numeric-method</a></code></li><li><code><a href="cc.html">cc</a></code></li><li><code><a href="cc.html">cc-method</a></code></li><li><code><a href="cc.html">cc,missing,FLQuant-method</a></code></li><li><code><a href="cc.html">cc,FLQuant,missing-method</a></code></li>
-      </ul>
-      
-      <p><a href="dnormal.html">Double normal ogive</a></p>
-      <ul>
-        <li><code><a href="dnormal.html">dnormal,FLQuant,FLPar-method</a></code></li><li><code><a href="dnormal.html">dnormal</a></code></li><li><code><a href="dnormal.html">dnormal-method</a></code></li><li><code><a href="dnormal.html">dnormal,FLPar,FLPar-method</a></code></li><li><code><a href="dnormal.html">dnormal,numeric,numeric-method</a></code></li><li><code><a href="dnormal.html">dnormal,FLQuant,numeric-method</a></code></li>
-      </ul>
-      
-      <p><a href="elasticity.html">Elasticity analysis for reference points</a></p>
-      <ul>
-        <li><code><a href="elasticity.html">elasticity</a></code></li><li><code><a href="elasticity.html">elasticity-method</a></code></li>
-      </ul>
-      
-      <p><a href="gascuel.html">Gascuel growth curve</a></p>
-      <ul>
-        <li><code><a href="gascuel.html">gascuel,FLQuant,FLPar-method</a></code></li><li><code><a href="gascuel.html">gascuel</a></code></li><li><code><a href="gascuel.html">gascuel-method</a></code></li><li><code><a href="gascuel.html">gascuel,FLQuant,missing-method</a></code></li><li><code><a href="gascuel.html">gascuel,FLPar,FLPar-method</a></code></li><li><code><a href="gascuel.html">gascuel,FLPar,FLQuant-method</a></code></li><li><code><a href="gascuel.html">gascuel,FLPar,missing-method</a></code></li><li><code><a href="gascuel.html">gascuel,numeric,FLQuant-method</a></code></li><li><code><a href="gascuel.html">gascuel,numeric,numeric-method</a></code></li><li><code><a href="gascuel.html">gascuel,numeric,FLPar-method</a></code></li><li><code><a href="gascuel.html">gascuel,numeric,missing-method</a></code></li><li><code><a href="gascuel.html">gascuel,missing,FLPar-method</a></code></li><li><code><a href="gascuel.html">gascuel,missing,missing-method</a></code></li>
-      </ul>
-      
-      <p><a href="gislason.html">gislason</a></p>
-      <ul>
-        <li><code><a href="gislason.html">gislason,FLQuant,numeric-method</a></code></li><li><code><a href="gislason.html">gislason</a></code></li><li><code><a href="gislason.html">gislason-method</a></code></li><li><code><a href="gislason.html">gislason,FLQuant,FLPar-method</a></code></li><li><code><a href="gislason.html">gislason,FLQuant,missing-method</a></code></li>
-      </ul>
-      
-      <p><a href="gompertz.html">Gompertz growth equation</a></p>
-      <ul>
-        <li><code><a href="gompertz.html">gompertz,FLQuant,FLPar-method</a></code></li><li><code><a href="gompertz.html">gompertz</a></code></li><li><code><a href="gompertz.html">gompertz-method</a></code></li><li><code><a href="gompertz.html">g</a></code></li><li><code><a href="gompertz.html">gompertz,FLPar,FLPar-method</a></code></li><li><code><a href="gompertz.html">gompertz,FLQuant,numeric-method</a></code></li><li><code><a href="gompertz.html">gompertz,missing,FLPar-method</a></code></li><li><code><a href="gompertz.html">gompertz,numeric,numeric-method</a></code></li>
-      </ul>
-      
-      <p><a href="grwdd.html">grwdd</a></p>
-      <ul>
-        <li><code><a href="grwdd.html">grwdd,FLQuant,FLPar-method</a></code></li><li><code><a href="grwdd.html">grwdd</a></code></li><li><code><a href="grwdd.html">grwdd-method</a></code></li>
-      </ul>
-      
-      <p><a href="knife.html">knife edge ogive</a></p>
-      <ul>
-        <li><code><a href="knife.html">knife,FLQuant,FLPar-method</a></code></li><li><code><a href="knife.html">knife</a></code></li><li><code><a href="knife.html">knife-method</a></code></li><li><code><a href="knife.html">knife,FLPar,FLPar-method</a></code></li><li><code><a href="knife.html">knife,numeric,numeric-method</a></code></li><li><code><a href="knife.html">knife,FLQuant,numeric-method</a></code></li>
-      </ul>
-      
-      <p><a href="lambda.html">Population growth rate</a></p>
-      <ul>
-        <li><code><a href="lambda.html">r,FLPar,missing-method</a></code></li><li><code><a href="lambda.html">r-method</a></code></li><li><code><a href="lambda.html">r,FLPar-method</a></code></li>
-      </ul>
-      
-      <p><a href="len2wt.html">Length to weight conversion</a></p>
-      <ul>
-        <li><code><a href="len2wt.html">len2wt,FLQuant,FLPar-method</a></code></li><li><code><a href="len2wt.html">len2wt</a></code></li><li><code><a href="len2wt.html">len2wt-method</a></code></li><li><code><a href="len2wt.html">len2wt,FLCohort,FLPar-method</a></code></li><li><code><a href="len2wt.html">len2wt,numeric,FLPar-method</a></code></li>
-      </ul>
-      
-      <p><a href="leslie.html">Leslie matrix</a></p>
-      <ul>
-        <li><code><a href="leslie.html">leslie,FLBRP-method</a></code></li><li><code><a href="leslie.html">leslie-method</a></code></li>
-      </ul>
-      
-      <p><a href="lhEql.html">Derives an </a></p>
-      <ul>
-        <li><code><a href="lhEql.html">lhEql,FLPar-method</a></code></li><li><code><a href="lhEql.html">lhEql</a></code></li><li><code><a href="lhEql.html">lhEql-method</a></code></li>
-      </ul>
-      
-      <p><a href="lhPar.html">Generates life history parameters</a></p>
-      <ul>
-        <li><code><a href="lhPar.html">lhPar</a></code></li>
-      </ul>
-      
-      <p><a href="lhRef.html">Reference points based on life histories</a></p>
-      <ul>
-        <li><code><a href="lhRef.html">lhRef</a></code></li>
-      </ul>
-      
-      <p><a href="logistic.html">logistic</a></p>
-      <ul>
-        <li><code><a href="logistic.html">logistic,FLQuant,FLPar-method</a></code></li><li><code><a href="logistic.html">logistic</a></code></li><li><code><a href="logistic.html">logistic-method</a></code></li>
-      </ul>
-      
-      <p><a href="loptAge.html">Age at maximum biomass</a></p>
-      <ul>
-        <li><code><a href="loptAge.html">loptAge,FLPar-method</a></code></li><li><code><a href="loptAge.html">loptAge</a></code></li><li><code><a href="loptAge.html">loptAge-method</a></code></li>
-      </ul>
-      
-      <p><a href="lopt.html">Lopt</a></p>
-      <ul>
-        <li><code><a href="lopt.html">lopt,FLPar-method</a></code></li><li><code><a href="lopt.html">lopt</a></code></li><li><code><a href="lopt.html">lopt-method</a></code></li>
-      </ul>
-      
-      <p><a href="lorenzen.html">lorenzen</a></p>
-      <ul>
-        <li><code><a href="lorenzen.html">lorenzen,FLQuant,FLPar-method</a></code></li><li><code><a href="lorenzen.html">lorenzen</a></code></li><li><code><a href="lorenzen.html">lorenzen-method</a></code></li><li><code><a href="lorenzen.html">lorenzen,FLQuant,missing-method</a></code></li><li><code><a href="lorenzen.html">lorenzen,FLQuant,numeric-method</a></code></li><li><code><a href="lorenzen.html">lorenzen,numeric,missing-method</a></code></li>
-      </ul>
-      
-      <p><a href="matdd.html">matdd</a></p>
-      <ul>
-        <li><code><a href="matdd.html">matdd,FLQuant,FLPar-method</a></code></li><li><code><a href="matdd.html">matdd</a></code></li><li><code><a href="matdd.html">matdd-method</a></code></li>
-      </ul>
-      
-      <p><a href="mdd.html">mdd</a></p>
-      <ul>
-        <li><code><a href="mdd.html">mdd,FLQuant,FLPar-method</a></code></li><li><code><a href="mdd.html">mdd</a></code></li><li><code><a href="mdd.html">mdd-method</a></code></li>
-      </ul>
-      
-      <p><a href="moment.html">Calculates moments of a distribution</a></p>
-      <ul>
-        <li><code><a href="moment.html">moment,numeric-method</a></code></li><li><code><a href="moment.html">moment</a></code></li><li><code><a href="moment.html">moment-method</a></code></li>
-      </ul>
-      
-      <p><a href="m.html">Natural mortality</a></p>
-      <ul>
-        <li><code><a href="m.html">roff</a></code></li><li><code><a href="m.html">roff-method</a></code></li><li><code><a href="m.html">roff,FLPar-method</a></code></li><li><code><a href="m.html">rikhter</a></code></li><li><code><a href="m.html">rikhter-method</a></code></li><li><code><a href="m.html">rikhter,FLPar-method</a></code></li><li><code><a href="m.html">rikhter2</a></code></li><li><code><a href="m.html">rikhter2-method</a></code></li><li><code><a href="m.html">rikhter2,FLPar-method</a></code></li><li><code><a href="m.html">griffiths</a></code></li><li><code><a href="m.html">griffiths-method</a></code></li><li><code><a href="m.html">griffiths,FLPar-method</a></code></li><li><code><a href="m.html">djababli</a></code></li><li><code><a href="m.html">djababli-method</a></code></li><li><code><a href="m.html">djababli,FLPar-method</a></code></li><li><code><a href="m.html">jensen</a></code></li><li><code><a href="m.html">jensen-method</a></code></li><li><code><a href="m.html">jensen,FLPar-method</a></code></li><li><code><a href="m.html">jensen2</a></code></li><li><code><a href="m.html">jensen2-method</a></code></li><li><code><a href="m.html">jensen2,FLPar-method</a></code></li><li><code><a href="m.html">charnov</a></code></li><li><code><a href="m.html">charnov-method</a></code></li><li><code><a href="m.html">charnov,FLQuant,FLPar-method</a></code></li><li><code><a href="m.html">petersen</a></code></li><li><code><a href="m.html">petersen-method</a></code></li><li><code><a href="m.html">petersen,FLPar-method</a></code></li>
-      </ul>
-      
-      <p><a href="powh.html">Powell Weatherall method for estimating Z and Linfinity</a></p>
-      <ul>
-        <li><code><a href="powh.html">powh,numeric,numeric-method</a></code></li><li><code><a href="powh.html">powh</a></code></li><li><code><a href="powh.html">powh-method</a></code></li>
-      </ul>
-      
-      <p><a href="refs.html">refs</a></p>
-      <ul>
-        <li><code><a href="refs.html">refs</a></code></li>
-      </ul>
-      
-      <p><a href="richards.html">Richards growth curve</a></p>
-      <ul>
-        <li><code><a href="richards.html">richards,FLQuant,FLPar-method</a></code></li><li><code><a href="richards.html">richards</a></code></li><li><code><a href="richards.html">richards-method</a></code></li><li><code><a href="richards.html">richards,FLPar,FLPar-method</a></code></li><li><code><a href="richards.html">richards,FLQuant,numeric-method</a></code></li><li><code><a href="richards.html">richards,missing,FLPar-method</a></code></li><li><code><a href="richards.html">richards,numeric,numeric-method</a></code></li>
-      </ul>
-      
-      <p><a href="rnoise.html">Random noise with different frequencies</a></p>
-      <ul>
-        <li><code><a href="rnoise.html">rnoise,numeric,FLQuant-method</a></code></li><li><code><a href="rnoise.html">rnoise</a></code></li><li><code><a href="rnoise.html">rnoise-method</a></code></li><li><code><a href="rnoise.html">rnoise,numeric,missing-method</a></code></li>
-      </ul>
-      
-      <p><a href="rod.html">rod</a></p>
-      <ul>
-        <li><code><a href="rod.html">rod,FLQuant-method</a></code></li><li><code><a href="rod.html">rod</a></code></li><li><code><a href="rod.html">rod-method</a></code></li>
-      </ul>
-      
-      <p><a href="sigmoid.html">Sigmoid ogive</a></p>
-      <ul>
-        <li><code><a href="sigmoid.html">sigmoid,FLQuant,FLPar-method</a></code></li><li><code><a href="sigmoid.html">sigmoid</a></code></li><li><code><a href="sigmoid.html">sigmoid-method</a></code></li><li><code><a href="sigmoid.html">sigmoid,FLPar,FLPar-method</a></code></li><li><code><a href="sigmoid.html">sigmoid,FLQuant,numeric-method</a></code></li><li><code><a href="sigmoid.html">sigmoid,numeric,numeric-method</a></code></li>
-      </ul>
-      
-      <p><a href="sv.html">Calculates steepness and virgin biomass</a></p>
-      <ul>
-        <li><code><a href="sv.html">sv,FLPar,character-method</a></code></li>
-      </ul>
-      
-      <p><a href="teleost.html">teleost</a></p>
-      <ul>
-        <li><code><a href="teleost.html">teleost</a></code></li>
-      </ul>
-      
-      <p><a href="unbin.html">unbin frequency distributions</a></p>
-      <ul>
-        <li><code><a href="unbin.html">unbin</a></code></li>
-      </ul>
-      
-      <p><a href="vonB.html">von Bertalanffy growth curve</a></p>
-      <ul>
-        <li><code><a href="vonB.html">vonB,FLQuant,FLPar-method</a></code></li><li><code><a href="vonB.html">vonB</a></code></li><li><code><a href="vonB.html">vonB-method</a></code></li><li><code><a href="vonB.html">vonB,FLPar,FLPar-method</a></code></li><li><code><a href="vonB.html">vonB,FLQuant,numeric-method</a></code></li><li><code><a href="vonB.html">vonB,missing,FLPar-method</a></code></li><li><code><a href="vonB.html">vonB,numeric,numeric-method</a></code></li>
-      </ul>
-      
-      <p><a href="wt2len.html">Mass to length conversion</a></p>
-      <ul>
-        <li><code><a href="wt2len.html">wt2len,FLQuant,FLPar-method</a></code></li><li><code><a href="wt2len.html">wt2len</a></code></li><li><code><a href="wt2len.html">wt2len-method</a></code></li><li><code><a href="wt2len.html">wt2len,FLCohort,FLPar-method</a></code></li><li><code><a href="wt2len.html">wt2len,numeric,FLPar-method</a></code></li>
-      </ul>
-    
+      <colgroup>
+        <col class="alias" />
+        <col class="title" />
+      </colgroup>
+
+      <tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+            <p class="section-desc"></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ages.html">ages</a></code> </p>
+          </td>
+          <td><p>Fills an <code>FLQuant</code> with ages</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="cas.html">cas</a></code> </p>
+          </td>
+          <td><p>cas</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="cc.html">cc</a></code> </p>
+          </td>
+          <td><p>Catch curve analysis</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="dnormal.html">dnormal</a></code> </p>
+          </td>
+          <td><p>Double normal ogive</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="elasticity.html">elasticity</a></code> </p>
+          </td>
+          <td><p>Elasticity analysis for reference points</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="gascuel.html">gascuel</a></code> </p>
+          </td>
+          <td><p>Gascuel growth curve</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="gislason.html">gislason</a></code> </p>
+          </td>
+          <td><p>gislason</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="gompertz.html">gompertz</a></code> </p>
+          </td>
+          <td><p>Gompertz growth equation</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="grwdd.html">grwdd</a></code> </p>
+          </td>
+          <td><p>grwdd</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="knife.html">knife</a></code> </p>
+          </td>
+          <td><p>knife edge ogive</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="lambda.html">r</a></code> </p>
+          </td>
+          <td><p>Population growth rate</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="len2wt.html">len2wt</a></code> </p>
+          </td>
+          <td><p>Length to weight conversion</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="leslie.html">leslie</a></code> </p>
+          </td>
+          <td><p>Leslie matrix</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="lhEql.html">lhEql</a></code> </p>
+          </td>
+          <td><p>Derives an <code>FLRP</code> from life history parameters</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="lhPar.html">lhPar</a></code> </p>
+          </td>
+          <td><p>Generates life history parameters</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="lhRef.html">lhRef</a></code> </p>
+          </td>
+          <td><p>Reference points based on life histories</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="logistic.html">logistic</a></code> </p>
+          </td>
+          <td><p>logistic</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="lopt.html">lopt</a></code> </p>
+          </td>
+          <td><p>Lopt</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="loptAge.html">loptAge</a></code> </p>
+          </td>
+          <td><p>Age at maximum biomass</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="lorenzen.html">lorenzen</a></code> </p>
+          </td>
+          <td><p>lorenzen</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="m.html">roff</a></code> </p>
+          </td>
+          <td><p>Natural mortality</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="matdd.html">matdd</a></code> </p>
+          </td>
+          <td><p>matdd</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="mdd.html">mdd</a></code> </p>
+          </td>
+          <td><p>mdd</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="moment.html">moment</a></code> </p>
+          </td>
+          <td><p>Calculates moments of a distribution</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="powh.html">powh</a></code> </p>
+          </td>
+          <td><p>Powell Weatherall method for estimating Z and Linfinity</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="refs.html">refs</a></code> </p>
+          </td>
+          <td><p>refs</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="richards.html">richards</a></code> </p>
+          </td>
+          <td><p>Richards growth curve</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="rnoise.html">rnoise</a></code> </p>
+          </td>
+          <td><p>Random noise with different frequencies</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="rod.html">rod</a></code> </p>
+          </td>
+          <td><p>rod</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="sigmoid.html">sigmoid</a></code> </p>
+          </td>
+          <td><p>Sigmoid ogive</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="sv.html">sv</a></code> </p>
+          </td>
+          <td><p>Calculates steepness and virgin biomass</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="teleost.html">teleost</a></code> </p>
+          </td>
+          <td><p>teleost</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="unbin.html">unbin</a></code> </p>
+          </td>
+          <td><p>unbin frequency distributions</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="vonB.html">vonB</a></code> </p>
+          </td>
+          <td><p>von Bertalanffy growth curve</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="wklife.html">wklife</a></code> </p>
+          </td>
+          <td><p>wklife</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="wt2len.html">wt2len</a></code> </p>
+          </td>
+          <td><p>Mass to length conversion</p></td>
+        </tr>
+      </tbody>
+      </table>
     </div>
   </div>
 
@@ -282,7 +344,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -290,3 +352,4 @@
 
   </body>
 </html>
+
