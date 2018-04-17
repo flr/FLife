@@ -2,11 +2,11 @@
 % Please edit documentation in R/cc.R
 \docType{methods}
 \name{cc,numeric,numeric-method}
-\alias{cc,numeric,numeric-method}
 \alias{cc}
-\alias{cc-method}
-\alias{cc,missing,FLQuant-method}
 \alias{cc,FLQuant,missing-method}
+\alias{cc,missing,FLQuant-method}
+\alias{cc,numeric,numeric-method}
+\alias{cc-method}
 \title{Catch curve analysis}
 \usage{
 \S4method{cc}{numeric,numeric}(age, n, ...)
@@ -37,3 +37,4 @@ head(dat)
 
 \code{\link{powh}}
 }
+

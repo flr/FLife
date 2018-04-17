@@ -2,8 +2,8 @@
 % Please edit documentation in R/refs.R
 \name{refs}
 \alias{refs}
-\alias{refs-method}
 \alias{refs,FLStock-method}
+\alias{refs-method}
 \title{refs}
 \usage{
 refs(object, ...)
@@ -47,3 +47,4 @@ the average recruitment.
  refs(ple4)
 } 
 }
+

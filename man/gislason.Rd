@@ -2,11 +2,11 @@
 % Please edit documentation in R/gislason.R
 \docType{methods}
 \name{gislason,FLQuant,numeric-method}
-\alias{gislason,FLQuant,numeric-method}
 \alias{gislason}
-\alias{gislason-method}
 \alias{gislason,FLQuant,FLPar-method}
 \alias{gislason,FLQuant,missing-method}
+\alias{gislason,FLQuant,numeric-method}
+\alias{gislason-method}
 \title{gislason}
 \usage{
 \S4method{gislason}{FLQuant,numeric}(length, params, a = 0.55, b = 1.44,
@@ -42,3 +42,4 @@ gislason(length,params)
 \seealso{
 \code{\link{lorenzen}}
 }
+

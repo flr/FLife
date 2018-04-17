@@ -48,3 +48,4 @@ lhPar(FLPar(linf=200))
 \seealso{
 \code{\link{loptAge}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}}
 }
+

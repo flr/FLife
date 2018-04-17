@@ -2,8 +2,8 @@
 % Please edit documentation in R/lhEql.R
 \docType{methods}
 \name{lhEql,FLPar-method}
-\alias{lhEql,FLPar-method}
 \alias{lhEql}
+\alias{lhEql,FLPar-method}
 \alias{lhEql-method}
 \title{Derives an \code{FLRP} from life history parameters}
 \usage{
@@ -60,3 +60,4 @@ eql=lhEql(lhPar(alb))
 
 \code{\link{vonB}} \code{\link{lorenzen}} \code{\link{sigmoid}}
 }
+

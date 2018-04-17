@@ -2,8 +2,8 @@
 % Please edit documentation in R/moment.R
 \docType{methods}
 \name{moment,numeric-method}
-\alias{moment,numeric-method}
 \alias{moment}
+\alias{moment,numeric-method}
 \alias{moment-method}
 \title{Calculates moments of a distribution}
 \usage{
@@ -31,3 +31,4 @@ moment(x)
 }
 
 }
+

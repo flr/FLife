@@ -2,11 +2,11 @@
 % Please edit documentation in R/len2wt.R
 \docType{methods}
 \name{len2wt,FLQuant,FLPar-method}
-\alias{len2wt,FLQuant,FLPar-method}
 \alias{len2wt}
-\alias{len2wt-method}
 \alias{len2wt,FLCohort,FLPar-method}
+\alias{len2wt,FLQuant,FLPar-method}
 \alias{len2wt,numeric,FLPar-method}
+\alias{len2wt-method}
 \title{Length to weight conversion}
 \usage{
 \S4method{len2wt}{FLQuant,FLPar}(length, params)
@@ -33,3 +33,4 @@ len2wt(FLQuant(10),params)
 \seealso{
 \code{\link{wt2len}}
 }
+

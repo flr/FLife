@@ -11,7 +11,10 @@
 #' @param c -1.61
 #' @param ... any other arguments
 #' 
-#' @aliases  gislason gislason-method gislason,FLQuant,FLPar-method gislason,FLQuant,missing-method gislason,FLQuant,numeric-method
+#' @aliases  gislason gislason-method 
+#'           gislason,FLQuant,FLPar-method 
+#'           gislason,FLQuant,missing-method 
+#'           gislason,FLQuant,numeric-method
 #'
 #' @export
 #' @docType methods

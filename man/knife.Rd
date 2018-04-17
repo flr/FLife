@@ -2,12 +2,12 @@
 % Please edit documentation in R/knife.R
 \docType{methods}
 \name{knife,FLQuant,FLPar-method}
-\alias{knife,FLQuant,FLPar-method}
 \alias{knife}
-\alias{knife-method}
 \alias{knife,FLPar,FLPar-method}
-\alias{knife,numeric,numeric-method}
+\alias{knife,FLQuant,FLPar-method}
 \alias{knife,FLQuant,numeric-method}
+\alias{knife,numeric,numeric-method}
+\alias{knife-method}
 \title{knife edge ogive}
 \usage{
 \S4method{knife}{FLQuant,FLPar}(age, params, ...)
@@ -43,3 +43,4 @@ knife(age,params)
 \seealso{
 \code{\link{sigmoid}},  \code{\link{dnormal}}, \code{\link{logistic}}
 }
+
