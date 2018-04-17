@@ -32,7 +32,7 @@ iFig=0
 
 
 ```{r, pkgs, echo=FALSE, message=FALSE}
-library(ggplot2)
+library(ggplotFL)
 library(FLRP)
 library(FLife)
 library(plyr)
@@ -326,7 +326,7 @@ library(glmnet)
 t.=cbind(model.frame(teleost)[,-7],as.data.frame(attributes(teleost)[5:9]))
 
 x=model.matrix(~order+genus+family+habitat,t.[,-1])
-y=log(as.matrix(t.[,"k"])
+y=log(as.matrix(t.[,"k"]))
 
 fit=glmnet::cv.glmnet(x, y)
 plot(fit)
@@ -578,6 +578,7 @@ f[,,,,,2]=0
 f[,,,,,3]=f[,,,,,1]*4
 
 stkr=as(eq,"FLStock")
+units(harvest(stkr)) <- "f"
 stkr=fwd(stkr,f=f,sr=eq)
 ref =stock.n(eq)[,1]
 ```
@@ -616,6 +617,7 @@ f[,,,,,2]=0
 f[,,,,,3]=f[,,,,,1]*4
 
 stkr=as(eq,"FLStock")
+units(harvest(stkr)) <- "f"
 stkr=fwd(stkr,f=f,sr=eq)
 ref =stock.n(eq)[,1]
 ```
@@ -697,6 +699,7 @@ library(FLRP)
 par=lhPar(FLPar(linf=100))  
 eql=lhEql(par)
 mou=as(eql,"FLStock")
+units(harvest(mou)) <- "f"
 mou=FLash::fwd(mou,f=fbar(eql)[,-1]/4,sr=eql)
   
 srDev=rlnorm(100,FLQuant(rep(0,136)),0.3)
