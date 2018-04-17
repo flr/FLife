@@ -2,8 +2,8 @@
 % Please edit documentation in R/grw-dd.R
 \docType{methods}
 \name{grwdd,FLQuant,FLPar-method}
-\alias{grwdd,FLQuant,FLPar-method}
 \alias{grwdd}
+\alias{grwdd,FLQuant,FLPar-method}
 \alias{grwdd-method}
 \title{grwdd}
 \usage{
@@ -73,3 +73,4 @@ ggplot(as.data.frame(grw))+
 \seealso{
 \code{\link{vonB}}
 }
+

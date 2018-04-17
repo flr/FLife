@@ -2,8 +2,8 @@
 % Please edit documentation in R/lopt.R
 \docType{methods}
 \name{lopt,FLPar-method}
-\alias{lopt,FLPar-method}
 \alias{lopt}
+\alias{lopt,FLPar-method}
 \alias{lopt-method}
 \title{Lopt}
 \usage{
@@ -49,3 +49,4 @@ lopt(params)
 \seealso{
 \code{\link{gislason}}, \code{\link{vonB}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}},
 }
+

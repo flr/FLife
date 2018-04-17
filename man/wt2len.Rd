@@ -2,11 +2,11 @@
 % Please edit documentation in R/wt2len.R
 \docType{methods}
 \name{wt2len,FLQuant,FLPar-method}
-\alias{wt2len,FLQuant,FLPar-method}
 \alias{wt2len}
-\alias{wt2len-method}
 \alias{wt2len,FLCohort,FLPar-method}
+\alias{wt2len,FLQuant,FLPar-method}
 \alias{wt2len,numeric,FLPar-method}
+\alias{wt2len-method}
 \title{Mass to length conversion}
 \usage{
 \S4method{wt2len}{FLQuant,FLPar}(wt, params, ...)
@@ -33,3 +33,4 @@ wt2len(FLQuant(10),params)
 \seealso{
 \code{\link{len2wt}}
 }
+

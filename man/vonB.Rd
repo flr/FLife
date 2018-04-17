@@ -2,14 +2,14 @@
 % Please edit documentation in R/vonB.R
 \docType{methods}
 \name{vonB,FLQuant,FLPar-method}
-\alias{vonB,FLQuant,FLPar-method}
 \alias{vonB}
-\alias{vonB-method}
 \alias{vonB,FLPar,FLPar-method}
+\alias{vonB,FLQuant,FLPar-method}
 \alias{vonB,FLQuant,numeric-method}
 \alias{vonB,missing,FLPar-method}
-\alias{vonB,numeric,numeric-method}
 \alias{vonB,numeric,FLPar-method}
+\alias{vonB,numeric,numeric-method}
+\alias{vonB-method}
 \title{von Bertalanffy growth curve}
 \usage{
 \S4method{vonB}{FLQuant,FLPar}(age, params, ...)
@@ -40,3 +40,4 @@ vonB(params=params,length=len)
 \seealso{
 \code{\link{gompertz}}, \code{\link{gascuel}}, \code{\link{richards}}
 }
+

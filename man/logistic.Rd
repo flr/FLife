@@ -2,8 +2,8 @@
 % Please edit documentation in R/logistic.R
 \docType{methods}
 \name{logistic,FLQuant,FLPar-method}
-\alias{logistic,FLQuant,FLPar-method}
 \alias{logistic}
+\alias{logistic,FLQuant,FLPar-method}
 \alias{logistic-method}
 \title{logistic}
 \usage{
@@ -29,3 +29,4 @@ logistic(age,params)
 \seealso{
 \code{\link{gompertz}}
 }
+

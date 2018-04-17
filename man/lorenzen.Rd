@@ -2,12 +2,12 @@
 % Please edit documentation in R/lorenzen.R
 \docType{methods}
 \name{lorenzen,FLQuant,FLPar-method}
-\alias{lorenzen,FLQuant,FLPar-method}
 \alias{lorenzen}
-\alias{lorenzen-method}
+\alias{lorenzen,FLQuant,FLPar-method}
 \alias{lorenzen,FLQuant,missing-method}
 \alias{lorenzen,FLQuant,numeric-method}
 \alias{lorenzen,numeric,missing-method}
+\alias{lorenzen-method}
 \title{lorenzen}
 \usage{
 \S4method{lorenzen}{FLQuant,FLPar}(wt, params, ...)
@@ -35,3 +35,4 @@ lorenzen(mass)
 \seealso{
 \code{\link{gislason}}
 }
+

@@ -2,8 +2,8 @@
 % Please edit documentation in R/lopt.R
 \docType{methods}
 \name{loptAge,FLPar-method}
-\alias{loptAge,FLPar-method}
 \alias{loptAge}
+\alias{loptAge,FLPar-method}
 \alias{loptAge-method}
 \title{Age at maximum biomass}
 \usage{
@@ -41,3 +41,4 @@ loptAge(params)
 \seealso{
 \code{\link{loptAge}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}},
 }
+

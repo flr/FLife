@@ -2,8 +2,8 @@
 % Please edit documentation in R/powh.R
 \docType{methods}
 \name{powh,numeric,numeric-method}
-\alias{powh,numeric,numeric-method}
 \alias{powh}
+\alias{powh,numeric,numeric-method}
 \alias{powh-method}
 \title{Powell Weatherall method for estimating Z and Linfinity}
 \usage{
@@ -111,3 +111,4 @@ R. Beverton and S. Holt. Review of method for estimating mortality rates in
 \seealso{
 \code{\link{cc}}
 }
+

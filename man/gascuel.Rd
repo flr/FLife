@@ -2,19 +2,19 @@
 % Please edit documentation in R/gascuel.R
 \docType{methods}
 \name{gascuel,FLQuant,FLPar-method}
-\alias{gascuel,FLQuant,FLPar-method}
 \alias{gascuel}
-\alias{gascuel-method}
-\alias{gascuel,FLQuant,missing-method}
 \alias{gascuel,FLPar,FLPar-method}
 \alias{gascuel,FLPar,FLQuant-method}
 \alias{gascuel,FLPar,missing-method}
-\alias{gascuel,numeric,FLQuant-method}
-\alias{gascuel,numeric,numeric-method}
-\alias{gascuel,numeric,FLPar-method}
-\alias{gascuel,numeric,missing-method}
+\alias{gascuel,FLQuant,FLPar-method}
+\alias{gascuel,FLQuant,missing-method}
 \alias{gascuel,missing,FLPar-method}
 \alias{gascuel,missing,missing-method}
+\alias{gascuel,numeric,FLPar-method}
+\alias{gascuel,numeric,FLQuant-method}
+\alias{gascuel,numeric,missing-method}
+\alias{gascuel,numeric,numeric-method}
+\alias{gascuel-method}
 \title{Gascuel growth curve}
 \usage{
 \S4method{gascuel}{FLQuant,FLPar}(age, params, ...)
@@ -45,3 +45,4 @@ gascuel(10)
 \seealso{
 \code{\link{gompertz}}, \code{\link{vonB}} , \code{\link{richards}}
 }
+

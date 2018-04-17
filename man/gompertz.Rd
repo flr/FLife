@@ -2,14 +2,14 @@
 % Please edit documentation in R/gompertz.R
 \docType{methods}
 \name{gompertz,FLQuant,FLPar-method}
-\alias{gompertz,FLQuant,FLPar-method}
-\alias{gompertz}
-\alias{gompertz-method}
 \alias{g}
+\alias{gompertz}
 \alias{gompertz,FLPar,FLPar-method}
+\alias{gompertz,FLQuant,FLPar-method}
 \alias{gompertz,FLQuant,numeric-method}
 \alias{gompertz,missing,FLPar-method}
 \alias{gompertz,numeric,numeric-method}
+\alias{gompertz-method}
 \title{Gompertz growth equation}
 \usage{
 \S4method{gompertz}{FLQuant,FLPar}(age, params, ...)
@@ -38,3 +38,4 @@ gompertz(age,params)
 \seealso{
 \code{\link{gascuel}}, \code{\link{vonB}}, \code{\link{richards}}
 }
+
