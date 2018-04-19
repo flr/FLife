@@ -1,10 +1,10 @@
 ^.travis.yml$
 appveyor.yml
 NEWS.md
-docs/
+^docs/$
 man-roxygen/
 Makefile
-.git/
+^.git/$
 _pkgdown.yml
 CONTRIBUTORS.md
 CONTRIBUTING.md

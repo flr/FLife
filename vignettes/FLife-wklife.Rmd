@@ -35,7 +35,7 @@ iFig=0
 
 
 ```{r, pkgs, message=FALSE}
-library(ggplot2)
+library(ggplotFL)
 library(plyr)
 library(reshape)
 library(FLRP)
@@ -92,7 +92,8 @@ attributes(wkpar)[names(wklife)[1:5]]=wklife[,1:5]
 
 Then use life history relationships to estimate missing values  
 ```{r m-gislason}
-par=lhPar(wkpar)
+par <- lhPar(wkpar)
+units(par) <- c("", "", "cm", "", "cm", "cm", "cm", "cm")
 ```
 
 and then to derive vectors for processses such as natural mortality 
@@ -133,6 +134,7 @@ Create a forward projection, i.e. an `FLStock` from an equilibrium object
 lmsl=as(iter(eql,7),"FLStock")
 
 units(mat(lmsl))="NA"
+units(harvest(lmsl))="f"
 plot(lmsl)
 ```
 

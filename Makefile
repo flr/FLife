@@ -37,9 +37,9 @@ release: build docs
 
 build:
 	cd ..;\
-	R CMD build $(PKGSRC) --compact-vignettes
+	R CMD build $(PKGSRC) --compact-vignettes="gs+qpdf"
 
-buildNV: README.md NEWS
+buildNV:
 	cd ..;\
 	R CMD build $(PKGSRC) --no-build-vignettes
 

@@ -11,26 +11,35 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+  
+  
+<meta property="og:title" content="Natural mortality — roff" />
 
+<meta property="og:description" content="Methods to provide estimates of natural mortality based on growth and reproduction parameters" />
+<meta name="twitter:card" content="summary" />
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -88,15 +97,20 @@
     <p>Methods to provide estimates of natural mortality based on growth and reproduction parameters</p>
     
 
-    <pre><span class='fu'>roff</span>(<span class='no'>params</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>roff</span>(<span class='no'>params</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>params</dt>
-      <dd><code>FLPar</code></dd>
-      <dt>...</dt>
-      <dd>any other arguments</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>params</th>
+      <td><p><code>FLPar</code></p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>any other arguments</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -110,41 +124,41 @@ exposure to a higher natural mortality @gislason2008does. While many small demer
 seem to be partly protected against predation by hiding, cryptic behaviour, being flat 
 or by possessing spines have the lowest rates of natural mortality @griffiths2007natural. 
 Hence, at a given length individuals belonging to species with a high $$L_{\infty}$$ may 
-generally be exposed to a higher M than individuals belonging to species with a low $$L_{\infty}$$.</p>
-    <p>$$ log(M) = 0.55-1.61log(L) + 1.44log(L_{\infty}) + log(k)$$</p>
-    <p>Functional forms</p>
-    <p>Many estimators have been propose for M, based on growth and reproduction,</p>
-    <p>Age at maturity 
+generally be exposed to a higher M than individuals belonging to species with a low $$L_{\infty}$$.
+    $$ log(M) = 0.55-1.61log(L) + 1.44log(L_{\infty}) + log(k)$$</p>
+<p>Functional forms</p>
+<p>Many estimators have been propose for M, based on growth and reproduction,</p>
+<p>Age at maturity 
  $$M=\frac{1.521}{a_{50}^{0.72}}-0.155$$
  $$M=\frac{1.65}{a_{50}}$$</p>
-    <p>Growth
+<p>Growth
 $$M=1.5k$$
-$$M=1.406W_{\infty}^{-0.096}k^{0.78}$$</p>
-    <p>$$M=1.0661L_{\infty}^{-0.1172}k^{0.5092}$$
-Growth and length at maturity</p>
-    <p>$$M=3kL_{\infty}\frac{(1-\frac{L_{50}}{L_{\infty}})}{L_{50}}$$
+$$M=1.406W_{\infty}^{-0.096}k^{0.78}$$
+    $$M=1.0661L_{\infty}^{-0.1172}k^{0.5092}$$
+Growth and length at maturity
+    $$M=3kL_{\infty}\frac{(1-\frac{L_{50}}{L_{\infty}})}{L_{50}}$$
 $$M=\frac{\beta k}{e^{k(a_{50}-t_0)}-1}$$</p>
-    <p>Varing by length, weight or age</p>
+<p>Varing by length, weight or age</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='gislason,FLQuant,numeric-method.html'>gislason</a></code>,  <code><a href='lorenzen,FLQuant,FLPar-method.html'>lorenzen</a></code>, <code>chen</code></p>
+    <p><code><a href='gislason.html'>gislason</a></code>,  <code><a href='lorenzen.html'>lorenzen</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># params=FLPar(FLPar(linf=120,k=.15,t0=-0.1,l50=60,a=0.0001,b=3))</span>
-<span class='co'># age=FLQuant(1:10,dimnames=list(age=1:10))</span>
-<span class='co'># </span>
-<span class='co'># </span>
-<span class='co'># roff(params)</span>
-<span class='co'># rikhter(params)</span>
-<span class='co'># rikhter2(params)</span>
-<span class='co'># griffiths(params)</span>
-<span class='co'># djababli(params)</span>
-<span class='co'># jensen(params)</span>
-<span class='co'># jensen2(params)</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='no'>params</span><span class='kw'>=</span><span class='fu'>FLPar</span>(<span class='fu'>FLPar</span>(<span class='kw'>linf</span><span class='kw'>=</span><span class='fl'>120</span>,<span class='kw'>k</span><span class='kw'>=</span><span class='fl'>.15</span>,<span class='kw'>t0</span><span class='kw'>=</span>-<span class='fl'>0.1</span>,<span class='kw'>l50</span><span class='kw'>=</span><span class='fl'>60</span>,<span class='kw'>a</span><span class='kw'>=</span><span class='fl'>0.0001</span>,<span class='kw'>b</span><span class='kw'>=</span><span class='fl'>3</span>))
+<span class='no'>age</span><span class='kw'>=</span><span class='fu'>FLQuant</span>(<span class='fl'>1</span>:<span class='fl'>10</span>,<span class='kw'>dimnames</span><span class='kw'>=</span><span class='fu'>list</span>(<span class='kw'>age</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>10</span>))
+
+
+<span class='fu'>roff</span>(<span class='no'>params</span>)
+<span class='fu'>rikhter</span>(<span class='no'>params</span>)
+<span class='fu'>rikhter2</span>(<span class='no'>params</span>)
+<span class='fu'>griffiths</span>(<span class='no'>params</span>)
+<span class='fu'>djababli</span>(<span class='no'>params</span>)
+<span class='fu'>jensen</span>(<span class='no'>params</span>)
+<span class='fu'>jensen2</span>(<span class='no'>params</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -169,7 +183,7 @@ $$M=\frac{\beta k}{e^{k(a_{50}-t_0)}-1}$$</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -177,3 +191,4 @@ $$M=\frac{\beta k}{e^{k(a_{50}-t_0)}-1}$$</p>
 
   </body>
 </html>
+

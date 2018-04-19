@@ -38,18 +38,19 @@
 #' }
 #' 
 setMethod("lhEql", signature(params='FLPar'),
-          function(params,
-            growth     =FLife::vonB,
-            m          =function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
-            mat        =FLife::logistic,
-            sel        =FLife::dnormal,
-            sr         ="bevholt",
-            range      =c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40),
-            spwn       =c(params["a50"]-floor(params["a50"])),
-            fish       = 0.5, # proportion of year when fishing happens
-            units=if("units" %in% names(attributes(params))) attributes(params)$units else NULL,
-            midyear    =0.5,
-            ...){
+  function(params, growth=FLife::vonB,
+    m = function(length,params)
+      exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
+    mat = FLife::logistic,
+    sel = FLife::dnormal,
+    sr = "bevholt",
+    range = c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40),
+    spwn = c(params["a50"]-floor(params["a50"])),
+    fish = 0.5, # proportion of year when fishing happens
+    units = if("units" %in% names(attributes(params))) attributes(params)$units
+      else NULL,
+    midyear = 0.5, ...){
+
   # Check that spwn and fish are [0, 1]
   if (any(spwn > 1) | any(spwn < 0) | any(fish > 1) | any(fish < 0))
     stop("spwn and fish must be in the range 0 to 1\n")
@@ -59,16 +60,16 @@ setMethod("lhEql", signature(params='FLPar'),
   if (("m.spwn" %in% names(args)))
     m.spwn =args[["m.spwn"]]
   else
-    m.spwn=FLQuant(spwn, dimnames=list(age=range["min"]:range["max"]))
+    m.spwn=FLQuant(spwn, dimnames=list(age=range["min"]:range["max"]), units="")
 
   if (("harvest.spwn" %in% names(args)))
     harvest.spwn =args[["harvest.spwn"]]
   else
-    harvest.spwn=FLQuant(spwn, dimnames=list(age=range["min"]:range["max"]))
+    harvest.spwn=FLQuant(spwn, dimnames=list(age=range["min"]:range["max"]), units="")
   
   age=FLQuant(range["min"]:range["max"],
               dimnames=list(age =range["min"]:range["max"],
-                            iter=dimnames(params)$iter))
+                            iter=dimnames(params)$iter), units="")
   # Get the lengths through different times of the year
   slen   <- growth(age+m.spwn,params) # slen is length at spawning time
   clen   <- growth(age+fish,  params) # clen is length when fishing happens
@@ -104,13 +105,13 @@ setMethod("lhEql", signature(params='FLPar'),
             discards.wt    =cwt,
             bycatch.wt     =cwt,
             m              =m.,
-            mat            =FLQuant(mat., dimnames=dimnames(m.)),
-            landings.sel   =FLQuant(sel., dimnames=dimnames(m.)),
-            discards.sel   =FLQuant(0,    dimnames=dimnames(m.)),
-            bycatch.harvest=FLQuant(0,    dimnames=dimnames(m.)),
-            harvest.spwn   =FLQuant(harvest.spwn,    dimnames=dimnames(m.)),
-            m.spwn         =FLQuant(m.spwn,    dimnames=dimnames(m.)),
-            availability   =FLQuant(1,    dimnames=dimnames(m.)),
+            mat            =FLQuant(mat., dimnames=dimnames(m.), units=""),
+            landings.sel   =FLQuant(sel., dimnames=dimnames(m.), units=""),
+            discards.sel   =FLQuant(0,    dimnames=dimnames(m.), units=""),
+            bycatch.harvest=FLQuant(0,    dimnames=dimnames(m.), units="f"),
+            harvest.spwn   =FLQuant(harvest.spwn, dimnames=dimnames(m.), units=""),
+            m.spwn         =FLQuant(m.spwn, dimnames=dimnames(m.), units=""),
+            availability   =FLQuant(1, dimnames=dimnames(m.), units=""),
             range          =range)
 
   ## FApex

@@ -1,10 +1,17 @@
 Package: FLife
 Type: Package
 Title: Methods for Modelling Life History Traits
+<<<<<<< HEAD
 Version: 3.1.0
 Date: 2017-09-18
 Authors@R: person(given = "Laurence", family = "Kell", role = c("aut", "cre"), 
              email = "laurie@seaplusplus.co.uk")
+=======
+Version: 3.0.0
+Date: 2018-04-17
+Authors@R: c(
+  person("Laurence T.", "Kell", email = "laurie@seaplusplus.co.uk", role = c("cre", "aut")))
+>>>>>>> e464012bbdbfd82fb436b1f65fbceb53cdc6c7f7
 Maintainer: Laurence Kell <laurie@seaplusplus.co.uk>
 Description: Many studies have shown the relationships between life history
     traits for processes such as growth, maturity and natural mortality. Life
@@ -14,6 +21,7 @@ Description: Many studies have shown the relationships between life history
 LazyData: true
 License: GPL (>= 2)
 Depends:
+<<<<<<< HEAD
     R(>= 3.1),
     FLCore (>= 2.6.6.9006),
 Imports:
@@ -30,6 +38,24 @@ Suggests:
     GGally,
     reshape,
     popbio
+=======
+  R(>= 3.1),
+  FLCore (>= 2.6.7)
+Imports:
+  FLRP(>= 1.0.0),
+  ggplotFL,
+  methods,
+  plyr
+Suggests:
+  ggplot2,
+  FLash(>= 2.5.7),
+  FLAssess,
+  testthat,
+  knitr,
+  GGally, 
+  reshape,
+  popbio
+>>>>>>> e464012bbdbfd82fb436b1f65fbceb53cdc6c7f7
 Additional_repositories: http://flr-project.org/R
 VignetteBuilder: knitr
 Collate:
