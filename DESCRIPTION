@@ -4,7 +4,7 @@ Title: Methods for Modelling Life History Traits
 Version: 3.1.0
 Date: 2017-09-18
 Authors@R: person(given = "Laurence", family = "Kell", role = c("aut", "cre"), 
-             email = "laurie@seaplusplus.co.uk"))
+             email = "laurie@seaplusplus.co.uk")
 Maintainer: Laurence Kell <laurie@seaplusplus.co.uk>
 Description: Many studies have shown the relationships between life history
     traits for processes such as growth, maturity and natural mortality. Life
