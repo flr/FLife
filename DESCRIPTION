@@ -3,8 +3,8 @@ Type: Package
 Title: Methods for Modelling Life History Traits
 Version: 3.1.0
 Date: 2017-09-18
-Author: c(person(given = "Laurence", family = "Kell", role = c("aut", "cre"),
-  email = "laurie@seaplusplus.co.uk"))
+Authors@R: person(given = "Laurence", family = "Kell", role = c("aut", "cre"), 
+             email = "laurie@seaplusplus.co.uk"))
 Maintainer: Laurence Kell <laurie@seaplusplus.co.uk>
 Description: Many studies have shown the relationships between life history
     traits for processes such as growth, maturity and natural mortality. Life
@@ -14,20 +14,20 @@ Description: Many studies have shown the relationships between life history
 LazyData: true
 License: GPL (>= 2)
 Depends:
-      R(>= 3.1),
-      FLCore (>= 2.6.6.9006),
-  Imports:
-      FLRP(>= 0.0.3),
-      methods,
-      plyr
-  Suggests:
-      ggplot2,
-      FLash(>= 2.5.7),
-      ggplotFL (>= 2.5.9.9003),
-      FLAssess,
+    R(>= 3.1),
+    FLCore (>= 2.6.6.9006),
+Imports:
+    FLRP(>= 0.0.3),
+    methods,
+    plyr
+Suggests:
+    ggplot2,
+    FLash(>= 2.5.7),
+    ggplotFL(>= 2.5.9.9003),
+    FLAssess,
     testthat,
     knitr,
-    GGally, 
+    GGally,
     reshape,
     popbio
 Additional_repositories: http://flr-project.org/R
@@ -40,16 +40,16 @@ Collate:
     gompertz.R
     richards.R
     ages.R
-    len2wt.R   
+    len2wt.R
     wt2len.R
     knife.R
     logistic.R
-    dnormal.R 
-    sigmoid.R  
+    dnormal.R
+    sigmoid.R
     gislason.R
     lorenzen.R
     mFn.R
-    fapex.R  
+    fapex.R
     elasticity.R
     lhPar.R
     lhEql.R
@@ -58,15 +58,15 @@ Collate:
     lh-indicators.R
     bench.R
     lh-srr-sv.R
-    cc.R      
-    powh.R   
-    noise.R  
-    stars.R   
-    m-dd.R      
-    mat-dd.R      
-    grw-dd.R  
-    moment.R  
-    pid.R    
+    cc.R
+    powh.R
+    noise.R
+    stars.R
+    m-dd.R
+    mat-dd.R
+    grw-dd.R
+    moment.R
+    pid.R
     util.R
     leslie.R
     calcR.R
@@ -87,4 +87,4 @@ Collate:
     funcs-MSE.R
     funcs-indicators.R
     plot-bivariate.R
-RoxygenNote: 6.0.1
+RoxygenNote: 5.0.1
