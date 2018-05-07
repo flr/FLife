@@ -27,22 +27,16 @@ opts_chunk$set(cache     =TRUE,
                fig.height=6,
                fig.width =8)
 
+options(digits=3)
+
 iFig=0
 ```
 
-
-```{r, pkgs, echo=FALSE, message=FALSE}
-library(ggplotFL)
-library(FLRP)
-library(FLife)
-library(plyr)
-library(popbio)
-
-theme_set(theme_bw())
-options(digits=3)
-```
-
 [](#top)
+
+[Back to Top](#top)
+
+[Packages](#Packages)
 
 [Quick Start](#Quick Start)
 
@@ -56,12 +50,45 @@ options(digits=3)
 
 [References](#References)
 
-
 Life history traits include growth rate; age and size at sexual maturity; the temporal pattern or schedule of reproduction; the number, size, and sex ratio of offspring; the distribution of intrinsic or extrinsic mortality rates (e.g., patterns of senescence); and patterns of dormancy and dispersal. These traits contribute directly to age-specific survival and reproductive functions.^[http://www.oxfordbibliographies.com/view/document/obo-9780199830060/obo-9780199830060-0016.xml] The **FLife** package has a variety of methods for modelling life history traits and functional forms for processes for use in fish stock assessment and for conducting Management Strategy Evaluation (MSE). 
 
 These relationships have many uses, for example in age-structured population models, functional relationships for these processes allow the calculation of the population growth rate and have been used to to develop priors in stock assesments and to parameterise ecological models. 
 
 The **FLife** package has methods for modelling functional forms, for simulating equilibrium `FLBRP` and dynamic stock objects `FLStock`.
+
+# Packages {#Packages}
+
+`FLife`, as with all FLR packages, is designed to use and augment a variety of other packages, e.g. `ggplot2` for plotting
+
+```{r, pkgs1}
+library(ggplot2)
+library(GGally)
+```
+
+`reshape` and `plyr` for data manipulation
+
+```{r, pkgs2, echo=FALSE, message=FALSE}
+library(reshape)
+library(plyr)
+```
+
+as well as the other FLR packages
+
+```{r, pkgs3, echo=FALSE, message=FALSE}
+library(FLCore)
+library(ggplotFL)
+
+library(FLRP)
+library(FLash)
+
+library(FLAssess)
+```
+
+and those such as `popbio` for analysing age or stage based population matrix models.
+
+```{r, pkgs4, echo=FALSE, message=FALSE}
+library(popbio)
+```
 
 [Back to Top](#top)
 
@@ -125,8 +152,6 @@ ggplot(as.data.frame(len))+
 ## Life History Parameters
 
 ```{r, pair-plot, fig.height=8,fig.cap="Relationship between life history parameters in the teleost dataset."}
-library(GGally)
-
 habitat=ifelse(attributes(teleost)$habitat=="demersal","Demersal","Other")
 
 my_smooth <- function(data,mapping,...){
@@ -386,7 +411,6 @@ refs(ple4)
 ## Simulation of equilibrium values and reference points
 
 ```{r, eql, echo=TRUE, fig.cap="Age-vectors of growthm natural mortality, maturity and selection pattern"}
-library(FLRP)
 eql=lhEql(par)
 
 ggplot(FLQuants(eql,"m","catch.sel","mat","catch.wt"))+
@@ -419,8 +443,6 @@ alb=lhPar(rbind(alb,FLPar(m1=0.15,m2=-0.288,s=0.75)))
 
 ## Stock recruitment relationships
 ```{r fig3,fig.cap="Stock recruitment relationships for a steepness of 0.75 and vigin biomass of 1000"}
-library(reshape)
-
 srr=as(list("Beverton and Holt"     =lhEql(alb,sr="bevholt"),
             "Ricker"                =lhEql(alb,sr="ricker"),
             "Cushing"               =lhEql(alb,sr="cushing"),
@@ -441,7 +463,6 @@ ggplot(melt(srr[,-5],id=c("year","ssb",".id")))+
   scale_colour_manual("Stock Recruit \n Relationship",
                       values=c("red","green","yellow","blue","pink"))+
   xlab("Spawning Stock Biomass")+ylab("Recruits")
-i=0
 ```
 
 ```{r fig4,fig.cap="Production curves, Yield v SSB, for a steepness of 0.75 and vigin biomass of 1000."}
@@ -496,9 +517,6 @@ Modelling density dependence in natural mortality and fecundity.
 
 
 ```{r, echo=TRUE, m-density-dependence,fig.cap="Density Dependence in M"}
-library(FLRP)
-library(FLife)
-
 data(teleost)
 par=teleost[,"Hucho hucho"]
 par=lhPar(par)
@@ -563,15 +581,13 @@ ggplot()+
 ```
 
 ```{r fig11, fig.height=6,fig.width=10}
-library(FLash)
-
 k   =1
 sr  ="cushing"
 s   =0.7
 alb  =teleost[c("linf","k","t0","l50","a","b"),"Thunnus alalunga"]
 alb  =lhPar(rbind(alb,FLPar(m1=0.3,m2=-0.288,s=s)))
 eq      =lhEql(alb,m=lorenzen,sr=sr)
-fbar(eq)=FLQuant(rep(1,1001)*refpts(eq)["msy","harvest"])
+fbar(eq)=FLQuant(rep(1,1001)*c(refpts(eq)["msy","harvest"]))
 f       =fbar(eq)[,-1]
 f       =propagate(fbar(eq)[,-1],3)
 f[,,,,,2]=0
@@ -609,7 +625,7 @@ alb  =teleost[c("linf","k","t0","l50","a","b"),"Thunnus alalunga"]
 alb  =lhPar(rbind(alb,FLPar(m1=0.3,m2=-0.288,s=s)))
 alb[c("a1","sr")]=c(0,5000)
 eq      =lhEql(alb,m=lorenzen,sr=sr)
-fbar(eq)=FLQuant(rep(1,1001)*refpts(eq)["msy","harvest"])
+fbar(eq)=FLQuant(rep(1,1001)*c(refpts(eq)["msy","harvest"]))
 
 f       =fbar(eq)[,-1]
 f       =propagate(fbar(eq)[,-1],3)
@@ -673,8 +689,6 @@ ggplot(dat,aes(freq,val,col=qname))+
 
 
 ```{r fig13, fig.width=10,fig.height=4,fig.cap="Cohort Effects"}
-library(FLAssess)
-
 stk   =iter(stkm[,101:250],1)
 m(stk)=iter(m(stkr),1)[,101:250]
 vpa    =stk+VPA(stk)
@@ -692,10 +706,6 @@ ggplot(subset(p$data,year>50))+
 
 ## MSE using empirical HCR
 ```{r fig14, fig.width=6,fig.height=8,fig.cap="MSE using empirical HCR"}
-library(FLife)
-library(FLash)
-library(FLRP)
-  
 par=lhPar(FLPar(linf=100))  
 eql=lhEql(par)
 mou=as(eql,"FLStock")
@@ -749,8 +759,6 @@ head(dat)
 
 
 ```{r}
-library(plyr)
-
 data(cas)
 pw=ddply(subset(cas), .(year), 
    function(cas) powh(cas$len,cas$n)$data)
