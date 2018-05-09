@@ -11,3 +11,6 @@ vignettes/*.pdf
 .Rproj.user
 issues
 FLife.Rproj
+stuff
+.Rbuildignore
+mystuff

@@ -17,13 +17,13 @@ Depends:
   R(>= 3.1),
   FLCore (>= 2.6.7)
 Imports:
-  FLRP(>= 1.0.1),
+  FLRP(>= 1.0.0),
   ggplotFL,
   methods,
   plyr
 Suggests:
   ggplot2,
-  FLash(>= 2.5.7),
+  FLasher,
   FLAssess,
   testthat,
   knitr,

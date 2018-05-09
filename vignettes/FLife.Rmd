@@ -1,7 +1,7 @@
 ---
 title: "Life History Relationships"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: pdf_document
+output: html_document
 vignette: >
   %\VignetteIndexEntry{FLife}
   %\VignetteEngine{knitr::rmarkdown}
@@ -17,7 +17,7 @@ license: Creative Commons Attribution-ShareAlike 4.0 International Public Licens
 library(knitr)
 ## Global options
 opts_chunk$set(cache     =TRUE,
-               echo      =!TRUE,
+               echo      =FALSE,
                eval      =TRUE,
                prompt    =FALSE,
                comment   =NA,
@@ -33,8 +33,6 @@ iFig=0
 ```
 
 [](#top)
-
-[Back to Top](#top)
 
 [Packages](#Packages)
 
@@ -60,33 +58,33 @@ The **FLife** package has methods for modelling functional forms, for simulating
 
 `FLife`, as with all FLR packages, is designed to use and augment a variety of other packages, e.g. `ggplot2` for plotting
 
-```{r, pkgs1}
+```{r, pkgs1, echo=TRUE}
 library(ggplot2)
 library(GGally)
 ```
 
 `reshape` and `plyr` for data manipulation
 
-```{r, pkgs2, echo=FALSE, message=FALSE}
+```{r, pkgs2, echo=TRUE}
 library(reshape)
 library(plyr)
 ```
 
 as well as the other FLR packages
 
-```{r, pkgs3, echo=FALSE, message=FALSE}
+```{r, pkgs3, echo=TRUE}
 library(FLCore)
 library(ggplotFL)
 
 library(FLRP)
-library(FLash)
+library(FLasher)
 
-library(FLAssess)
+#library(FLAssess)
 ```
 
 and those such as `popbio` for analysing age or stage based population matrix models.
 
-```{r, pkgs4, echo=FALSE, message=FALSE}
+```{r, pkgs4, echo=TRUE}
 library(popbio)
 ```
 
@@ -363,8 +361,6 @@ fit = glmnet(x, y)
 plot(fit, xvar = "lambda", label = TRUE)
 ```
 
-```
-
 #### Natural Mortality
 ```{r m-gislason}
 m=gislason(FLQuant(1:15,dimnames=list(age=1:15)),teleost)
@@ -434,7 +430,6 @@ data(teleost)
 #teleost=with(teleost,l50linf=l50/linf)
 teleost=rbind(teleost,l50linf=teleost["l50"]/teleost["linf"])
 dimnames(teleost)[[1]][7]="l50linf"
-
 
 alb=FLPar(unlist(teleost[,"Thunnus alalunga",
         c("linf","k","t0","l50","a","b")]))
@@ -581,12 +576,9 @@ ggplot()+
 ```
 
 ```{r fig11, fig.height=6,fig.width=10}
-k   =1
-sr  ="cushing"
-s   =0.7
 alb  =teleost[c("linf","k","t0","l50","a","b"),"Thunnus alalunga"]
-alb  =lhPar(rbind(alb,FLPar(m1=0.3,m2=-0.288,s=s)))
-eq      =lhEql(alb,m=lorenzen,sr=sr)
+alb  =lhPar(rbind(alb,FLPar(m1=0.3,m2=-0.288)))
+eq      =lhEql(alb,m=lorenzen,sr="cushing")
 fbar(eq)=FLQuant(rep(1,1001)*c(refpts(eq)["msy","harvest"]))
 f       =fbar(eq)[,-1]
 f       =propagate(fbar(eq)[,-1],3)
@@ -594,23 +586,40 @@ f[,,,,,2]=0
 f[,,,,,3]=f[,,,,,1]*4
 
 stkr=as(eq,"FLStock")
-units(harvest(stkr)) <- "f"
-stkr=fwd(stkr,f=f,sr=eq)
+```
+
+```{r}
+stkr=fwd( stkr,fbar=f,sr=eq)
+
 ref =stock.n(eq)[,1]
 ```
 
 ```{r fig11b, fig.height=6,fig.width=10}
-scale=rnoise(1,stock.wt(stkr),sd=0.3,b=0.9,what="cohort")
+scale=rnoise(1,iter(stock.wt(stkr),1),sd=0.3,b=0.9,what="cohort")
 stkm=stkr
+```
 
-m(  stkm)=mdd(iter(stock.wt(stkm),1),alb,scale,k) 
-stkm=fwd(stkm,f=f,sr=eq)
+```{r}
+m(stkm)=mdd(stock.wt(stkm),alb,scale,k) 
 
-scale=rnoise(1,stock.wt(stkm),sd=0.3,b=0.9,what="cohort")
+stkm=fwd( stkm,fbar=f,sr=eq)
+```
+
+```{r}
 stkf=stkr
-mat(stkf)=matdd(ages(stock.wt(stkf)),alb,scale,k,TRUE) 
-stkf=fwd(stkf,f=f,sr=eq)
-stkr=fwd(stkr,f=f,sr=eq,sr.residuals=rlnorm(1,iter(f,1)*0,.3))
+
+mat(stkf)=matdd(ages(iter(stock.wt(stkf),1)),alb,scale,k,TRUE) 
+```
+
+```{r}
+
+stkf=fwd( stkf,fbar=f,sr=eq)
+```
+
+```{r}
+stkr=fwd( stkr,fbar=f,sr=eq,
+         residuals=rlnorm(3,iter(f,1)*0,.3))
+
 dat =as.data.frame(FLQuants("SRR"=ssb(stkr),
                               "M"=ssb(stkm),
                               "Fecundity"=ssb(stkf)))
@@ -631,24 +640,43 @@ f       =fbar(eq)[,-1]
 f       =propagate(fbar(eq)[,-1],3)
 f[,,,,,2]=0
 f[,,,,,3]=f[,,,,,1]*4
+```
 
+```{r}
 stkr=as(eq,"FLStock")
-units(harvest(stkr)) <- "f"
-stkr=fwd(stkr,f=f,sr=eq)
+```
+
+```{r}
+catch.n(stkr)=propagate(catch.n(stkr),dims(f)$iter)
+stkr=fwd( stkr,fbar=f,sr=eq)
 ref =stock.n(eq)[,1]
 ```
 
 ```{r fig11d, fig.height=6,fig.width=10}
-scale=rnoise(1,stock.wt(stkr),sd=0.3,b=0.9,what="cohort")
+scale=rnoise(1,iter(stock.wt(stkr),1),sd=0.3,b=0.9,what="cohort")
 
 stkm=stkr
-m(  stkm)=mdd(iter(stock.wt(stkm),1),alb,scale,k) 
-stkm=fwd(stkm,f=f,sr=eq)
-scale=rnoise(1,stock.wt(stkm),sd=0.3,b=0.9,what="cohort")
+m(stkm)=mdd(iter(stock.wt(stkm),1),alb,scale,k) 
+
+stkm=fwd( stkm,fbar=f,sr=eq)
+```
+
+```{r}
+scale=rnoise(1,iter(stock.wt(stkm),1),sd=0.3,b=0.9,what="cohort")
 stkf=stkr
-mat(stkf)=matdd(ages(stock.wt(stkf)),alb,scale,k,TRUE) 
-stkf=fwd(stkf,f=f,sr=eq)
-stkr=fwd(stkr,f=f,sr=eq,sr.residuals=rlnorm(1,iter(f,1)*0,.3))
+mat(stkf)=matdd(ages(iter(stock.wt(stkf),1)),alb,scale,k,TRUE) 
+```
+
+```{r}
+stkf=fwd( stkf,fbar=f,sr=eq)
+```
+
+```{r}
+stkr=fwd( stkr,fbar=f,sr=eq,
+         residuals=rlnorm(1,iter(f,1)*0,.3))
+```
+
+```{r}
 dat =as.data.frame(FLQuants("SRR"=ssb(stkr),
                             "M"=ssb(stkm),
                             "Fecundity"=ssb(stkf)))
@@ -688,7 +716,7 @@ ggplot(dat,aes(freq,val,col=qname))+
 ```
 
 
-```{r fig13, fig.width=10,fig.height=4,fig.cap="Cohort Effects"}
+```{r fig13, fig.width=10,fig.height=4,fig.cap="Cohort Effects",eval=FALSE}
 stk   =iter(stkm[,101:250],1)
 m(stk)=iter(m(stkr),1)[,101:250]
 vpa    =stk+VPA(stk)
@@ -705,20 +733,90 @@ ggplot(subset(p$data,year>50))+
 ```
 
 ## MSE using empirical HCR
-```{r fig14, fig.width=6,fig.height=8,fig.cap="MSE using empirical HCR"}
-par=lhPar(FLPar(linf=100))  
-eql=lhEql(par)
-mou=as(eql,"FLStock")
-units(harvest(mou)) <- "f"
-mou=FLash::fwd(mou,f=fbar(eql)[,-1]/4,sr=eql)
+```{r}
+hcrSBT1=function(cpue,tac,k1=1.5,k2=3,gamma=1,nyrs=5,lag=1,interval=3){
   
-srDev=rlnorm(100,FLQuant(rep(0,136)),0.3)
+     dat=as.data.frame(cpue[,ac(-((nyrs-1):0)+dims(cpue)$maxyear)])
+     lambda=as.FLQuant(ddply(dat, .(iter), with,  data.frame(data=coefficients(lm(data~year))[2])))
+     
+     flag  =lambda<0
+     lambda=abs(lambda)
+  
+     res=1+ifelse(flag,-k1,k2)*lambda^ifelse(flag,gamma,1)
+     res=res%*%tac
+     
+     dmns=dimnames(tac)
+     dmns$year=as.integer(dmns$year)+lag+seq(interval)-1
+     dmns$iter=dimnames(cpue)$iter
+     
+     res=FLQuant(rep(c(res),each=interval),dimnames=dmns)
+     
+     return(res)}
+```
 
-om=FLife:::mseSBT1(mou,eql,srDev,
-             start=dims(mou)$maxyear,end=dims(mou)$maxyear+20,interval=3,
-             k1=1.5,k2=3.0,gamma=1,nyrs=5,   
-             uDev =0.2) 
+```{r fig14, fig.width=6,fig.height=8,fig.cap="MSE using empirical HCR"}
+par     =teleost[c("linf","k","t0","l50","a","b"),"Thunnus alalunga"]
+par     =lhPar(rbind(par,FLPar(m1=0.3,m2=-0.288)))
+eql     =lhEql(par,m=lorenzen)
+fbar(eql)=FLQuant(seq(101)/50.5*c(refpts(eql)["msy","harvest"]))
+
+om=as(eql,"FLStock")
+om=fwd(om,fbar=fbar(eql)[,-1],sr=eql)
+om=fwdWindow(om,end=131,eql)
+
+set.seed(1235)  
+srDev=rlnorm(100,FLQuant(rep(0,131)),0.3)
+uDev =rlnorm(100,FLQuant(rep(0,131)),0.3)
+
+#mseSBT1<-function(om,eql,srDev,uDev,
+                  
+                  ##hcr params
+                  k1=1.5;k2=3.0;gamma=1;nyrs=5;lag=1
+                  
+                  #years over which to run MSE
+                  start=range(om)["maxyear"]-30;interval=3;end=range(om)["maxyear"]-interval
+                  
+                  monitor=TRUE
+ #                 ){
   
+  ## Get number of iterations in OM
+  #if (dims(uDev)$iter!=dims(srDev)$iter) 
+  #  stop("Iters in srDev and uDev must match")
+  #nits=c(om=dims(om)$iter, sr=dims(params(eql))$iter, rsdl=dims(srDev)$iter)
+  
+  #if (length(unique(nits))>=2 & !(1 %in% nits)) 
+  #  ("Stop, iters not '1 or n' in OM")
+  #nits=max(nits)
+  nits=100
+  
+  stock(om)=propagate(computeStock(om),nits)
+  
+  #### Observation Error (OEM) setup #######################
+  ## Random variation for CPUE
+  cpue=window(computeStock(om),end=start)%*%window(uDev,end=start)
+
+  mn=apply(cpue,6,mean,na.rm=TRUE)
+  sd=apply(cpue,6,sd,  na.rm=TRUE)
+  
+  ## capacity can not be twice what was seen historically
+  effort_max=max(fbar(window(om,end=start)))*2
+  
+  ## Loop round years
+  tac=catch(om)[,ac(start-1)]
+  for (iYr in seq(start,end,interval)){
+    #if (monitor) cat('iYr, ')
+    
+    cpue=window(cpue,end=iYr)
+    cpue[,ac(iYr-(interval:1)+1)]=stock(om)[,ac(iYr-(interval:1)+1)]*uDev[,ac(iYr-(interval:1)+1)]
+        
+    tac=hcrSBT1((cpue%/%mn),tac,k1,k2,gamma,interval=interval)
+    
+    om <-fwd(om,catch=tac,sr=eql,residuals=srDev,effort_max=effort_max)
+    tac=tac[,interval]}
+  
+  #return(window(om,end=end))}
+
+
 ggplot()+
     geom_line(aes(year,data,col=iter),
               data=as.data.frame(FLQuants(iter(om[,ac(95:120)],5:7),c("Rec"=rec,"SSB"=ssb,

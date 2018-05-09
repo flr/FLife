@@ -183,8 +183,6 @@ setMethod("lhEql", signature(params='FLPar'),
 
   return(res)})
 
-
-
 #
 # setMethod('ab', signature(x='FLparams', model='character'),
 #   function(x, model, spr0=NA){
