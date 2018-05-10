@@ -1,20 +1,20 @@
-#' @title Elasticity analysis for reference points
+#' @title elas analysis for reference points
 #' 
 #' @description 
 #'
-#' Estimates elasticity
+#' Estimates elas
 #'  
 #' @param params parameters
 #' @param sel selection pattern
 #' @param fn user supplied function
 #' 
-#' @aliases elasticity-method
+#' @aliases elas-method
 #' 
-#' @return \code{FLPar} with elasticity of reference points by input parameters
+#' @return \code{FLPar} with elas of reference points by input parameters
 #' 
 #' @export
 #' @docType methods
-#' @rdname elasticity
+#' @rdname elas
 #'   
 #' @seealso \code{\link{lhPar}},  \code{\link{lhEql}},  \code{\link{lhRef}}    
 #'  
@@ -22,7 +22,7 @@
 #' \dontrun{
 #' #bug
 #' }
-elasticity=function(params,sel,fn){
+elas=function(params,sel,fn){
 
    elasFn=function(x,dmns,what,sel,fn) {
 
@@ -64,7 +64,7 @@ elasticity=function(params,sel,fn){
             
    return(res[,c("Year","Quantity","Type","Parameter","value")])}
 
-elasticity2=function(par,sel,fn){
+elas2=function(par,sel,fn){
 
    elasFn=function(x,dmns,sel,fn) {
 

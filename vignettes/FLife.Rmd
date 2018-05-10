@@ -23,7 +23,7 @@ opts_chunk$set(cache     =TRUE,
                comment   =NA,
                message   =FALSE,
                warning   =FALSE,
-               tidy      =FALSE,
+               tidy      =TRUE,
                fig.height=6,
                fig.width =8)
 
@@ -159,7 +159,7 @@ my_smooth <- function(data,mapping,...){
 
 my_density <- function(data,mapping,...){
   ggplot(data=data,mapping=mapping)+
-  geom_density(...,lwd=1)}
+  geom_density(...,lwd=1,alpha=0.5)}
 
 ggpairs(cbind(transform(model.frame(teleost)[,-c(7)],linf=log(linf),k=log(k),l50=log(l50)),
                   "habitat"=habitat),
@@ -611,7 +611,7 @@ stkm=stkr
 ```
 
 ```{r}
-m(stkm)=mdd(stock.wt(stkm),alb,scale,k) 
+m(stkm)=mdd(stock.wt(stkm),alb,scale) 
 
 stkm=fwd( stkm,fbar=f,sr=eq)
 ```
@@ -619,7 +619,7 @@ stkm=fwd( stkm,fbar=f,sr=eq)
 ```{r}
 stkf=stkr
 
-mat(stkf)=matdd(ages(iter(stock.wt(stkf),1)),alb,scale,k,TRUE) 
+mat(stkf)=matdd(ages(iter(stock.wt(stkf),1)),alb,scale) 
 ```
 
 ```{r}
