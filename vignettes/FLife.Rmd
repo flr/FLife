@@ -166,6 +166,7 @@ ggpairs(cbind(transform(model.frame(teleost)[,-c(7)],linf=log(linf),k=log(k),l50
   mapping = ggplot2::aes(color=habitat),
   lower = list(continuous = wrap(my_smooth)),
   diag=list(continuous=wrap(my_density,alpha=0.2)),
+  upper = list(continuous = wrap("cor", size = 3, hjust=0.8)),
   title = "")+
   theme(legend.position ="none",
   panel.grid.major =element_blank(),
