@@ -43,7 +43,8 @@ utils::globalVariables(c("cast"))
 # 1 & x \ge 0
 # \end{array}
 # \right. }{ (non-Latex version) }
-lhPar=function(params,t0=-0.1,a=0.0003,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
+lhPar=function(params,t0=function(params)-exp(-0.3922-0.2752*log(params["linf"])%-%(1.038*log(params["k"]))),
+                       a=0.0003,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
  
   if("data.frame"%in%class(params)) params=mf2FLPar(params)
  
@@ -51,7 +52,6 @@ lhPar=function(params,t0=-0.1,a=0.0003,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
     
     names(dimnames(params)) <- tolower(names(dimnames(params)))
     
-    if (!("t0"    %in% dimnames(params)$params)) params=addpar(params,"t0", t0)
     if (!("a"     %in% dimnames(params)$params)) params=addpar(params,"a",   a)
     if (!("b"     %in% dimnames(params)$params)) params=addpar(params,"b",   b)
     if (!("bg"    %in% dimnames(params)$params)) {
@@ -66,6 +66,8 @@ lhPar=function(params,t0=-0.1,a=0.0003,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
   
       params=rbind(params,kpar) # From Gislason et al 2008, all species combined
       }
+    
+    if (!("t0"    %in% dimnames(params)$params)) params=addpar(params,"t0", t0(params))
     
     # Natural mortality parameters from Model 2, Table 1 Gislason 2010
     if (!all(c("m1","m2")%in%dimnames(params)$params)){

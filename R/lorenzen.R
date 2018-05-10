@@ -1,6 +1,6 @@
 #' lorenzen
 #'
-#' Lorenzen natural mortality relatoinship estimate M as a function of weight. 
+#' Lorenzen natural mortality relationship estimate M as a function of weight. 
 #' M=a*wt^b; 
 #' 
 #' @param wt  mass at which M is to be predicted

@@ -1,4 +1,3 @@
-
 #' @title Derives an \code{FLRP} from life history parameters
 #' 
 #' @description 

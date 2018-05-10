@@ -437,6 +437,17 @@ alb=lhPar(rbind(alb,FLPar(m1=0.15,m2=-0.288,s=0.75)))
 ```
 
 ## Stock recruitment relationships
+
+bevholt
+$r = \frac{aS}{b + ssb}$
+
+ricker
+$r = aSe^{-bS}$
+
+cushing
+$r=aS^b$
+
+
 ```{r fig3,fig.cap="Stock recruitment relationships for a steepness of 0.75 and vigin biomass of 1000"}
 srr=as(list("Beverton and Holt"     =lhEql(alb,sr="bevholt"),
             "Ricker"                =lhEql(alb,sr="ricker"),
