@@ -17,6 +17,7 @@ license: Creative Commons Attribution-ShareAlike 4.0 International Public Licens
 library(knitr)
 ## Global options
 opts_chunk$set(cache     =TRUE,
+               cache.path="../cache/FLife/",
                echo      =FALSE,
                eval      =TRUE,
                prompt    =FALSE,
@@ -28,6 +29,7 @@ opts_chunk$set(cache     =TRUE,
                fig.width =8)
 
 options(digits=3)
+
 
 iFig=0
 ```
@@ -590,7 +592,7 @@ ggplot()+
 ```{r fig11, fig.height=6,fig.width=10}
 alb  =teleost[c("linf","k","t0","l50","a","b"),"Thunnus alalunga"]
 alb  =lhPar(rbind(alb,FLPar(m1=0.3,m2=-0.288)))
-eq      =lhEql(alb,m=lorenzen,sr="cushing")
+eq      =lhEql(alb,m=lorenzen,sr="bevholt")
 fbar(eq)=FLQuant(rep(1,1001)*c(refpts(eq)["msy","harvest"]))
 f       =fbar(eq)[,-1]
 f       =propagate(fbar(eq)[,-1],3)
@@ -601,7 +603,7 @@ stkr=as(eq,"FLStock")
 ```
 
 ```{r}
-stkr=fwd( stkr,fbar=f,sr=eq)
+stkr=fwd(stkr,fbar=fbar(eq)[,-1],sr=eq)
 
 ref =stock.n(eq)[,1]
 ```
