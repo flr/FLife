@@ -1,4 +1,4 @@
-if (FALSE){
+if (!FALSE){
 #### Indicators ################################################################
 setGeneric("mnSwt", function(object,...)
    standardGeneric("mnSwt"))

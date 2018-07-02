@@ -138,8 +138,8 @@ setMethod("lhEql", signature(params='FLPar'),
   
   if (dims(params)$iter>1) {
 
-    warning("Scarab, iters dont work for SRR:sv/ab etc")
-    warning("Should be no need to specify mode of FLPar element")
+    #warning("Scarab, iters dont work for SRR:sv/ab etc")
+    #warning("Should be no need to specify mode of FLPar element")
   
     if (sr=="shepherd")
       params(res)=FLPar(c(a=as.numeric(NA),b=as.numeric(NA),c=as.numeric(NA)),iter=dims(params)$iter)
@@ -148,13 +148,12 @@ setMethod("lhEql", signature(params='FLPar'),
    
     for (i in seq(dims(params)$iter))
       if (sr=="shepherd")
-        params(res)[,i][]=unlist(c(FLCore::ab(params[c("s","v","c"),i],sr,spr0=FLCore::iter(spr0(res),i))[c("a","b","c")]))
+        params(res)[,i][]=unlist(c(FLCore::ab(params[c("s","v","c"),i],sr,spr0=iter(spr0(res),i))[c("a","b","c")]))
       else
-        params(res)[,i][]=unlist(c(FLCore::ab(params[c("s","v"),i],sr,spr0=FLCore::iter(spr0(res),i))[c("a","b")]))
-    print(1)    
+        params(res)[,i][]=unlist(c(FLCore::ab(params[c("s","v"),i],sr,spr0=iter(spr0(res),i))[c("a","b")]))  
     
-    warning("iter(params(res),i)=ab(params[c(s,v),i],sr,spr0=iter(spr0(res),i))[c(a,b)] assignment doesnt work")
-    warning("iter(FLRP,i) doesn't work")
+    #warning("iter(params(res),i)=ab(params[c(s,v),i],sr,spr0=iter(spr0(res),i))[c(a,b)] assignment doesnt work")
+    #warning("iter(FLRP,i) doesn't work")
   }else{
     
     if (sr=="shepherd"){

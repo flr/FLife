@@ -88,4 +88,6 @@ Collate:
     funcs-MSE.R
     funcs-indicators.R
     plot-bivariate.R
+    reverse.R
+    runs.R
 RoxygenNote: 5.0.1

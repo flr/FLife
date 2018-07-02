@@ -40,7 +40,7 @@ utils::globalVariables("growth")
 setMethod("lopt", signature(params="FLPar"),
        function(params,
                 m=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
-                growth=vonB,
+                growth=FLife:::vonB,
                 ...){   
             dmns=dimnames(params)
             dmns$params="lopt"
