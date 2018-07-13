@@ -59,13 +59,13 @@ setMethod("lhEql", signature(params='FLPar'),
   if (("m.spwn" %in% names(args)))
     m.spwn =args[["m.spwn"]]
   else
-    m.spwn=FLQuant(spwn, dimnames=list(age=range["min"]:range["max"]), units="")
+    m.spwn=FLQuant(rep(spwn,each=length(range["min"]:range["max"])), dimnames=list(age=range["min"]:range["max"],iter=seq(length(spwn))), units="")
 
   if (("harvest.spwn" %in% names(args)))
     harvest.spwn =args[["harvest.spwn"]]
   else
-    harvest.spwn=FLQuant(spwn, dimnames=list(age=range["min"]:range["max"]), units="")
-  
+    harvest.spwn=FLQuant(rep(spwn,each=length(range["min"]:range["max"])), dimnames=list(age=range["min"]:range["max"],iter=seq(length(spwn))), units="")
+
   age=FLQuant(range["min"]:range["max"],
               dimnames=list(age =range["min"]:range["max"],
                             iter=dimnames(params)$iter), units="")

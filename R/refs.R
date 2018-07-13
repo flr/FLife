@@ -160,7 +160,7 @@ old<-function(object,s=NULL){
   res[,"r.current"]=c(params(eql1))
   FLife:::mf2FLPar(res)}
 
-
+### r conditional on maturity so comparable across stocks
 new<-function(object,s=NULL,recent=3){
   
   warn=options()$warn

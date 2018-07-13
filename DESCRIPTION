@@ -90,4 +90,8 @@ Collate:
     plot-bivariate.R
     reverse.R
     runs.R
+    frules.R
+    oemLfq.R
+    omOut.R
+    priors.R
 RoxygenNote: 5.0.1

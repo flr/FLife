@@ -44,7 +44,7 @@ utils::globalVariables(c("cast"))
 # \end{array}
 # \right. }{ (non-Latex version) }
 lhPar=function(params,t0=function(params)-exp(-0.3922-0.2752*log(params["linf"])%-%(1.038*log(params["k"]))),
-                       a=0.0003,b=3,ato95=1,sl=2,sr=5000,s=0.9,v=1000){
+                       a=0.0003,b=3,ato95=1,sl=1,sr=5000,s=0.9,v=1000){
  
   if("data.frame"%in%class(params)) params=mf2FLPar(params)
  
@@ -103,7 +103,7 @@ lhPar=function(params,t0=function(params)-exp(-0.3922-0.2752*log(params["linf"])
       }
   
     ## selectivity guestimate
-    a1=params["a50"]
+    a1=params["a50"]%+%params["ato95"]
    
     dimnames(a1)$params="a1"
    
