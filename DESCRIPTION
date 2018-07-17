@@ -17,7 +17,7 @@ Depends:
   R(>= 3.1),
   FLCore (>= 2.6.7)
 Imports:
-  FLRP(>= 1.0.0),
+  FLBRP,
   ggplotFL,
   methods,
   plyr,
