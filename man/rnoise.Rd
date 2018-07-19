@@ -2,10 +2,10 @@
 % Please edit documentation in R/noise.R
 \docType{methods}
 \name{rnoise,numeric,FLQuant-method}
-\alias{rnoise}
 \alias{rnoise,numeric,FLQuant-method}
-\alias{rnoise,numeric,missing-method}
+\alias{rnoise}
 \alias{rnoise-method}
+\alias{rnoise,numeric,missing-method}
 \title{Random noise with different frequencies}
 \usage{
 \S4method{rnoise}{numeric,FLQuant}(n = n, len = len, sd = 0.3, b = 0,
@@ -73,4 +73,3 @@ vt = b * vt-1 + s * sqrt(1 - b^2)
 s is normally distributed random variable with mean = 0
 b is the autocorrelation parameter
 }
-

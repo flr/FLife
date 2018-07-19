@@ -26,4 +26,3 @@ A dataset containing life history parameters for a range of teleost species
 \seealso{
 \code{\link{teleost}}
 }
-

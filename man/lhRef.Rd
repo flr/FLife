@@ -33,7 +33,7 @@ time reproductive output (srp0) and reproductive output at B~{MSY} (sprmsy)
 }
 \examples{
 \dontrun{
-library(FLRP)
+library(FLBRP)
 params=FLPar(linf=100,t0=0,k=.4)
 params=lhPar(params)
 lhRef(params)
@@ -42,4 +42,3 @@ lhRef(params)
 \seealso{
 \code{\link{lhPar}}, \code{\link{lhEql}}
 }
-

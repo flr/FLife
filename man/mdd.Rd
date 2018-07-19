@@ -2,8 +2,8 @@
 % Please edit documentation in R/m-dd.R
 \docType{methods}
 \name{mdd,FLQuant,FLPar-method}
-\alias{mdd}
 \alias{mdd,FLQuant,FLPar-method}
+\alias{mdd}
 \alias{mdd-method}
 \title{mdd}
 \usage{
@@ -51,7 +51,7 @@ Combining the two functions gives
 }
 \examples{
 \dontrun{
-library(FLRP)
+library(FLBRP)
 library(FLife)
 
 data(teleost)
@@ -75,4 +75,3 @@ m=mdd(stock.wt(hutchen),params=FLPar(m1=3,m2=-0.288),scale,k=1.2,m=lorenzen)
 \seealso{
 \code{\link{lorenzen}}
 }
-

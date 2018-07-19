@@ -60,7 +60,7 @@ testObjects[["lhEql"]]=refpts(lhEql(lhPar(FLPar(linf=100))))["msy","yield"]
 testObjects[["lhPar"]]=lhPar(FLPar(linf=200))
 
 #lhRef
-library(FLRP)
+library(FLBRP)
 params=FLPar(linf=100,t0=0,k=.4)
 params=lhPar(params)
 testObjects[["lhRef"]]=lhRef(params)

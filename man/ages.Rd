@@ -2,10 +2,10 @@
 % Please edit documentation in R/ages.R
 \docType{methods}
 \name{ages,FLQuant-method}
-\alias{ages}
-\alias{ages,FLCohort-method}
 \alias{ages,FLQuant-method}
+\alias{ages}
 \alias{ages-method}
+\alias{ages,FLCohort-method}
 \title{Fills an \code{FLQuant} with ages}
 \usage{
 \S4method{ages}{FLQuant}(object)
@@ -29,4 +29,3 @@ ages(m(ple4))}
 \seealso{
 \code{\link{knife}} \code{\link{gascuel}} \code{\link{sigmoid}} \code{\link{gompertz}} \code{\link{vonB}} \code{\link{dnormal}} \code{\link{logistic}}
 }
-

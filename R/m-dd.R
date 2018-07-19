@@ -42,7 +42,7 @@
 #'  
 #' @examples
 #' \dontrun{
-#' library(FLRP)
+#' library(FLBRP)
 #' library(FLife)
 #' 
 #' data(teleost)

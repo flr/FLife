@@ -4,15 +4,15 @@ Title: Methods for Modelling Life History Traits
 Version: 3.2.0
 Date: 2018-04-18
 Authors@R: person(given = "Laurence", family = "Kell", role = c("aut", "cre"), 
-             email = "laurie@seaplusplus.co.uk")
+  email = "laurie@seaplusplus.co.uk")
 Maintainer: Laurence Kell <laurie@seaplusplus.co.uk>
 Description: Many studies have shown the relationships between life history
-    traits for processes such as growth, maturity and natural mortality. Life
-          history has been used to develop priors in stock assesments and to parameterise
-          ecological models. Package has a variety of methods for modelling life history
-          traits and processes.
-      LazyData: true
-      License: GPL (>= 2)
+  traits for processes such as growth, maturity and natural mortality. Life
+  history has been used to develop priors in stock assesments and to parameterise
+  ecological models. Package has a variety of methods for modelling life history
+  traits and processes.
+LazyData: true
+License: GPL (>= 2)
 Depends:
   R(>= 3.1),
   FLCore (>= 2.6.7)
@@ -94,4 +94,4 @@ Collate:
     oemLfq.R
     omOut.R
     priors.R
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

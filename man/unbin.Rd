@@ -21,4 +21,3 @@ For a vector with labels corresponding to intervals i.e. \code{"(0,10]"}
 x=summary(cut(runif(100),seq(0,1,.1)))
 unbin(x)
 }
-
