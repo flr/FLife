@@ -1,3 +1,7 @@
+nms=c("iter","year","ssb","stock","rec","catch","catchjuv","fbar",
+      "crash_harvest","virgin_rec","virgin_ssb","msy_harvest","msy_ssb","msy_yield","rec_hat",
+      "swt","cwt","sage","cage","sln","cln") 
+
 omStock<-function(object){
   sage<-function(object) apply(stock.n(object)%*%ages(stock.n(object)),2:6,sum)%/%
                            apply(stock.n(object),2:6,sum)
@@ -15,8 +19,9 @@ omStock<-function(object){
   
   catchJuv<-function(object) apply(catch.n(object)%*%(1-mat(object))%*%catch.wt(object),2:6,sum)
 
-  res=FLQuants(object,"ssb"=ssb,"stock"=stock,"rec"=recs,"catch"=catch,"fbar"=fbar,
-                      "swt"=swt,"cwt"=cwt,"sage"=sage,"cage"=cage,"catchJuv"=catchJuv)
+  res=FLQuants(object,"ssb"=ssb,"stock"=FLCore:::stock,"rec"=recs,"catch"=FLCore:::catch,"catchjuv"=catchJuv,
+                      "fbar"=fbar,
+                      "swt"=swt,"cwt"=cwt,"sage"=sage,"cage"=cage)
   
   model.frame(mcf(res),drop=TRUE)}
 
@@ -34,14 +39,24 @@ omSmry<-function(x,y="missing",z="missing"){
   
   res=omStock(x)
   
-  if ("FLBRP" %in% is(y))
+  if ("FLBRP" %in% is(y)){
     res=merge(res,omRefs(refpts(y)))
+    rec=as.data.frame((params(y)["a"]%*%ssb(x))%/%(params(y)["b"]%+%ssb(x)),drop=T)
+    
+    names(rec)[(seq(dim(rec)[2]))[names(rec)=="data"]]="rec_hat"
+    res=merge(res,rec)
+    }
   else if ("FLPar" %in% is(y))  
     res=merge(res,omRefs(y))
   
   if ("FLPar" %in% is(z))
     if (all(c("a","b") %in% dimnames(z)$params))
       res=merge(res,lenFn(x,z))
+
+  res=res[,nms[names(res)%in%nms]]
+  
+  res=res[do.call(order,res[,c("iter","year")]),]
+
   return(res)}
 
 lenFn<-function(x,y){
