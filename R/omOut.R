@@ -53,7 +53,7 @@ omSmry<-function(x,y="missing",z="missing"){
     if (all(c("a","b") %in% dimnames(z)$params))
       res=merge(res,lenFn(x,z))
 
-  res=res[,nms[names(res)%in%nms]]
+  res=res[,names(res)[names(res)%in%nms]]
   
   res=res[do.call(order,res[,c("iter","year")]),]
 
