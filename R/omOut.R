@@ -1,7 +1,3 @@
-nms=c("iter","year","ssb","stock","rec","catch","catchjuv","fbar",
-      "crash_harvest","virgin_rec","virgin_ssb","msy_harvest","msy_ssb","msy_yield","rec_hat",
-      "swt","cwt","sage","cage","sln","cln") 
-
 omStock<-function(object){
   sage<-function(object) apply(stock.n(object)%*%ages(stock.n(object)),2:6,sum)%/%
                            apply(stock.n(object),2:6,sum)
@@ -36,6 +32,10 @@ omRefs<-function(object){
 
 
 omSmry<-function(x,y="missing",z="missing"){
+  
+  nms=c("iter","year","ssb","stock","rec","catch","catchjuv","fbar",
+        "crash_harvest","virgin_rec","virgin_ssb","msy_harvest","msy_ssb","msy_yield","rec_hat",
+        "swt","cwt","sage","cage","sln","cln") 
   
   res=omStock(x)
   

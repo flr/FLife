@@ -44,8 +44,8 @@ setMethod("lhEql", signature(params='FLPar'),
     sel = FLife::dnormal,
     sr = "bevholt",
     range = c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40),
-    spwn = c(params["a50"]-floor(params["a50"])),
-    fish = 0.5, # proportion of year when fishing happens
+    spwn  = 0, #c(params["a50"]-floor(params["a50"])),
+    fish  = 0.5, # proportion of year when fishing happens
     units = if("units" %in% names(attributes(params))) attributes(params)$units
       else NULL,
     midyear = 0.5, ...){
