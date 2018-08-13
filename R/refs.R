@@ -29,7 +29,7 @@
 #' \dontrun{
 #' 
 #'  library(FLCore)
-#'  library(FLRP)
+#'  library(FLBRP)
 #'  library(ggplotFL)
 #'  library(FLife)
 #'  library(popbio)

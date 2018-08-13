@@ -2,8 +2,8 @@
 % Please edit documentation in R/lopt.R
 \docType{methods}
 \name{loptAge,FLPar-method}
-\alias{loptAge}
 \alias{loptAge,FLPar-method}
+\alias{loptAge}
 \alias{loptAge-method}
 \title{Age at maximum biomass}
 \usage{
@@ -30,7 +30,7 @@ There are several ways to calculate \eqn{L_{opt}}, i.e.
 i) \eqn{{2/3}^{rds}  L_{\infty}}
 ii) \eqn{L_{\infty}\frac{3}{3+k/m}}
 iii) by maximising the biomass of
-iv) from an FLRP object by fishing at F=0 and finding age where biomass is a maximum
+iv) from an FLBRP object by fishing at F=0 and finding age where biomass is a maximum
 }
 \examples{
 \dontrun{
@@ -41,4 +41,3 @@ loptAge(params)
 \seealso{
 \code{\link{loptAge}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}},
 }
-

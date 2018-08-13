@@ -1,6 +1,6 @@
 # FLife
-- Version: 3.0.0
-- Date: 2018-04-17
+- Version: 3.2.1
+- Date: 2018-07-19
 - Author: %USER%
 - Maintainer: %USER2% <laurie@seaplusplus.co.uk>
 - Repository: <https://github.com/flr/FLife/>

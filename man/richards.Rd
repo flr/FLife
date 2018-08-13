@@ -2,14 +2,14 @@
 % Please edit documentation in R/richards.R
 \docType{methods}
 \name{richards,FLQuant,FLPar-method}
-\alias{richards}
-\alias{richards,FLPar,FLPar-method}
 \alias{richards,FLQuant,FLPar-method}
+\alias{richards}
+\alias{richards-method}
+\alias{richards,FLPar,FLPar-method}
 \alias{richards,FLQuant,numeric-method}
 \alias{richards,missing,FLPar-method}
-\alias{richards,numeric,FLPar-method}
 \alias{richards,numeric,numeric-method}
-\alias{richards-method}
+\alias{richards,numeric,FLPar-method}
 \title{Richards growth curve}
 \usage{
 \S4method{richards}{FLQuant,FLPar}(age, params, ...)
@@ -36,4 +36,3 @@ len=richards(age,FLPar(linf=100,k=.4,b=.1,m=2))
 \seealso{
 \code{\link{vonB}}, \code{\link{gompertz}}, \code{\link{gascuel}}
 }
-

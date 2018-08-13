@@ -53,7 +53,7 @@ ldex<-function(object,cv=0.3,nsample=100){
 if (FALSE){
   library(ggplot2)
   library(ggplotFL)
-  library(FLRP)
+  library(FLBRP)
   library(FLife)
   library(mvtnorm)
   
@@ -76,7 +76,7 @@ ggplot(as.data.frame(idx[[3]]))+
 }
 
 if (FALSE){
-  library(FLRP)
+  library(FLBRP)
   library(FLife)
   
   par=lhPar(FLPar(linf=100))

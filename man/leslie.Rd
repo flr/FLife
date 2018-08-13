@@ -2,8 +2,8 @@
 % Please edit documentation in R/leslie.R
 \docType{methods}
 \name{leslie,FLBRP-method}
-\alias{leslie}
 \alias{leslie,FLBRP-method}
+\alias{leslie}
 \alias{leslie-method}
 \title{Leslie matrix}
 \usage{
@@ -33,4 +33,3 @@ leslie(eql)
 \seealso{
 \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}}
 }
-

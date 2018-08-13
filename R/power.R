@@ -24,7 +24,7 @@ if (FALSE){
   library(plyr)
   library(FLCore)
   library(ggplotFL)
-  library(FLRP)
+  library(FLBRP)
   library(FLash)
   
   

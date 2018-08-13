@@ -79,7 +79,7 @@ as well as the other FLR packages
 library(FLCore)
 library(ggplotFL)
 
-library(FLRP)
+library(FLBRP)
 library(FLasher)
 
 #library(FLAssess)
@@ -626,10 +626,6 @@ mat(stkf)=rlnoise(1,log(iter(mat(stk),1)),sd=0.3,b=0.9,what="year")
 stkf     =fwd(stkf,fbar=fbar(stk)[,-1],sr=eq)
 ```
 
-```{r,eval=FALSE}
-save(stkr,stkm,stkf,file="/home/laurence/Desktop/tmp/stk.RData")
-```
-
 ```{r ssbNoise, fig.height=6,fig.width=10}
 dat =as.data.frame(FLQuants("SRR"       =ssb(stkr),
                              "M"        =ssb(stkm),
@@ -674,10 +670,6 @@ stkf     =stk
 #mat(stkf)=matdd(ages(iter(stock.wt(stkf),1)),alb,scale) 
 mat(stkf)=rlnoise(1,log(iter(mat(stk),1)),sd=0.3,b=0.9,what="cohort")
 stkf     =fwd(stkf,fbar=fbar(stk)[,-1],sr=eq)
-```
-
-```{r}
-save(stkr,stkm,stkf,file="/home/laurence/Desktop/tmp/stkar.RData")
 ```
 
 ```{r ssbAR, fig.height=6,fig.width=10}

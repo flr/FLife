@@ -2,12 +2,12 @@
 % Please edit documentation in R/lorenzen.R
 \docType{methods}
 \name{lorenzen,FLQuant,FLPar-method}
-\alias{lorenzen}
 \alias{lorenzen,FLQuant,FLPar-method}
+\alias{lorenzen}
+\alias{lorenzen-method}
 \alias{lorenzen,FLQuant,missing-method}
 \alias{lorenzen,FLQuant,numeric-method}
 \alias{lorenzen,numeric,missing-method}
-\alias{lorenzen-method}
 \title{lorenzen}
 \usage{
 \S4method{lorenzen}{FLQuant,FLPar}(wt, params, ...)
@@ -21,7 +21,7 @@ and b a power term; defaults are a=0.3 and b=-0.288}
 \item{...}{any other arguments}
 }
 \description{
-Lorenzen natural mortality relatoinship estimate M as a function of weight. 
+Lorenzen natural mortality relationship estimate M as a function of weight. 
 M=a*wt^b;
 }
 \examples{
@@ -35,4 +35,3 @@ lorenzen(mass)
 \seealso{
 \code{\link{gislason}}
 }
-

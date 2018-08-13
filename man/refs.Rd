@@ -2,8 +2,8 @@
 % Please edit documentation in R/refs.R
 \name{refs}
 \alias{refs}
-\alias{refs,FLStock-method}
 \alias{refs-method}
+\alias{refs,FLStock-method}
 \title{refs}
 \usage{
 refs(object, ...)
@@ -36,7 +36,7 @@ the average recruitment.
 \dontrun{
 
  library(FLCore)
- library(FLRP)
+ library(FLBRP)
  library(ggplotFL)
  library(FLife)
  library(popbio)
@@ -47,4 +47,3 @@ the average recruitment.
  refs(ple4)
 } 
 }
-

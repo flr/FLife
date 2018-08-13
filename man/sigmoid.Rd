@@ -2,12 +2,12 @@
 % Please edit documentation in R/sigmoid.R
 \docType{methods}
 \name{sigmoid,FLQuant,FLPar-method}
-\alias{sigmoid}
-\alias{sigmoid,FLPar,FLPar-method}
 \alias{sigmoid,FLQuant,FLPar-method}
+\alias{sigmoid}
+\alias{sigmoid-method}
+\alias{sigmoid,FLPar,FLPar-method}
 \alias{sigmoid,FLQuant,numeric-method}
 \alias{sigmoid,numeric,numeric-method}
-\alias{sigmoid-method}
 \title{Sigmoid ogive}
 \usage{
 \S4method{sigmoid}{FLQuant,FLPar}(age, params, ...)
@@ -41,4 +41,3 @@ sigmoid(age,params)
 
 \code{\link{dnormal},\link{knife}}
 }
-

@@ -21,13 +21,19 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Function reference" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -50,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">FLife</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">FLife</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">3.2.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -77,6 +87,7 @@
   <a href="http://flr-project.org/">FLR</a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -84,250 +95,246 @@
       
       </header>
 
-      <div class="row">
-  <div class="col-md-9">
+<div class="row">
+  <div class="contents col-md-9">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;3.0.0</small>
-      </h1>
+      <h1>Reference</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    <table class="ref-index">
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <colgroup>
+      
+      <col class="alias" />
+      <col class="title" />
+    </colgroup>
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ages.html">ages</a></code> </p>
-          </td>
-          <td><p>Fills an <code>FLQuant</code> with ages</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="cas.html">cas</a></code> </p>
-          </td>
-          <td><p>cas</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="cc.html">cc</a></code> </p>
-          </td>
-          <td><p>Catch curve analysis</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="dnormal.html">dnormal</a></code> </p>
-          </td>
-          <td><p>Double normal ogive</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="elasticity.html">elasticity</a></code> </p>
-          </td>
-          <td><p>Elasticity analysis for reference points</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="gascuel.html">gascuel</a></code> </p>
-          </td>
-          <td><p>Gascuel growth curve</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="gislason.html">gislason</a></code> </p>
-          </td>
-          <td><p>gislason</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="gompertz.html">gompertz</a></code> </p>
-          </td>
-          <td><p>Gompertz growth equation</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="grwdd.html">grwdd</a></code> </p>
-          </td>
-          <td><p>grwdd</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="knife.html">knife</a></code> </p>
-          </td>
-          <td><p>knife edge ogive</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="lambda.html">r</a></code> </p>
-          </td>
-          <td><p>Population growth rate</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="len2wt.html">len2wt</a></code> </p>
-          </td>
-          <td><p>Length to weight conversion</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="leslie.html">leslie</a></code> </p>
-          </td>
-          <td><p>Leslie matrix</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="lhEql.html">lhEql</a></code> </p>
-          </td>
-          <td><p>Derives an <code>FLRP</code> from life history parameters</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="lhPar.html">lhPar</a></code> </p>
-          </td>
-          <td><p>Generates life history parameters</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="lhRef.html">lhRef</a></code> </p>
-          </td>
-          <td><p>Reference points based on life histories</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="logistic.html">logistic</a></code> </p>
-          </td>
-          <td><p>logistic</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="lopt.html">lopt</a></code> </p>
-          </td>
-          <td><p>Lopt</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="loptAge.html">loptAge</a></code> </p>
-          </td>
-          <td><p>Age at maximum biomass</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="lorenzen.html">lorenzen</a></code> </p>
-          </td>
-          <td><p>lorenzen</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="m.html">roff</a></code> </p>
-          </td>
-          <td><p>Natural mortality</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="matdd.html">matdd</a></code> </p>
-          </td>
-          <td><p>matdd</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mdd.html">mdd</a></code> </p>
-          </td>
-          <td><p>mdd</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="moment.html">moment</a></code> </p>
-          </td>
-          <td><p>Calculates moments of a distribution</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="powh.html">powh</a></code> </p>
-          </td>
-          <td><p>Powell Weatherall method for estimating Z and Linfinity</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="refs.html">refs</a></code> </p>
-          </td>
-          <td><p>refs</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="richards.html">richards</a></code> </p>
-          </td>
-          <td><p>Richards growth curve</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rnoise.html">rnoise</a></code> </p>
-          </td>
-          <td><p>Random noise with different frequencies</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="rod.html">rod</a></code> </p>
-          </td>
-          <td><p>rod</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="sigmoid.html">sigmoid</a></code> </p>
-          </td>
-          <td><p>Sigmoid ogive</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="sv.html">sv</a></code> </p>
-          </td>
-          <td><p>Calculates steepness and virgin biomass</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="teleost.html">teleost</a></code> </p>
-          </td>
-          <td><p>teleost</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="unbin.html">unbin</a></code> </p>
-          </td>
-          <td><p>unbin frequency distributions</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="vonB.html">vonB</a></code> </p>
-          </td>
-          <td><p>von Bertalanffy growth curve</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="wklife.html">wklife</a></code> </p>
-          </td>
-          <td><p>wklife</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="wt2len.html">wt2len</a></code> </p>
-          </td>
-          <td><p>Mass to length conversion</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+    <tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="ages.html">ages(<i>&lt;FLQuant&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Fills an <code>FLQuant</code> with ages</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="cas.html">cas</a></code> </p>
+        </td>
+        <td><p>cas</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="cc.html">cc(<i>&lt;numeric&gt;</i>,<i>&lt;numeric&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Catch curve analysis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="dnormal.html">dnormal(<i>&lt;FLQuant&gt;</i>,<i>&lt;FLPar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Double normal ogive</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="elas.html">elas()</a></code> </p>
+        </td>
+        <td><p>elas analysis for reference points</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="gascuel.html">gascuel(<i>&lt;FLQuant&gt;</i>,<i>&lt;FLPar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Gascuel growth curve</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="gislason.html">gislason(<i>&lt;FLQuant&gt;</i>,<i>&lt;numeric&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>gislason</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="gompertz.html">gompertz(<i>&lt;FLQuant&gt;</i>,<i>&lt;FLPar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Gompertz growth equation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="grwdd.html">grwdd(<i>&lt;FLQuant&gt;</i>,<i>&lt;FLPar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>grwdd</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="knife.html">knife(<i>&lt;FLQuant&gt;</i>,<i>&lt;FLPar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>knife edge ogive</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="lambda.html">r(<i>&lt;FLPar&gt;</i>,<i>&lt;missing&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Population growth rate</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="len2wt.html">len2wt(<i>&lt;FLQuant&gt;</i>,<i>&lt;FLPar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Length to weight conversion</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="leslie.html">leslie(<i>&lt;FLBRP&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Leslie matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="lhEql.html">lhEql(<i>&lt;FLPar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Derives an <code>FLBRP</code> from life history parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="lhPar.html">lhPar()</a></code> </p>
+        </td>
+        <td><p>Generates life history parameters</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="lhRef.html">lhRef()</a></code> </p>
+        </td>
+        <td><p>Reference points based on life histories</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="logistic.html">logistic(<i>&lt;FLQuant&gt;</i>,<i>&lt;FLPar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>logistic</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="lopt.html">lopt(<i>&lt;FLPar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Lopt</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="loptAge.html">loptAge(<i>&lt;FLPar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Age at maximum biomass</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="lorenzen.html">lorenzen(<i>&lt;FLQuant&gt;</i>,<i>&lt;FLPar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>lorenzen</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="m.html">roff()</a></code> </p>
+        </td>
+        <td><p>Natural mortality</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="matdd.html">matdd(<i>&lt;FLQuant&gt;</i>,<i>&lt;FLPar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>matdd</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="mdd.html">mdd(<i>&lt;FLQuant&gt;</i>,<i>&lt;FLPar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>mdd</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="moment.html">moment(<i>&lt;numeric&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Calculates moments of a distribution</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="powh.html">powh(<i>&lt;numeric&gt;</i>,<i>&lt;numeric&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Powell Weatherall method for estimating Z and Linfinity</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="refs.html">refs()</a></code> </p>
+        </td>
+        <td><p>refs</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="richards.html">richards(<i>&lt;FLQuant&gt;</i>,<i>&lt;FLPar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Richards growth curve</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="rnoise.html">rnoise(<i>&lt;numeric&gt;</i>,<i>&lt;FLQuant&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Random noise with different frequencies</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="rod.html">rod(<i>&lt;FLQuant&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>rod</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sigmoid.html">sigmoid(<i>&lt;FLQuant&gt;</i>,<i>&lt;FLPar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Sigmoid ogive</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sv.html">sv(<i>&lt;FLPar&gt;</i>,<i>&lt;character&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Calculates steepness and virgin biomass</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="teleost.html">teleost</a></code> </p>
+        </td>
+        <td><p>teleost</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="unbin.html">unbin()</a></code> </p>
+        </td>
+        <td><p>unbin frequency distributions</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="vonB.html">vonB(<i>&lt;FLQuant&gt;</i>,<i>&lt;FLPar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>von Bertalanffy growth curve</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="wklife.html">wklife</a></code> </p>
+        </td>
+        <td><p>wklife</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="wt2len.html">wt2len(<i>&lt;FLQuant&gt;</i>,<i>&lt;FLPar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Mass to length conversion</p></td>
+      </tr>
+    </tbody>
+    </table>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -340,7 +347,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Laurence T. Kell.</p>
+  <p>Developed by Laurence Kell.</p>
 </div>
 
 <div class="pkgdown">
@@ -349,6 +356,8 @@
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

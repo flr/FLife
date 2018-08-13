@@ -38,7 +38,7 @@ iFig=0
 library(ggplotFL)
 library(plyr)
 library(reshape)
-library(FLRP)
+library(FLBRP)
 library(FLife)
 ```
 
@@ -99,9 +99,6 @@ units(par) <- c("", "", "cm", "", "cm", "cm", "cm", "cm")
 and then to derive vectors for processses such as natural mortality 
  
 ```{r eqls}
-#source('~/Desktop/flr/FLRP/R/spr.R')
-#source('~/Desktop/flr/FLife/R/lhEql.R')
-
 eql=lhEql(par)
 ```
 

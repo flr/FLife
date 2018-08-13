@@ -1,8 +1,8 @@
-#' @title Derives an \code{FLRP} from life history parameters
+#' @title Derives an \code{FLBRP} from life history parameters
 #' 
 #' @description 
 #' Takes an \code{FLPar} object with life history and selectivity parameters
-#' and generates an corresponding \code{FLRP} object. Can uses a range of functional forms
+#' and generates an corresponding \code{FLBRP} object. Can uses a range of functional forms
 #'
 #' @param params an \code{FLPar} object with life history parameters
 #' @param growth A function that takes an \code{FLPar} oject with parameters, by default \code{vonB}
@@ -13,13 +13,13 @@
 #' @param range A \code{numeric} with age range by default from 0 to 40
 #' @param spwn A \code{numeric} give propotion of year when spawning occurs, by default is params["a50"]-floor(params["a50"])
 #' @param fish A \code{numeric} give propotion of year when fishing occurs, by default 0.5        
-#' @param units A\code{character} for vectors in \code{FLRP} returned by method
+#' @param units A\code{character} for vectors in \code{FLBRP} returned by method
 #' @param midyear when growth measured, default 0.5
 #' @param ... any other arguments 
 #' 
 #' @aliases lhEql lhEql-method lhEql,FLPar-method
 #' 
-#' @return \code{FLRP} object
+#' @return \code{FLBRP} object
 #'
 #' @seealso \code{\link{lhPar}}, \code{\link{lhRef}}
 #'
@@ -96,7 +96,7 @@ setMethod("lhEql", signature(params='FLPar'),
 
   sel. =sel(age + fish,  params) # selectivty is fishery  based therefore + fish
   
-  ## create a FLRP object to   calculate expected equilibrium values and ref pts
+  ## create a FLBRP object to   calculate expected equilibrium values and ref pts
   dms=dimnames(m.)
 
   res=FLBRP(stock.wt       =swt,
@@ -153,7 +153,7 @@ setMethod("lhEql", signature(params='FLPar'),
         params(res)[,i][]=unlist(c(FLCore::ab(params[c("s","v"),i],sr,spr0=iter(spr0(res),i))[c("a","b")]))  
     
     #warning("iter(params(res),i)=ab(params[c(s,v),i],sr,spr0=iter(spr0(res),i))[c(a,b)] assignment doesnt work")
-    #warning("iter(FLRP,i) doesn't work")
+    #warning("iter(FLBRP,i) doesn't work")
   }else{
     
     if (sr=="shepherd"){
