@@ -94,4 +94,6 @@ Collate:
     oemLfq.R
     omOut.R
     priors.R
+    lbspr.R
+    oemLn.R
 RoxygenNote: 6.0.1

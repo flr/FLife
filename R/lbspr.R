@@ -27,7 +27,7 @@ lbspr<-function(object,params){
   
   nits=max(dim(object)[6],dim(params)[2])
   
-  if (!((dim(object)[6]!=1|dim(object)[6]!=nits)|(dim(params)[2]!=1|dim(params)[2]!=nits)))
+  if (!(dim(object)[6]%in%c(1,nits)|(dim(params)[2]%in%c(1,nits))))
     stop("iters should be equal to n or 1")
   
   res=mdply(data.frame(iter=seq(nits)), function(iter)
