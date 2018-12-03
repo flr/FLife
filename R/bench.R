@@ -6,6 +6,10 @@ ma <- function(x,n=5){filter(x,rep(1/n,n), sides=2)}
 ## r, rc, k, p 
 benchFn<-function(object,window=5){
   
+  if (!requireNamespace("popbio", quietly = TRUE)) {
+    stop("Package \"popbio\" needed for this function to work. Please install it.",
+         call. = FALSE)}
+  
   options(warn=-1)
   goodIts=seq(dim(m(object))[2]-(window%/%2))
   if (any((1:(window%/%2))>0))
@@ -69,6 +73,9 @@ benchFn<-function(object,window=5){
   res}
 
 bench<-function(object,window=5){
+  if (!requireNamespace("popbio", quietly = TRUE)) {
+    stop("Package \"popbio\" needed for this function to work. Please install it.",
+         call. = FALSE)}
   
   n  =dims(object)$year
   sr =fmle(as.FLSR(object,model="bevholt"),control=list(silent=TRUE))

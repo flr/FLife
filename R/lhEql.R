@@ -80,7 +80,7 @@ setMethod("lhEql", signature(params='FLPar'),
     swt=exp(log(slen)%*%params["bg"])%*%params["a"]
   else
     swt=FLife::len2wt(slen,params)
-  
+
   #warning("FLPar%*%FLQuant operator sets 1st dim name to quant regardless")
   if ("numeric" %in% is(m)) m.=FLQuant(m,dimnames=dimnames(age)) else{
     if ("length" %in% names(formals(m)))
@@ -88,12 +88,17 @@ setMethod("lhEql", signature(params='FLPar'),
     else if ("age" %in% names(formals(m))){
       m.   =m(age=age+midyear,params=params) # natural mortality is always based on mid year length
     }else if ("wt" %in% names(formals(m)))
-      m.   =m(wt=swt,params[c("m1","m2")])
+      {
+      print(params)
+      m.   =m(swt,params=params[c("m1","m2")])
+      }
 
   names(dimnames(m.))[1]="age"}
   
   mat. =mat(age + m.spwn,params) # maturity is biological therefore + m.spwn
 
+  if (dims(mat.)["min"]==0) mat.[1]=0
+  
   sel. =sel(age + fish,  params) # selectivty is fishery  based therefore + fish
   
   ## create a FLBRP object to   calculate expected equilibrium values and ref pts
@@ -112,7 +117,7 @@ setMethod("lhEql", signature(params='FLPar'),
             m.spwn         =FLQuant(m.spwn, dimnames=dimnames(m.), units=""),
             availability   =FLQuant(1, dimnames=dimnames(m.), units=""),
             range          =range)
-
+  
   ## FApex
   #if (!("range" %in% names(args))) range(res,c("minfbar","maxfbar"))[]<-as.numeric(dimnames(landings.sel(res)[landings.sel(res)==max(landings.sel(res))][1])$age)
 

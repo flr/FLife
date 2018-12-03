@@ -97,9 +97,14 @@ setMethod("leslie", signature(object="FLBRP"),
 #' L=leslie(eql)
 #' lambda(L[drop=TRUE])
 #' }
+#' 
 setMethod("r", signature(m="FLPar",fec="missing"),
           function(m,...){
 
+    if (!requireNamespace("popbio", quietly = TRUE)) {
+          stop("Package \"popbio\" needed for this function to work. Please install it.",
+               call. = FALSE)}
+            
     object=m        
     
     dmns=dimnames(object)[-2]

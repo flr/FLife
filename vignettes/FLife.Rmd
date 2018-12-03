@@ -137,7 +137,6 @@ Plotting is done using **ggplot2** which provides a powerful alternative paradig
 The **ggplot** methods expects a `data.frame` for its first argument, `data` (this has been overloaded by **ggplotFL** to also accept FLR objects); then a geometric object `geom` that specifies the actual marks put on to a plot and an aesthetic that is "something you can see" have to be provided. Examples of geometic Objects (geom) include points (geom_point, for scatter plots, dot plots, etc), lines (geom_line, for time series, trend lines, etc) and boxplot (geom_boxplot, for, well, boxplots!). Aesthetic mappings are set with the aes() function and, examples include, position (i.e., on the x and y axes), color ("outside" color), fill ("inside" color), shape (of points), linetype and size. 
 
 ```{r, length, echo=TRUE, fig.cap="Von Bertalanffy growth curves."}
-
 age=FLQuant(1:20,dimnames=list(age=1:20))
 len=vonB(age,teleost)
 

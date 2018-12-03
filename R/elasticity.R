@@ -23,7 +23,10 @@
 #' #bug
 #' }
 elas=function(params,sel,fn){
-
+  if (!requireNamespace("popbio", quietly = TRUE)) {
+    stop("Package \"popbio\" needed for this function to work. Please install it.",
+         call. = FALSE)}
+  
    elasFn=function(x,dmns,what,sel,fn) {
 
     pr       =exp(x)

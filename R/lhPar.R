@@ -70,16 +70,16 @@ lhPar=function(params,t0=function(params)-exp(-0.3922-0.2752*log(params["linf"])
     if (!("t0"    %in% dimnames(params)$params)) params=addpar(params,"t0", t0(params))
     
     # Natural mortality parameters from Model 2, Table 1 Gislason 2010
-    if (!all(c("m1","m2")%in%dimnames(params)$params)){
-      
+  #  if (!all(c("m1","m2")%in%dimnames(params)$params)){
+  #    
   #     params=rbind(params,FLPar(m1= 0.55*(params["linf"]^1.44)%*%params["k"], iter=dims(params)$iter),
   #                         FLPar(m2=-1.61                                    , iter=dims(params)$iter))
-      
-      #m=(length^-1.61)%*%(exp(0.55)*params["linf"]^1.44)%*%params["k"]
-      
-      params=addpar(params,"m1", exp(0.55)*(params["linf"]^1.44)%*%params["k"])
-      params=addpar(params,"m2", -1.61)
-      }
+  #    
+  #    #m=(length^-1.61)%*%(exp(0.55)*params["linf"]^1.44)%*%params["k"]
+  #    
+  #    params=addpar(params,"m1", exp(0.55)*(params["linf"]^1.44)%*%params["k"])
+  #    params=addpar(params,"m2", -1.61)
+  #    }
   
     if (!("ato95" %in% dimnames(params)$params)) params=addpar(params,"ato95",ato95)  #rbind(params,FLPar("ato95" =ato95, iter=dims(params)$iter))
     if (!("sl"    %in% dimnames(params)$params)) params=addpar(params,"sl",   sl)     #rbind(params,FLPar("sl"    =sl,    iter=dims(params)$iter))

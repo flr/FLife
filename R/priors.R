@@ -1,5 +1,9 @@
 priors<-function(object,eq=lhEql(lhPar(object))){
   
+  if (!requireNamespace("popbio", quietly = TRUE)) {
+    stop("Package \"popbio\" needed for this function to work. Please install it.",
+         call. = FALSE)}
+  
   par=lhPar(object)
 
   ## return

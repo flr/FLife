@@ -60,14 +60,13 @@ loptFn=function(x,params,
                 m=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
                 age=0:200){
   
- 
   length=growth(FLQuant(age,dimnames=list(age=age)),params)
   m.    =FLQuant(m(length,params), dimnames=list(age=age))
   mCum  =FLQuant(aaply(m.,2,cumsum),dimnames=dimnames(m.))
 
   a =qmax(growth(params=params,length=FLQuant(x)),min(age))
   a =qmin(a,max(age))
-  
+ 
   aMin=floor(a)
   if (is.na(aMin)) return (as.numeric(NA))
   

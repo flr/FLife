@@ -44,6 +44,10 @@ setGeneric('refs', function(object,...) standardGeneric('refs'))
 
 old<-function(object,s=NULL){
   
+  if (!requireNamespace("popbio", quietly = TRUE)) {
+    stop("Package \"popbio\" needed for this function to work. Please install it.",
+         call. = FALSE)}
+  
   warn=options()$warn
   options(warn=-1)
   
@@ -162,6 +166,10 @@ old<-function(object,s=NULL){
 
 ### r conditional on maturity so comparable across stocks
 new<-function(object,s=NULL,recent=3){
+
+  if (!requireNamespace("popbio", quietly = TRUE)) {
+    stop("Package \"popbio\" needed for this function to work. Please install it.",
+         call. = FALSE)}
   
   warn=options()$warn
   options(warn=-1)

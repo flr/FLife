@@ -1,3 +1,5 @@
+#' @export omSmry
+
 omStock<-function(object){
   sage<-function(object) apply(stock.n(object)%*%ages(stock.n(object)),2:6,sum)%/%
                            apply(stock.n(object),2:6,sum)

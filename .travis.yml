@@ -23,3 +23,9 @@ notifications:
 branches:
   only:
     - master
+
+repos:
+  CRAN: https://cloud.r-project.org
+  flr: http://flr-project.org/R
+
+

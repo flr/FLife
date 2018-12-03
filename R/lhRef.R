@@ -36,6 +36,10 @@ lhRef<-function(params,
                  what=c("r","rc","msy","lopt","sk","spr0","sprmsy"),
                  msy="msy"){
   
+  if (!requireNamespace("popbio", quietly = TRUE)) {
+    stop("Package \"popbio\" needed for this function to work. Please install it.",
+         call. = FALSE)}
+  
   eql=lhEql(params,m=m,sr=sr,range=range)
 
   res=NULL
