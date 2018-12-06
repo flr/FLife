@@ -25,7 +25,7 @@ priors<-function(object,eq=lhEql(lhPar(object))){
   rtn=rbind(rtn,rfs)
   
   #lopt
-  growth=vonB
+  growth=mydas:::vonB
   lop=lopt(par)
   rtn=rbind(rtn,lop)
   
