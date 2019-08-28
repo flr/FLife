@@ -11,20 +11,20 @@
   params) exp(0.55) * (length^-1.61) \%*\% (params["linf"]^1.44) \%*\%
   params["k"], mat = FLife::logistic, sel = FLife::dnormal,
   sr = "bevholt", range = c(min = 0, max = 40, minfbar = 1, maxfbar = 40,
-  plusgroup = 40), spwn = c(params["a50"] - floor(params["a50"])),
+  plusgroup = 40), spwn = 0,
   fish = 0.5, units = if ("units" \%in\% names(attributes(params)))
   attributes(params)$units else NULL, midyear = 0.5, ...)
 }
 \arguments{
 \item{params}{an \code{FLPar} object with life history parameters}
 
-\item{growth}{A function that takes an \code{FLPar} oject with parameters, by default \code{vonB}}
+\item{growth}{A function that takes an \code{FLPar} object with parameters, by default \code{vonB}}
 
-\item{m}{A function that takes an \code{FLPar} oject with parameters, by default \code{gislason}}
+\item{m}{A function that takes an \code{FLPar} object with parameters, by default \code{gislason}}
 
-\item{mat}{A function that takes an \code{FLPar} oject with parameters, by default \code{logistic}}
+\item{mat}{A function that takes an \code{FLPar} object with parameters, by default \code{logistic}}
 
-\item{sel}{A function that takes an \code{FLPar} oject with parameters, by default \code{dnormal}}
+\item{sel}{A function that takes an \code{FLPar} object with parameters, by default \code{dnormal}}
 
 \item{sr}{A \code{character} value, "bevholt" by default}
 
@@ -45,7 +45,7 @@
 }
 \description{
 Takes an \code{FLPar} object with life history and selectivity parameters
-and generates an corresponding \code{FLBRP} object. Can uses a range of functional forms
+and generates a corresponding \code{FLBRP} object. Can use a range of functional forms.
 }
 \examples{
 \dontrun{
