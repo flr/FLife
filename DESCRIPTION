@@ -91,6 +91,7 @@ Collate:
     runs.R
     frules.R
     oemLfq.R
+    oemLn.R
     omOut.R
     priors.R
     lbspr.R
