@@ -7,12 +7,12 @@
 \alias{lhEql-method}
 \title{Derives an \code{FLBRP} from life history parameters}
 \usage{
-\S4method{lhEql}{FLPar}(params, growth = FLife::vonB, m = function(length,
-  params) exp(0.55) * (length^-1.61) \%*\% (params["linf"]^1.44) \%*\%
-  params["k"], mat = FLife::logistic, sel = FLife::dnormal,
-  sr = "bevholt", range = c(min = 0, max = 40, minfbar = 1, maxfbar = 40,
-  plusgroup = 40), spwn = c(params["a50"] - floor(params["a50"])),
-  fish = 0.5, units = if ("units" \%in\% names(attributes(params)))
+\S4method{lhEql}{FLPar}(params, growth = FLife::vonB,
+  m = function(length, params) exp(0.55) * (length^-1.61) \%*\%
+  (params["linf"]^1.44) \%*\% params["k"], mat = FLife::logistic,
+  sel = FLife::dnormal, sr = "bevholt", range = c(min = 0, max = 40,
+  minfbar = 1, maxfbar = 40, plusgroup = 40), spwn = 0, fish = 0.5,
+  units = if ("units" \%in\% names(attributes(params)))
   attributes(params)$units else NULL, midyear = 0.5, ...)
 }
 \arguments{

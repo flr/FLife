@@ -8,8 +8,8 @@
 \alias{rnoise,numeric,missing-method}
 \title{Random noise with different frequencies}
 \usage{
-\S4method{rnoise}{numeric,FLQuant}(n = n, len = len, sd = 0.3, b = 0,
-  burn = 0, trunc = 0, what = c("year", "cohort", "age"))
+\S4method{rnoise}{numeric,FLQuant}(n = n, len = len, sd = 0.3,
+  b = 0, burn = 0, trunc = 0, what = c("year", "cohort", "age"))
 }
 \arguments{
 \item{n}{number of iterations}

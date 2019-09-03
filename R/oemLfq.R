@@ -1,3 +1,4 @@
+utils::globalVariables(c("dnorm","age","unit","season","area"))
 
 ### Create lengths-at-age 
 oemLfq<-function(om,lh,

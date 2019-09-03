@@ -7,7 +7,8 @@
 \alias{leslie-method}
 \title{Leslie matrix}
 \usage{
-\S4method{leslie}{FLBRP}(object, fbar = FLQuant(0), numbers = TRUE, ...)
+\S4method{leslie}{FLBRP}(object, fbar = FLQuant(0), numbers = TRUE,
+  ...)
 }
 \arguments{
 \item{object}{\code{FLBRP}}

@@ -1,3 +1,5 @@
+utils::globalVariables(c("mnSzStock"))
+
 if (!FALSE){
 #### Indicators ################################################################
 setGeneric("mnSwt", function(object,...)

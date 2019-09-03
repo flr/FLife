@@ -9,8 +9,8 @@
 \alias{gislason,FLQuant,missing-method}
 \title{gislason}
 \usage{
-\S4method{gislason}{FLQuant,numeric}(length, params, a = 0.55, b = 1.44,
-  c = -1.61, ...)
+\S4method{gislason}{FLQuant,numeric}(length, params, a = 0.55,
+  b = 1.44, c = -1.61, ...)
 }
 \arguments{
 \item{length}{mass at which M is to be predicted}

@@ -43,15 +43,15 @@ setMethod("leslie", signature(object="FLBRP"),
     if (range(object)["plusgroup"]==range(object)["max"])
       mx[length(ages),length(ages),i]=FLCore::iter(z[length(ages)],i)
     } 
-  
+
   #recruitment
   #tmp    =mat(object)*stock.wt(object)*stock.n(object)[,1]
   #tmp2   =apply(tmp,2:6,sum)
   #mx[1,,]=(rec(object)[,1]%*%tmp%/%tmp2)%/%stock.n(object)[,1]
   
   # a/b slope at orign for bevholt
-  mx[1,,]=(rec(object)[,1]%/%ssb(object)[,1])%*%(mat(object)%*%stock.wt(object))
-
+  mx[1,,]=sweep((mat(object)%*%stock.wt(object)),2,(rec(object)[,1]%/%ssb(object)[,1]), "*")
+  
   #Mass
   if (!numbers){
     #recruitment
@@ -63,6 +63,7 @@ setMethod("leslie", signature(object="FLBRP"),
       diag(mx[-1,-length(ages),i])=iter(incr[-length(ages)],i)*diag(mx[-1,-length(ages),i])              
     }
 
+  
   #  diag(mx[-1,-length(ages)])=c(stock.wt(object)[-1,1])/c(stock.wt(object)[-length(ages),1])
   #  mx[1,]=c(stock.wt(object)[,1])*mx[1,]
   

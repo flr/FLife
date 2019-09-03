@@ -1,7 +1,7 @@
 Package: FLife
 Type: Package
 Title: Methods for Modelling Life History Traits
-Version: 3.2.3.0
+Version: 3.3.0
 Date: 2018-07-25
 Authors@R: person(given = "Laurence", family = "Kell", role = c("aut", "cre"), 
   email = "laurie@seaplusplus.co.uk")
@@ -11,17 +11,17 @@ Description: Many studies have shown the relationships between life history
   history has been used to develop priors in stock assesments and to parameterise
   ecological models. Package has a variety of methods for modelling life history
   traits and processes.
+VignetteBuilder: knitr  
 LazyData: true
 License: GPL (>= 2)
 Depends:
-  R(>= 3.5.1),
-  FLCore (>= 2.6.10)
+  R(>= 3.6.0),
+  FLCore (>= 2.6.13)
 Imports:
   FLBRP,
-  ggplotFL,
   methods,
   plyr,
-  dplyr
+  ggplotFL
 Suggests:
   ggplot2,
   FLasher,
@@ -32,9 +32,9 @@ Suggests:
   reshape,
   popbio
 Additional_repositories: http://flr-project.org/R
-VignetteBuilder: knitr
 Collate:
     generic.R
+    lhPar.R
     data.R
     vonB.R
     gascuel.R
@@ -52,7 +52,6 @@ Collate:
     mFn.R
     fapex.R
     elasticity.R
-    lhPar.R
     lhEql.R
     lhRef.R
     lopt.R
@@ -95,5 +94,6 @@ Collate:
     omOut.R
     priors.R
     lbspr.R
-    oemLn.R
-RoxygenNote: 6.0.1
+    ggpairs.R
+Encoding: UTF-8
+RoxygenNote: 6.1.1

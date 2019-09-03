@@ -1,3 +1,5 @@
+utils::globalVariables(c("LBSPRfit"))
+
 lbsprFn<-function(len,params,species="",units="cm"){
   
   pars        =new("LB_pars")

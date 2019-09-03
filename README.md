@@ -1,23 +1,22 @@
 # FLife
 - Version: 3.2.1
 - Date: 2018-07-19
-- Author: %USER%
-- Maintainer: %USER2% <laurie@seaplusplus.co.uk>
+- Author: Laurence Kell
+- Maintainer: Laurence Kell <laurie@seaplusplus.co.uk>
 - Repository: <https://github.com/flr/FLife/>
 - Bug reports: <https://github.com/flr/FLife/issues>
 
 ## Overview
-ONE LINE OVERVIEW, SAME AS IN DESCRIPTION
+Methods for Modelling Life History Traits
 
 To install this package, start R and enter:
-
     install.packages("FLife", repos="http:///flr-project.org/R")
 
 or download from the [FLife releases page](https://github.com/flr/FLife/releases/)
 
 ## Documentation
 - [Help pages](http://flr-project.org/FLife)
-- Vignette
+- [Vignette]()
 
 ## Build Status
 [![Travis Build Status](https://travis-ci.org/flr/FLife.svg?branch=master)](https://travis-ci.org/flr/FLife)

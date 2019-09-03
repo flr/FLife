@@ -7,7 +7,8 @@
 \alias{mdd-method}
 \title{mdd}
 \usage{
-\S4method{mdd}{FLQuant,FLPar}(object, params, scale, k = 1, m = gislason)
+\S4method{mdd}{FLQuant,FLPar}(object, params, scale, k = 1,
+  m = gislason)
 }
 \arguments{
 \item{object}{mass at which M is to be predicted}

@@ -7,7 +7,8 @@
 \alias{matdd-method}
 \title{matdd}
 \usage{
-\S4method{matdd}{FLQuant,FLPar}(age, params, scale, k = 1, flagAge = TRUE)
+\S4method{matdd}{FLQuant,FLPar}(age, params, scale, k = 1,
+  flagAge = TRUE)
 }
 \arguments{
 \item{age}{ages}

@@ -6,8 +6,8 @@
 \title{Generates life history parameters}
 \usage{
 lhPar(params, t0 = function(params) -exp(-0.3922 - 0.2752 *
-  log(params["linf"]) \%-\% (1.038 * log(params["k"]))), a = 3e-04, b = 3,
-  ato95 = 1, sl = 1, sr = 5000, s = 0.9, v = 1000)
+  log(params["linf"]) \%-\% (1.038 * log(params["k"]))), a = 3e-04,
+  b = 3, ato95 = 1, sl = 1, sr = 5000, s = 0.9, v = 1000)
 }
 \arguments{
 \item{params}{\code{FLPar} object with parameters for life history equations and selection pattern.

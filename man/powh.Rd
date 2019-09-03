@@ -7,8 +7,8 @@
 \alias{powh-method}
 \title{Powell Weatherall method for estimating Z and Linfinity}
 \usage{
-\S4method{powh}{numeric,numeric}(len, n, weights = FALSE, fromMode = FALSE,
-  linf = 0)
+\S4method{powh}{numeric,numeric}(len, n, weights = FALSE,
+  fromMode = FALSE, linf = 0)
 }
 \arguments{
 \item{len}{vector with length distribution}

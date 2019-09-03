@@ -7,7 +7,8 @@
 \alias{moment-method}
 \title{Calculates moments of a distribution}
 \usage{
-\S4method{moment}{numeric}(object, n = rep(1, length(object)), na.rm = T)
+\S4method{moment}{numeric}(object, n = rep(1, length(object)),
+  na.rm = T)
 }
 \arguments{
 \item{object}{a vector holding a time series}

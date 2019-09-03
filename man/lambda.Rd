@@ -29,6 +29,7 @@ eql=lhEql(lhPar(FLPar(linf=100)))
 L=leslie(eql)
 lambda(L[drop=TRUE])
 }
+
 }
 \seealso{
 \code{\link{leslie}}, \code{\link{lhRef}}

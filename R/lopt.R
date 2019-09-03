@@ -1,4 +1,4 @@
-utils::globalVariables("growth")
+utils::globalVariables(c("growth","s","FLife"))
 
 #' @title Lopt
 #'
@@ -40,7 +40,7 @@ utils::globalVariables("growth")
 setMethod("lopt", signature(params="FLPar"),
        function(params,
                 m=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
-                growth=FLife:::vonB,
+                growth=FLife::vonB,
                 ...){   
             dmns=dimnames(params)
             dmns$params="lopt"
@@ -58,7 +58,8 @@ setMethod("lopt", signature(params="FLPar"),
 
 loptFn=function(x,params,
                 m=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
-                age=0:200){
+                age=0:200,
+                growth=vonB){
   
   length=growth(FLQuant(age,dimnames=list(age=age)),params)
   m.    =FLQuant(m(length,params), dimnames=list(age=age))

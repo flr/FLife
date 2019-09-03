@@ -4,6 +4,8 @@
 #' A method to simulate a knife edge ogive where at a given age the proportion chnages from 0 to 1
 #' 
 #' @import FLCore 
+#' @import ggplotFL
+
 #' 
 #' @param age FLQuant, FLPar or numeric with ages 
 #' @param params \code{FLPar}

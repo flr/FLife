@@ -1,5 +1,5 @@
 priors<-function(object,eq=lhEql(lhPar(object))){
-  
+
   if (!requireNamespace("popbio", quietly = TRUE)) {
     stop("Package \"popbio\" needed for this function to work. Please install it.",
          call. = FALSE)}
@@ -25,7 +25,6 @@ priors<-function(object,eq=lhEql(lhPar(object))){
   rtn=rbind(rtn,rfs)
   
   #lopt
-  growth=mydas:::vonB
   lop=lopt(par)
   rtn=rbind(rtn,lop)
   

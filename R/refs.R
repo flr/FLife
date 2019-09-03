@@ -112,7 +112,7 @@ old<-function(object,s=NULL){
     dimnames(catch(object))$iter=dimnames(rec(object))$iter
   }
   
-  current=as.data.frame(mcf(FLQuants(object,"harvest"=FLCore:::fbar,
+  current=as.data.frame(mcf(FLQuants(object,"harvest"=FLCore::fbar,
                                             "yield"  =catch,
                                             "rec"    =rec, 
                                             "ssb"    =ssb,
@@ -162,7 +162,7 @@ old<-function(object,s=NULL){
                               "f.virgin","f.spr.100","f.spr.100_","y.virgin","y.spr.100"))]
   
   res[,"r.current"]=c(params(eql1))
-  FLife:::mf2FLPar(res)}
+  mf2FLPar(res)}
 
 ### r conditional on maturity so comparable across stocks
 new<-function(object,s=NULL,recent=3){
@@ -204,7 +204,7 @@ new<-function(object,s=NULL,recent=3){
 
   ## latest
   res=FLQuants(object[,dim(object)[2]],
-               "f"      =FLCore:::fbar,
+               "f"      =FLCore::fbar,
                "yield"  =catch,
                "rec"    =rec, 
                "ssb"    =ssb,
@@ -217,7 +217,7 @@ new<-function(object,s=NULL,recent=3){
   
   ## recent
   res=FLQuants(object[,dim(object)[2]-seq(recent)+1],
-               "f"      =FLCore:::fbar,
+               "f"      =FLCore::fbar,
                "yield"  =catch,
                "rec"    =rec, 
                "ssb"    =ssb,
