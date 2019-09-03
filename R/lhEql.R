@@ -2,13 +2,13 @@
 #' 
 #' @description 
 #' Takes an \code{FLPar} object with life history and selectivity parameters
-#' and generates an corresponding \code{FLBRP} object. Can uses a range of functional forms
+#' and generates a corresponding \code{FLBRP} object. Can use a range of functional forms.
 #'
 #' @param params an \code{FLPar} object with life history parameters
-#' @param growth A function that takes an \code{FLPar} oject with parameters, by default \code{vonB}
-#' @param m A function that takes an \code{FLPar} oject with parameters, by default \code{gislason}
-#' @param mat A function that takes an \code{FLPar} oject with parameters, by default \code{logistic}
-#' @param sel A function that takes an \code{FLPar} oject with parameters, by default \code{dnormal}
+#' @param growth A function that takes an \code{FLPar} object with parameters, by default \code{vonB}
+#' @param m A function that takes an \code{FLPar} object with parameters, by default \code{gislason}
+#' @param mat A function that takes an \code{FLPar} object with parameters, by default \code{logistic}
+#' @param sel A function that takes an \code{FLPar} object with parameters, by default \code{dnormal}
 #' @param sr A \code{character} value, "bevholt" by default
 #' @param range A \code{numeric} with age range by default from 0 to 40
 #' @param spwn A \code{numeric} give propotion of year when spawning occurs, by default is params["a50"]-floor(params["a50"])
