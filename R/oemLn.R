@@ -1,3 +1,5 @@
+utils::globalVariables(c("rmultinom","pnorm","lh","llply"))
+
 setALK<-function(par,age=0:40,cv=0.2,lmax=1.2){
   
   alk=mdply(data.frame(age=age), function(age,par,cv,lmax){

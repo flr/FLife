@@ -13,7 +13,7 @@ utils::globalVariables(c("growth","s","FLife"))
 #' @param m natural mortality function, by default Gislason
 #' @param growth length or weight-at-age function, by default von Bertalanffy
 #' @param ... any other arguments
-#' 
+#'  
 #' @aliases lopt lopt-method lopt,FLPar-method
 #' 
 #' @return \code{FLPar} with $L_{opt}$ the length at which a cohort achives its maximum biomass
