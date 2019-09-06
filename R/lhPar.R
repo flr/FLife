@@ -2,6 +2,16 @@ utils::globalVariables(c("dlply"))
 utils::globalVariables(c("mlply"))
 utils::globalVariables(c("cast"))
 
+lhValid=data.frame(old=c("linf","k","t0","a","b",
+                         "ato95","a50","asym","bg",
+                         "a1","sl","sr",
+                         "s","v"),
+                    new=c("linf","k","t0","a","b",
+                          "ato95","a50","asym","bg",
+                          "p1","p2","p3",
+                          "h","v"))
+
+
 
 #' @title Generates life history parameters
 #' 
@@ -20,7 +30,7 @@ utils::globalVariables(c("cast"))
 #' @param   b exponent of length weight relationship
 #' @param   ato95 age at which 95\% of fish are mature, offset to age at which 50\% are mature
 #' @param   sl selectivity-at-age parameter, standard deviation of lefthand limb of double normal
-#' @param   sr stock recruitment relationship
+#' @param   sr selectivity-at-age parameter, standard deviation of righthand limb of double normal
 #' @param   s steepness of stock recruitment relationship
 #' @param   v virgin biomass
 #' 

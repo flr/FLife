@@ -89,7 +89,6 @@ setMethod("lhEql", signature(params='FLPar'),
       m.   =m(age=age+midyear,params=params) # natural mortality is always based on mid year length
     }else if ("wt" %in% names(formals(m)))
       {
-      print(params)
       m.   =m(swt,params=params[c("m1","m2")])
       }
 

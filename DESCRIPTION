@@ -18,12 +18,12 @@ Depends:
   R(>= 3.6.0),
   FLCore (>= 2.6.13)
 Imports:
-  FLBRP,
   methods,
   plyr,
   ggplotFL
 Suggests:
   ggplot2,
+  FLBRP,
   FLasher,
   FLAssess,
   testthat,
