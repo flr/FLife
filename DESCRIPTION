@@ -20,10 +20,10 @@ Depends:
 Imports:
   methods,
   plyr,
-  ggplotFL
+  ggplotFL,
+  FLBRP
 Suggests:
   ggplot2,
-  FLBRP,
   FLasher,
   FLAssess,
   testthat,
@@ -47,6 +47,7 @@ Collate:
     logistic.R
     dnormal.R
     sigmoid.R
+    FLife-m.R
     gislason.R
     lorenzen.R
     mFn.R
@@ -62,8 +63,8 @@ Collate:
     powh.R
     noise.R
     stars.R
-    m-dd.R
-    mat-dd.R
+    FLife-dd-m.R
+    FLife-dd-mat.R
     grw-dd.R
     moment.R
     pid.R

@@ -3,14 +3,15 @@ utils::globalVariables(c("mlply"))
 utils::globalVariables(c("cast"))
 
 lhValid=data.frame(old=c("linf","k","t0","a","b",
-                         "ato95","a50","asym","bg",
-                         "a1","sl","sr",
-                         "s","v"),
+                         "ato95","a50","asym","bg","l50",
+                         "s","v",
+                         "a1","sl","sel2",
+                         "m1","m2","m3"),
                     new=c("linf","k","t0","a","b",
-                          "ato95","a50","asym","bg",
-                          "p1","p2","p3",
-                          "h","v"))
-
+                          "ato95","a50","asym","bg","l50",
+                          "s","v",
+                          "sel1","sel2","sel3",
+                          "m1",  "m2",  "m3"),stringsAsFactors=FALSE)
 
 
 #' @title Generates life history parameters
@@ -29,10 +30,14 @@ lhValid=data.frame(old=c("linf","k","t0","a","b",
 #' @param   a coefficient of length weight relationship
 #' @param   b exponent of length weight relationship
 #' @param   ato95 age at which 95\% of fish are mature, offset to age at which 50\% are mature
-#' @param   sl selectivity-at-age parameter, standard deviation of lefthand limb of double normal
-#' @param   sr selectivity-at-age parameter, standard deviation of righthand limb of double normal
 #' @param   s steepness of stock recruitment relationship
 #' @param   v virgin biomass
+#' @param   sel1 selectivity-at-age parameter, by default double normal, age at maximum selectivity
+#' @param   sel2 selectivity-at-age parameter, by default double normal, standard deviation of lefthand limb of double normal
+#' @param   sel3 selectivity-at-age parameter, by default double normal, standard deviation of righthand limb of double normal
+#' @param   m1 m-at-age parameter by default for Gislason empirical relationship
+#' @param   m2 m-at-age parameter, by default for Gislason empirical relationship
+#' @param   m3 m-at-age parameter, by default for Gislason empirical relationship
 #' 
 #' @export
 #' 
@@ -53,12 +58,19 @@ lhValid=data.frame(old=c("linf","k","t0","a","b",
 # 1 & x \ge 0
 # \end{array}
 # \right. }{ (non-Latex version) }
-lhPar=function(params,t0=function(params)-exp(-0.3922-0.2752*log(params["linf"])%-%(1.038*log(params["k"]))),
-                       a=0.0003,b=3,ato95=1,sl=1,sr=5000,s=0.9,v=1000){
+lhPar=function(params,
+               a=0.0003,b=3,
+               ato95=1,
+               sl=1,sr=5000,
+               sel2=1,sel3=5000,
+               m1=0.55,m2=-1.61,m3=1.44,
+               s=0.9,v=1000,
+               t0=function(params)-exp(-0.3922-0.2752*log(params["linf"])%-%(1.038*log(params["k"])))
+               ){
  
   if("data.frame"%in%class(params)) params=mf2FLPar(params)
  
-  fn <- function(params,t0,a,b,ato95,sl,sr,s,v){
+  fn <- function(params,t0,a,b,ato95,sel2,sel3,s,v){
     
     names(dimnames(params)) <- tolower(names(dimnames(params)))
     
@@ -78,26 +90,27 @@ lhPar=function(params,t0=function(params)-exp(-0.3922-0.2752*log(params["linf"])
       }
     
     if (!("t0"    %in% dimnames(params)$params)) params=addpar(params,"t0", t0(params))
-    
     # Natural mortality parameters from Model 2, Table 1 Gislason 2010
-  #  if (!all(c("m1","m2")%in%dimnames(params)$params)){
-  #    
-  #     params=rbind(params,FLPar(m1= 0.55*(params["linf"]^1.44)%*%params["k"], iter=dims(params)$iter),
-  #                         FLPar(m2=-1.61                                    , iter=dims(params)$iter))
-  #    
-  #    #m=(length^-1.61)%*%(exp(0.55)*params["linf"]^1.44)%*%params["k"]
-  #    
-  #    params=addpar(params,"m1", exp(0.55)*(params["linf"]^1.44)%*%params["k"])
-  #    params=addpar(params,"m2", -1.61)
-  #    }
+    params=rbind(params,FLPar(m1=m1,m2=m2,m3=m3))
+    
+    #  if (!all(c("m1","m2")%in%dimnames(params)$params)){
+    #    
+    #     params=rbind(params,FLPar(m1= 0.55*(params["linf"]^1.44)%*%params["k"], iter=dims(params)$iter),
+    #                         FLPar(m2=-1.61                                    , iter=dims(params)$iter))
+    #    
+    #    #m=(length^-1.61)%*%(exp(0.55)*params["linf"]^1.44)%*%params["k"]
+    #    
+    #    params=addpar(params,"m1", exp(0.55)*(params["linf"]^1.44)%*%params["k"])
+    #    params=addpar(params,"m2", -1.61)
+    #    }
   
     if (!("ato95" %in% dimnames(params)$params)) params=addpar(params,"ato95",ato95)  #rbind(params,FLPar("ato95" =ato95, iter=dims(params)$iter))
-    if (!("sl"    %in% dimnames(params)$params)) params=addpar(params,"sl",   sl)     #rbind(params,FLPar("sl"    =sl,    iter=dims(params)$iter))
-    if (!("sr"    %in% dimnames(params)$params)) params=addpar(params,"sr",   sr)     #rbind(params,FLPar("sr"    =sr,    iter=dims(params)$iter))
+    if (!("sel2"    %in% dimnames(params)$params)) params=addpar(params,"sel2",   sel2)     #rbind(params,FLPar("sel2"    =sel2,    iter=dims(params)$iter))
+    if (!("sel3"    %in% dimnames(params)$params)) params=addpar(params,"sel3",   sel3)     #rbind(params,FLPar("sel3"    =sel3,    iter=dims(params)$iter))
    
     ## maturity parameters from http://www.fishbase.org/manual/FishbaseThe_MATURITY_Table.htm
     if (!("asym"    %in% dimnames(params)$params)) params=params=addpar(params,"asym",  1) #rbind(params,FLPar("asym"    =asym, iter=dims(params)$iter))
-  
+    
     if (!("a50" %in% dimnames(params)$params)){
       if (!("l50" %in% dimnames(params)$params)){
         l50=0.72*params["linf"]^0.93
@@ -105,38 +118,35 @@ lhPar=function(params,t0=function(params)-exp(-0.3922-0.2752*log(params["linf"])
         }else{
         l50=params["l50"]
         }
-        
+
       a50=log(1-(l50%/%params["linf"]))%/%(-params["k"])%+%params["t0"]
       dimnames(a50)$params="a50"
       
       params=rbind(params,a50)
-      }
-  
+      params=rbind(params,l50)
+    }
+    
     ## selectivity guestimate
-    a1=params["a50"]%+%params["ato95"]
+    sel1=params["a50"]%+%params["ato95"]
+    
+    dimnames(sel1)$params="sel1"
    
-    dimnames(a1)$params="a1"
-   
-    params=rbind(params,a1)
+    params=rbind(params,sel1)
     
     attributes(params)$units=c("cm","kg","1000s")
     
-    order=c("linf","k","t0","a","b","ato95","a50","asym","bg","m1","m2","a1","sl","sr","s","v")  
-    order=order[order %in% dimnames(params)[[1]]]
-    order=c(order,dimnames(params)[[1]][!(dimnames(params)[[1]]%in%order)])
-  
-    return(params[order])}
+    return(params[lhValid$new[lhValid$new%in%dimnames(params)$params]])}
   
   if (dims(params)$iter==1) {
-     return(fn(params[apply(is.na(params), 1, sum) == 0,],t0,a,b,ato95,sl,sr,s,v))
+     return(fn(params[apply(is.na(params), 1, sum) == 0,],t0,a,b,ato95,sel2,sel3,s,v))
   }
   else{
     df=subset(as.data.frame(params),!is.na(data))
-    
+     
     res1=dlply(df,.(iter),function(x) as(x[,c("data","params")],"FLPar")[,1])
     
     res2=mlply(data.frame(iter=seq(length(res1))),function(iter,v1,v2,v3,v4,v5,v6,v7,v8) 
-      fn(res1[[iter]],v1,v2,v3,v4,v5,v6,v7,v8),v1=t0,v2=a,v3=b,v4=ato95,v5=sl,v6=sr,v7=s,v8=v)
+      fn(res1[[iter]],v1,v2,v3,v4,v5,v6,v7,v8),v1=t0,v2=a,v3=b,v4=ato95,v5=sel2,v6=sel3,v7=s,v8=v)
     
     res3=mdply(data.frame(iter=seq(length(res1))),function(iter) cbind(iter=iter,as.data.frame(iter(res2[[iter]],1))[,-2]))
     

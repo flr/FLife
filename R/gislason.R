@@ -43,6 +43,8 @@ setMethod('gislason', signature(length='FLQuant',params='FLPar'),
 
 gislasonFn<-function(length,params,a=0.55,b=1.44,c=-1.61) {
   
+#  log(M)=a+blog(L)+c*log(Linf)+log(k)
+  
   # Natural mortality parameters from Model 2, Table 1 gislason 2010
   if (!all(c("m1","m2")%in%dimnames(params)$params)){
     

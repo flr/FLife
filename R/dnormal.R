@@ -1,5 +1,5 @@
 dnormalFn_<-function(age,params){
-  func<- function(age,a1,sl,sr){
+  func<- function(age,sl,sr,a1){
     if (age < a1)
       return(pow(2.0,-((age-a1)/sl*(age-a1)/sl)))
     else
@@ -9,6 +9,18 @@ dnormalFn_<-function(age,params){
 
 dnormalFn<-function(age,params){
   
+  pNms=dimnames(params)$params
+  
+  if ("sel1"%in%pNms){
+    params=params[dimnames(params)$params!="a1"]
+    dimnames(params)$params["sel1"==pNms]="a1"}
+  if ("sel2"%in%pNms){
+    params=params[dimnames(params)$params!="sl"]
+    dimnames(params)$params["sel2"==pNms]="sl"}
+  if ("sel3"%in%pNms){
+    params=params[dimnames(params)$params!="sr"]
+    dimnames(params)$params["sel3"==pNms]="sr"}
+
   a1=FLQuant(1,dimnames=dimnames(age))%*%params["a1"]
   s =FLQuant(1,dimnames=dimnames(age))%*%params["sl"]
   sr=FLQuant(1,dimnames=dimnames(age))%*%params["sr"]

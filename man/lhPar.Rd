@@ -25,7 +25,7 @@ from life history theory, as are the following args.}
 
 \item{sl}{selectivity-at-age parameter, standard deviation of lefthand limb of double normal}
 
-\item{sr}{stock recruitment relationship}
+\item{sr}{selectivity-at-age parameter, standard deviation of righthand limb of double normal}
 
 \item{s}{steepness of stock recruitment relationship}
 

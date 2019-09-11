@@ -18,9 +18,6 @@ setGeneric('sigmoid', function(age,params,...) standardGeneric('sigmoid'))
 setGeneric('dnormal', function(age,params,...) standardGeneric('dnormal'))
 setGeneric('logistic', function(age,params,...) standardGeneric('logistic'))
 
-setGeneric('gislason', function(length,params,...) standardGeneric('gislason'))
-setGeneric('lorenzen', function(wt,params,...) standardGeneric('lorenzen'))
-
 setGeneric('vonB',     function(age,params,...) standardGeneric('vonB'))
 setGeneric('gascuel',  function(age,params,...) standardGeneric('gascuel'))
 setGeneric('gompertz', function(age,params,...) standardGeneric('gompertz'))

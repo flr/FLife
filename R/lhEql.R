@@ -5,15 +5,15 @@
 #' and generates a corresponding \code{FLBRP} object. Can use a range of functional forms.
 #'
 #' @param params an \code{FLPar} object with life history parameters
-#' @param growth A function that takes an \code{FLPar} object with parameters, by default \code{vonB}
-#' @param m A function that takes an \code{FLPar} object with parameters, by default \code{gislason}
-#' @param mat A function that takes an \code{FLPar} object with parameters, by default \code{logistic}
-#' @param sel A function that takes an \code{FLPar} object with parameters, by default \code{dnormal}
-#' @param sr A \code{character} value, "bevholt" by default
-#' @param range A \code{numeric} with age range by default from 0 to 40
-#' @param spwn A \code{numeric} give propotion of year when spawning occurs, by default is params["a50"]-floor(params["a50"])
-#' @param fish A \code{numeric} give propotion of year when fishing occurs, by default 0.5        
-#' @param units A\code{character} for vectors in \code{FLBRP} returned by method
+#' @param growth function that takes an \code{FLPar} object with parameters, by default \code{vonB}
+#' @param m function that takes an \code{FLPar} object with parameters, by default \code{gislason}
+#' @param mat function that takes an \code{FLPar} object with parameters, by default \code{logistic}
+#' @param sel function that takes an \code{FLPar} object with parameters, by default \code{dnormal}
+#' @param sr \code{character} value, "bevholt" by default
+#' @param range \code{numeric} with age range by default from 0 to 40
+#' @param spwn \code{numeric} give propotion of year when spawning occurs, by default is params["a50"]-floor(params["a50"])
+#' @param fish \code{numeric} give propotion of year when fishing occurs, by default 0.5        
+#' @param units \code{character} for vectors in \code{FLBRP} returned by method
 #' @param midyear when growth measured, default 0.5
 #' @param ... any other arguments 
 #' 
@@ -38,18 +38,27 @@
 #' 
 setMethod("lhEql", signature(params='FLPar'),
   function(params, growth=FLife::vonB,
-    m = function(length,params)
-      exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
+    m  ="gislason",
+    #m = function(length,params)
+    #  exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
     mat = FLife::logistic,
     sel = FLife::dnormal,
-    sr = "bevholt",
+    sr  = "bevholt",
     range = c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40),
     spwn  = 0, #c(params["a50"]-floor(params["a50"])),
     fish  = 0.5, # proportion of year when fishing happens
     units = if("units" %in% names(attributes(params))) attributes(params)$units
       else NULL,
     midyear = 0.5, ...){
-
+    
+    pNms=dimnames(params)$params
+    if ("sl"%in%pNms&!("sel1"%in%pNms))
+      dimnames(params)$params["sel1"==pNms]="sel1"
+    if ("sr"%in%pNms&!("sel2"%in%pNms))
+      dimnames(params)$params["sel2"==pNms]="sel2"
+    if ("a1"%in%pNms&!("sel3"%in%pNms))
+      dimnames(params)$params["sel3"==pNms]="sel3"
+     
   # Check that spwn and fish are [0, 1]
   if (any(spwn > 1) | any(spwn < 0) | any(fish > 1) | any(fish < 0))
     stop("spwn and fish must be in the range 0 to 1\n")
@@ -73,7 +82,7 @@ setMethod("lhEql", signature(params='FLPar'),
   slen   <- growth(age+m.spwn,params) # slen is length at spawning time
   clen   <- growth(age+fish,  params) # clen is length when fishing happens
   midyearlen <- growth(age+midyear,params) # midyear length used for natural mortality
-
+slen<<-slen
   # Corresponding weights
   cwt=FLife::len2wt(clen,params)
   if ("bg" %in% dimnames(params)$param)
@@ -81,40 +90,48 @@ setMethod("lhEql", signature(params='FLPar'),
   else
     swt=FLife::len2wt(slen,params)
 
-  #warning("FLPar%*%FLQuant operator sets 1st dim name to quant regardless")
-  if ("numeric" %in% is(m)) m.=FLQuant(m,dimnames=dimnames(age)) else{
-    if ("length" %in% names(formals(m)))
-      m.   =m(length=midyearlen,params=params) # natural mortality is always based on mid year length
-    else if ("age" %in% names(formals(m))){
-      m.   =m(age=age+midyear,params=params) # natural mortality is always based on mid year length
-    }else if ("wt" %in% names(formals(m)))
-      {
-      m.   =m(swt,params=params[c("m1","m2")])
-      }
-
-  names(dimnames(m.))[1]="age"}
   mat. =mat(age + m.spwn,params) # maturity is biological therefore + m.spwn
   
   if (dims(mat.)["min"]==0) mat.[1]=0
   
   sel. =sel(age + fish,  params) # selectivty is fishery  based therefore + fish
-  
+
   ## create a FLBRP object to   calculate expected equilibrium values and ref pts
-  dms=dimnames(m.)
+  dms=dimnames(swt)
 
   res=FLBRP(stock.wt       =swt,
             landings.wt    =cwt,
             discards.wt    =cwt,
             bycatch.wt     =cwt,
-            m              =m.,
-            mat            =FLQuant(mat., dimnames=dimnames(m.), units=""),
-            landings.sel   =FLQuant(sel., dimnames=dimnames(m.), units=""),
-            discards.sel   =FLQuant(0,    dimnames=dimnames(m.), units=""),
-            bycatch.harvest=FLQuant(0,    dimnames=dimnames(m.), units="f"),
-            harvest.spwn   =FLQuant(harvest.spwn, dimnames=dimnames(m.), units=""),
-            m.spwn         =FLQuant(m.spwn, dimnames=dimnames(m.), units=""),
-            availability   =FLQuant(1, dimnames=dimnames(m.), units=""),
+            mat            =FLQuant(mat.,         dimnames=dms, units=""),
+            landings.sel   =FLQuant(sel.,         dimnames=dms, units=""),
+            discards.sel   =FLQuant(0,            dimnames=dms, units=""),
+            bycatch.harvest=FLQuant(0,            dimnames=dms, units="f"),
+            harvest.spwn   =FLQuant(harvest.spwn, dimnames=dms, units=""),
+            m.spwn         =FLQuant(m.spwn,       dimnames=dms, units=""),
+            availability   =FLQuant(1,            dimnames=dms, units=""),
             range          =range)
+
+  #warning("FLPar%*%FLQuant operator sets 1st dim name to quant regardless")
+  #if ("numeric" %in% is(m)) m.=FLQuant(m,dimnames=dimnames(age)) else{
+  #  if ("length" %in% names(formals(m)))
+  #    m.   =m(length=midyearlen,params=params) # natural mortality is always based on mid year length
+  #  else if ("age" %in% names(formals(m))){
+  #    m.   =m(age=age+midyear,params=params) # natural mortality is always based on mid year length
+  #  }else if ("wt" %in% names(formals(m)))
+  #    {
+  #    m.   =m(swt,params=params[c("m1","m2")])
+  #    }
+  #
+  #names(dimnames(m.))[1]="age"}
+  
+  if ("character"%in%is(m))
+    m(res)=m(res,m,params)
+  else if ("numeric"%in%is(m))
+    m(res)[]=m
+  else if ("function"%in%is(m))
+    m(res)=m(res,params)
+    
   
   ## FApex
   #if (!("range" %in% names(args))) range(res,c("minfbar","maxfbar"))[]<-as.numeric(dimnames(landings.sel(res)[landings.sel(res)==max(landings.sel(res))][1])$age)
