@@ -27,17 +27,19 @@ lhValid=data.frame(old=c("linf","k","t0","a","b",
 #' these are not provided by the algorithm 
 #' @param   t0 of von Bertalanffy. This is a default that isnt normally derived
 #' from life history theory, as are the following args.
-#' @param   a coefficient of length weight relationship
-#' @param   b exponent of length weight relationship
-#' @param   ato95 age at which 95\% of fish are mature, offset to age at which 50\% are mature
-#' @param   s steepness of stock recruitment relationship
-#' @param   v virgin biomass
-#' @param   sel1 selectivity-at-age parameter, by default double normal, age at maximum selectivity
-#' @param   sel2 selectivity-at-age parameter, by default double normal, standard deviation of lefthand limb of double normal
-#' @param   sel3 selectivity-at-age parameter, by default double normal, standard deviation of righthand limb of double normal
-#' @param   m1 m-at-age parameter by default for Gislason empirical relationship
-#' @param   m2 m-at-age parameter, by default for Gislason empirical relationship
-#' @param   m3 m-at-age parameter, by default for Gislason empirical relationship
+#' @param a coefficient of length weight relationship
+#' @param b exponent of length weight relationship
+#' @param ato95 age at which 95\% of fish are mature, offset to age at which 50\% are mature
+#' @param s steepness of stock recruitment relationship
+#' @param v virgin biomass
+#' @param sel1 selectivity-at-age parameter for double normal, age at maximum selectivity by default set to same as age at 100% mature
+#' @param sel2 selectivity-at-age parameter for double normal, standard deviation of lefthand limb of double normal, by default 5
+#' @param sel3 selectivity-at-age parameter for double normal, standard deviation of righthand limb of double normal, by default 5000
+#' @param sl obsolete now replaced by sel2 
+#' @param sr obsolete now replaced by sel3
+#' @param m1 m-at-age parameter by default for Gislason empirical relationship
+#' @param m2 m-at-age parameter, by default for Gislason empirical relationship
+#' @param m3 m-at-age parameter, by default for Gislason empirical relationship
 #' 
 #' @export
 #' 
@@ -62,7 +64,7 @@ lhPar=function(params,
                a=0.0003,b=3,
                ato95=1,
                sl=1,sr=5000,
-               sel2=1,sel3=5000,
+               sel1=NA,sel2=1,sel3=5000,
                m1=0.55,m2=-1.61,m3=1.44,
                s=0.9,v=1000,
                t0=function(params)-exp(-0.3922-0.2752*log(params["linf"])%-%(1.038*log(params["k"])))

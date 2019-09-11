@@ -7,34 +7,33 @@
 \alias{lhEql-method}
 \title{Derives an \code{FLBRP} from life history parameters}
 \usage{
-\S4method{lhEql}{FLPar}(params, growth = FLife::vonB,
-  m = function(length, params) exp(0.55) * (length^-1.61) \%*\%
-  (params["linf"]^1.44) \%*\% params["k"], mat = FLife::logistic,
-  sel = FLife::dnormal, sr = "bevholt", range = c(min = 0, max = 40,
-  minfbar = 1, maxfbar = 40, plusgroup = 40), spwn = 0, fish = 0.5,
-  units = if ("units" \%in\% names(attributes(params)))
-  attributes(params)$units else NULL, midyear = 0.5, ...)
+\S4method{lhEql}{FLPar}(params, growth = FLife::vonB, m = "gislason",
+  mat = FLife::logistic, sel = FLife::dnormal, sr = "bevholt",
+  range = c(min = 0, max = 40, minfbar = 1, maxfbar = 40, plusgroup =
+  40), spwn = 0, fish = 0.5, units = if ("units" \%in\%
+  names(attributes(params))) attributes(params)$units else NULL,
+  midyear = 0.5, ...)
 }
 \arguments{
 \item{params}{an \code{FLPar} object with life history parameters}
 
-\item{growth}{A function that takes an \code{FLPar} object with parameters, by default \code{vonB}}
+\item{growth}{function that takes an \code{FLPar} object with parameters, by default \code{vonB}}
 
-\item{m}{A function that takes an \code{FLPar} object with parameters, by default \code{gislason}}
+\item{m}{\code{character} takes the natural mortality model name, by default gislason}
 
-\item{mat}{A function that takes an \code{FLPar} object with parameters, by default \code{logistic}}
+\item{mat}{function that takes an \code{FLPar} object with parameters, by default \code{logistic}}
 
-\item{sel}{A function that takes an \code{FLPar} object with parameters, by default \code{dnormal}}
+\item{sel}{function that takes an \code{FLPar} object with parameters, by default \code{dnormal}}
 
-\item{sr}{A \code{character} value, "bevholt" by default}
+\item{sr}{\code{character} value, "bevholt" by default}
 
-\item{range}{A \code{numeric} with age range by default from 0 to 40}
+\item{range}{\code{numeric} with age range by default from 0 to 40}
 
-\item{spwn}{A \code{numeric} give propotion of year when spawning occurs, by default is params["a50"]-floor(params["a50"])}
+\item{spwn}{\code{numeric} give propotion of year when spawning occurs, by default is params["a50"]-floor(params["a50"])}
 
-\item{fish}{A \code{numeric} give propotion of year when fishing occurs, by default 0.5}
+\item{fish}{\code{numeric} give propotion of year when fishing occurs, by default 0.5}
 
-\item{units}{A\code{character} for vectors in \code{FLBRP} returned by method}
+\item{units}{\code{character} for vectors in \code{FLBRP} returned by method}
 
 \item{midyear}{when growth measured, default 0.5}
 
@@ -53,6 +52,8 @@ data(teleost)
 alb=teleost[,"Thunnus alalunga"]
 eql=lhEql(lhPar(alb))
 }
+
+
 
 }
 \seealso{

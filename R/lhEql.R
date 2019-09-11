@@ -6,7 +6,7 @@
 #'
 #' @param params an \code{FLPar} object with life history parameters
 #' @param growth function that takes an \code{FLPar} object with parameters, by default \code{vonB}
-#' @param m function that takes an \code{FLPar} object with parameters, by default \code{gislason}
+#' @param m \code{character} takes the natural mortality model name, by default gislason 
 #' @param mat function that takes an \code{FLPar} object with parameters, by default \code{logistic}
 #' @param sel function that takes an \code{FLPar} object with parameters, by default \code{dnormal}
 #' @param sr \code{character} value, "bevholt" by default
@@ -36,6 +36,10 @@
 #' eql=lhEql(lhPar(alb))
 #' }
 #' 
+#' 
+#' 
+
+
 setMethod("lhEql", signature(params='FLPar'),
   function(params, growth=FLife::vonB,
     m  ="gislason",

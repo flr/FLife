@@ -1,3 +1,4 @@
+utils::globalVariables(c("len"))
 
 setGeneric('m', function(object,model,params,...) 
   standardGeneric('m'))
