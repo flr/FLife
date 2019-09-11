@@ -78,7 +78,6 @@ Collate:
     mse.R
     extendPlusGroup.R
     getScriptPath.R
-    pMeasure.R
     sim.R
     knifeEdgeMsy.R
     netSel.R
@@ -88,9 +87,6 @@ Collate:
     reverse.R
     runs.R
     frules.R
-    oemLfq.R
-    oemLn.R
-    omOut.R
     priors.R
     lbspr.R
     ggpairs.R

@@ -1,3 +1,90 @@
+if (FALSE){
+  library(FLife)
+  library(FLasher)
+  
+  lh=lhPar(FLPar(linf=100))
+  eq=lhEql(lh)
+  fbar(eq)[]=refpts(eq)["msy","harvest"]
+  stk=as(eq,"FLStock")
+  stk=fwd(stk,fbar=fbar(eq)[,-1]%=%refpts(eq)["msy","harvest"],sr=eq)
+  
+  fbar(eq)=FLQuant(c(sort(refpts(eq)[,"harvest"])),dimnames=list(year=1:5))
+  nms=dimnames(sort(refpts(eq)[,"harvest"]))$refpt
+
+  ggplot(exp(-lorenzenFn(stock.wt(eq))))+
+    geom_line(aes(age,data,col=ac(year)))+
+    xlab("Age")+ylab("Survival")
+
+  dat=model.frame(FLQuants(survival=exp(-lorenzenFn(stock.wt(stk)[,1:5])),
+                           n       =stock.n(eq)),drop=TRUE)
+  
+  surv=subset(dat,year==3)[,c("n","survival")]
+  a=surv[,"survival"]
+  v=subset(dat,year==1)[,c("n")]
+
+  a=v[2]
+  b=rep(.1,1)
+  N=seq(1,100)
+  
+dd<-function(N,a,b){
+  a*N/(1+N/b)}
+
+ddm<-function(N,a,b){
+  -log((a*N/(1+N/b))/N)}
+
+cv<-function(x) var(x)^0.5/mean(x)
+
+plot(dd(N,.1,25))
+
+lh=lhPar(FLPar(linf=100))
+eq=lhEql(lh)
+
+srDev=rlnorm(1,FLQuant(0,dimnames=list(year=seq(1000))),0.3)
+
+fbar(eq)=FLQuant(0,dimnames=list(year=seq(1000)))
+fbar(eq)[]=refpts(eq)["msy","harvest"]*.1
+stk=as(eq,"FLStock")
+stk1=fwd(stk,fbar=fbar(eq)[,-1],sr=eq,residuals=srDev)
+
+fbar(eq)[]=refpts(eq)["msy","harvest"]
+stk=as(eq,"FLStock")
+stk2=fwd(stk,fbar=fbar(eq)[,-1],sr=eq,residuals=srDev)
+
+fbar(eq)[]=refpts(eq)["msy","harvest"]*2
+stk=as(eq,"FLStock")
+stk3=fwd(stk,fbar=fbar(eq)[,-1],sr=eq,residuals=srDev)
+
+plot(FLStocks(list("0.2"=stk1,"msy"=stk2,"2"=stk3)))
+
+stk1.=stk1
+stk2.=stk2
+stk3.=stk3
+
+for (i in 2:1000){
+  stk1@m[,i]=ddm(stock.n(stk1)[,i],surv[,"survival"],surv[,"n"])
+  stk1=fwd(stk1,fbar=fbar(stk1)[,i],sr=eq,residuals=srDev)
+
+  stk2@m[,i]=ddm(stock.n(stk2)[,i],surv[,"survival"],surv[,"n"])
+  stk2=fwd(stk2,fbar=fbar(stk2)[,i],sr=eq,residuals=srDev)
+
+  stk3@m[,i]=ddm(stock.n(stk3)[,i],surv[,"survival"],surv[,"n"])
+  stk3=fwd(stk3,fbar=fbar(stk3)[,i],sr=eq,residuals=srDev)
+  }
+
+plot(FLStocks(list("0.2"=stk1[,ac(20:99)],
+                   "msy"=stk2[,ac(20:99)],
+                   "2"  =stk3[,ac(20:99)])))
+
+x=rlnorm(100,0,0.3)
+y10=dd(x*surv[2,"n"]*.5,surv[2,"survival"],surv[2,"n"])
+y25=dd(x*surv[2,"n"],   surv[2,"survival"],surv[2,"n"])
+y50=dd(x*surv[2,"n"]*2, surv[2,"survival"],surv[2,"n"])
+
+ggplot(data.frame(x=rep(1:100,2),y=c(x,y),what=rep(c("input","output"),each=100)))+
+  geom_line(aes(x,y,col=what))
+}
+
+
 #' mdd
 #'
 #' Lorenzen natural mortality relationship where M is a function of weight, modified to 

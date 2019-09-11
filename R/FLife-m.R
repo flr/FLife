@@ -304,26 +304,25 @@ setMethod('m', signature(object='FLBRP',model="factor",params='missing'),
             m(flq,model,params)})
 
 #' gislason
-#' @description 
-#' gislason natural mortality relatoinship estimate M as a function of length. 
+#' 
+#' @description
+#' gislason natural mortality relatoinship estimate M as a function of length.
 #' 
 #' @param length at which M is to be predicted
-#' @param m1 0.55
-#' @param m2 1.44
-#' @param m3 -1.61
+#' @param params \code{FLPar} or \code{numeric} with parameters by default m1=0.55, m2=1.44, m3=-1.61
 #' @param ... any other arguments
 #' 
-#' @aliases  gislason gislason-method 
-#'           gislason,FLQuant,FLPar-method 
-#'           gislason,FLQuant,missing-method 
+#' @aliases  gislason gislason-method
+#'           gislason,FLQuant,FLPar-method
+#'           gislason,FLQuant,missing-method
 #'           gislason,FLQuant,numeric-method
-#'
+#' 
 #' @export
 #' @docType methods
 #' @rdname gislason
 #' 
 #' @seealso \code{\link{lorenzen}}
-#'  
+#' 
 #' @examples
 #' \dontrun{
 #' params=lhPar(FLPar(linf=111))
@@ -333,27 +332,15 @@ setMethod('m', signature(object='FLBRP',model="factor",params='missing'),
 #' gislason(length,params)
 #' }
 setMethod('gislason', signature(length='FLQuant',params='numeric'),
-          function(length,params,a=0.55,b=1.44,c=-1.61,...) { 
-            res=gislasonFn(length,params)
-            res@units='yr^-1'
+          function(length,params,...) { 
+            res=m(length,"gislason",FLPar(params))
+            res@units='instantaneous'
             res})
 setMethod('gislason', signature(length='FLQuant',params='FLPar'),
-          function(length,params,a=0.55,b=1.44,c=-1.61,...){   
-            res=gislasonFn(length,params)
-            res@units='yr^-1'
+          function(length,params,...){   
+            res=m(length,"gislason",params)
+            res@units='instantaneous'
             res})
-
-gislasonFn<-function(length,params,a=0.55,b=1.44,c=-1.61) {
-  
-  # Natural mortality parameters from Model 2, Table 1 gislason 2010
-  if (!all(c("m1","m2")%in%dimnames(params)$params)){
-    
-    m1=FLPar(m1= a*(params["linf"]^b)%*%params["k"], iter=dims(params)$iter)
-    m2=FLPar(m2=c                           ,        iter=dims(params)$iter)
-    params=rbind(params,m1,m2)
-  }
-  
-  params["m1"]%*%(exp(log(length)%*%params["m2"]))}
 
 #' lorenzen
 #'
@@ -365,7 +352,12 @@ gislasonFn<-function(length,params,a=0.55,b=1.44,c=-1.61) {
 #' and b a power term; defaults are a=0.3 and b=-0.288
 #' @param ... any other arguments
 #' 
-#' @aliases lorenzen lorenzen-method lorenzen,FLQuant,FLPar-method lorenzen,FLQuant,missing-method lorenzen,FLQuant,numeric-method  lorenzen,numeric,missing-method
+#' @aliases lorenzen 
+#'          lorenzen-method 
+#'          lorenzen,FLQuant,FLPar-method 
+#'          lorenzen,FLQuant,missing-method 
+#'          lorenzen,FLQuant,numeric-method  
+#'          lorenzen,numeric,missing-method
 #' 
 #' @export
 #' @docType methods
@@ -386,15 +378,16 @@ gislasonFn<-function(length,params,a=0.55,b=1.44,c=-1.61) {
 setMethod('lorenzen', signature(wt='FLQuant',params='FLPar'),
           function(wt,params,...){   
             res=params[1]%*%(wt%^%params[2])
-            res@units='yr^-1'
+            res@units='instantaneous'
             res})
 setMethod('lorenzen', signature(wt='FLQuant',params='missing'),
           function(wt,m1=.3,m2=-0.288,...) { 
             res=lorenzenFn(wt,m1=m1,m2=m2)
-            res@units='yr^-1'
+            res@units='instantaneous'
             res})
 setMethod('lorenzen', signature(wt='FLQuant',params='numeric'),
           function(wt,params,...) { 
+      
             res=params[1]*wt^params[2]
             res@units='yr^-1'
             res})
@@ -427,7 +420,6 @@ m1<-function(m,wt){
 #' @param ... any other arguments
 #' 
 #' @aliases gislasen gislasen-method gislasen,FLQuant,FLPar-method 
-#'          lorenzen lorenzen-method lorenzen,FLQuant,FLPar-method
 #'          roff roff-method roff,FLPar-method 
 #'          rikhter rikhter-method rikhter,FLPar-method
 #'          rikhter2 rikhter2-method rikhter2,FLPar-method

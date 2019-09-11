@@ -3,7 +3,6 @@
 export(elas)
 export(lhPar)
 export(lhRef)
-export(omSmry)
 export(refs)
 export(unbin)
 exportMethods(ages)

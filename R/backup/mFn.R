@@ -1,3 +1,5 @@
+utils::globalVariables(c("age"))
+
 #' gislason
 #' @description 
 #' gislason natural mortality relatoinship estimate M as a function of length. 
@@ -63,8 +65,8 @@ gislasonFn<-function(length,params,a=0.55,b=1.44,c=-1.61) {
 #' and b a power term; defaults are a=0.3 and b=-0.288
 #' @param ... any other arguments
 #' 
-#' @aliases lorenzen lorenzen-method lorenzen,FLQuant,FLPar-method lorenzen,FLQuant,missing-method lorenzen,FLQuant,numeric-method  lorenzen,numeric,missing-method
-#' 
+#' @aliases lorenzen 
+#'          
 #' @export
 #' @docType methods
 #' @rdname lorenzen

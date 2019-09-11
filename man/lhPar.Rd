@@ -25,7 +25,7 @@ these are not provided by the algorithm}
 
 \item{sr}{obsolete now replaced by sel3}
 
-\item{sel1}{selectivity-at-age parameter for double normal, age at maximum selectivity by default set to same as age at 100% mature}
+\item{sel1}{selectivity-at-age parameter for double normal, age at maximum selectivity by default set to same as age at 100\% mature}
 
 \item{sel2}{selectivity-at-age parameter for double normal, standard deviation of lefthand limb of double normal, by default 5}
 
@@ -41,8 +41,7 @@ these are not provided by the algorithm}
 
 \item{v}{virgin biomass}
 
-\item{t0}{of von Bertalanffy. This is a default that isnt normally derived
-from life history theory, as are the following args.}
+\item{t0}{of von Bertalanffy. This is a default that isnt normally derived from life history theory, as are the following args.}
 }
 \value{
 object of class \code{FLPar} with missing parameters calculated from life history theory

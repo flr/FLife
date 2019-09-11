@@ -22,17 +22,16 @@ lhValid=data.frame(old=c("linf","k","t0","a","b",
 #' same as age at 50/% mature (a50) As a minimum all `lhPar` requires is `linf` the asymptotic 
 #' length of the von Bertalannfy growth equation. 
 #'  
-#' @param   params \code{FLPar} object with parameters for life history equations and selection pattern.
+#' @param params \code{FLPar} object with parameters for life history equations and selection pattern.
 #' Need Linfinity to estimate other parameters, if any other parameters supplied in \code{code} then
 #' these are not provided by the algorithm 
-#' @param   t0 of von Bertalanffy. This is a default that isnt normally derived
-#' from life history theory, as are the following args.
+#' @param t0 of von Bertalanffy. This is a default that isnt normally derived from life history theory, as are the following args.
 #' @param a coefficient of length weight relationship
 #' @param b exponent of length weight relationship
 #' @param ato95 age at which 95\% of fish are mature, offset to age at which 50\% are mature
 #' @param s steepness of stock recruitment relationship
 #' @param v virgin biomass
-#' @param sel1 selectivity-at-age parameter for double normal, age at maximum selectivity by default set to same as age at 100% mature
+#' @param sel1 selectivity-at-age parameter for double normal, age at maximum selectivity by default set to same as age at 100\% mature
 #' @param sel2 selectivity-at-age parameter for double normal, standard deviation of lefthand limb of double normal, by default 5
 #' @param sel3 selectivity-at-age parameter for double normal, standard deviation of righthand limb of double normal, by default 5000
 #' @param sl obsolete now replaced by sel2 
