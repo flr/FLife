@@ -39,14 +39,13 @@
 #' 
 #' 
 
-
 setMethod("lhEql", signature(params='FLPar'),
   function(params, growth=FLife::vonB,
     m  ="gislason",
     #m = function(length,params)
     #  exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
-    mat = FLife::logistic,
-    sel = FLife::dnormal,
+    mat = logistic,
+    sel = dnormal,
     sr  = "bevholt",
     range = c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40),
     spwn  = 0, #c(params["a50"]-floor(params["a50"])),
@@ -86,8 +85,9 @@ setMethod("lhEql", signature(params='FLPar'),
   slen   <- growth(age+m.spwn,params) # slen is length at spawning time
   clen   <- growth(age+fish,  params) # clen is length when fishing happens
   midyearlen <- growth(age+midyear,params) # midyear length used for natural mortality
-slen<<-slen
+  
   # Corresponding weights
+  # bug warning cos of log(NA)
   cwt=FLife::len2wt(clen,params)
   if ("bg" %in% dimnames(params)$param)
     swt=exp(log(slen)%*%params["bg"])%*%params["a"]
@@ -95,14 +95,13 @@ slen<<-slen
     swt=FLife::len2wt(slen,params)
 
   mat. =mat(age + m.spwn,params) # maturity is biological therefore + m.spwn
-  
   if (dims(mat.)["min"]==0) mat.[1]=0
-  
+
   sel. =sel(age + fish,  params) # selectivty is fishery  based therefore + fish
 
   ## create a FLBRP object to   calculate expected equilibrium values and ref pts
   dms=dimnames(swt)
-
+  
   res=FLBRP(stock.wt       =swt,
             landings.wt    =cwt,
             discards.wt    =cwt,
@@ -127,8 +126,9 @@ slen<<-slen
   #    m.   =m(swt,params=params[c("m1","m2")])
   #    }
   #
+
+
   #names(dimnames(m.))[1]="age"}
-  
   if ("character"%in%is(m))
     m(res)=m(res,m,params)
   else if ("numeric"%in%is(m))
@@ -194,9 +194,10 @@ slen<<-slen
     fbar(res)<-args[["fbar"]] else
       if (any((!is.nan(refpts(res)["crash","harvest"]))))
         fbar(res)<-FLQuant(seq(0,1,length.out=101),quant="age")%*%refpts(res)["crash","harvest"]
-
+  
   names(dimnames(fbar(res)))[1]="age"
   res=brp(res)
+  
   
   if (!("units" %in% names(attributes(params))))  return(res)
   if (all(is.na(attributes(params)$units)))  return(res)

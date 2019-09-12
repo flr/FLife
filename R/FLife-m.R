@@ -1,5 +1,4 @@
-utils::globalVariables(c("len"))
-
+utils::globalVariables(c("len","age"))
 setGeneric('m', function(object,model,params,...) 
   standardGeneric('m'))
 setGeneric('gislason', function(length,params,...) 
@@ -59,7 +58,8 @@ mFn<-function(model,flq,params){
   switch(as.character(model),
 
   gislason={
-      exp(params["m1"]%-%(params["m1"]%*%log(flq))+(params["m1"]%*%log(params["linf"]))%+%log(params["k"]))},
+      exp(params["m1"]%-%(params["m1"]%*%log(flq))%+%
+            (params["m1"]%*%log(params["linf"]))%+%log(params["k"]))},
   
   roff={
     res=(3*params["k"]%*%params["linf"])*(1.0-params["l50"]%/%params["linf"])%/%params["l50"]

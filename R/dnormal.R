@@ -28,7 +28,7 @@ dnormalFn<-function(age,params){
   if (dims(age)$iter==1 &  dims(a1)$iter>1)
     age=propagate(age,dims(a1)$iter)
   
-  s[age>=a1]=sr[age>=a1]
+  s@.Data[age>=a1]=sr@.Data[age>=a1]
   
   res=2.0^(-((age%-%a1)%/%s%*%(age%-%a1)%/%s))}
 

@@ -35,7 +35,7 @@ logisticFn<-function(age,params) { #x,a50,ato95,asym=1.0){
   lss =(params["a50"]%-%age)%/%params["ato95"] < -5
   
   res[grt]=0
-  res[lss]=asym[lss]
+  res@.Data[lss]=asym@.Data[lss]
   
   dmns          =dimnames(res)
   names(dmns)[1]="age"

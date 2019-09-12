@@ -14,3 +14,5 @@ FLife.Rproj
 stuff
 .Rbuildignore
 mystuff
+cache
+tex

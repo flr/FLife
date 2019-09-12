@@ -71,6 +71,8 @@ ggplot(as.data.frame(m))+
    scale_x_continuous(limits=c(0,15))
 
 m=mdd(stock.wt(hutchen),params=FLPar(m1=3,m2=-0.288),scale,k=1.2,m=lorenzen)   
+
+ library(FLife)
 }
 }
 \seealso{

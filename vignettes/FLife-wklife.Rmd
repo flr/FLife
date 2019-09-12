@@ -93,7 +93,6 @@ attributes(wkpar)[names(wklife)[1:5]]=wklife[,1:5]
 Then use life history relationships to estimate missing values  
 ```{r m-gislason}
 par <- lhPar(wkpar)
-units(par) <- c("", "", "cm", "", "cm", "cm", "cm", "cm")
 ```
 
 and then to derive vectors for processses such as natural mortality 
