@@ -60,104 +60,103 @@ lhValid=data.frame(old=c("linf","k","t0","a","b",
 # 1 & x \ge 0
 # \end{array}
 # \right. }{ (non-Latex version) }
-lhPar=function(params,
-               a=0.0003,b=3,
-               ato95=1,
-               sl=1,sr=5000,
-               sel1=NA,sel2=1,sel3=5000,
-               m1=0.55,m2=-1.61,m3=1.44,
-               s=0.9,v=1000,
-               t0=function(params)-exp(-0.3922-0.2752*log(params["linf"])%-%(1.038*log(params["k"])))
-               ){
- 
-  if("data.frame"%in%class(params)) params=mf2FLPar(params)
- 
-  fn <- function(params,t0,a,b,ato95,sel2,sel3,s,v){
-    
-    names(dimnames(params)) <- tolower(names(dimnames(params)))
-    
-    if (!("a"     %in% dimnames(params)$params)) params=addpar(params,"a",   a)
-    if (!("b"     %in% dimnames(params)$params)) params=addpar(params,"b",   b)
-    if (!("bg"    %in% dimnames(params)$params)) {
-      params=rbind(params,params["b"])
-      dimnames(params)[[1]][length(dimnames(params)[[1]])]="bg"}
-    if (!("s"     %in% dimnames(params)$params)) params=addpar(params,"s",   s)
-    if (!("v"     %in% dimnames(params)$params)) params=addpar(params,"v",   v)
-    
-    ## growth parameters
-    if (!("k"     %in% dimnames(params)$params)) {
-      kpar  =FLPar(array(3.15*params["linf"]^(-0.64), dim=c(1, dims(params)$iter),dimnames=list(params="k", iter=seq(dims(params)$iter))))
-  
-      params=rbind(params,kpar) # From Gislason et al 2008, all species combined
-      }
-    
-    if (!("t0"    %in% dimnames(params)$params)) params=addpar(params,"t0", t0(params))
-    # Natural mortality parameters from Model 2, Table 1 Gislason 2010
-    params=rbind(params,FLPar(m1=m1,m2=m2,m3=m3))
-    
-    #  if (!all(c("m1","m2")%in%dimnames(params)$params)){
-    #    
-    #     params=rbind(params,FLPar(m1= 0.55*(params["linf"]^1.44)%*%params["k"], iter=dims(params)$iter),
-    #                         FLPar(m2=-1.61                                    , iter=dims(params)$iter))
-    #    
-    #    #m=(length^-1.61)%*%(exp(0.55)*params["linf"]^1.44)%*%params["k"]
-    #    
-    #    params=addpar(params,"m1", exp(0.55)*(params["linf"]^1.44)%*%params["k"])
-    #    params=addpar(params,"m2", -1.61)
-    #    }
-  
-    if (!("ato95" %in% dimnames(params)$params)) params=addpar(params,"ato95",ato95)  #rbind(params,FLPar("ato95" =ato95, iter=dims(params)$iter))
-    if (!("sel2"    %in% dimnames(params)$params)) params=addpar(params,"sel2",   sel2)     #rbind(params,FLPar("sel2"    =sel2,    iter=dims(params)$iter))
-    if (!("sel3"    %in% dimnames(params)$params)) params=addpar(params,"sel3",   sel3)     #rbind(params,FLPar("sel3"    =sel3,    iter=dims(params)$iter))
-   
-    ## maturity parameters from http://www.fishbase.org/manual/FishbaseThe_MATURITY_Table.htm
-    if (!("asym"    %in% dimnames(params)$params)) params=params=addpar(params,"asym",  1) #rbind(params,FLPar("asym"    =asym, iter=dims(params)$iter))
-    
-    if (!("a50" %in% dimnames(params)$params)){
-      if (!("l50" %in% dimnames(params)$params)){
-        l50=0.72*params["linf"]^0.93
-        dimnames(l50)$params="l50"
-        }else{
-        l50=params["l50"]
-        }
 
-      a50=log(1-(l50%/%params["linf"]))%/%(-params["k"])%+%params["t0"]
-      dimnames(a50)$params="a50"
-      
-      params=rbind(params,a50)
-      params=rbind(params,l50)
-    }
-    
-    ## selectivity guestimate
-    sel1=params["a50"]%+%params["ato95"]
-    
-    dimnames(sel1)$params="sel1"
-   
-    params=rbind(params,sel1)
-    
-    attributes(params)$units=c("cm","kg","1000s")
-    
-    return(params[lhValid$new[lhValid$new%in%dimnames(params)$params]])}
+
+lhPar <- function(...,
+    m=list(model="gislason", params=c(m1=0.55, m2=-1.61, m3=1.44))) {
+
+  # DEFAULT defined parameter values + m
+  args <- list(a=0.0003, b=3, ato95=1, sel2=1, sel3=5000,
+    s=0.9, v=1000, asym=1, m=m)
   
-  if (dims(params)$iter==1) {
-     return(fn(params[apply(is.na(params), 1, sum) == 0,],t0,a,b,ato95,sel2,sel3,s,v))
+  # PARSE ...
+  input <- list(...)
+  
+  # FIND FLPar(s) and data.frame(s) in input
+  flp <- unlist(lapply(input, function(x) is(x, "FLPar")))
+  dtf <- unlist(lapply(input, function(x) is(x, "data.frame")))
+
+  # CONVERT all to single list of vectors
+  input <- c(input[!flp & !dtf],
+      Reduce("c", lapply(input[flp], as, "list")),
+      unlist(lapply(input[dtf], unlist)))
+
+  # DROP any NAs
+  input <- input[!unlist(lapply(input, function(x) any(is.na(x))))]
+
+  # MERGE input and default args
+  args[names(input)] <- input
+
+  # PARSE m params
+  margs <- args$m[unlist(lapply(args$m, is, "numeric"))][[1]]
+
+  # ENSURE m params are named
+  if(is.null(names(margs)))
+    names(margs) <- paste0("m", seq(length(margs)))
+
+  # STORE m model name
+  mmodel <- args$m[unlist(lapply(args$m, is, "character"))][[1]]
+
+  # ADD args and m params to form params
+  params <- c(args[names(args) != "m"], margs)
+
+  # EXPAND to max iters
+  its <- max(unlist(lapply(params, length)))
+
+  # CREATE output FLPar
+  params <- do.call("FLPar", lapply(params, rep, length.out=its))
+  
+  # DERIVED parameters
+  #
+  # Gislason, H., J.G. Pope, J.C. Rice, and N. Daan. 2008. Coexistence in
+  # North Sea fish communities: Implications for growth and natural mortality.
+  # ICES J. Mar. Sci. 65 (4): 514–30.
+
+  # k
+  if(!"k" %in% dimnames(params)$params)
+    params <- rbind(params, FLPar(k=3.15 * params$linf ^ (-0.64)))
+
+  # t0
+  if(!"t0" %in% dimnames(params)$params)
+    params <- rbind(params, FLPar(t0=-exp(-0.3922 - 0.2752 *
+      log(params$linf) %-% (1.038 * log(params$k)))))
+
+  # l50 - a50
+  if(!"l50" %in% dimnames(params)$params) {
+    if("a50" %in% dimnames(params)$params) {
+      params <- rbind(params,
+        FLPar(l50=vonB(age=c(params$a50), params[c("k", "t0", "linf"),])))
+    } else {
+      params <- rbind(params, FLPar(l50=0.72 * params$linf ^ 0.93))
+    }
   }
-  else{
-    df=subset(as.data.frame(params),!is.na(data))
-     
-    res1=dlply(df,.(iter),function(x) as(x[,c("data","params")],"FLPar")[,1])
-    
-    res2=mlply(data.frame(iter=seq(length(res1))),function(iter,v1,v2,v3,v4,v5,v6,v7,v8) 
-      fn(res1[[iter]],v1,v2,v3,v4,v5,v6,v7,v8),v1=t0,v2=a,v3=b,v4=ato95,v5=sel2,v6=sel3,v7=s,v8=v)
-    
-    res3=mdply(data.frame(iter=seq(length(res1))),function(iter) cbind(iter=iter,as.data.frame(iter(res2[[iter]],1))[,-2]))
-    
-    res4=as(res3,"FLPar")
-    
-   res4[]=unlist(c(cast(res3,params~iter,value="data")[,-1]))
-    
-    return(res4)}
+  if(!"a50" %in% dimnames(params)$params) {
+    params <- rbind(params, FLPar(a50=log(1-(params$l50 %/%
+      params$linf)) %/% (-params$k) %+% params$t0))
   }
+
+  # sel1
+  if(!"sel1" %in% dimnames(params)$params)
+    params <- rbind(params, FLPar(sel1=params$a50 + params$ato95))
+  
+  # bg
+  if(!"bg" %in% dimnames(params)$params)
+    params <- rbind(params, FLPar(bg=params$b))
+
+  # SORT params
+  order <- c("linf", "l50", "a50", "ato95", "k", "t0", "a", "b",
+    "m1", "m2", "m3", "sel1", "sel2", "sel3", "asym", "s", "v", "bg")
+
+  params <- params[order,]
+
+  # KEEP mmodel as attribute
+  attr(params, "mmodel") <- mmodel
+
+  return(params)
+}
+
+
+# ---
 
 mf2FLPar=function(x){
   
