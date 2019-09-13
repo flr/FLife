@@ -71,7 +71,7 @@
 # \right. }{ (non-Latex version) }
 
 lhPar <- function(...,
-    m=list(model="gislason", params=c(m1=0.55, m2=-1.61, m3=1.44)),
+    m  =list(model="gislason", params=c(m1=0.55, m2=-1.61, m3=1.44)),
     k  =function(params,a=3.15,b=-0.64) a*params["linf"]^b,
     t0 =function(params,a=-0.3922,b=-0.2752,c=-1.038) 
             -exp(a-b*log(params$linf)%-%(c*log(params$k))),

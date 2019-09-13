@@ -63,9 +63,7 @@ Collate:
     util.R
     leslie.R
     calcR.R
-    refs.R
     len-index.R
-    sbt-mse.R
     power.R
     spectra.R
     t0.R
@@ -74,14 +72,11 @@ Collate:
     sim.R
     knifeEdgeMsy.R
     netSel.R
-    funcs-MSE.R
     funcs-indicators.R
     plot-bivariate.R
     reverse.R
-    runs.R
-    frules.R
     priors.R
-    lbspr.R
     ggpairs.R
+    steepness.R
 Encoding: UTF-8
 RoxygenNote: 6.1.1
