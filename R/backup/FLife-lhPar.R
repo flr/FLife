@@ -72,12 +72,13 @@
 
 lhPar <- function(...,
     m=list(model="gislason", params=c(m1=0.55, m2=-1.61, m3=1.44)),
-    linf2k  =c( 3.15,  -6.4),
-    linfk2t0=c(-0.3922,-0.2752,-1.038),
-    linf2l50=c( 0.72,   0.93)) {
-
-  args <- list(a=0.0003, b=3, ato95=1, sel2=1, sel3=5000,
-    s=0.9, v=1000, m=m, asym=1)
+    k  =function(params,a=3.15,b=-0.64) a*params["linf"]^b,
+    t0 =function(params,a=-0.3922,b=-0.2752,c=-1.038) 
+            -exp(a-b*log(params$linf)%-%(c*log(params$k))),
+    l50=function(params,a=0.72,b=0.93) a*params["linf"]^b){
+  
+  args <- list(a=0.0003, b=3, bg=3, ato95=1, sel2=1, sel3=5000,
+               s=0.9, v=1000, m=m, asym=1)
   
   # PARSE ...
   input <- list(...)
@@ -111,16 +112,16 @@ lhPar <- function(...,
   params <- do.call("FLPar", lapply(params, rep, length.out=its))
   # k
   if(!"k" %in% dimnames(params)$params)
-    params <- rbind(params, FLPar(k=linf2k[1]*params$linf^(linf2k[2])))
+    params <- rbind(params, FLPar("k"=k(params)))
+
   if(any(is.na(params["k"])))
-    params["k",is.na(params["k"])]=FLPar(k=linf2k[1]*params["linf",is.na(params["k"])]^(linf2k[2]))
+    params["k",is.na(params["k"])]=FLPar("k"=k(params[,is.na(params["k"])]))
 
   # t0
   if(!"t0" %in% dimnames(params)$params)
-    params <- rbind(params, FLPar(t0=-exp(linfk2t0[1]-linfk2t0[2]*log(params$linf)%-%(linfk2t0[3]*log(params$k)))))
+    params <- rbind(params, FLPar("t0"=FLPar(t0(params))))
   if(any(is.na(params["t0"])))
-    params["t0",is.na(params["t0"])]=-exp(linfk2t0[1]-linfk2t0[2]*log(params["linf",is.na(params["t0"])])%-%
-                                                       (linfk2t0[3]*log(params["k",is.na(params["t0"])])))
+    params["t0",is.na(params["t0"])]=FLPar("t0"=FLPar(t0(params[,is.na(params["t0"])])))
   
   # l50
   ## if l50 is NA and a50 supplied estimate l50
@@ -130,17 +131,15 @@ lhPar <- function(...,
         params["l50",flag]=vonB(c(params["a50",flag]),params[,flag])
     }
 
-  ## if l50 not supplied but a50 is estimate l50
+  ## if l50 not supplied but a50 is, then estimes l50
   if((!"l50" %in% dimnames(params)$params)&("a50" %in% dimnames(params)$params))
     params <- rbind(params, FLPar(a50=vonB(c(a50),params)))
-  if(any(is.na(params["l50"])))
-    params["l50",is.na(params["l50"])]=linf2l50[1]*params["linf",is.na(params["l50"])]^linf2l50[2]
   
   ## if l50 still missing estimate l50
   if(!"l50" %in% dimnames(params)$params)
-    params <- rbind(params, FLPar(l50=linf2l50[1]*params$linf^linf2l50[2]))
+    params <- rbind(params, FLPar("l50"=l50(params)))
   if(any(is.na(params["l50"])))
-    params["l50",is.na(params["l50"])]=linf2l50[1]*params["linf",is.na(params["l50"])]^linf2l50[2]
+    params["l50",is.na(params["l50"])]=l50(params["l50",is.na(params["l50"])])
   
   # a50
   if(!"a50" %in% dimnames(params)$params)
@@ -158,7 +157,6 @@ lhPar <- function(...,
   # KEEP mmodel as attribute
   attr(params, "mmodel") <- mmodel
 
-  return(params)
-}
-
+  return(params[c("linf","k","t0","a","b","l50","a50","ato95","asym","bg",
+                  "m1","m2","m3","s","v","sel1","sel2","sel3")])}
 
