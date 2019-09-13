@@ -17,5 +17,3 @@ extendPG<-function(object,pg=40){
   
   bpg}
 
-
-ddply(expand.grid(a=1:4,b=rlnorm(100)), .(a), with, mean(b))
