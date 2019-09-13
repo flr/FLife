@@ -9,7 +9,7 @@
 #' @description 
 #' Uses life history theory to derive parameters for biological relationships, i.e. or growth, 
 #' maturity, natural mortality. Selectivity by default is set so age at peak selectivity is the 
-#' same as age at 50/% mature (a50) As a minimum all `lhPar` requires is `linf` the asymptotic 
+#' same as age at 50\% mature (a50) As a minimum all `lhPar` requires is `linf` the asymptotic 
 #' length of the von Bertalannfy growth equation. 
 #'  
 #' @param params \code{FLPar} object with parameters for life history equations and selection pattern.

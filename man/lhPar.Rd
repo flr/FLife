@@ -6,14 +6,17 @@
 \title{Generates life history parameters}
 \usage{
 lhPar(..., m = list(model = "gislason", params = c(m1 = 0.55, m2 = -1.61,
-  m3 = 1.44)))
+  m3 = 1.44)), k = function(params, a = 3.15, b = -0.64) a *
+  params["linf"]^b, t0 = function(params, a = -0.3922, b = -0.2752, c =
+  -1.038) -exp(a - b * log(params$linf) \%-\% (c * log(params$k))),
+  l50 = function(params, a = 0.72, b = 0.93) a * params["linf"]^b)
 }
 \arguments{
+\item{t0}{of von Bertalanffy. This is a default that isnt normally derived from life history theory, as are the following args.}
+
 \item{params}{\code{FLPar} object with parameters for life history equations and selection pattern.
 Need Linfinity to estimate other parameters, if any other parameters supplied in \code{code} then
 these are not provided by the algorithm}
-
-\item{t0}{of von Bertalanffy. This is a default that isnt normally derived from life history theory, as are the following args.}
 
 \item{a}{coefficient of length weight relationship}
 
@@ -47,7 +50,7 @@ object of class \code{FLPar} with missing parameters calculated from life histor
 \description{
 Uses life history theory to derive parameters for biological relationships, i.e. or growth, 
 maturity, natural mortality. Selectivity by default is set so age at peak selectivity is the 
-same as age at 50/% mature (a50) As a minimum all `lhPar` requires is `linf` the asymptotic 
+same as age at 50\% mature (a50) As a minimum all `lhPar` requires is `linf` the asymptotic 
 length of the von Bertalannfy growth equation.
 }
 \examples{
