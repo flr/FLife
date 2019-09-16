@@ -1,7 +1,7 @@
 Package: FLife
 Type: Package
 Title: Methods for Modelling Life History Traits
-Version: 3.3.0
+Version: 3.5.0
 Date: 2018-07-25
 Authors@R: person(given = "Laurence", family = "Kell", role = c("aut", "cre"), 
   email = "laurie@seaplusplus.co.uk")
@@ -34,7 +34,7 @@ Suggests:
 Additional_repositories: http://flr-project.org/R
 Collate:
     generic.R
-    lhPar.R
+    FLife-lhPar.R
     data.R
     vonB.R
     gascuel.R
@@ -56,29 +56,22 @@ Collate:
     lh-indicators.R
     bench.R
     lh-srr-sv.R
-    cc.R
-    powh.R
     noise.R
     stars.R
     FLife-dd-m.R
     FLife-dd-mat.R
     grw-dd.R
     moment.R
-    pid.R
     util.R
     leslie.R
     calcR.R
     refs.R
     len-index.R
-    sbt-mse.R
     power.R
     spectra.R
     t0.R
-    mp.R
-    mse.R
     extendPlusGroup.R
     getScriptPath.R
-    pMeasure.R
     sim.R
     knifeEdgeMsy.R
     netSel.R
@@ -86,11 +79,7 @@ Collate:
     funcs-indicators.R
     plot-bivariate.R
     reverse.R
-    runs.R
     frules.R
-    oemLfq.R
-    oemLn.R
-    omOut.R
     priors.R
     lbspr.R
     ggpairs.R
