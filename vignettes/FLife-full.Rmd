@@ -187,6 +187,8 @@ lhPar(linf)
 
 ### Stock recruitment relationship
 
+exportMethods(sv)  
+exportMethods(steepness)  
 
 `lhPar` assumes a Beverton and Holt stock recruitment relationship by default
 
@@ -227,11 +229,72 @@ hist(Steepness)
 
 ### Functional Forms
 
+exportMethods(ages)  
+
+#### Ogives
+
+exportMethods(knife)  
+exportMethods(logistic)  
+exportMethods(sigmoid)  
+exportMethods(dnormal)  
+
+#### Growth curves
+
+exportMethods(vonB)  
+exportMethods(gascuel)  
+exportMethods(richards)  
+exportMethods(gompertz)  
+
+#### Conversions
+exportMethods(len2wt)  
+exportMethods(wt2len)  
+
+
 ### Population growth rate
+
+exportMethods(leslie)  
+exportMethods(r)  
 
 ## Time series dynamics
 
+### `lhStock`
+
 ## Density Dependence
+
+exportMethods(grwdd)  
+exportMethods(matdd)  
+exportMethods(mdd)  
+
+### Natural Mortality
+
+exportMethods(charnov)  
+exportMethods(djababli)  
+exportMethods(gislason)  
+exportMethods(griffiths)  
+exportMethods(lorenzen)  
+exportMethods(jensen)  
+exportMethods(jensen2)
+exportMethods(rikhter)  
+exportMethods(rikhter2)  
+exportMethods(petersen)  
+exportMethods(roff)  
+
+
+@forrest2013modelling
+
+$$N_{t+1}=\frac{N_{t}exp[-M_{\infty}-F_t]}{1+N_t\frac{A}{M_{\infty}+F_t}\{1-exp(-M_{\infty}-F_t)]\}}$$
+
+
+$$C_t=\frac{F_t}{A}ln{\huge[}1+N_t\frac{A}{M_{\infty}+F_t}[1-exp(-M_{\infty}-F_t)]{\huge]}$$
+
+## Indicators
+
+export(lhRef)  
+export(refs)  
+
+exportMethods(lopt)  
+exportMethods(loptAge)  
+
 
 [Back to Top](#top)
 
@@ -240,6 +303,9 @@ hist(Steepness)
 ## Projections
 
 ## Stochasticity
+
+exportMethods(rnoise)  
+exportMethods(rod)  
 
 ## Management Strategy Evaluation
 
@@ -277,41 +343,43 @@ This vignette and many of the methods documented in it were developed under the 
 
 [Back to Top](#top)
 
++ FLife-lhPar
++ data
++ knife
++ logistic
++ dnormal
++ sigmoid
++ FLife-m
++ fapex
++ lhEql
++ lhRef
++ lopt
++ lh-indicators
++ bench
++ lh-srr-sv
++ noise
++ stars
++ FLife-dd-m
++ FLife-dd-mat
++ grw-dd
++ util
++ leslie
++ calcR
++ len-index
++ power
++ spectra
++ t0
++ extendPlusGroup
++ getScriptPath
++ sim
++ knifeEdgeMsy
++ netSel
++ funcs-indicators
++ plot-bivariate
++ reverse
++ priors
++ ggpairs
++ steepness		
 
-export(lhPar)
-export(lhRef)
-export(refs)
-exportMethods(ages)
-exportMethods(charnov)
-exportMethods(djababli)
-exportMethods(dnormal)
-exportMethods(gascuel)
-exportMethods(gislason)
-exportMethods(gompertz)
-exportMethods(griffiths)
-exportMethods(grwdd)
-exportMethods(jensen)
-exportMethods(jensen2)
-exportMethods(knife)
-exportMethods(len2wt)
-exportMethods(leslie)
-exportMethods(lhEql)
-exportMethods(logistic)
-exportMethods(lopt)
-exportMethods(loptAge)
-exportMethods(lorenzen)
-exportMethods(matdd)
-exportMethods(mdd)
-exportMethods(petersen)
-exportMethods(r)
-exportMethods(richards)
-exportMethods(rikhter)
-exportMethods(rikhter2)
-exportMethods(rnoise)
-exportMethods(rod)
-exportMethods(roff)
-exportMethods(sigmoid)
-exportMethods(sv)
-exportMethods(vonB)
-exportMethods(wt2len)
+
 

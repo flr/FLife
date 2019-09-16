@@ -40,27 +40,24 @@
 #' 
 
 setMethod("lhEql", signature(params='FLPar'),
-  function(params, growth=FLife::vonB,
-    m  ="gislason",
-    #m = function(length,params)
-    #  exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
-    mat = logistic,
-    sel = dnormal,
-    sr  = "bevholt",
-    range = c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40),
-    spwn  = 0, #c(params["a50"]-floor(params["a50"])),
-    fish  = 0.5, # proportion of year when fishing happens
-    units = if("units" %in% names(attributes(params))) attributes(params)$units
-      else NULL,
-    midyear = 0.5, ...){
-    
-    pNms=dimnames(params)$params
-    if ("sl"%in%pNms&!("sel1"%in%pNms))
-      dimnames(params)$params["sel1"==pNms]="sel1"
-    if ("sr"%in%pNms&!("sel2"%in%pNms))
-      dimnames(params)$params["sel2"==pNms]="sel2"
-    if ("a1"%in%pNms&!("sel3"%in%pNms))
-      dimnames(params)$params["sel3"==pNms]="sel3"
+  function(params, 
+    growth =FLife::vonB,
+    m      ="gislason",
+    sr     ="bevholt",
+    mat    =logistic,
+    sel    =dnormal,
+    range  =c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40),
+    spwn   =0, #c(params["a50"]-floor(params["a50"])),
+    fish   =0.5, # proportion of year when fishing happens
+    midyear=0.5, ...){
+  
+  pNms=dimnames(params)$params
+  if ("sl"%in%pNms&!("sel1"%in%pNms))
+    dimnames(params)$params["sel1"==pNms]="sel1"
+  if ("sr"%in%pNms&!("sel2"%in%pNms))
+    dimnames(params)$params["sel2"==pNms]="sel2"
+  if ("a1"%in%pNms&!("sel3"%in%pNms))
+    dimnames(params)$params["sel3"==pNms]="sel3"
      
   # Check that spwn and fish are [0, 1]
   if (any(spwn > 1) | any(spwn < 0) | any(fish > 1) | any(fish < 0))
@@ -126,16 +123,16 @@ setMethod("lhEql", signature(params='FLPar'),
   #    m.   =m(swt,params=params[c("m1","m2")])
   #    }
   #
-
-
+ 
   #names(dimnames(m.))[1]="age"}
   if ("character"%in%is(m))
-    m(res)=m(res,m,params)
+    m(res)=FLife:::m(res,m,params)
   else if ("numeric"%in%is(m))
     m(res)[]=m
   else if ("function"%in%is(m))
     m(res)=m(res,params)
-    
+  else if ("FLQuant"%in%is(m))
+    m(res)=m
   
   ## FApex
   #if (!("range" %in% names(args))) range(res,c("minfbar","maxfbar"))[]<-as.numeric(dimnames(landings.sel(res)[landings.sel(res)==max(landings.sel(res))][1])$age)
@@ -197,7 +194,6 @@ setMethod("lhEql", signature(params='FLPar'),
   
   names(dimnames(fbar(res)))[1]="age"
   res=brp(res)
-  
   
   if (!("units" %in% names(attributes(params))))  return(res)
   if (all(is.na(attributes(params)$units)))  return(res)

@@ -79,7 +79,6 @@ lhPar <- function(...,
   
   args <- list(a=0.0003, b=3, bg=3, ato95=1, sel2=1, sel3=5000,
                s=0.9, v=1000, m=m, asym=1)
-  
   # PARSE ...
   input <- list(...)
 
@@ -93,27 +92,34 @@ lhPar <- function(...,
       unlist(lapply(input[dtf], unlist)))
 
   args[names(input)] <- input
-      
+  
   # PARSE m
-  margs <- args$m[unlist(lapply(args$m, is, "numeric"))][[1]]
-
+  if (is.FLQuant(args$m)){
+    margs=as.numeric(NA)
+  }else
+    margs <- args$m[unlist(lapply(args$m, is, "numeric"))][[1]]
+  
   if(is.null(names(margs)))
     names(margs) <- paste0("m", seq(length(margs)))
 
-  mmodel <- args$m[unlist(lapply(args$m, is, "character"))][[1]]
+  if (!is.FLQuant(args$m))
+    mmodel <- args$m[unlist(lapply(args$m, is, "character"))][[1]]
+  else 
+    mmodel="FLQuantß"
 
   # CREATE params list
   params <- c(args[names(args) != "m"], margs)
-
+  
   # SET iters
   its <- max(unlist(lapply(params, length)))
 
   # OUTPUT FLPar
   params <- do.call("FLPar", lapply(params, rep, length.out=its))
+  
   # k
   if(!"k" %in% dimnames(params)$params)
     params <- rbind(params, FLPar("k"=k(params)))
-
+  
   if(any(is.na(params["k"])))
     params["k",is.na(params["k"])]=FLPar("k"=k(params[,is.na(params["k"])]))
 
@@ -130,8 +136,8 @@ lhPar <- function(...,
       if (any(flag))
         params["l50",flag]=vonB(c(params["a50",flag]),params[,flag])
     }
-
-  ## if l50 not supplied but a50 is, then estimes l50
+  
+  ## if l50 not supplied but a50 is, then estimate l50
   if((!"l50" %in% dimnames(params)$params)&("a50" %in% dimnames(params)$params))
     params <- rbind(params, FLPar(a50=vonB(c(a50),params)))
   
@@ -143,9 +149,8 @@ lhPar <- function(...,
   
   # a50
   if(!"a50" %in% dimnames(params)$params)
-    params <- rbind(params, FLPar(a50=NA))
-  params["a50"]=log(1-(params$l50 %/%params$linf)) %/% (-params$k) %+% params$t0
-
+    params <- rbind(params, FLPar(a50=c(vonB(length=params["l50"],params=params))))
+ 
   # sel1
   if(!"sel1" %in% dimnames(params)$params)
     params <- rbind(params, FLPar(sel1=params$a50 + params$ato95))
@@ -153,10 +158,14 @@ lhPar <- function(...,
   # bg
   if(!"bg" %in% dimnames(params)$params)
     params <- rbind(params, FLPar(bg=params$b))
-
+  
   # KEEP mmodel as attribute
   attr(params, "mmodel") <- mmodel
+  
+  nms=c("linf","k","t0","a","b","l50","a50","ato95","asym","bg",
+        "m1","m2","m3","s","v","sel1","sel2","sel3")
+  
+  nms=nms[nms%in%dimnames(params)$params]
 
-  return(params[c("linf","k","t0","a","b","l50","a50","ato95","asym","bg",
-                  "m1","m2","m3","s","v","sel1","sel2","sel3")])}
+  return(params[nms])}
 

@@ -1,4 +1,5 @@
 utils::globalVariables(c("len","age"))
+
 setGeneric('m', function(object,model,params,...) 
   standardGeneric('m'))
 setGeneric('gislason', function(length,params,...) 
@@ -18,7 +19,8 @@ mNms<-c("gislason",
         "petersen",
         "djababli",
         "jensen2",
-        "charnov")
+        "charnov",
+        "constant")
 
 mPar<-function(model){
   
@@ -26,6 +28,7 @@ mPar<-function(model){
 
   res=array(c(
     c(0.55,-1.61, 1.44),
+    c(0.3, -0.288,NA),
     c(1.521,0.72,-0.155),
     c(1.65, NA,   NA),
     c(NA,   NA,   NA),
@@ -38,7 +41,8 @@ mPar<-function(model){
     c(NA,     NA,    NA),
     c(NA,     NA,    NA),
     c(NA,     NA,    NA),
-    c(NA,     NA,    NA)),c(3,13,1))
+    c(NA,     NA,    NA),
+    c(0.2,     NA,    NA)),c(3,14,1))
   
   res=aperm(res,c(2,1,3))
   
@@ -47,10 +51,10 @@ mPar<-function(model){
                       model=mNms,
                       iter=1))
   
-  FLPar(res[,model,drop=T])}
+  res[,model,drop=T]}
 
-mVar       =c("age",  "age",   "age",     "age", "age",   "age",    "len",    "len",     "age",     "wt")
-names(mVar)=c("roff","rikhter","rikhter2","chen","jensen","jensen2","charnov","gislason","petersen","lorenzen") 
+mVar       =c("len",     "age",     "wt",      "age",     "age",   "age",     "age", "age",   "age",    "len",         "age",      "age")
+names(mVar)=c("gislason","lorenzen","roff","rikhter","rikhter2","chen","jensen","jensen2","charnov","petersen","constant") 
 
 
 mFn<-function(model,flq,params){
@@ -60,6 +64,8 @@ mFn<-function(model,flq,params){
   gislason={
       exp(params["m1"]%-%(params["m1"]%*%log(flq))%+%
             (params["m1"]%*%log(params["linf"]))%+%log(params["k"]))},
+  
+  lorenzen=params["m1"]%*%(flq%^%params["m2"]),
   
   roff={
     res=(3*params["k"]%*%params["linf"])*(1.0-params["l50"]%/%params["linf"])%/%params["l50"]
@@ -107,12 +113,13 @@ mFn<-function(model,flq,params){
     res},
   
   charnov={
-    res=params["k"]%*%(params["linf"]%/%len)^1.5
+    res=params["k"]%*%(params["linf"]%/%flq)^1.5
     
     res},
   
   petersen={
-    1.28*wt^(-0.25)},
+    flq%=%1.28*wt^(-0.25)
+    flq},
   
   chen={
     m =params["k"]/(1-exp(-params["k"]%*%(age%-%params["t0"])))
@@ -127,7 +134,11 @@ mFn<-function(model,flq,params){
     m[age.] =params["k"]/(a0+a1*(age[age.]-tm)+a2*(age[age.]-tm)^2)
     
     dimnames(m)$params="m"
-    return(m)}) 
+    return(m)},
+  
+  constant={flq[]=params["m1"]
+            flq})
+
   }
 
 setMethod('m', signature(object='FLQuant',model="character",params='FLPar'),
@@ -418,6 +429,7 @@ m1<-function(m,wt){
 #' 
 #' @param params \code{FLPar}
 #' @param ... any other arguments
+#' 
 #' 
 #' @aliases gislasen gislasen-method gislasen,FLQuant,FLPar-method 
 #'          roff roff-method roff,FLPar-method 
