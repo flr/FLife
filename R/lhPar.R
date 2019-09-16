@@ -1,18 +1,3 @@
-utils::globalVariables(c("dlply"))
-utils::globalVariables(c("mlply"))
-utils::globalVariables(c("cast"))
-
-lhValid=data.frame(old=c("linf","k","t0","a","b",
-                         "ato95","a50","asym","bg","l50",
-                         "s","v",
-                         "a1","sl","sel2",
-                         "m1","m2","m3"),
-                    new=c("linf","k","t0","a","b",
-                          "ato95","a50","asym","bg","l50",
-                          "s","v",
-                          "sel1","sel2","sel3",
-                          "m1",  "m2",  "m3"),stringsAsFactors=FALSE)
-
 
 #' @title Generates life history parameters
 #' 
@@ -60,7 +45,6 @@ lhValid=data.frame(old=c("linf","k","t0","a","b",
 # 1 & x \ge 0
 # \end{array}
 # \right. }{ (non-Latex version) }
-
 
 lhPar <- function(...,
     m=list(model="gislason", params=c(m1=0.55, m2=-1.61, m3=1.44))) {
@@ -157,24 +141,6 @@ lhPar <- function(...,
 
 
 # ---
-
-mf2FLPar=function(x){
-  
-  if ("iter"%in%names(x)){
-     iters=x[,seq(length(dimnames(x)[[2]]))[dimnames(x)[[2]]=="iter"][1]]
-     x    =x[,seq(length(dimnames(x)[[2]]))[dimnames(x)[[2]]!="iter"]]
-  }else iter=seq(dim(x)[1])
-  
-  dmns=dimnames(x)[2:1]
-  names(dmns)=c("params","iter")
-  dmns[[2]]=seq(dim(x)[1])
-  x=t(as.matrix(x))
-  
-  FLPar(array(x,dim=dim(x),dimnames=dmns),units="")}
-
-addpar<-function(params,name,val)
-  rbind(params,FLPar(array(val, dim=c(1, dims(params)$iter),dimnames=list(params=name, iter=seq(dims(params)$iter)))))
-
 
 setUnits=function(res, par){
 
