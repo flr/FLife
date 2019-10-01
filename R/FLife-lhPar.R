@@ -90,7 +90,7 @@ lhPar <- function(...,
   input <- c(input[!flp & !dtf],
       Reduce("c", lapply(input[flp], as, "list")),
       unlist(lapply(input[dtf], unlist)))
-
+  
   args[names(input)] <- input
   
   # PARSE m
@@ -101,25 +101,24 @@ lhPar <- function(...,
   
   if(is.null(names(margs)))
     names(margs) <- paste0("m", seq(length(margs)))
-
+  
   if (!is.FLQuant(args$m))
     mmodel <- args$m[unlist(lapply(args$m, is, "character"))][[1]]
   else 
-    mmodel="FLQuantß"
-
+    mmodel="FLQuant"
+  
   # CREATE params list
   params <- c(args[names(args) != "m"], margs)
   
   # SET iters
   its <- max(unlist(lapply(params, length)))
-
+  
   # OUTPUT FLPar
   params <- do.call("FLPar", lapply(params, rep, length.out=its))
   
   # k
   if(!"k" %in% dimnames(params)$params)
     params <- rbind(params, FLPar("k"=k(params)))
-  
   if(any(is.na(params["k"])))
     params["k",is.na(params["k"])]=FLPar("k"=k(params[,is.na(params["k"])]))
 
@@ -129,28 +128,27 @@ lhPar <- function(...,
   if(any(is.na(params["t0"])))
     params["t0",is.na(params["t0"])]=FLPar("t0"=FLPar(t0(params[,is.na(params["t0"])])))
   
+  # l50 & a50 ######################################################
+  if (!("a50"%in%dimnames(params)$params)) params=rbind(params,propagate(FLPar(a50=NA),dim(params)[2]))
+  if (!("l50"%in%dimnames(params)$params)) params=rbind(params,propagate(FLPar(l50=NA),dim(params)[2]))
+
   # l50
-  ## if l50 is NA and a50 supplied estimate l50
-  if(("l50" %in% dimnames(params)$params)&("a50" %in% dimnames(params)$params)){
-    flag=is.na(params["l50"]&!is.na(params["a50"]))
-      if (any(flag))
-        params["l50",flag]=vonB(c(params["a50",flag]),params[,flag])
-    }
-  
-  ## if l50 not supplied but a50 is, then estimate l50
-  if((!"l50" %in% dimnames(params)$params)&("a50" %in% dimnames(params)$params))
-    params <- rbind(params, FLPar(a50=vonB(c(a50),params)))
-  
-  ## if l50 still missing estimate l50
-  if(!"l50" %in% dimnames(params)$params)
-    params <- rbind(params, FLPar("l50"=l50(params)))
-  if(any(is.na(params["l50"])))
-    params["l50",is.na(params["l50"])]=l50(params["l50",is.na(params["l50"])])
-  
-  # a50
-  if(!"a50" %in% dimnames(params)$params)
-    params <- rbind(params, FLPar(a50=c(vonB(length=params["l50"],params=params))))
- 
+  ## l50=NA and a50=NA then estimate l50
+  flag=is.na(params["l50"])&(is.na(params["a50"]))
+  if (any(flag))
+    params["l50",flag]=l50(params[,flag])
+
+  ## l50=NA and a50!=NA
+  flag=is.na(params["l50"])&(!is.na(params["a50"]))
+  if (any(flag))
+    params["l50",flag]=vonB(c(params["a50",flag]),params=params[,flag])
+
+  ## l50!=NA and a50=NA
+  flag=!is.na(params["l50"])&(is.na(params["a50"]))
+param.<<-params
+  if (any(flag))
+    params["a50",flag]=vonB(len=params["l50",flag],params=params[,flag])
+
   # sel1
   if(!"sel1" %in% dimnames(params)$params)
     params <- rbind(params, FLPar(sel1=params$a50 + params$ato95))

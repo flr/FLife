@@ -38,11 +38,12 @@ fn2<-function(object,cv=0.3,nsample=100){
   sigma=matrix(0, ncol=dim(m(object))[1],nrow=dim(m(object))[1])
   diag(sigma)=cv
 
-  mdply(data.frame(year=dimnames(m(object))$year),fn,object=object,sigma=sigma,nsample=nsample)}
+  mdply(data.frame(year=dimnames(m(object))$year),
+        fn,object=object,sigma=sigma,nsample=nsample)}
   
 ldex<-function(object,cv=0.3,nsample=100){
   
-  idx=mdply(data.frame(iter=seq(dim(stk)[6])), 
+  idx=mdply(data.frame(iter=seq(dim(object)[6])), 
             function(iter) fn2(iter(object,iter),cv=cv,nsample=nsample))
   idx=FLQuants(dlply(idx,.(bin),with, 
             as.FLQuant(data.frame(year=as.numeric(ac(year)),iter=iter,data=p))))
@@ -54,25 +55,26 @@ if (FALSE){
   library(ggplot2)
   library(ggplotFL)
   library(FLBRP)
+  library(FLasher)
   library(FLife)
   library(mvtnorm)
   
-par=lhPar(FLPar(linf=100))
-stk=fwd(lhEql(par))[,ac(10:90)]
-stk=setPlusGroup(stk,8)[-1,]
-stk=propagate(stk,10)
+  par=lhPar(linf=100)
+  stk=as(lhEql(par),"FLStock")[,ac(10:90)]
+  stk=setPlusGroup(stk,8)[-1,]
+  stk=propagate(stk,10)
 
-plot(stk)
-idx=ldex(stk)
+  plot(stk)
+  idx=ldex(stk)
 
-ggplot(as.data.frame(idx[[1]]))+
-  geom_boxplot(aes(as.factor(year),data))
+  ggplot(as.data.frame(idx[[1]]))+
+    geom_boxplot(aes(as.factor(year),data))
 
-ggplot(as.data.frame(idx[[2]]+idx[[2]]))+
-  geom_boxplot(aes(as.factor(year),data))
+  ggplot(as.data.frame(idx[[2]]+idx[[2]]))+
+    geom_boxplot(aes(as.factor(year),data))
 
-ggplot(as.data.frame(idx[[3]]))+
-  geom_boxplot(aes(as.factor(year),data))
+  ggplot(as.data.frame(idx[[3]]))+
+    geom_boxplot(aes(as.factor(year),data))
 }
 
 if (FALSE){

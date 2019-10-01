@@ -1,11 +1,14 @@
 ---
 title: "FLife"
 subtitle: "Modelling Life History relationships"
+author: "Laurence Kell"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output:
-github_document:
+output: rmarkdown:::pdf_document
   mathjax: TRUE
-pdf_document:
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{FLife-full}
+  %\VignetteEncoding{UTF-8}
   fig_width: 6 
   fig_height: 4 
 bibliography: ../vignettes/bibliography.bib

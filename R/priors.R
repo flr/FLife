@@ -48,10 +48,9 @@ priors<-function(object,eq=lhEql(lhPar(object))){
   
   #"m/k",priors<-function(object,eq=lhEql(lhPar(object))){
   
-  par=lhPar(object)
-  
-  ## return
-  rtn=par[c("linf","k","t0","a50","ato95","a","b","s","v")]
+  #LF=M
+  lfm=FLPar(lfm=0.75*param["lc"]%+%0.25*param["linf"])
+  rtn=rbind(rtn,lfm)
   
   ## SRR
   sr=params(eq)

@@ -53,12 +53,12 @@ mPar<-function(model){
   
   res[,model,drop=T]}
 
-mVar       =c("len",     "age",     "wt",      "age",     "age",   "age",     "age", "age",   "age",    "len",         "age",      "age")
+mVar       =c("len",     "wt",      "wt",      "age",     "age",   "age",     "age", "age",   "age",    "len",         "age",      "age")
 names(mVar)=c("gislason","lorenzen","roff","rikhter","rikhter2","chen","jensen","jensen2","charnov","petersen","constant") 
 
 
 mFn<-function(model,flq,params){
-  
+
   switch(as.character(model),
 
   gislason={
@@ -153,7 +153,7 @@ setMethod('m', signature(object='FLStock',model="character",params='FLPar'),
                  len=wt2len(stock.wt(object),params),
                  wt =       stock.wt(object),
                  age=  ages(stock.wt(object))) 
-                 
+
           m(flq,model,params)})
 
 setMethod('m', signature(object='FLBRP',model="character",params='FLPar'),
@@ -163,7 +163,7 @@ setMethod('m', signature(object='FLBRP',model="character",params='FLPar'),
                        len=wt2len(stock.wt(object),params),
                        wt =       stock.wt(object),
                        age=  ages(stock.wt(object))) 
-            
+
             m(flq,model,params)})
 setMethod('m', signature(object='FLQuant',model="factor",params='FLPar'),
           function(object,model,params,...) { 
@@ -388,7 +388,7 @@ setMethod('gislason', signature(length='FLQuant',params='FLPar'),
 
 setMethod('lorenzen', signature(wt='FLQuant',params='FLPar'),
           function(wt,params,...){   
-            res=params[1]%*%(wt%^%params[2])
+            res=params["m1"]%*%(wt%^%params["m2"])
             res@units='instantaneous'
             res})
 setMethod('lorenzen', signature(wt='FLQuant',params='missing'),

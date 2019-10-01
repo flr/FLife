@@ -67,7 +67,7 @@ xsaMP<-function(om,pg=10,ctrl=FLXSA.control(maxit=250)){
   range(idx)[c("plusgroup","startf","endf")]=c(pg,0.1,.2)
   stk+FLXSA(stk,idx,control=ctrl,diag.flag=FALSE)}
 
-# Create FLstock with constatnt M
+# Create FLstock with constant M
 
 mVector<-function(linf,mval,A){
   lh=lhPar(FLPar(linf=linf),s=1,m=list(model="constant",params=c(m1=mval)))
