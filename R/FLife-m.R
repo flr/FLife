@@ -1,5 +1,3 @@
-utils::globalVariables(c("len","age"))
-
 setGeneric('m', function(object,model,params,...) 
   standardGeneric('m'))
 setGeneric('gislason', function(length,params,...) 
@@ -19,8 +17,7 @@ mNms<-c("gislason",
         "petersen",
         "djababli",
         "jensen2",
-        "charnov",
-        "constant")
+        "charnov")
 
 mPar<-function(model){
   
@@ -28,7 +25,6 @@ mPar<-function(model){
 
   res=array(c(
     c(0.55,-1.61, 1.44),
-    c(0.3, -0.288,NA),
     c(1.521,0.72,-0.155),
     c(1.65, NA,   NA),
     c(NA,   NA,   NA),
@@ -41,8 +37,7 @@ mPar<-function(model){
     c(NA,     NA,    NA),
     c(NA,     NA,    NA),
     c(NA,     NA,    NA),
-    c(NA,     NA,    NA),
-    c(0.2,     NA,    NA)),c(3,14,1))
+    c(NA,     NA,    NA)),c(3,13,1))
   
   res=aperm(res,c(2,1,3))
   
@@ -51,77 +46,72 @@ mPar<-function(model){
                       model=mNms,
                       iter=1))
   
-  res[,model,drop=T]}
+  FLPar(res[,model,drop=T])}
 
-mVar       =c("len",     "wt",      "wt",      "age",     "age",   "age",     "age", "age",   "age",    "len",         "age",      "age")
-names(mVar)=c("gislason","lorenzen","roff","rikhter","rikhter2","chen","jensen","jensen2","charnov","petersen","constant") 
+mVar       =c("age",  "age",   "age",     "age", "age",   "age",    "len",    "len",     "age",     "wt")
+names(mVar)=c("roff","rikhter","rikhter2","chen","jensen","jensen2","charnov","gislason","petersen","lorenzen") 
 
 
 mFn<-function(model,flq,params){
-
+  
   switch(as.character(model),
 
-  gislason={
-      exp(params["m1"]%-%(params["m1"]%*%log(flq))%+%
-            (params["m1"]%*%log(params["linf"]))%+%log(params["k"]))},
-  
-  lorenzen=params["m1"]%*%(flq%^%params["m2"]),
-  
-  roff={
+  gislason=exp(params["m1"]%-%(params["m1"]%*%log(flq))+(params["m1"]%*%log(params["linf"]))%+%log(params["k"])),
+         
+  roff=function(params){
     res=(3*params["k"]%*%params["linf"])*(1.0-params["l50"]%/%params["linf"])%/%params["l50"]
     
     dimnames(res)$params="m"
     res},
-  rikhter={
+  rikhter=function(params){
     tm=params["t0"]%+%log(1-params["l50"]/(params["linf"]))%/%(-params["k"])
     res=params["b"]%*%params["k"]%/%(exp(params["k"]%*%(tm%-%params["t0"]))-1)
     
     dimnames(res)$params="m"
     res},
   
-  rikhter2={
+  rikhter2=function(params,...){
     tm=params["t0"]%+%log(1-params["l50"]/(params["linf"]))%/%(-params["k"])
     res=1.521/tm^0.73-0.155
     
     dimnames(res)$params="m"
     res},
   
-  griffiths={
+  griffiths=function(params,...){
     winf=params["a"]%*%(params["linf"]^params["b"])
     res=(1.406*(winf^-0.096))%*%params["k"]^0.78
     
     dimnames(res)$params="m"
     res},
   
-  djababli={
+  djababli=function(params,...){
     res=(1.066*params["linf"]^-0.1172)%*%params["k"]^0.5092
     
     dimnames(res)$params="m"
     res},
   
-  jensen={
+  jensen=function(params,...){
     res=1.5*params["k"]
     
     dimnames(res)$params="m"
     res},
   
-  jensen2={
+  jensen2=function(params,...){
     tm=params["t0"]%+%log(1-params["l50"]/(params["linf"]))%/%(-params["k"])
     res=1.65/tm
     
     dimnames(res)$params="m"
     res},
   
-  charnov={
-    res=params["k"]%*%(params["linf"]%/%flq)^1.5
+  charnov=function(len,params,...){
+    res=params["k"]%*%(params["linf"]%/%len)^1.5
     
     res},
   
-  petersen={
-    flq%=%1.28*wt^(-0.25)
-    flq},
+  petersen=function(wt,params,...){
+    1.28*wt^(-0.25)},
   
-  chen={
+  chen=function(age,params,...){ #(age,k,t0=-0.1){
     m =params["k"]/(1-exp(-params["k"]%*%(age%-%params["t0"])))
     
     tm =-(1/params["k"])*log(1-exp(params["k"]*params["t0"]))+params["t0"]
@@ -134,11 +124,7 @@ mFn<-function(model,flq,params){
     m[age.] =params["k"]/(a0+a1*(age[age.]-tm)+a2*(age[age.]-tm)^2)
     
     dimnames(m)$params="m"
-    return(m)},
-  
-  constant={flq[]=params["m1"]
-            flq})
-
+    return(m)}) 
   }
 
 setMethod('m', signature(object='FLQuant',model="character",params='FLPar'),
@@ -153,17 +139,17 @@ setMethod('m', signature(object='FLStock',model="character",params='FLPar'),
                  len=wt2len(stock.wt(object),params),
                  wt =       stock.wt(object),
                  age=  ages(stock.wt(object))) 
-
+                 
           m(flq,model,params)})
 
 setMethod('m', signature(object='FLBRP',model="character",params='FLPar'),
           function(object,model,params,...) { 
-
+            
             flq=switch(mVar[model],
                        len=wt2len(stock.wt(object),params),
                        wt =       stock.wt(object),
                        age=  ages(stock.wt(object))) 
-
+            
             m(flq,model,params)})
 setMethod('m', signature(object='FLQuant',model="factor",params='FLPar'),
           function(object,model,params,...) { 
@@ -315,25 +301,29 @@ setMethod('m', signature(object='FLBRP',model="factor",params='missing'),
             m(flq,model,params)})
 
 #' gislason
+#' @description 
+#' gislason natural mortality relatoinship estimate M as a function of length. 
+#' M=a*length^b; 
 #' 
-#' @description
-#' gislason natural mortality relatoinship estimate M as a function of length.
-#' 
-#' @param length at which M is to be predicted
-#' @param params \code{FLPar} or \code{numeric} with parameters by default m1=0.55, m2=1.44, m3=-1.61
+#' @param length  mass at which M is to be predicted
+#' @param params \code{FLPar} with two values; i.e. a equal to M at unit mass 
+#' and b a power term; defaults are a=0.3 and b=-0.288
+#' @param a 0.55
+#' @param b 1.44
+#' @param c -1.61
 #' @param ... any other arguments
 #' 
-#' @aliases  gislason gislason-method
-#'           gislason,FLQuant,FLPar-method
-#'           gislason,FLQuant,missing-method
+#' @aliases  gislason gislason-method 
+#'           gislason,FLQuant,FLPar-method 
+#'           gislason,FLQuant,missing-method 
 #'           gislason,FLQuant,numeric-method
-#' 
+#'
 #' @export
 #' @docType methods
 #' @rdname gislason
 #' 
 #' @seealso \code{\link{lorenzen}}
-#' 
+#'  
 #' @examples
 #' \dontrun{
 #' params=lhPar(FLPar(linf=111))
@@ -343,15 +333,27 @@ setMethod('m', signature(object='FLBRP',model="factor",params='missing'),
 #' gislason(length,params)
 #' }
 setMethod('gislason', signature(length='FLQuant',params='numeric'),
-          function(length,params,...) { 
-            res=m(length,"gislason",FLPar(params))
-            res@units='instantaneous'
+          function(length,params,a=0.55,b=1.44,c=-1.61,...) { 
+            res=gislasonFn(length,params)
+            res@units='yr^-1'
             res})
 setMethod('gislason', signature(length='FLQuant',params='FLPar'),
-          function(length,params,...){   
-            res=m(length,"gislason",params)
-            res@units='instantaneous'
+          function(length,params,a=0.55,b=1.44,c=-1.61,...){   
+            res=gislasonFn(length,params)
+            res@units='yr^-1'
             res})
+
+gislasonFn<-function(length,params,a=0.55,b=1.44,c=-1.61) {
+  
+  # Natural mortality parameters from Model 2, Table 1 gislason 2010
+  if (!all(c("m1","m2")%in%dimnames(params)$params)){
+    
+    m1=FLPar(m1= a*(params["linf"]^b)%*%params["k"], iter=dims(params)$iter)
+    m2=FLPar(m2=c                           ,        iter=dims(params)$iter)
+    params=rbind(params,m1,m2)
+  }
+  
+  params["m1"]%*%(exp(log(length)%*%params["m2"]))}
 
 #' lorenzen
 #'
@@ -363,12 +365,7 @@ setMethod('gislason', signature(length='FLQuant',params='FLPar'),
 #' and b a power term; defaults are a=0.3 and b=-0.288
 #' @param ... any other arguments
 #' 
-#' @aliases lorenzen 
-#'          lorenzen-method 
-#'          lorenzen,FLQuant,FLPar-method 
-#'          lorenzen,FLQuant,missing-method 
-#'          lorenzen,FLQuant,numeric-method  
-#'          lorenzen,numeric,missing-method
+#' @aliases lorenzen lorenzen-method lorenzen,FLQuant,FLPar-method lorenzen,FLQuant,missing-method lorenzen,FLQuant,numeric-method  lorenzen,numeric,missing-method
 #' 
 #' @export
 #' @docType methods
@@ -388,17 +385,16 @@ setMethod('gislason', signature(length='FLQuant',params='FLPar'),
 
 setMethod('lorenzen', signature(wt='FLQuant',params='FLPar'),
           function(wt,params,...){   
-            res=params["m1"]%*%(wt%^%params["m2"])
-            res@units='instantaneous'
+            res=params[1]%*%(wt%^%params[2])
+            res@units='yr^-1'
             res})
 setMethod('lorenzen', signature(wt='FLQuant',params='missing'),
           function(wt,m1=.3,m2=-0.288,...) { 
             res=lorenzenFn(wt,m1=m1,m2=m2)
-            res@units='instantaneous'
+            res@units='yr^-1'
             res})
 setMethod('lorenzen', signature(wt='FLQuant',params='numeric'),
           function(wt,params,...) { 
-      
             res=params[1]*wt^params[2]
             res@units='yr^-1'
             res})
@@ -430,8 +426,8 @@ m1<-function(m,wt){
 #' @param params \code{FLPar}
 #' @param ... any other arguments
 #' 
-#' 
 #' @aliases gislasen gislasen-method gislasen,FLQuant,FLPar-method 
+#'          lorenzen lorenzen-method lorenzen,FLQuant,FLPar-method
 #'          roff roff-method roff,FLPar-method 
 #'          rikhter rikhter-method rikhter,FLPar-method
 #'          rikhter2 rikhter2-method rikhter2,FLPar-method

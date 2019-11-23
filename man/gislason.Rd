@@ -9,17 +9,25 @@
 \alias{gislason,FLQuant,missing-method}
 \title{gislason}
 \usage{
-\S4method{gislason}{FLQuant,numeric}(length, params, ...)
+\S4method{gislason}{FLQuant,numeric}(length, params, a = 0.55, b = 1.44, c = -1.61, ...)
 }
 \arguments{
-\item{length}{at which M is to be predicted}
+\item{length}{mass at which M is to be predicted}
 
-\item{params}{\code{FLPar} or \code{numeric} with parameters by default m1=0.55, m2=1.44, m3=-1.61}
+\item{params}{\code{FLPar} with two values; i.e. a equal to M at unit mass 
+and b a power term; defaults are a=0.3 and b=-0.288}
+
+\item{a}{0.55}
+
+\item{b}{1.44}
+
+\item{c}{-1.61}
 
 \item{...}{any other arguments}
 }
 \description{
-gislason natural mortality relatoinship estimate M as a function of length.
+gislason natural mortality relatoinship estimate M as a function of length. 
+M=a*length^b;
 }
 \examples{
 \dontrun{

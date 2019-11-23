@@ -1,0 +1,10 @@
+base
+knitr
+ggplot2
+reshape
+plyr
+lattice
+iterators
+FLCore
+FLife
+GGally

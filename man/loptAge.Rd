@@ -7,9 +7,12 @@
 \alias{loptAge-method}
 \title{Age at maximum biomass}
 \usage{
-\S4method{loptAge}{FLPar}(params, m = function(length, params)
-  params["m1"] \%*\% (exp(log(length) \%*\% params["m2"])),
-  growth = vonB, ...)
+\S4method{loptAge}{FLPar}(
+  params,
+  m = function(length, params) params["m1"] \%*\% (exp(log(length) \%*\% params["m2"])),
+  growth = vonB,
+  ...
+)
 }
 \arguments{
 \item{params}{FLPar}

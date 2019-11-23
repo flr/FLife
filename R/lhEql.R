@@ -23,7 +23,7 @@
 #'
 #' @seealso \code{\link{lhPar}}, \code{\link{lhRef}}
 #'
-#' @export
+#' @export lhEql
 #' @docType methods
 #' @rdname lhEql
 #'
@@ -86,10 +86,7 @@ setMethod("lhEql", signature(params='FLPar'),
   # Corresponding weights
   # bug warning cos of log(NA)
   cwt=FLife::len2wt(clen,params)
-  if ("bg" %in% dimnames(params)$param)
-    swt=exp(log(slen)%*%params["bg"])%*%params["a"]
-  else
-    swt=FLife::len2wt(slen,params)
+  swt=len2wt(slen,params)
 
   mat. =mat(age + m.spwn,params) # maturity is biological therefore + m.spwn
   if (dims(mat.)["min"]==0) mat.[1]=0
@@ -123,7 +120,10 @@ setMethod("lhEql", signature(params='FLPar'),
   #    m.   =m(swt,params=params[c("m1","m2")])
   #    }
   #
- 
+res<<-res
+m.<<-m
+params.<<-params
+
   #names(dimnames(m.))[1]="age"}
   if ("character"%in%is(m))
     m(res)=FLife:::m(res,m,params)

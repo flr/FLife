@@ -7,8 +7,7 @@
 \alias{matdd-method}
 \title{matdd}
 \usage{
-\S4method{matdd}{FLQuant,FLPar}(age, params, scale, k = 1,
-  flagAge = TRUE)
+\S4method{matdd}{FLQuant,FLPar}(age, params, scale, k = 1, flagAge = TRUE)
 }
 \arguments{
 \item{age}{ages}
@@ -55,8 +54,8 @@ par=teleost[,"Hucho hucho"]
 par=lhPar(par)
 hutchen=lhEql(par)
 
-scale=stock.n(hutchen)[,25]\%*\%stock.wt(hutchen)
-scale=(stock.n(hutchen)\%*\%stock.wt(hutchen)\%-\%scale)\%/\%scale
+scale=stock.n(hutchen)[,25]%*%stock.wt(hutchen)
+scale=(stock.n(hutchen)%*%stock.wt(hutchen)%-%scale)%/%scale
 
 mat=matdd(ages(scale),par,scale,k=.5)   
 

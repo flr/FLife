@@ -29,6 +29,7 @@ converts weight to length
 params=FLPar(a=0.1,b=3)
 wt2len(FLQuant(10),params)
 }
+
 }
 \seealso{
 \code{\link{len2wt}}

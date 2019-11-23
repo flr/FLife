@@ -22,6 +22,18 @@
 #' params=FLPar(a=0.1,b=3)
 #' wt2len(FLQuant(10),params)
 #' }
-setMethod("wt2len", signature(wt="FLQuant", params="FLPar"),function(wt,params,...)  (wt%/%(params["a"])^(1/params["b"])))
-setMethod("wt2len", signature(wt="FLCohort",params="FLPar"),function(wt,params,...)  (wt%/%(params["a"])^(1/params["b"])))
-setMethod("wt2len", signature(wt="numeric", params="FLPar"), function(wt,params,...) (wt/params["a"])^(1/params["b"]))
+#' 
+
+#wt=a*exp(log(len)*b)
+#a*exp(log(len)*b)=wt
+#exp(log(len)*b)=(wt/a)
+#log(len)*b=log(wt/a)
+#log(len)=log(wt/a)/b
+#len=exp(log(wt/a)/b)
+
+setMethod("wt2len", signature(wt="FLQuant", params="FLPar"),function(wt,params,...) 
+    exp(log(wt%/%params["a"])/params["b"]))
+setMethod("wt2len", signature(wt="FLCohort",params="FLPar"),function(wt,params,...)  
+    exp(log(wt%/%params["a"])/params["b"]))
+setMethod("wt2len", signature(wt="numeric", params="FLPar"), function(wt,params,...) 
+    exp(log(wt%/%params["a"])/params["b"]))

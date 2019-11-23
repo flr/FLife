@@ -7,8 +7,7 @@
 \alias{mdd-method}
 \title{mdd}
 \usage{
-\S4method{mdd}{FLQuant,FLPar}(object, params, scale, k = 1,
-  m = gislason)
+\S4method{mdd}{FLQuant,FLPar}(object, params, scale, k = 1, m = gislason)
 }
 \arguments{
 \item{object}{mass at which M is to be predicted}
@@ -31,12 +30,12 @@ explicitly included M as a function of numbers in a cohort, i.e. density depende
 @details
    
 The Lorenzen natural mortality relationship is a function of mass-at-age i.e. 
-   M=a*wt^b
+   M=a*wt^b 
 
 The relationship can be explained by population density, since as fish grow they 
 also die and so there is potentially less competition for resources between larger and 
 older fish. Density dependence can be modelled by a logistic function, a sigmoid 
-curve (or S shaped) curve, with equation
+curve (or S shaped) curve, with equation 
 
 f(x)=L/(1+exp(-k(x-x0)))
  
@@ -60,8 +59,8 @@ par=teleost[,"Hucho hucho"]
 par=lhPar(par)
 hutchen=lhEql(par)
 
-scale=stock.n(hutchen)[,25]\%*\%stock.wt(hutchen)
-scale=(stock.n(hutchen)\%*\%stock.wt(hutchen)\%-\%scale)\%/\%scale
+scale=stock.n(hutchen)[,25]%*%stock.wt(hutchen)
+scale=(stock.n(hutchen)%*%stock.wt(hutchen)%-%scale)%/%scale
 
 m=mdd(wt2len(stock.wt(hutchen),par),params=par,scale,k=.9) 
  
