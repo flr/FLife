@@ -20,7 +20,6 @@ dnormalFn<-function(age,params){
   if ("sel3"%in%pNms){
     params=params[dimnames(params)$params!="sr"]
     dimnames(params)$params["sel3"==pNms]="sr"}
-
   a1=FLQuant(1,dimnames=dimnames(age))%*%params["a1"]
   s =FLQuant(1,dimnames=dimnames(age))%*%params["sl"]
   sr=FLQuant(1,dimnames=dimnames(age))%*%params["sr"]
@@ -30,7 +29,9 @@ dnormalFn<-function(age,params){
   
   s@.Data[age>=a1]=sr@.Data[age>=a1]
   
-  res=2.0^(-((age%-%a1)%/%s%*%(age%-%a1)%/%s))}
+  res=2.0^(-((age%-%a1)%/%s%*%(age%-%a1)%/%s))
+  return(res)
+}
 
 #' @title Double normal ogive
 #' 
@@ -69,6 +70,9 @@ setMethod("dnormal", signature(age="FLPar",params="FLPar"),
 setMethod("dnormal", signature(age="numeric",params="numeric"),
           function(age,params,...) 
             dnormalFn(age,params))
+setMethod("dnormal", signature(age="numeric",params="FLPar"),
+          function(age,params,...) 
+            dnormalFn(FLQuant(age, dimnames=list(age=age)),params))
 setMethod("dnormal", signature(age="FLQuant",params="numeric"),
           function(age,params,...) { 
             res=dnormalFn(FLPar(params),age)

@@ -27,4 +27,4 @@ setMethod("len2wt", signature(length="FLQuant",params="FLPar"),
 setMethod("len2wt", signature(length="FLCohort",params="FLPar"),
    function(length,params) params["a"]%*%exp(log(length)%*%params["b"]))
 setMethod("len2wt", signature(length="numeric",params="FLPar"),
-   function(length,params) params["a"]%*%exp(log(length)%*%params["b"]))
+   function(length,params) c(params["a"])*exp(log(length)*c(params["b"])))

@@ -127,7 +127,6 @@ setMethod("lhEql", signature(params='FLPar'),
   #    }
   #
 
-
   #names(dimnames(m.))[1]="age"}
   if ("character"%in%is(m))
     m(res)=m(res,m,params)
