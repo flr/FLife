@@ -126,7 +126,7 @@ params.<<-params
 
   #names(dimnames(m.))[1]="age"}
   if ("character"%in%is(m))
-    m(res)=FLife:::m(res,m,params)
+    m(res)=setM(res,m,params)
   else if ("numeric"%in%is(m))
     m(res)[]=m
   else if ("function"%in%is(m))

@@ -45,7 +45,7 @@ setMethod("lopt", signature(params="FLPar"),
             dmns=dimnames(params)
             dmns$params="lopt"
             dm  =dim(params)
-            
+
             res=aaply(params,seq(length(dm))[-1],function(x){
                    x.=FLPar(x)
 
@@ -86,6 +86,45 @@ loptFn=function(x,params,
   c(n%*%len2wt(x,params))
   }
 
+if (FALSE){
+ library(FLife)
+  
+ par=readRDS("/home/laurence-kell/Desktop/projects/mydas/data/simon/pol_par.rds")
+ par=par[c("linf","k","t0","a","b")]
+ par["k"]=seq(0.1,0.5,length.out=12)
+ par["t0"]=-0.1
+ 
+ loFLife=lopt(par)
+
+ par=lhPar(par)
+ eql=lhEql(par,fbar=FLQuant(0)) # ,m=function(object,param) {res=FLQuant(m(object)); res%=%0.2;res} )
+ #m(eql)[]=0.2
+ res=model.frame(FLQuants(eql,biomass=function(x) catch.wt(x)%*%stock.n(x),
+                              wt     =function(x) catch.wt(x)),drop=TRUE)
+ 
+ res=transform(res,iter=factor(iter,levels=as.numeric(as.character(unique(res$iter)))))
+ 
+ res2=ddply(res,.(iter), with, 
+            data.frame(biomass=max(biomass),
+                       wt     =wt[biomass==max(biomass)]))
+ 
+ wo=as(transmute(res2,lopt=wt,iter=as.numeric(as.character(iter))),"FLPar")
+ par=rbind(par,lopt=loFLife,FLPar(lopt2=wt2len(c(wo),par)))
+ 
+ ggpairs(model.frame(par[c("k","lopt","lopt2")])[,-3])
+ 
+ 
+ dat=as.data.frame(stock.n(eql)%*%stock.wt(eql))
+ dat$iter=as.numeric(as.character(dat$iter))
+ dat$k=c(par["k",dat$iter])
+ 
+ ggplot(dat)+
+   geom_line(aes(age,data,group=k))+
+   facet_wrap(~k,scale="free")
+
+
+}
+  
 #params=par[,10]
 #params["t0"]=-.1
 #loptFn(x,params)

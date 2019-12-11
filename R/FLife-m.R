@@ -1,5 +1,3 @@
-setGeneric('m', function(object,model,params,...) 
-  standardGeneric('m'))
 setGeneric('gislason', function(length,params,...) 
   standardGeneric('gislason'))
 setGeneric('lorenzen', function(wt,params,...) 
@@ -25,7 +23,7 @@ mPar<-function(model){
 
   res=array(c(
     c(0.55,-1.61, 1.44),
-    c(1.521,0.72,-0.155),
+    c(.3,-0.288,NA),
     c(1.65, NA,   NA),
     c(NA,   NA,   NA),
     c(1.5,  NA,   NA),
@@ -57,6 +55,8 @@ mFn<-function(model,flq,params){
   switch(as.character(model),
 
   gislason=exp(params["m1"]%-%(params["m1"]%*%log(flq))+(params["m1"]%*%log(params["linf"]))%+%log(params["k"])),
+  
+  lorenzen=params["m1"]%*%(flq%^%params["m2"]),
          
   roff=function(params){
     res=(3*params["k"]%*%params["linf"])*(1.0-params["l50"]%/%params["linf"])%/%params["l50"]
@@ -127,12 +127,17 @@ mFn<-function(model,flq,params){
     return(m)}) 
   }
 
-setMethod('m', signature(object='FLQuant',model="character",params='FLPar'),
+setGeneric('setM', function(object,model,params,...) standardGeneric('setM'))
+
+#setMethod("m", c("FLQuant"), function(object,model,params,...) {
+#            mFn(model,object,params)})
+
+setMethod('setM', signature(object='FLQuant',model="character",params='FLPar'),
           function(object,model,params,...) { 
 
           mFn(model,object,params)})
 
-setMethod('m', signature(object='FLStock',model="character",params='FLPar'),
+setMethod('setM', signature(object='FLStock',model="character",params='FLPar'),
           function(object,model,params,...) { 
 
           flq=switch(mVar[model],
@@ -140,9 +145,9 @@ setMethod('m', signature(object='FLStock',model="character",params='FLPar'),
                  wt =       stock.wt(object),
                  age=  ages(stock.wt(object))) 
                  
-          m(flq,model,params)})
+          setM(flq,model,params)})
 
-setMethod('m', signature(object='FLBRP',model="character",params='FLPar'),
+setMethod('setM', signature(object='FLBRP',model="character",params='FLPar'),
           function(object,model,params,...) { 
             
             flq=switch(mVar[model],
@@ -150,15 +155,15 @@ setMethod('m', signature(object='FLBRP',model="character",params='FLPar'),
                        wt =       stock.wt(object),
                        age=  ages(stock.wt(object))) 
             
-            m(flq,model,params)})
-setMethod('m', signature(object='FLQuant',model="factor",params='FLPar'),
+            setM(flq,model,params)})
+setMethod('setM', signature(object='FLQuant',model="factor",params='FLPar'),
           function(object,model,params,...) { 
           
           model=as.character(model)
             
-          m(flq,model,params)})
+          setM(flq,model,params)})
 
-setMethod('m', signature(object='FLStock',model="factor",params='FLPar'),
+setMethod('setM', signature(object='FLStock',model="factor",params='FLPar'),
           function(object,model,params,...) { 
             
             model=as.character(model)
@@ -168,8 +173,8 @@ setMethod('m', signature(object='FLStock',model="factor",params='FLPar'),
                        wt =       stock.wt(object),
                        age=  ages(stock.wt(object))) 
             
-            m(flq,model,params)})
-setMethod('m', signature(object='FLBRP',model="factor",params='FLPar'),
+            setM(flq,model,params)})
+setMethod('setM', signature(object='FLBRP',model="factor",params='FLPar'),
           function(object,model,params,...) { 
             model=as.character(model)
             flq=switch(mVar[model],
@@ -177,13 +182,13 @@ setMethod('m', signature(object='FLBRP',model="factor",params='FLPar'),
                        wt =       stock.wt(object),
                        age=  ages(stock.wt(object))) 
             
-            m(flq,model,params)})
-setMethod('m', signature(object='FLQuant',model="character",params='numeric'),
+            setM(flq,model,params)})
+setMethod('setM', signature(object='FLQuant',model="character",params='numeric'),
           function(object,model,params,...) { 
           
           params=FLPar(params)    
-          m(flq,model,params)})
-setMethod('m', signature(object='FLStock',model="character",params='numeric'),
+          setM(flq,model,params)})
+setMethod('setM', signature(object='FLStock',model="character",params='numeric'),
           function(object,model,params,...) { 
             
             params=FLPar(params)    
@@ -193,8 +198,8 @@ setMethod('m', signature(object='FLStock',model="character",params='numeric'),
                        wt =       stock.wt(object),
                        age=  ages(stock.wt(object))) 
             
-            m(flq,model,params)})
-setMethod('m', signature(object='FLBRP',model="character",params='numeric'),
+            setM(flq,model,params)})
+setMethod('setM', signature(object='FLBRP',model="character",params='numeric'),
           function(object,model,params,...) { 
             
             params=FLPar(params)    
@@ -204,15 +209,15 @@ setMethod('m', signature(object='FLBRP',model="character",params='numeric'),
                        wt =       stock.wt(object),
                        age=  ages(stock.wt(object))) 
             
-            m(flq,model,params)})
-setMethod('m', signature(object='FLQuant',model="factor",params='numeric'),
+            setM(flq,model,params)})
+setMethod('setM', signature(object='FLQuant',model="factor",params='numeric'),
           function(object,model,params,...) { 
           
           model=as.character(model)
           params=FLPar(params)
           
-          m(flq,model,params)})
-setMethod('m', signature(object='FLStock',model="factor",params='numeric'),
+          setM(flq,model,params)})
+setMethod('setM', signature(object='FLStock',model="factor",params='numeric'),
           function(object,model,params,...) { 
           
             model=as.character(model)
@@ -223,8 +228,8 @@ setMethod('m', signature(object='FLStock',model="factor",params='numeric'),
                        wt =       stock.wt(object),
                        age=  ages(stock.wt(object))) 
             
-            m(flq,model,params)})
-setMethod('m', signature(object='FLBRP',model="factor",params='numeric'),
+            setM(flq,model,params)})
+setMethod('setM', signature(object='FLBRP',model="factor",params='numeric'),
           function(object,model,params,...) { 
             
             model=as.character(model)
@@ -235,14 +240,14 @@ setMethod('m', signature(object='FLBRP',model="factor",params='numeric'),
                        wt =       stock.wt(object),
                        age=  ages(stock.wt(object))) 
             
-            m(flq,model,params)})
-setMethod('m', signature(object='FLQuant',model="character",params='missing'),
+            setM(flq,model,params)})
+setMethod('setM', signature(object='FLQuant',model="character",params='missing'),
           function(object,model,params,...) { 
             
             params=mPar(model)
             
-            m(flq,model,params)})
-setMethod('m', signature(object='FLStock',model="character",params='missing'),
+            setM(flq,model,params)})
+setMethod('setM', signature(object='FLStock',model="character",params='missing'),
           function(object,model,params=mPar(model),...) { 
             
             params=mPar(model)
@@ -252,8 +257,8 @@ setMethod('m', signature(object='FLStock',model="character",params='missing'),
                        wt =       stock.wt(object),
                        age=  ages(stock.wt(object))) 
             
-            m(flq,model,params)})
-setMethod('m', signature(object='FLBRP',model="character",params='missing'),
+            setM(flq,model,params)})
+setMethod('setM', signature(object='FLBRP',model="character",params='missing'),
           function(object,model,params,...) { 
             
             params=mPar(model)
@@ -263,16 +268,16 @@ setMethod('m', signature(object='FLBRP',model="character",params='missing'),
                        wt =       stock.wt(object),
                        age=  ages(stock.wt(object))) 
 
-            m(flq,model,params)})
-setMethod('m', signature(object='FLQuant',model="factor",params='missing'),
+            setM(flq,model,params)})
+setMethod('setM', signature(object='FLQuant',model="factor",params='missing'),
           function(object,model,params,...) { 
           
           params=mPar(model)
             
           model=as.character(model)
-          m(flq,model,params)})
+          setM(flq,model,params)})
 
-setMethod('m', signature(object='FLStock',model="factor",params='missing'),
+setMethod('setM', signature(object='FLStock',model="factor",params='missing'),
           function(object,model,params,...) { 
           
             params=mPar(model)
@@ -284,8 +289,8 @@ setMethod('m', signature(object='FLStock',model="factor",params='missing'),
                        wt =       stock.wt(object),
                        age=  ages(stock.wt(object))) 
             
-            m(flq,model,params)})
-setMethod('m', signature(object='FLBRP',model="factor",params='missing'),
+            setM(flq,model,params)})
+setMethod('setM', signature(object='FLBRP',model="factor",params='missing'),
           function(object,model,params,...) { 
             
             params=mPar(model)
@@ -298,7 +303,7 @@ setMethod('m', signature(object='FLBRP',model="factor",params='missing'),
                        wt =       stock.wt(object),
                        age=  ages(stock.wt(object))) 
             
-            m(flq,model,params)})
+            setM(flq,model,params)})
 
 #' gislason
 #' @description 
