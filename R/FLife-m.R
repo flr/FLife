@@ -54,7 +54,7 @@ mFn<-function(model,flq,params){
   
   switch(as.character(model),
 
-  gislason=exp(params["m1"]%-%(params["m1"]%*%log(flq))+(params["m1"]%*%log(params["linf"]))%+%log(params["k"])),
+  gislason=exp(params["m1"]%+%(params["m2"]%*%log(flq))%+%(params["m3"]%*%log(params["linf"]))%+%log(params["k"])),
   
   lorenzen=params["m1"]%*%(flq%^%params["m2"]),
          
