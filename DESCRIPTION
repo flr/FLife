@@ -1,10 +1,9 @@
 Package: FLife
 Type: Package
 Title: Methods for Modelling Life History Traits
-Version: 3.3.1
+Version: 3.4.0
 Date: 2018-07-25
-Authors@R: person(given = "Laurence", family = "Kell", role = c("aut", "cre"), 
-  email = "laurie@seaplusplus.co.uk")
+Author: Laurence Kell <laurie@seaplusplus.co.uk>
 Maintainer: Laurence Kell <laurie@seaplusplus.co.uk>
 Description: Many studies have shown the relationships between life history
   traits for processes such as growth, maturity and natural mortality. Life
@@ -80,4 +79,4 @@ Collate:
     steepness.R
     rtest.R		
 Encoding: UTF-8
-RoxygenNote: 7.1.0
+RoxygenNote: 7.0.0

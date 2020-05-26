@@ -432,6 +432,7 @@ m1<-function(m,wt){
 #' @param ... any other arguments
 #' 
 #' @aliases gislasen gislasen-method gislasen,FLQuant,FLPar-method 
+#'          lorenzen lorenzen-method lorenzen,FLQuant,FLPar-method
 #'          roff roff-method roff,FLPar-method 
 #'          rikhter rikhter-method rikhter,FLPar-method
 #'          rikhter2 rikhter2-method rikhter2,FLPar-method
