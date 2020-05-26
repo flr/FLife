@@ -8,7 +8,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{FLife-WKLife}
   %\VignetteEncoding{UTF-8}
-bibliography: refs.bib
+bibliography: bibliography.bib
 tags: FLPKG FLR
 license: Creative Commons Attribution-ShareAlike 4.0 International
 ---
