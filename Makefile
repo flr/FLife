@@ -24,7 +24,9 @@ NEWS: NEWS.md
 docs: $(HELP_FILES) README.md
 	R --vanilla --silent -e "options(repos='http://cran.r-project.org'); pkgdown::build_site(preview=FALSE)"
 
-roxygen: $(HELP_FILES)
+roxygen: $(R_FILES)
+	R --vanilla --silent -e "library(devtools);" \
+		-e "document(roclets='rd')"
 
 $(HELP_FILES): $(R_FILES)
 	R --vanilla --silent -e "library(devtools);" \
@@ -33,23 +35,30 @@ $(HELP_FILES): $(R_FILES)
 update:
 	sed -i 's/Date: *\([^ ]*\)/Date: $(GITDATE)/' DESCRIPTION
 
-release: build docs
+spell:
+	R -e "spelling::spell_check_package()"
 
-build:
+release: spell build docs
+	
+build: README.md
 	cd ..;\
-	R CMD build $(PKGSRC) --compact-vignettes="gs+qpdf"
+	R CMD build $(PKGSRC) --compact-vignettes
 
-buildNV:
+buildNV: README.md
 	cd ..;\
-	R CMD build $(PKGSRC) --no-build-vignettes
+	R --vanilla CMD build $(PKGSRC) --no-build-vignettes
 
-install: build
+install: ../$(PKGNAME)_$(PKGVERS).tar.gz
 	cd ..;\
-	R CMD INSTALL $(PKGNAME)_$(PKGVERS).tar.gz
+	R --vanilla CMD INSTALL $(PKGNAME)_$(PKGVERS).tar.gz
 
-check: build
+checkCRAN: ../$(PKGNAME)_$(PKGVERS).tar.gz
 	cd ..;\
-	R CMD check $(PKGNAME)_$(PKGVERS).tar.gz --as-cran
+	R --vanilla CMD check $(PKGNAME)_$(PKGVERS).tar.gz --as-cran
+
+check: ../$(PKGNAME)_$(PKGVERS).tar.gz
+	cd ..;\
+	R --vanilla CMD check $(PKGNAME)_$(PKGVERS).tar.gz
 
 clean:
 	cd ..;\

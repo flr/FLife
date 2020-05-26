@@ -1,6 +1,6 @@
 # FLife
-- Version: 3.2.1
-- Date: 2018-07-19
+- Version: 3.3.1
+- Date: 2018-07-25
 - Author: Laurence Kell
 - Maintainer: Laurence Kell <laurie@seaplusplus.co.uk>
 - Repository: <https://github.com/flr/FLife/>
