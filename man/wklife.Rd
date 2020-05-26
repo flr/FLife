@@ -4,7 +4,8 @@
 \name{wklife}
 \alias{wklife}
 \title{wklife}
-\format{A data frame with 15 rows (i.e. species) and 13 variables:
+\format{
+A data frame with 15 rows (i.e. species) and 13 variables:
 \describe{
   \item{species}{} 
   \item{name}{} 
@@ -19,7 +20,8 @@
   \item{lmax}{asymptotic length of the Von Bertalanffy growth equation}    
   \item{l50}{length at which 50\% are mature}     
   \item{a50}{age at which 50\% are mature}     
-}}
+}
+}
 \description{
 A dataset containing life history parameters for a range of teleost species
 }

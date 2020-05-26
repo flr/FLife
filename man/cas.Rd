@@ -4,12 +4,14 @@
 \name{cas}
 \alias{cas}
 \title{cas}
-\format{An \code{data.frame} object
+\format{
+An \code{data.frame} object
 \describe{
   \item{year}{ of capture}
   \item{len}{ at capture}   
   \item{n}{ frequency}   
-}}
+}
+}
 \description{
 A dataset containing lengths by year
 }

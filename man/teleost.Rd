@@ -4,7 +4,8 @@
 \name{teleost}
 \alias{teleost}
 \title{teleost}
-\format{A data frame with 139 rows (i.e. species) and 13 variables:
+\format{
+A data frame with 139 rows (i.e. species) and 13 variables:
 \describe{
   \item{species,genus,family,order,class}{} 
   \item{linf}{asymptotic length of the Von Bertalanffy growth equation}    
@@ -15,7 +16,8 @@
   \item{b}{exponent of the length weight relationship}       
   \item{temp}{temperature}    
   \item{habit}{e.g. pelagic or demeresal}   
-}}
+}
+}
 \description{
 A dataset containing life history parameters for a range of teleost species
 }

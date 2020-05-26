@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Random noise with different frequencies — rnoise,numeric,FLQuant-method • FLife</title>
+<title>Random noise with different frequencies — rlnoise • FLife</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Random noise with different frequencies — rnoise,numeric,FLQuant-method" />
-<meta property="og:description" content="A noise generator" />
+<meta property="og:title" content="Random noise with different frequencies — rlnoise" />
+<meta property="og:description" content="A noise generator for lognormal errors" />
 
 
 
@@ -114,15 +114,15 @@
     <div class="page-header">
     <h1>Random noise with different frequencies</h1>
     
-    <div class="hidden name"><code>rnoise.Rd</code></div>
+    <div class="hidden name"><code>rlnoise.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A noise generator</p>
+    <p>A noise generator for lognormal errors</p>
     </div>
 
     <pre class="usage"><span class='co'># S4 method for numeric,FLQuant</span>
-<span class='fu'>rnoise</span>(
+<span class='fu'>rlnoise</span>(
   <span class='kw'>n</span> <span class='kw'>=</span> <span class='no'>n</span>,
   <span class='kw'>len</span> <span class='kw'>=</span> <span class='no'>len</span>,
   <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>0.3</span>,
@@ -186,12 +186,12 @@ b is the autocorrelation parameter</p>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>white</span>)
 <span class='fu'><a href='https://rdrr.io/r/stats/acf.html'>acf</a></span>(<span class='no'>white</span>)
 
-<span class='no'>red</span> <span class='kw'>&lt;-</span> <span class='fu'>rnoise</span>(<span class='fl'>1000</span>,<span class='no'>flq</span>,<span class='kw'>sd</span><span class='kw'>=</span><span class='fl'>.3</span>,<span class='kw'>b</span><span class='kw'>=</span><span class='fl'>0.7</span>)
+<span class='no'>red</span> <span class='kw'>&lt;-</span> <span class='fu'>rlnoise</span>(<span class='fl'>1000</span>,<span class='no'>flq</span>,<span class='kw'>sd</span><span class='kw'>=</span><span class='fl'>.3</span>,<span class='kw'>b</span><span class='kw'>=</span><span class='fl'>0.7</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>red</span>)
 <span class='fu'><a href='https://rdrr.io/r/stats/acf.html'>acf</a></span>(<span class='no'>red</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ple4</span>)
-<span class='no'>res</span><span class='kw'>=</span><span class='fu'>rnoise</span>(<span class='fl'>1000</span>,<span class='no'>flq</span>,<span class='kw'>sd</span><span class='kw'>=</span><span class='fl'>.3</span>,<span class='kw'>b</span><span class='kw'>=</span><span class='fl'>0</span>)
+<span class='no'>res</span><span class='kw'>=</span><span class='fu'>rnoise</span>(<span class='fl'>1000</span>,<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>flq</span>),<span class='kw'>sd</span><span class='kw'>=</span><span class='fl'>.3</span>,<span class='kw'>b</span><span class='kw'>=</span><span class='fl'>0</span>)
 
 <span class='fu'>ggplot</span>()+
 <span class='fu'>geom_point</span>(<span class='fu'>aes</span>(<span class='no'>year</span>,<span class='no'>age</span>,<span class='kw'>size</span><span class='kw'>=</span> <span class='no'>data</span>),
@@ -201,7 +201,7 @@ b is the autocorrelation parameter</p>
 <span class='fu'>scale_size_area</span>(<span class='kw'>max_size</span><span class='kw'>=</span><span class='fl'>4</span>, <span class='kw'>guide</span><span class='kw'>=</span><span class='st'>"none"</span>)+
 <span class='fu'>facet_wrap</span>(~<span class='no'>iter</span>)
 
-<span class='no'>res</span><span class='kw'>=</span><span class='fu'>rnoise</span>(<span class='fl'>4</span>,<span class='fu'>m</span>(<span class='no'>ple4</span>),<span class='kw'>burn</span><span class='kw'>=</span><span class='fl'>10</span>,<span class='kw'>b</span><span class='kw'>=</span><span class='fl'>0.9</span>,<span class='kw'>cohort</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+<span class='no'>res</span><span class='kw'>=</span><span class='fu'>rlnoise</span>(<span class='fl'>4</span>,<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='fu'>m</span>(<span class='no'>ple4</span>)),<span class='kw'>burn</span><span class='kw'>=</span><span class='fl'>10</span>,<span class='kw'>b</span><span class='kw'>=</span><span class='fl'>0.9</span>,<span class='kw'>cohort</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
 <span class='fu'>ggplot</span>()+
 <span class='fu'>geom_point</span>(<span class='fu'>aes</span>(<span class='no'>year</span>,<span class='no'>age</span>,<span class='kw'>size</span><span class='kw'>=</span> <span class='no'>data</span>),
           <span class='kw'>data</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>res</span>),<span class='no'>data</span><span class='kw'>&gt;</span><span class='fl'>0</span>))+

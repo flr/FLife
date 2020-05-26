@@ -8,21 +8,29 @@
 
 <title>Lopt — lopt,FLPar-method • FLife</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,14 +38,14 @@
 
 
 
-<meta property="og:title" content="Lopt — lopt,FLPar-method" />
 
+<meta property="og:title" content="Lopt — lopt,FLPar-method" />
 <meta property="og:description" content="Lopt, the length at which a cohort achives its maximum biomass, can be used as a
 reference point to identify growth over- or underfishing. Since taking fish below or above 
 this size results in potential loss of yield. The total biomass of a cohort changes through
 time as a result of gains due to an increase in mean size-at-age and losses due to natural 
 mortality. Lopt can therefore be estimated from the natural mortality and weight-at-age vectors." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -51,9 +59,10 @@ mortality. Lopt can therefore be estimated from the natural mortality and weight
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -67,7 +76,7 @@ mortality. Lopt can therefore be estimated from the natural mortality and weight
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FLife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.2.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.3.1</span>
       </span>
     </div>
 
@@ -90,7 +99,6 @@ mortality. Lopt can therefore be estimated from the natural mortality and weight
   <a href="../news/index.html">News</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="http://flr-project.org/">FLR</a>
@@ -102,6 +110,7 @@ mortality. Lopt can therefore be estimated from the natural mortality and weight
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -113,20 +122,22 @@ mortality. Lopt can therefore be estimated from the natural mortality and weight
     </div>
 
     <div class="ref-description">
-    
     <p>Lopt, the length at which a cohort achives its maximum biomass, can be used as a
 reference point to identify growth over- or underfishing. Since taking fish below or above 
 this size results in potential loss of yield. The total biomass of a cohort changes through
 time as a result of gains due to an increase in mean size-at-age and losses due to natural 
 mortality. Lopt can therefore be estimated from the natural mortality and weight-at-age vectors.</p>
-    
     </div>
 
     <pre class="usage"><span class='co'># S4 method for FLPar</span>
-<span class='fu'>lopt</span>(<span class='no'>params</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>length</span>, <span class='no'>params</span>) <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Log'>exp</a></span>(<span class='fl'>0.55</span>) *
-  (<span class='no'>length</span>^-<span class='fl'>1.61</span>) <span class='kw'>%*%</span> (<span class='no'>params</span>[<span class='st'>"linf"</span>]^<span class='fl'>1.44</span>) <span class='kw'>%*%</span> <span class='no'>params</span>[<span class='st'>"k"</span>],
-  <span class='kw'>growth</span> <span class='kw'>=</span> <span class='kw pkg'>FLife</span><span class='kw ns'>:::</span><span class='no'><a href='https://www.rdocumentation.org/packages/FLife/topics/vonB'>vonB</a></span>, <span class='no'>...</span>)</pre>
-    
+<span class='fu'>lopt</span>(
+  <span class='no'>params</span>,
+  <span class='kw'>m</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>length</span>, <span class='no'>params</span>) <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(<span class='fl'>0.55</span>) * (<span class='no'>length</span>^-<span class='fl'>1.61</span>) <span class='kw'>%*%</span> (<span class='no'>params</span>[<span class='st'>"linf"</span>]^<span class='fl'>1.44</span>)
+    <span class='kw'>%*%</span> <span class='no'>params</span>[<span class='st'>"k"</span>],
+  <span class='kw'>growth</span> <span class='kw'>=</span> <span class='kw pkg'>FLife</span><span class='kw ns'>::</span><span class='no'>vonB</span>,
+  <span class='no'>...</span>
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -148,11 +159,10 @@ functions, and the exponent <code>b</code> of the length/weight relationship.</p
       <td><p>any other arguments</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>FLPar</code> with $L_opt$ the length at which a cohort achives its maximum biomass</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Lopt is a function of growth and natural mortality-at-age and there are several 
@@ -162,34 +172,23 @@ time (t) and hence length at which the maximum biomass is achieved i.e.
  \(L(T)^a e^{\int_0^T m(t)}\)
 where \(m(t)\) can be found from the relationship of mortality at length using the relationship 
 of Gislason, assuming the von Bertalanffy growth curve.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='gislason.html'>gislason</a></code>, <code><a href='vonB.html'>vonB</a></code>, <code><a href='lhRef.html'>lhRef</a></code>, <code><a href='lhPar.html'>lhPar</a></code>, <code><a href='lhEql.html'>lhEql</a></code>,</p></div>
-    
+    <div class='dont-index'><p><code>gislason</code>, <code>vonB</code>, <code>lhRef</code>, <code>lhPar</code>, <code>lhEql</code>,</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>params</span><span class='kw'>=</span><span class='fu'><a href='lhPar.html'>lhPar</a></span>(<span class='fu'>FLPar</span>(<span class='kw'>linf</span><span class='kw'>=</span><span class='fl'>100</span>,<span class='kw'>k</span><span class='kw'>=</span><span class='fl'>0.1</span>,<span class='kw'>t0</span><span class='kw'>=</span>-<span class='fl'>0.1</span>,<span class='kw'>b</span><span class='kw'>=</span><span class='fl'>3</span>))
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>params</span><span class='kw'>=</span><span class='fu'>lhPar</span>(<span class='fu'>FLPar</span>(<span class='kw'>linf</span><span class='kw'>=</span><span class='fl'>100</span>,<span class='kw'>k</span><span class='kw'>=</span><span class='fl'>0.1</span>,<span class='kw'>t0</span><span class='kw'>=</span>-<span class='fl'>0.1</span>,<span class='kw'>b</span><span class='kw'>=</span><span class='fl'>3</span>))
 <span class='fu'>lopt</span>(<span class='no'>params</span>)
-<span class='co'># }</span></pre>
+}</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -197,13 +196,16 @@ of Gislason, assuming the von Bertalanffy growth curve.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

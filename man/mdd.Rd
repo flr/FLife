@@ -59,8 +59,8 @@ par=teleost[,"Hucho hucho"]
 par=lhPar(par)
 hutchen=lhEql(par)
 
-scale=stock.n(hutchen)[,25]%*%stock.wt(hutchen)
-scale=(stock.n(hutchen)%*%stock.wt(hutchen)%-%scale)%/%scale
+scale=stock.n(hutchen)[,25]\%*\%stock.wt(hutchen)
+scale=(stock.n(hutchen)\%*\%stock.wt(hutchen)\%-\%scale)\%/\%scale
 
 m=mdd(wt2len(stock.wt(hutchen),par),params=par,scale,k=.9) 
  
