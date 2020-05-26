@@ -30,7 +30,7 @@
 #' lhRef(params)
 #' }
 lhRef<-function(params,
-                 m = "gislason",
+                 m=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
                  sr="bevholt",
                  range=c(min=0,max=40,minfbar=1,maxfbar=40,plusgroup=40),
                  what=c("r","rc","msy","lopt","sk","spr0","sprmsy"),
@@ -72,12 +72,7 @@ lhRef<-function(params,
   }
   
   if ("lopt"%in%what){
-    if (isTRUE(m == "gislason")) {
-      m_fun <- function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"]
-    } else {
-      m_fun <- m
-    }
-    lopt=loptAge(params,m=m_fun)
+    lopt=loptAge(params,m=m)
     
     res=cbind(res,"lopt"   =c(lopt))
     }

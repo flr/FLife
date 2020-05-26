@@ -8,29 +8,21 @@
 
 <title>Derives an <code>FLBRP</code> from life history parameters — lhEql,FLPar-method • FLife</title>
 
-
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
-
-<!-- bootstrap-toc -->
-<link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -38,11 +30,11 @@
 
 
 
-
 <meta property="og:title" content="Derives an <code>FLBRP</code> from life history parameters — lhEql,FLPar-method" />
-<meta property="og:description" content="Takes an FLPar object with life history and selectivity parameters
-and generates a corresponding FLBRP object. Can use a range of functional forms." />
 
+<meta property="og:description" content="Takes an FLPar object with life history and selectivity parameters
+and generates an corresponding FLBRP object. Can uses a range of functional forms" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -56,10 +48,9 @@ and generates a corresponding FLBRP object. Can use a range of functional forms.
 <![endif]-->
 
 
-
   </head>
 
-  <body data-spy="scroll" data-target="#toc">
+  <body>
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -73,7 +64,7 @@ and generates a corresponding FLBRP object. Can use a range of functional forms.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FLife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.2.3.0</span>
       </span>
     </div>
 
@@ -96,6 +87,7 @@ and generates a corresponding FLBRP object. Can use a range of functional forms.
   <a href="../news/index.html">News</a>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="http://flr-project.org/">FLR</a>
@@ -107,7 +99,6 @@ and generates a corresponding FLBRP object. Can use a range of functional forms.
 </div><!--/.navbar -->
 
       
-
       </header>
 
 <div class="row">
@@ -119,25 +110,21 @@ and generates a corresponding FLBRP object. Can use a range of functional forms.
     </div>
 
     <div class="ref-description">
+    
     <p>Takes an <code>FLPar</code> object with life history and selectivity parameters
-and generates a corresponding <code>FLBRP</code> object. Can use a range of functional forms.</p>
+and generates an corresponding <code>FLBRP</code> object. Can uses a range of functional forms</p>
+    
     </div>
 
     <pre class="usage"><span class='co'># S4 method for FLPar</span>
-<span class='fu'>lhEql</span>(
-  <span class='no'>params</span>,
-  <span class='kw'>growth</span> <span class='kw'>=</span> <span class='kw pkg'>FLife</span><span class='kw ns'>::</span><span class='no'>vonB</span>,
-  <span class='kw'>m</span> <span class='kw'>=</span> <span class='st'>"gislason"</span>,
-  <span class='kw'>sr</span> <span class='kw'>=</span> <span class='st'>"bevholt"</span>,
-  <span class='kw'>mat</span> <span class='kw'>=</span> <span class='no'>logistic</span>,
-  <span class='kw'>sel</span> <span class='kw'>=</span> <span class='no'>dnormal</span>,
-  <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>40</span>, <span class='kw'>minfbar</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>maxfbar</span> <span class='kw'>=</span> <span class='fl'>40</span>, <span class='kw'>plusgroup</span> <span class='kw'>=</span> <span class='fl'>40</span>),
-  <span class='kw'>spwn</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>fish</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>midyear</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='no'>...</span>
-)</pre>
-
+<span class='fu'>lhEql</span>(<span class='no'>params</span>, <span class='kw'>growth</span> <span class='kw'>=</span> <span class='kw pkg'>FLife</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/FLife/topics/vonB'>vonB</a></span>,
+  <span class='kw'>m</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>length</span>, <span class='no'>params</span>) <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Log'>exp</a></span>(<span class='fl'>0.55</span>) * (<span class='no'>length</span>^-<span class='fl'>1.61</span>) <span class='kw'>%*%</span>
+  (<span class='no'>params</span>[<span class='st'>"linf"</span>]^<span class='fl'>1.44</span>) <span class='kw'>%*%</span> <span class='no'>params</span>[<span class='st'>"k"</span>], <span class='kw'>mat</span> <span class='kw'>=</span> <span class='kw pkg'>FLife</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/FLife/topics/logistic'>logistic</a></span>,
+  <span class='kw'>sel</span> <span class='kw'>=</span> <span class='kw pkg'>FLife</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/FLife/topics/dnormal'>dnormal</a></span>, <span class='kw'>sr</span> <span class='kw'>=</span> <span class='st'>"bevholt"</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>40</span>,
+  <span class='kw'>minfbar</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>maxfbar</span> <span class='kw'>=</span> <span class='fl'>40</span>, <span class='kw'>plusgroup</span> <span class='kw'>=</span> <span class='fl'>40</span>), <span class='kw'>spwn</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>fish</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>units</span> <span class='kw'>=</span> <span class='kw'>if</span> (<span class='st'>"units"</span> <span class='kw'>%in%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/attributes'>attributes</a></span>(<span class='no'>params</span>)))
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/attributes'>attributes</a></span>(<span class='no'>params</span>)$<span class='no'>units</span> <span class='kw'>else</span> <span class='kw'>NULL</span>, <span class='kw'>midyear</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='no'>...</span>)</pre>
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -147,35 +134,39 @@ and generates a corresponding <code>FLBRP</code> object. Can use a range of func
     </tr>
     <tr>
       <th>growth</th>
-      <td><p>function that takes an <code>FLPar</code> object with parameters, by default <code>vonB</code></p></td>
+      <td><p>A function that takes an <code>FLPar</code> oject with parameters, by default <code>vonB</code></p></td>
     </tr>
     <tr>
       <th>m</th>
-      <td><p><code>character</code> takes the natural mortality model name, by default gislason</p></td>
-    </tr>
-    <tr>
-      <th>sr</th>
-      <td><p><code>character</code> value, "bevholt" by default</p></td>
+      <td><p>A function that takes an <code>FLPar</code> oject with parameters, by default <code>gislason</code></p></td>
     </tr>
     <tr>
       <th>mat</th>
-      <td><p>function that takes an <code>FLPar</code> object with parameters, by default <code>logistic</code></p></td>
+      <td><p>A function that takes an <code>FLPar</code> oject with parameters, by default <code>logistic</code></p></td>
     </tr>
     <tr>
       <th>sel</th>
-      <td><p>function that takes an <code>FLPar</code> object with parameters, by default <code>dnormal</code></p></td>
+      <td><p>A function that takes an <code>FLPar</code> oject with parameters, by default <code>dnormal</code></p></td>
+    </tr>
+    <tr>
+      <th>sr</th>
+      <td><p>A <code>character</code> value, "bevholt" by default</p></td>
     </tr>
     <tr>
       <th>range</th>
-      <td><p><code>numeric</code> with age range by default from 0 to 40</p></td>
+      <td><p>A <code>numeric</code> with age range by default from 0 to 40</p></td>
     </tr>
     <tr>
       <th>spwn</th>
-      <td><p><code>numeric</code> give propotion of year when spawning occurs, by default is params["a50"]-floor(params["a50"])</p></td>
+      <td><p>A <code>numeric</code> give propotion of year when spawning occurs, by default is params["a50"]-floor(params["a50"])</p></td>
     </tr>
     <tr>
       <th>fish</th>
-      <td><p><code>numeric</code> give propotion of year when fishing occurs, by default 0.5</p></td>
+      <td><p>A <code>numeric</code> give propotion of year when fishing occurs, by default 0.5</p></td>
+    </tr>
+    <tr>
+      <th>units</th>
+      <td><p>A<code>character</code> for vectors in <code>FLBRP</code> returned by method</p></td>
     </tr>
     <tr>
       <th>midyear</th>
@@ -185,34 +176,40 @@ and generates a corresponding <code>FLBRP</code> object. Can use a range of func
       <th>...</th>
       <td><p>any other arguments</p></td>
     </tr>
-    <tr>
-      <th>units</th>
-      <td><p><code>character</code> for vectors in <code>FLBRP</code> returned by method</p></td>
-    </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>FLBRP</code> object</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>lhPar</code>, <code>lhRef</code></p>
-<p><code>vonB</code> <code>lorenzen</code> <code>sigmoid</code></p></div>
+    <div class='dont-index'><p><code><a href='lhPar.html'>lhPar</a></code>, <code><a href='lhRef.html'>lhRef</a></code></p>
+<p><code><a href='vonB.html'>vonB</a></code> <code><a href='lorenzen.html'>lorenzen</a></code> <code><a href='sigmoid.html'>sigmoid</a></code></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>teleost</span>)
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>teleost</span>)
 <span class='no'>alb</span><span class='kw'>=</span><span class='no'>teleost</span>[,<span class='st'>"Thunnus alalunga"</span>]
-<span class='no'>eql</span><span class='kw'>=</span><span class='fu'>lhEql</span>(<span class='fu'>lhPar</span>(<span class='no'>alb</span>))
-}</div></pre>
+<span class='no'>eql</span><span class='kw'>=</span><span class='fu'>lhEql</span>(<span class='fu'><a href='lhPar.html'>lhPar</a></span>(<span class='no'>alb</span>))
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <nav id="toc" data-toggle="toc" class="sticky-top">
-      <h2 data-toc-skip>Contents</h2>
-    </nav>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+
   </div>
 </div>
-
 
       <footer>
       <div class="copyright">
@@ -220,16 +217,13 @@ and generates a corresponding <code>FLBRP</code> object. Can use a range of func
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
 </div>
-
       </footer>
    </div>
 
   
 
-
   </body>
 </html>
-
 
