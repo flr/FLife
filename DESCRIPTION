@@ -15,14 +15,13 @@ LazyData: true
 License: GPL (>= 2)
 Depends:
   R(>= 3.6.0),
-  FLCore (>= 2.6.13)
+  FLCore (>= 2.6.13),
+  ggplotFL
 Imports:
   methods,
   plyr,
-  ggplotFL,
   FLBRP
 Suggests:
-  ggplot2,
   FLasher,
   FLAssess,
   testthat,
