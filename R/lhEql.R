@@ -120,9 +120,9 @@ setMethod("lhEql", signature(params='FLPar'),
   #    m.   =m(swt,params=params[c("m1","m2")])
   #    }
   #
-res<<-res
-m.<<-m
-params.<<-params
+#res    <<-res
+#m.     <<-m
+#params.<<-params
 
   #names(dimnames(m.))[1]="age"}
   if ("character"%in%is(m))
