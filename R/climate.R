@@ -17,7 +17,9 @@ icesRefpts<-function(x,refs=NULL,model="bevholtSV",steepness=0.7,nyears=3) {
     sr=as.FLSR(x,model=model)
     sr=fmle(sr,
             fixed=list(s=steepness,spr0=spr0(eq)),
-            control=list(silent=TRUE))
+            control=list(silent=TRUE),
+            method="Brent",
+            lower=c(0.001),upper=max(ssb(sr))*10)
     params(eq)=ab(params(sr),substr(model,1,gregexpr("SV",model)[[1]][1]-1))[-dim(params(sr))[1]]
     model( eq)=do.call(substr(model,1,gregexpr("SV",model)[[1]][1]-1), list())$model
     refpts(eq)=computeRefpts(eq)
