@@ -6,7 +6,7 @@ addRefs<-function(x,refs){
   
   x[maply(dimnames(x)$refpt,function(x) gregexpr("B",x)[[1]][1]==1),"ssb"]=
     refs[maply(dimnames(refs)[[1]],function(x) gregexpr("B",x)[[1]][1]>0),]
-  x[maply(dimnames(x)$refpt,function(x) gregexpr("F",x)[[1]][1]==1),"harvest"]=
+  x[maply(dimnames(x)$refpt,function(x) gregexpr("F",x)[[1]][1]>0),"harvest"]=
     refs[maply(dimnames(refs)[[1]],function(x) gregexpr("F",x)[[1]][1]>0),]
   x} 
 
