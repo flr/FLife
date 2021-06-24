@@ -1,7 +1,7 @@
 
 ## Adds the ICES PA & MSY reference points to refpts and fits a SRRR
 addRefs<-function(x,refs){
-  x=FLPar(NA,dimnames=list(refpt=c(dimnames(refpts(eq))$refpt,dimnames(refs)$params),
+  x=FLPar(NA,dimnames=list(refpt=c(dimnames(x)$refpt,dimnames(refs)$params),
                            quant=c("harvest","yield","rec","ssb","biomass","revenue","cost","profit"),iter=1))
   
   x[maply(dimnames(x)$refpt,function(x) gregexpr("B",x)[[1]][1]==1),"ssb"]=
@@ -32,7 +32,7 @@ icesRefpts<-function(x,refs=NULL,model="bevholtSV",steepness=0.7,nyears=3) {
   
   if (!is.null(refs))
     refpts(eq)=addRefs(refpts(eq),refs)
-  
+
   eq=brp(eq)
   eq}
 
