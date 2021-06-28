@@ -78,6 +78,8 @@ Collate:
     priors.R
     ggpairs.R
     steepness.R
-    rtest.R		
+    rtest.R	
+    climate.R
+    production.R
 Encoding: UTF-8
 RoxygenNote: 7.0.0

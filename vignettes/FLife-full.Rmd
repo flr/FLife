@@ -198,7 +198,7 @@ exportMethods(steepness)
 
 $$R=\frac{aSSB}{b+SSB} $$
 
-@beverton1993dynamics as reformulated by @francis1992use in terms of steepness ($h$), virgin biomass ($v$) and $S/R_{F=0}$, where steepness is the rat. 
+@beverton1993dynamics as reformulated by @francis1992use in terms of steepness ($h$), virgin recruitment ($R_0$) and $S/R_{F=0}$, where steepness is the rat. 
 
 $$R=\frac{0.8R_0hS}{0.2S/R_{F=0}R_{0}(1-h)+(h-0.2)S}$$
 
