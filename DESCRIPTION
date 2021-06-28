@@ -28,7 +28,8 @@ Suggests:
   knitr,
   GGally, 
   reshape,
-  popbio
+  popbio,
+  rmarkdown
 Additional_repositories: http://flr-project.org/R
 Collate:
     generic.R
