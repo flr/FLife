@@ -106,9 +106,9 @@ sel<-function(x)
   catch.sel(x)%/%fapex(catch.sel(x))
 
 ggplot(FLQuants(eql,"m","catch.sel"=sel,"mat","catch.wt"))+
-  geom_line(aes(age,data,col=attributes(wkpar)$name[iter]))+
+  geom_line(aes(age,data,col=attributes(wkpar)$stock[as.numeric(iter)]))+
   facet_wrap(~qname,scale="free")+
-  scale_x_continuous(limits=c(0,15))+ 
+  scale_x_continuous(limits=c(0,15))+
   guides(colour=guide_legend(title="Species",title.position="top"))
 ```
 
