@@ -4,10 +4,9 @@ addRefs<-function(x,refs){
   x=FLPar(NA,dimnames=list(refpt=c(dimnames(x)$refpt,dimnames(refs)$params),
                            quant=c("harvest","yield","rec","ssb","biomass","revenue","cost","profit"),iter=1))
   
-  x[maply(dimnames(x)$refpt,function(x) gregexpr("B",x)[[1]][1]==1),"ssb"]=
-    refs[maply(dimnames(refs)[[1]],function(x) gregexpr("B",x)[[1]][1]>0),]
-  x[maply(dimnames(x)$refpt,function(x) gregexpr("F",x)[[1]][1]>0),"harvest"]=
-    refs[maply(dimnames(refs)[[1]],function(x) gregexpr("F",x)[[1]][1]>0),]
+  x[unlist(gregexpr("B",dimnames(x)$refpt))==1,"ssb"]    =refs[unlist(gregexpr("B",dimnames(refs)[[1]])>0),]
+  x[unlist(gregexpr("F",dimnames(x)$refpt))==1,"harvest"]=refs[unlist(gregexpr("F",dimnames(refs)[[1]])>0),]
+  
   x} 
 
 icesRefpts<-function(x,refs=NULL,model="bevholtSV",steepness=0.7,nyears=3) {
@@ -62,10 +61,21 @@ surplusPrd<-function(x){
   rtn}
 
 ## Set M, wt, sel & mat to vary by iter based on annual values to look at non-stationarity
-nonStn<-function(x,sr=NULL,nyears=dim(x)[2],slots=c("m","mat","stock.wt","catch.wt","catch.sel")){
+nonStn<-function(x,sr=NULL,nyears=dim(x)[2],slots=c("m","mat","stock.wt","catch.wt","catch.sel"),model="bevholtSV",h=0.8){
   
-  if (is.null(sr)) eq=FLBRP(x,nyears=nyears)
-  else             eq=FLBRP(x,sr-sr,nyears=nyears)
+  if (is.null(sr)){
+    eq=FLBRP(x,nyears=nyears)
+    sr=as.FLSR(x,model=model)
+    sr=fmle(sr,
+            fixed=list(s=h,spr0=spr0(eq)),
+            control=list(silent=TRUE),
+            method="Brent",
+            lower=c(0.001),upper=max(ssb(sr))*10)
+    params(eq)=ab(params(sr),substr(model,1,gregexpr("SV",model)[[1]][1]-1))[-dim(params(sr))[1]]
+    model( eq)=do.call(substr(model,1,gregexpr("SV",model)[[1]][1]-1), list())$model
+    refpts(eq)=computeRefpts(eq)}
+  else if ("FLBRP"%in%is(sr)) eq=sr
+  else if ("FLSR"%in%is(sr))  eq=FLBRP(x,sr=sr,nyears=nyears)
   
   eq=propagate(eq,dim(ssb(x))[2])
   
