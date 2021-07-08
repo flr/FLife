@@ -67,7 +67,7 @@ my_density <- function(data,mapping,...){
   ggplot(data=data,mapping=mapping)+
   geom_density(...,lwd=1)}
 
-ggpairs(transform(wklife[,-c(1:5)],linf=log(linf),k=log(k),l50=log(l50)),
+ggpairs(transform(wklife[,-c(1:5,10:11)],linf=log(linf),k=log(k),l50=log(l50)),
   lower = list(continuous = wrap(my_smooth)),
   diag=list(continuous=wrap(my_density,alpha=0.2)),
   title = "")+
