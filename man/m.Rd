@@ -6,6 +6,9 @@
 \alias{gislasen}
 \alias{gislasen-method}
 \alias{gislasen,FLQuant,FLPar-method}
+\alias{lorenzen}
+\alias{lorenzen-method}
+\alias{lorenzen,FLQuant,FLPar-method}
 \alias{roff-method}
 \alias{roff,FLPar-method}
 \alias{rikhter}

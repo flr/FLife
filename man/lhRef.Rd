@@ -7,7 +7,8 @@
 \usage{
 lhRef(
   params,
-  m = "gislason",
+  m = function(length, params) exp(0.55) * (length^-1.61) \%*\% (params["linf"]^1.44)
+    \%*\% params["k"],
   sr = "bevholt",
   range = c(min = 0, max = 40, minfbar = 1, maxfbar = 40, plusgroup = 40),
   what = c("r", "rc", "msy", "lopt", "sk", "spr0", "sprmsy"),
