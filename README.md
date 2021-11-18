@@ -12,8 +12,6 @@ Methods for Modelling Life History Traits
 To install this package, start R and enter:
     install.packages("FLife", repos="https:///flr-project.org/R")
 
-or download from the [FLife releases page](https://github.com/flr/FLife/releases/)
-
 ## Documentation
 - [Help pages](http://flr-project.org/FLife)
 - [Vignette](https://flr-project.org/doc/Using_information_on_life_history_relationships.html)
