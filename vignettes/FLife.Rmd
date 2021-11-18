@@ -11,12 +11,12 @@ tags: [FLR ggplot2]
 license: Creative Commons Attribution-ShareAlike 4.0 International Public License
 ---
 
-PLEASE visit the tutorial on [FLife: plotting FLR objects with ggplot2](http://www.flr-project.org/doc/Life_history_relationships.html) at the [FLR website](http://flr-project.org).
+PLEASE visit the tutorial on [Using information on Life History relationships](https://flr-project.org/doc/Using_information_on_life_history_relationships.html) at the [FLR website](http://flr-project.org).
 
 # Download
 
 The tutorial is available in various formats:
 
-- [html](http://www.flr-project.org/doc/Life_history_relationships.html)
-- [pdf](http://www.flr-project.org/doc/pdf/Life_history_relationships.pdf)
-- [R script](http://www.flr-project.org/doc/R/Life_history_relationships.R)
+- [html](https://flr-project.org/doc/Using_information_on_life_history_relationships.html)
+- [pdf](https://flr-project.org/doc/pdf/Using_information_on_life_history_relationships.pdf)
+- [R script](https://flr-project.org/doc/R/Using_information_on_life_history_relationships.html)
