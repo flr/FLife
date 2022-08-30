@@ -3,7 +3,7 @@ title: "FLife"
 subtitle: "WKLIFE Life History Relationships"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 author: "Laurence Kell"
-output: rmarkdown:::pdf_document
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{FLife-WKLife}

@@ -1,7 +1,9 @@
-pandoc: 2.2.1
-pkgdown: 1.2.0
+pandoc: 2.7.3
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
+  FLife-full: FLife-full.html
   FLife-wklife: FLife-wklife.html
   FLife: FLife.html
+last_built: 2022-08-30T19:12Z
 

@@ -17,7 +17,7 @@ README.md: DESCRIPTION
 	sed -i 's/Version: *\([^ ]*\)/Version: $(PKGVERS)/' README.md
 	sed -i 's/Date: *\([^ ]*\)/Date: $(PKGDATE)/' README.md
 
-docs: $(HELP_FILES) README.md NEWS
+docs: $(HELP_FILES) README.md
 	R --vanilla --silent -e "options(repos='http://cran.r-project.org'); pkgdown::build_site(preview=FALSE)"
 
 roxygen: $(R_FILES)

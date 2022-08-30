@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,14 +33,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FLife</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.4.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="http://github.com/flr/FLife">
+  <a href="http://github.com/flr/FLife" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
     Source
@@ -56,7 +58,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="http://flr-project.org/">FLR</a>
+  <a href="http://flr-project.org/" class="external-link">FLR</a>
 </li>
       </ul>
 </div>
@@ -68,14 +70,14 @@
 
       
 
-      </header><div class="row">
+      </header><script src="FLife-full_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>FLife</h1>
-            <h3 class="subtitle">Modelling Life History relationships</h3>
-                        <h4 class="author">Laurence Kell</h4>
+            <h3 data-toc-skip class="subtitle">Modelling Life History relationships</h3>
+                        <h4 data-toc-skip class="author">Laurence Kell</h4>
             
-            <h4 class="date">26 May, 2020</h4>
+            <h4 data-toc-skip class="date">30 August, 2022</h4>
       
       
       <div class="hidden name"><code>FLife-full.Rmd</code></div>
@@ -86,34 +88,38 @@
     
 <p><a href="#top"></a></p>
 <p><a href="#Introduction">Introduction</a><br><a href="#Life%20History%20Relationships">Life History Relationships</a><br><a href="#Dynamics">Dynamics</a><br><a href="#Simulation">Simulation</a><br><a href="#More">More Information</a><br><a href="#References">References</a></p>
-<div id="introduction" class="section level1">
-<h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h1>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
 <p>Life history traits include growth rate; age and size at sexual maturity; the temporal pattern or schedule of reproduction; the number, size, and sex ratio of offspring; the distribution of intrinsic or extrinsic mortality rates (e.g., patterns of senescence); and patterns of dormancy and dispersal. These traits contribute directly to age-specific survival and reproductive functions.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> The <strong>FLife</strong> package has a variety of methods for modelling life history traits and functional forms for processes for use in fish stock assessment and for conducting Management Strategy Evaluation (MSE).</p>
 <p>These relationships have many uses, for example in age-structured population models, functional relationships for these processes allow the calculation of the population growth rate and have been used to to develop priors in stock assesments and to parameterise ecological models.</p>
 <p>The <strong>FLife</strong> package has methods for modelling functional forms, for simulating equilibrium <code>FLBRP</code> and dynamic stock objects <code>FLStock</code>.</p>
-<div id="quick-start" class="section level2">
-<h2 class="hasAnchor">
-<a href="#quick-start" class="anchor"></a>Quick Start</h2>
+<div class="section level3">
+<h3 id="quick-start">Quick Start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
+</h3>
 <p>This section provide a quick way to get running and provides an overview of the functions available, their potential use, and where to seek help.</p>
-<p>A number of packages need to be installed from CRAN and the<br><a href="http://www.flr-project.org">FLR</a> website, where <a href="https://www.flr-project.org/doc/">tutorials</a> are also available.</p>
-<p>Extensive use is made of the packages of <a href="http://hadley.nz/">Hadley Wickham</a>. For example <code>ggplot2</code>, based on the <em>Grammar of Graphics</em>,<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> is used for plotting<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. While <code>reshape</code> and <code>plyr</code> are used for data manipulatation and analysis.</p>
+<p>A number of packages need to be installed from CRAN and the<br><a href="http://www.flr-project.org" class="external-link">FLR</a> website, where <a href="https://www.flr-project.org/doc/" class="external-link">tutorials</a> are also available.</p>
+<p>Extensive use is made of the packages of <a href="http://hadley.nz/" class="external-link">Hadley Wickham</a>. For example <code>ggplot2</code>, based on the <em>Grammar of Graphics</em>,<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> is used for plotting<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. While <code>reshape</code> and <code>plyr</code> are used for data manipulatation and analysis.</p>
 <p>The simplest way to obtain <strong>FLife</strong> is to install it from the <code>FLR</code> repository via the R console. See help(install.packages) for more details.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"FLife"</span>, <span class="kw">repos</span> <span class="kw">=</span> <span class="st">"http://flr-project.org/R"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"FLife"</span>, repos <span class="op">=</span> <span class="st">"http://flr-project.org/R"</span><span class="op">)</span></span></code></pre></div>
 <p>After installing the <strong>FLife</strong> package load it</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">FLife</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">FLife</span><span class="op">)</span></span></code></pre></div>
 <p><a href="#top">Back to Top</a></p>
 </div>
 </div>
-<div id="life-history-relationships" class="section level1">
-<h1 class="hasAnchor">
-<a href="#life-history-relationships" class="anchor"></a>Life History Relationships</h1>
-<div id="data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#data" class="anchor"></a>Data</h2>
+<div class="section level2">
+<h2 id="life-history-relationships">Life History Relationships<a class="anchor" aria-label="anchor" href="#life-history-relationships"></a>
+</h2>
+<div class="section level3">
+<h3 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
+</h3>
 <p>There is an example dataset</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">teleost</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">teleost</span></pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">teleost</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">teleost</span></span></code></pre></div>
 <pre><code>An object of class "FLPar"
 iters:  145 
 
@@ -133,45 +139,47 @@ Relationship between life history parameters.
 </p>
 </div>
 </div>
-<div id="lhpar-method" class="section level2">
-<h2 class="hasAnchor">
-<a href="#lhpar-method" class="anchor"></a><code>lhPar</code> method</h2>
+<div class="section level3">
+<h3 id="lhpar-method">
+<code>lhPar</code> method<a class="anchor" aria-label="anchor" href="#lhpar-method"></a>
+</h3>
 <p>As seen in the above plot there are relationships between life history parameters, for example <span class="math inline">\(L_{\infty}\)</span> and <span class="math inline">\(L_{50}\)</span> show a strong positive correlation, in other words at a a large species has a faster rate of growth than a small species.</p>
 <p>The <code>lhPar</code> method can be used to fill in missing values.</p>
-<div id="growth" class="section level3">
-<h3 class="hasAnchor">
-<a href="#growth" class="anchor"></a>Growth</h3>
+<div class="section level4">
+<h4 id="growth">Growth<a class="anchor" aria-label="anchor" href="#growth"></a>
+</h4>
 <p><span class="citation">Gislason, Pope, et al. (2008)</span> proposed the relationship between <span class="math inline">\(k\)</span> and <span class="math inline">\(L_{\infty}\)</span></p>
 <p><span class="math display">\[k=3.15L_{\infty}^{-0.64}\]</span></p>
 <p>While <span class="citation">Pauly (1979)</span> proposed the empirical relationship between <span class="math inline">\(t_0\)</span> and <span class="math inline">\(L_{\infty}\)</span> and <span class="math inline">\(k\)</span></p>
 <p><span class="math display">\[log(-t_0) = -0.3922 - 0.2752 log(L_{\infty}) - 1.038 log(k)\]</span></p>
 <p>Therefore for a value of <span class="math inline">\(L_{\infty}\)</span>, or for the maximum observed size (<span class="math inline">\(L_{max}\)</span> ) since <span class="math inline">\(L_{\infty}=0.95L_{max}\)</span>, then missing growth parameters can be estimated.</p>
 <p>This is done by the <code>lhPar</code> method, for example create an <code>FLPar</code> object with only <code>linf</code> then estimate the missing values</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">linf</span><span class="kw">=</span><span class="no">teleost</span>[<span class="st">"linf"</span>]
-
-<span class="no">hat</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/pkg/FLife/man/lhPar.html">lhPar</a></span>(<span class="no">linf</span>)
-
-<span class="fu">ggplot</span>()+
-  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="no">linf</span>,<span class="no">k</span>), <span class="kw">data</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/stats/model.frame.html">model.frame</a></span>(<span class="no">hat</span>))+
-  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="no">linf</span>,<span class="no">k</span>),<span class="kw">data</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/stats/model.frame.html">model.frame</a></span>(<span class="no">teleost</span>),<span class="kw">col</span><span class="kw">=</span><span class="st">"red"</span>)+
-  <span class="fu">scale_x_log10</span>()+
-  <span class="fu">scale_y_log10</span>()+
-  <span class="fu">xlab</span>(<span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span>(<span class="no">L</span>[<span class="no">infinty</span>]))</pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linf</span><span class="op">=</span><span class="va">teleost</span><span class="op">[</span><span class="st">"linf"</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">hat</span><span class="op">=</span><span class="fu"><a href="../reference/lhPar.html">lhPar</a></span><span class="op">(</span><span class="va">linf</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">linf</span>,<span class="va">k</span><span class="op">)</span>, data<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/model.frame.html" class="external-link">model.frame</a></span><span class="op">(</span><span class="va">hat</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">linf</span>,<span class="va">k</span><span class="op">)</span>,data<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/model.frame.html" class="external-link">model.frame</a></span><span class="op">(</span><span class="va">teleost</span><span class="op">)</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">scale_x_log10</span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">xlab</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">L</span><span class="op">[</span><span class="va">infinty</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="FLife-full_files/figure-html/unnamed-chunk-3-1.png" alt="Relationship between k and Linfinty" width="768"><p class="caption">
 Relationship between k and Linfinty
 </p>
 </div>
 </div>
-<div id="maturity" class="section level3">
-<h3 class="hasAnchor">
-<a href="#maturity" class="anchor"></a>Maturity</h3>
+<div class="section level4">
+<h4 id="maturity">Maturity<a class="anchor" aria-label="anchor" href="#maturity"></a>
+</h4>
 <p><span class="citation">Beverton (1992)</span> proposed a relationship between <span class="math inline">\(L_{50}\)</span> the length at which 50% of individuals are mature</p>
 <p><span class="math display">\[l_{50}=0.72L_{\infty}^{0.93}\]</span></p>
 </div>
-<div id="natural-mortality" class="section level3">
-<h3 class="hasAnchor">
-<a href="#natural-mortality" class="anchor"></a>Natural Mortality</h3>
+<div class="section level4">
+<h4 id="natural-mortality">Natural Mortality<a class="anchor" aria-label="anchor" href="#natural-mortality"></a>
+</h4>
 <p>For larger species securing sufficient food to maintain a fast growth rate entails exposure to a higher natural mortality, e.g. due to predation. While many small demersal species seem to be partly protected against predation by hiding, cryptic behaviour, being flat or by possessing spines have the lowest rates of natural mortality <span class="citation">Griffiths and Harrod (2007)</span>. Hence, at a given length individuals belonging to species with a high <span class="math inline">\(L_{\infty}\)</span> may generally be exposed to a higher M than individuals belonging to species with a low <span class="math inline">\(L_{\infty}\)</span>.</p>
 <p><span class="citation">Gislason, Daan, et al. (2008)</span> proposed the empirical relationship</p>
 <p><span class="math display">\[ log(M) = 0.55-1.61log(L) + 1.44log(L_{\infty}) + log(k)\]</span></p>
@@ -192,14 +200,14 @@ params
    1.00000( 0.0000) 5000.00000( 0.0000) 
 units:  NA </code></pre>
 </div>
-<div id="stock-recruitment-relationship" class="section level3">
-<h3 class="hasAnchor">
-<a href="#stock-recruitment-relationship" class="anchor"></a>Stock recruitment relationship</h3>
+<div class="section level4">
+<h4 id="stock-recruitment-relationship">Stock recruitment relationship<a class="anchor" aria-label="anchor" href="#stock-recruitment-relationship"></a>
+</h4>
 <p>exportMethods(sv)<br>
 exportMethods(steepness)</p>
 <p><code>lhPar</code> assumes a Beverton and Holt stock recruitment relationship by default</p>
 <p><span class="math display">\[R=\frac{aSSB}{b+SSB} \]</span></p>
-<p><span class="citation">Beverton and Holt (1993)</span> as reformulated by <span class="citation">Francis (1992)</span> in terms of steepness (<span class="math inline">\(h\)</span>), virgin biomass (<span class="math inline">\(v\)</span>) and <span class="math inline">\(S/R_{F=0}\)</span>, where steepness is the rat.</p>
+<p><span class="citation">Beverton and Holt (1993)</span> as reformulated by <span class="citation">Francis (1992)</span> in terms of steepness (<span class="math inline">\(h\)</span>), virgin recruitment (<span class="math inline">\(R_0\)</span>) and <span class="math inline">\(S/R_{F=0}\)</span>, where steepness is the rat.</p>
 <p><span class="math display">\[R=\frac{0.8R_0hS}{0.2S/R_{F=0}R_{0}(1-h)+(h-0.2)S}\]</span></p>
 <p>Steepness is difficult to estimate from stock assessment data sets as there is often insufficient range in biomass levels required for its estimation.</p>
 <p><span class="citation">Wiff et al. (2016)</span> investigated the relationship between life history parameters and the steepness of the stock recruitment relationship.</p>
@@ -210,69 +218,69 @@ exportMethods(steepness)</p>
 </div>
 </div>
 </div>
-<div id="dynamics" class="section level1">
-<h1 class="hasAnchor">
-<a href="#dynamics" class="anchor"></a>Dynamics</h1>
-<div id="expected-dynamics" class="section level2">
-<h2 class="hasAnchor">
-<a href="#expected-dynamics" class="anchor"></a>Expected dynamics</h2>
-<div id="lheql" class="section level3">
-<h3 class="hasAnchor">
-<a href="#lheql" class="anchor"></a><code>lhEql</code>
+<div class="section level2">
+<h2 id="dynamics">Dynamics<a class="anchor" aria-label="anchor" href="#dynamics"></a>
+</h2>
+<div class="section level3">
+<h3 id="expected-dynamics">Expected dynamics<a class="anchor" aria-label="anchor" href="#expected-dynamics"></a>
 </h3>
+<div class="section level4">
+<h4 id="lheql">
+<code>lhEql</code><a class="anchor" aria-label="anchor" href="#lheql"></a>
+</h4>
 </div>
-<div id="functional-forms" class="section level3">
-<h3 class="hasAnchor">
-<a href="#functional-forms" class="anchor"></a>Functional Forms</h3>
+<div class="section level4">
+<h4 id="functional-forms">Functional Forms<a class="anchor" aria-label="anchor" href="#functional-forms"></a>
+</h4>
 <p>exportMethods(ages)</p>
-<div id="ogives" class="section level4">
-<h4 class="hasAnchor">
-<a href="#ogives" class="anchor"></a>Ogives</h4>
+<div class="section level5">
+<h5 id="ogives">Ogives<a class="anchor" aria-label="anchor" href="#ogives"></a>
+</h5>
 <p>exportMethods(knife)<br>
 exportMethods(logistic)<br>
 exportMethods(sigmoid)<br>
 exportMethods(dnormal)</p>
 </div>
-<div id="growth-curves" class="section level4">
-<h4 class="hasAnchor">
-<a href="#growth-curves" class="anchor"></a>Growth curves</h4>
+<div class="section level5">
+<h5 id="growth-curves">Growth curves<a class="anchor" aria-label="anchor" href="#growth-curves"></a>
+</h5>
 <p>exportMethods(vonB)<br>
 exportMethods(gascuel)<br>
 exportMethods(richards)<br>
 exportMethods(gompertz)</p>
 </div>
-<div id="conversions" class="section level4">
-<h4 class="hasAnchor">
-<a href="#conversions" class="anchor"></a>Conversions</h4>
+<div class="section level5">
+<h5 id="conversions">Conversions<a class="anchor" aria-label="anchor" href="#conversions"></a>
+</h5>
 <p>exportMethods(len2wt)<br>
 exportMethods(wt2len)</p>
 </div>
 </div>
-<div id="population-growth-rate" class="section level3">
-<h3 class="hasAnchor">
-<a href="#population-growth-rate" class="anchor"></a>Population growth rate</h3>
+<div class="section level4">
+<h4 id="population-growth-rate">Population growth rate<a class="anchor" aria-label="anchor" href="#population-growth-rate"></a>
+</h4>
 <p>exportMethods(leslie)<br>
 exportMethods(r)</p>
 </div>
 </div>
-<div id="time-series-dynamics" class="section level2">
-<h2 class="hasAnchor">
-<a href="#time-series-dynamics" class="anchor"></a>Time series dynamics</h2>
-<div id="lhstock" class="section level3">
-<h3 class="hasAnchor">
-<a href="#lhstock" class="anchor"></a><code>lhStock</code>
+<div class="section level3">
+<h3 id="time-series-dynamics">Time series dynamics<a class="anchor" aria-label="anchor" href="#time-series-dynamics"></a>
 </h3>
+<div class="section level4">
+<h4 id="lhstock">
+<code>lhStock</code><a class="anchor" aria-label="anchor" href="#lhstock"></a>
+</h4>
 </div>
 </div>
-<div id="density-dependence" class="section level2">
-<h2 class="hasAnchor">
-<a href="#density-dependence" class="anchor"></a>Density Dependence</h2>
+<div class="section level3">
+<h3 id="density-dependence">Density Dependence<a class="anchor" aria-label="anchor" href="#density-dependence"></a>
+</h3>
 <p>exportMethods(grwdd)<br>
 exportMethods(matdd)<br>
 exportMethods(mdd)</p>
-<div id="natural-mortality-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#natural-mortality-1" class="anchor"></a>Natural Mortality</h3>
+<div class="section level4">
+<h4 id="natural-mortality-1">Natural Mortality<a class="anchor" aria-label="anchor" href="#natural-mortality-1"></a>
+</h4>
 <p>exportMethods(charnov)<br>
 exportMethods(djababli)<br>
 exportMethods(gislason)<br>
@@ -288,9 +296,9 @@ exportMethods(roff)</p>
 <p><span class="math display">\[C_t=\frac{F_t}{A}ln{\huge[}1+N_t\frac{A}{M_{\infty}+F_t}[1-exp(-M_{\infty}-F_t)]{\huge]}\]</span></p>
 </div>
 </div>
-<div id="indicators" class="section level2">
-<h2 class="hasAnchor">
-<a href="#indicators" class="anchor"></a>Indicators</h2>
+<div class="section level3">
+<h3 id="indicators">Indicators<a class="anchor" aria-label="anchor" href="#indicators"></a>
+</h3>
 <p>export(lhRef)<br>
 export(refs)</p>
 <p>exportMethods(lopt)<br>
@@ -298,65 +306,66 @@ exportMethods(loptAge)</p>
 <p><a href="#top">Back to Top</a></p>
 </div>
 </div>
-<div id="simulation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#simulation" class="anchor"></a>Simulation</h1>
-<div id="projections" class="section level2">
-<h2 class="hasAnchor">
-<a href="#projections" class="anchor"></a>Projections</h2>
+<div class="section level2">
+<h2 id="simulation">Simulation<a class="anchor" aria-label="anchor" href="#simulation"></a>
+</h2>
+<div class="section level3">
+<h3 id="projections">Projections<a class="anchor" aria-label="anchor" href="#projections"></a>
+</h3>
 </div>
-<div id="stochasticity" class="section level2">
-<h2 class="hasAnchor">
-<a href="#stochasticity" class="anchor"></a>Stochasticity</h2>
+<div class="section level3">
+<h3 id="stochasticity">Stochasticity<a class="anchor" aria-label="anchor" href="#stochasticity"></a>
+</h3>
 <p>exportMethods(rnoise)<br>
 exportMethods(rod)</p>
 </div>
-<div id="management-strategy-evaluation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#management-strategy-evaluation" class="anchor"></a>Management Strategy Evaluation</h2>
+<div class="section level3">
+<h3 id="management-strategy-evaluation">Management Strategy Evaluation<a class="anchor" aria-label="anchor" href="#management-strategy-evaluation"></a>
+</h3>
 <p><a href="#top">Back to Top</a></p>
 </div>
 </div>
-<div id="More" class="section level1">
-<h1 class="hasAnchor">
-<a href="#More" class="anchor"></a>More Information</h1>
+<div class="section level2">
+<h2 id="More">More Information<a class="anchor" aria-label="anchor" href="#More"></a>
+</h2>
 <ul>
 <li>You can submit bug reports, questions or suggestions on <code>FLife</code> at the <code>FLife</code> issue page,<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> or on the <em>FLR</em> mailing list.</li>
-<li>Or send a pull request to <a href="https://github.com/flr/FLife/" class="uri">https://github.com/flr/FLife/</a>
+<li>Or send a pull request to <a href="https://github.com/flr/FLife/" class="external-link uri">https://github.com/flr/FLife/</a>
 </li>
 <li>For more information on the FLR Project for Quantitative Fisheries Science in R, visit the FLR webpage.<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>
 </li>
 <li>The latest version of <code>FLife</code> can always be installed using the <code>devtools</code> package, by calling</li>
 </ul>
-<div class="sourceCode" id="cb8"><html><body><pre class="r">    <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">devtools</span>)
-    <span class="fu"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"flr/FLife"</span>)</pre></body></html></div>
-<div id="software-versions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#software-versions" class="anchor"></a>Software Versions</h2>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"flr/FLife"</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="software-versions">Software Versions<a class="anchor" aria-label="anchor" href="#software-versions"></a>
+</h3>
 <ul>
-<li>R version 4.0.0 (2020-04-24)</li>
-<li>FLCore: 2.6.15</li>
+<li>R version 4.2.1 (2022-06-23)</li>
+<li>FLCore: 2.6.19</li>
 <li>FLPKG:</li>
 <li>
-<strong>Compiled</strong>: Tue May 26 10:26:35 2020</li>
+<strong>Compiled</strong>: Tue Aug 30 21:12:55 2022</li>
 <li>
-<strong>Git Hash</strong>: 9dfe294</li>
+<strong>Git Hash</strong>: f4ea8e3</li>
 </ul>
 </div>
-<div id="author-information" class="section level2">
-<h2 class="hasAnchor">
-<a href="#author-information" class="anchor"></a>Author information</h2>
+<div class="section level3">
+<h3 id="author-information">Author information<a class="anchor" aria-label="anchor" href="#author-information"></a>
+</h3>
 <p><strong>Laurence KELL</strong>. <a href="mailto:laurie@seaplusplus.co.uk" class="email">laurie@seaplusplus.co.uk</a></p>
 </div>
-<div id="acknowledgements" class="section level2">
-<h2 class="hasAnchor">
-<a href="#acknowledgements" class="anchor"></a>Acknowledgements</h2>
+<div class="section level3">
+<h3 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
+</h3>
 <p>This vignette and many of the methods documented in it were developed under the MyDas project funded by the Irish exchequer and EMFF 2014-2020. The overall aim of MyDas is to develop and test a range of assessment models and methods to establish Maximum Sustainable Yield (MSY) reference points (or proxy MSY reference points) across the spectrum of data-limited stocks.</p>
 </div>
 </div>
-<div id="References" class="section level1">
-<h1 class="hasAnchor">
-<a href="#References" class="anchor"></a>References</h1>
+<div class="section level2">
+<h2 id="References">References<a class="anchor" aria-label="anchor" href="#References"></a>
+</h2>
 <p><a href="#top">Back to Top</a></p>
 <ul>
 <li>FLife-lhPar</li>
@@ -427,11 +436,11 @@ exportMethods(rod)</p>
 <div class="footnotes">
 <hr>
 <ol>
-<li id="fn1"><p><a href="http://www.oxfordbibliographies.com/view/document/obo-9780199830060/obo-9780199830060-0016.xml" class="uri">http://www.oxfordbibliographies.com/view/document/obo-9780199830060/obo-9780199830060-0016.xml</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>Wilkinson, L. 1999. <em>The Grammar of Graphics</em>, Springer. <a href="http://dx.doi.org/10.1007/978-3-642-21551-3_13">doi 10.1007/978-3-642-21551-3_13</a>.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p><a href="http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html" class="uri">http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html</a><a href="#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p><a href="https://github.com/flr/FLife/issues" class="uri">https://github.com/flr/FLife/issues</a><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
-<li id="fn5"><p><a href="http://flr-project.org" class="uri">http://flr-project.org</a><a href="#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p><a href="http://www.oxfordbibliographies.com/view/document/obo-9780199830060/obo-9780199830060-0016.xml" class="external-link uri">http://www.oxfordbibliographies.com/view/document/obo-9780199830060/obo-9780199830060-0016.xml</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Wilkinson, L. 1999. <em>The Grammar of Graphics</em>, Springer. <a href="http://dx.doi.org/10.1007/978-3-642-21551-3_13" class="external-link">doi 10.1007/978-3-642-21551-3_13</a>.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p><a href="http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html" class="external-link uri">http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html</a><a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p><a href="https://github.com/flr/FLife/issues" class="external-link uri">https://github.com/flr/FLife/issues</a><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p><a href="http://flr-project.org" class="external-link uri">http://flr-project.org</a><a href="#fnref5" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>
@@ -447,11 +456,13 @@ exportMethods(rod)</p>
 
 
       <footer><div class="copyright">
-  <p>Developed by Laurence Kell.</p>
+  <p></p>
+<p>Developed by Laurence Kell.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -459,6 +470,8 @@ exportMethods(rod)</p>
 
   
 
+
+  
 
   </body>
 </html>

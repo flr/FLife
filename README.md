@@ -1,6 +1,6 @@
 # FLife
 - Version: 3.4.0
-- Date: 28-06-2021
+- Date: 18-11-2021
 - Author: Laurence Kell
 - Maintainer: Laurence Kell <laurie@seaplusplus.co.uk>
 - Repository: <https://github.com/flr/FLife/>
@@ -17,7 +17,7 @@ To install this package, start R and enter:
 - [Vignette](https://flr-project.org/doc/Using_information_on_life_history_relationships.html)
 
 ## License
-Copyright (c) 2021. Laurie Kell. Released under the GPL 2.0.
+Copyright (c) 2021-2022 Laurie Kell. Released under the GPL 2.0.
 
 ## Contact
 You are welcome to:

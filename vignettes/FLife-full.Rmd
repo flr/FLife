@@ -3,8 +3,7 @@ title: "FLife"
 subtitle: "Modelling Life History relationships"
 author: "Laurence Kell"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output:
-  rmarkdown:::pdf_document
+output: rmarkdown::html_vignette
 mathjax: TRUE
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
