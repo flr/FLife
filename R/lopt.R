@@ -28,7 +28,7 @@ utils::globalVariables(c("growth","s","FLife"))
 #' 
 #' @export
 #' @docType methods
-#' @rdname lopt
+#' @rdname lopt2
 #' 
 #' @seealso \code{\link{gislason}}, \code{\link{vonB}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}},  
 #' 
