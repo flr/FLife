@@ -74,8 +74,8 @@ loptFn=function(x,params,
   aMax=ceiling(a)
   if (is.na(aMax)) return (as.numeric(NA))
 
-  m1=m(vonB(aMin,params),params)
-  m2=m(vonB(aMax,params),params)
+  m1=mFn(vonB(aMin,params),params)
+  m2=mFn(vonB(aMax,params),params)
 
   slope    =(m1-m2)/(aMin-aMax)
   intercept=m1-slope*aMin
@@ -173,7 +173,7 @@ setMethod("loptAge", signature(params="FLPar"),
         age   =0:ceiling(x)
         dmns  =list(age=age)
         length=vonB(age=FLQuant(pmin(age+0.5,x),dimnames=dmns),params=params)
-        m.    =FLQuant(m(length,params),    dimnames=dmns)
+        m.    =FLQuant(mFn(length,params),    dimnames=dmns)
         mCum  =FLQuant(aaply(m.,6,sum))
         n     =exp(-mCum)
         c(n*FLife::len2wt(length[ac(ceiling(x))],params))}
@@ -194,7 +194,7 @@ setMethod("loptAge", signature(params="FLPar"),
 
 setMethod("genTime", signature(params="FLPar"),
           function(params,
-                   m     =function(length,params) params["m1"]%*%(exp(log(length)%*%params["m2"])),
+                   mFn   =function(length,params) params["m1"]%*%(exp(log(length)%*%params["m2"])),
                    growth=vonB,
                    ...){   
             
@@ -203,7 +203,7 @@ setMethod("genTime", signature(params="FLPar"),
               age   =0:ceiling(x)
               dmns  =list(age=age)
               length=vonB(age=FLQuant(pmin(age+0.5,x),dimnames=dmns),params=params)
-              m.    =FLQuant(m(length,params),    dimnames=dmns)
+              m.    =FLQuant(mFn(length,params),    dimnames=dmns)
               mCum  =FLQuant(aaply(m.,6,sum))
               n     =exp(-mCum)
               c(n*FLife::len2wt(length[ac(ceiling(x))],params))}
