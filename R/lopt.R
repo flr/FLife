@@ -37,7 +37,7 @@ utils::globalVariables(c("growth","s","FLife"))
 #' params=lhPar(FLPar(linf=100,k=0.1,t0=-0.1,b=3))
 #' lopt(params)
 #' }
-setMethod("lopt2", signature(params="FLPar"),
+setMethod("lopt", signature(params="FLPar"),
        function(params,
                 mFn=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
                 growth=FLife::vonB,
