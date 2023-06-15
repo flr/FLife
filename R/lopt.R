@@ -94,7 +94,7 @@ if (FALSE){
  par["k"]=seq(0.1,0.5,length.out=12)
  par["t0"]=-0.1
  
- loFLife=lopt(par)
+ loFLife=lopt2(par)
 
  par=lhPar(par)
  eql=lhEql(par,fbar=FLQuant(0)) # ,m=function(object,param) {res=FLQuant(m(object)); res%=%0.2;res} )

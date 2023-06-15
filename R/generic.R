@@ -31,7 +31,7 @@ setGeneric('mdd',   function(object,params,...) standardGeneric('mdd'))
 setGeneric('matdd', function(age,params,...)    standardGeneric('matdd'))
 setGeneric('grwdd', function(age,params,...)    standardGeneric('grwdd'))
 
-setGeneric('lopt2', function(params,...) standardGeneric('lopt'))
+setGeneric('lopt2', function(params,...) standardGeneric('lopt2'))
 setGeneric('loptAge', function(params,...) standardGeneric('loptAge'))
 
 setGeneric('genTime',function(params,...) standardGeneric('genTime'))
