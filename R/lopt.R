@@ -10,7 +10,7 @@ utils::globalVariables(c("growth","s","FLife"))
 #' 
 #' @param params an \code{FLPar} object with parameter values for the natural mortality and growth 
 #' functions, and the exponent \code{b} of the length/weight relationship.
-#' @param m natural mortality function, by default Gislason
+#' @param mFn natural mortality function, by default Gislason
 #' @param growth length or weight-at-age function, by default von Bertalanffy
 #' @param ... any other arguments
 #'  
@@ -62,7 +62,7 @@ loptFn=function(x,params,
                 growth=vonB){
   
   length=growth(FLQuant(age,dimnames=list(age=age)),params)
-  m.    =FLQuant(m(length,params), dimnames=list(age=age))
+  m.    =FLQuant(mFn(length,params), dimnames=list(age=age))
   mCum  =FLQuant(aaply(m.,2,cumsum),dimnames=dimnames(m.))
 
   a =qmax(growth(params=params,length=FLQuant(x)),min(age))
