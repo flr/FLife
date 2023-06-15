@@ -1,6 +1,6 @@
 utils::globalVariables(c("growth","s","FLife"))
 
-#' @title Lopt
+#' @title Lopt2
 #'
 #' @description Lopt, the length at which a cohort achives its maximum biomass, can be used as a
 #' reference point to identify growth over- or underfishing. Since taking fish below or above 
@@ -37,7 +37,7 @@ utils::globalVariables(c("growth","s","FLife"))
 #' params=lhPar(FLPar(linf=100,k=0.1,t0=-0.1,b=3))
 #' lopt(params)
 #' }
-setMethod("lopt", signature(params="FLPar"),
+setMethod("lopt2", signature(params="FLPar"),
        function(params,
                 mFn=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
                 growth=FLife::vonB,
