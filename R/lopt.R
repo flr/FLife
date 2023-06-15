@@ -39,7 +39,7 @@ utils::globalVariables(c("growth","s","FLife"))
 #' }
 setMethod("lopt", signature(params="FLPar"),
        function(params,
-                m=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
+                mFn=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
                 growth=FLife::vonB,
                 ...){   
             dmns=dimnames(params)
@@ -49,7 +49,7 @@ setMethod("lopt", signature(params="FLPar"),
             res=aaply(params,seq(length(dm))[-1],function(x){
                    x.=FLPar(x)
 
-                   rtn=try(optimise(loptFn,c(.01,c(x["linf"])*.99),params=x.,maximum=TRUE,m=m)$maximum)
+                   rtn=try(optimise(loptFn,c(.01,c(x["linf"])*.99),params=x.,maximum=TRUE,mFn=mFn)$maximum)
    
                    if ("character" %in% mode(rtn)) rtn=NA
                    rtn})
@@ -57,7 +57,7 @@ setMethod("lopt", signature(params="FLPar"),
             FLPar(array(res,dim=c(1, dm[-1]),dimnames=dmns))})
 
 loptFn=function(x,params,
-                m=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
+                mFn=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
                 age=0:200,
                 growth=vonB){
   
@@ -184,7 +184,7 @@ setMethod("loptAge", signature(params="FLPar"),
         
       res=aaply(params,seq(length(dm))[-1],function(x){
             x.=FLPar(x)
-            rtn=try(optimise(loptFn,c(0,40),params=x.,maximum=TRUE,m=m)$maximum)
+            rtn=try(optimise(loptFn,c(0,40),params=x.,maximum=TRUE,mFn=mFn)$maximum)
             if ("character" %in% mode(rtn)) rtn=NA
             rtn})
      
@@ -214,7 +214,7 @@ setMethod("genTime", signature(params="FLPar"),
             
             res=aaply(params,seq(length(dm))[-1],function(x){
               x.=FLPar(x)
-              rtn=try(optimise(loptFn,c(0,40),params=x.,maximum=TRUE,m=m)$maximum)
+              rtn=try(optimise(loptFn,c(0,40),params=x.,maximum=TRUE,mFn=mFn)$maximum)
               if ("character" %in% mode(rtn)) rtn=NA
               rtn})
             
