@@ -12,7 +12,7 @@ setGeneric('lopt', function(params, ...) standardGeneric('lopt'))
 #' 
 #' @param params an \code{FLPar} object with parameter values for the natural mortality and growth 
 #' functions, and the exponent \code{b} of the length/weight relationship.
-#' @param mFn natural mortality function, by default Gislason
+#' @param m natural mortality function, by default Gislason
 #' @param growth length or weight-at-age function, by default von Bertalanffy
 #' @param ... any other arguments
 #'  
@@ -41,7 +41,7 @@ setGeneric('lopt', function(params, ...) standardGeneric('lopt'))
 #' }
 setMethod("lopt", signature(params="FLPar"),
        function(params,
-                mFn=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
+                m=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
                 growth=FLife::vonB,
                 ...){   
             dmns=dimnames(params)
@@ -51,7 +51,7 @@ setMethod("lopt", signature(params="FLPar"),
             res=aaply(params,seq(length(dm))[-1],function(x){
                    x.=FLPar(x)
 
-                   rtn=try(optimise(loptFn,c(.01,c(x["linf"])*.99),params=x.,maximum=TRUE,mFn=mFn)$maximum)
+                   rtn=try(optimise(loptFn,c(.01,c(x["linf"])*.99),params=x.,maximum=TRUE,m=m)$maximum)
    
                    if ("character" %in% mode(rtn)) rtn=NA
                    rtn})
@@ -59,12 +59,12 @@ setMethod("lopt", signature(params="FLPar"),
             FLPar(array(res,dim=c(1, dm[-1]),dimnames=dmns))})
 
 loptFn=function(x,params,
-                mFn=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
+                m=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
                 age=0:200,
                 growth=vonB){
   
   length=growth(FLQuant(age,dimnames=list(age=age)),params)
-  m.    =FLQuant(mFn(length,params), dimnames=list(age=age))
+  m.    =FLQuant(m(length,params), dimnames=list(age=age))
   mCum  =FLQuant(aaply(m.,2,cumsum),dimnames=dimnames(m.))
 
   a =qmax(growth(params=params,length=FLQuant(x)),min(age))
@@ -76,8 +76,8 @@ loptFn=function(x,params,
   aMax=ceiling(a)
   if (is.na(aMax)) return (as.numeric(NA))
 
-  m1=mFn(vonB(aMin,params),params)
-  m2=mFn(vonB(aMax,params),params)
+  m1=m(vonB(aMin,params),params)
+  m2=m(vonB(aMax,params),params)
 
   slope    =(m1-m2)/(aMin-aMax)
   intercept=m1-slope*aMin
@@ -175,7 +175,7 @@ setMethod("loptAge", signature(params="FLPar"),
         age   =0:ceiling(x)
         dmns  =list(age=age)
         length=vonB(age=FLQuant(pmin(age+0.5,x),dimnames=dmns),params=params)
-        m.    =FLQuant(mFn(length,params),    dimnames=dmns)
+        m.    =FLQuant(m(length,params),    dimnames=dmns)
         mCum  =FLQuant(aaply(m.,6,sum))
         n     =exp(-mCum)
         c(n*FLife::len2wt(length[ac(ceiling(x))],params))}
@@ -186,7 +186,7 @@ setMethod("loptAge", signature(params="FLPar"),
         
       res=aaply(params,seq(length(dm))[-1],function(x){
             x.=FLPar(x)
-            rtn=try(optimise(loptFn,c(0,40),params=x.,maximum=TRUE,mFn=mFn)$maximum)
+            rtn=try(optimise(loptFn,c(0,40),params=x.,maximum=TRUE,m=m)$maximum)
             if ("character" %in% mode(rtn)) rtn=NA
             rtn})
      
@@ -196,7 +196,7 @@ setMethod("loptAge", signature(params="FLPar"),
 
 setMethod("genTime", signature(params="FLPar"),
           function(params,
-                   mFn   =function(length,params) params["m1"]%*%(exp(log(length)%*%params["m2"])),
+                   m   =function(length,params) params["m1"]%*%(exp(log(length)%*%params["m2"])),
                    growth=vonB,
                    ...){   
             
@@ -205,7 +205,7 @@ setMethod("genTime", signature(params="FLPar"),
               age   =0:ceiling(x)
               dmns  =list(age=age)
               length=vonB(age=FLQuant(pmin(age+0.5,x),dimnames=dmns),params=params)
-              m.    =FLQuant(mFn(length,params),    dimnames=dmns)
+              m.    =FLQuant(m(length,params),    dimnames=dmns)
               mCum  =FLQuant(aaply(m.,6,sum))
               n     =exp(-mCum)
               c(n*FLife::len2wt(length[ac(ceiling(x))],params))}
@@ -216,7 +216,7 @@ setMethod("genTime", signature(params="FLPar"),
             
             res=aaply(params,seq(length(dm))[-1],function(x){
               x.=FLPar(x)
-              rtn=try(optimise(loptFn,c(0,40),params=x.,maximum=TRUE,mFn=mFn)$maximum)
+              rtn=try(optimise(loptFn,c(0,40),params=x.,maximum=TRUE,m=m)$maximum)
               if ("character" %in% mode(rtn)) rtn=NA
               rtn})
             
