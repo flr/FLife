@@ -1,5 +1,7 @@
 utils::globalVariables(c("growth","s","FLife"))
 
+setGeneric('lopt', function(params, ...) standardGeneric('lopt'))
+
 #' @title lopt
 #'
 #' @description Lopt, the length at which a cohort achives its maximum biomass, can be used as a
