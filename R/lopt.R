@@ -1,6 +1,6 @@
 utils::globalVariables(c("growth","s","FLife"))
 
-#' @title Lopt2
+#' @title lopt
 #'
 #' @description Lopt, the length at which a cohort achives its maximum biomass, can be used as a
 #' reference point to identify growth over- or underfishing. Since taking fish below or above 
@@ -28,7 +28,7 @@ utils::globalVariables(c("growth","s","FLife"))
 #' 
 #' @export
 #' @docType methods
-#' @rdname lopt2
+#' @rdname lopt
 #' 
 #' @seealso \code{\link{gislason}}, \code{\link{vonB}}, \code{\link{lhRef}}, \code{\link{lhPar}}, \code{\link{lhEql}},  
 #' 
@@ -37,7 +37,7 @@ utils::globalVariables(c("growth","s","FLife"))
 #' params=lhPar(FLPar(linf=100,k=0.1,t0=-0.1,b=3))
 #' lopt(params)
 #' }
-setMethod("lopt2", signature(params="FLPar"),
+setMethod("lopt", signature(params="FLPar"),
        function(params,
                 mFn=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"],
                 growth=FLife::vonB,
@@ -94,7 +94,7 @@ if (FALSE){
  par["k"]=seq(0.1,0.5,length.out=12)
  par["t0"]=-0.1
  
- loFLife=lopt2(par)
+ loFLife=lopt(par)
 
  par=lhPar(par)
  eql=lhEql(par,fbar=FLQuant(0)) # ,m=function(object,param) {res=FLQuant(m(object)); res%=%0.2;res} )
@@ -109,9 +109,9 @@ if (FALSE){
                        wt     =wt[biomass==max(biomass)]))
  
  wo=as(transmute(res2,lopt=wt,iter=as.numeric(as.character(iter))),"FLPar")
- par=rbind(par,lopt=loFLife,FLPar(lopt2=wt2len(c(wo),par)))
+ par=rbind(par,lopt=loFLife,FLPar(lopt=wt2len(c(wo),par)))
  
- ggpairs(model.frame(par[c("k","lopt","lopt2")])[,-3])
+ ggpairs(model.frame(par[c("k","lopt","lopt")])[,-3])
  
  
  dat=as.data.frame(stock.n(eql)%*%stock.wt(eql))
@@ -271,10 +271,10 @@ aopt=ldply(eql,function(x) {
 lopt=ddply(aopt, .(.id), function(x) data.frame(length=c(FLife::vonB(FLQuant(x$age),par))))
 
 lopt1=lopt(pars[["Lorenzen"]])
-lopt2=lopt(pars[["0.2"]])
+lopt=lopt(pars[["0.2"]])
 
 vonB(params=par,length=lopt1)
-vonB(params=par,length=lopt2)
+vonB(params=par,length=lopt)
 
 crv=mdply(data.frame(Length=seq(56,239)),function(Length){
   biomass=FLife::loptFn(Length,params=par)
