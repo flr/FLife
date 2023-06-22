@@ -2,11 +2,11 @@ utils::globalVariables(c("growth","s","FLife"))
 
 setGeneric('lopt', function(params, m, ...) standardGeneric('lopt'))
 
-setMethod("lopt", signature(params="numeric",m="missing"),  function(params, m=0.2) {
-  return(params["linf"] * (3 / (3 + m/params["k"])))})
+setMethod("lopt", signature(params="numeric",m="missing"),  function(params, m=0.2, k=params[1]) {
+  return(params[1] * (3 / (3 + m/k)))})
 setMethod("lopt", signature(params="numeric",m="numeric"),  function(params, m) {
   return(params["linf"] * (3 / (3 + m/params["k"])))})
-setMethod("lopt", signature(params="FLPar",m="missing"),  function(params, mFn=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"]) {
+setMethod("lopt", signature(params="FLPar",m="missing"),    function(params, mFn=function(length,params) exp(0.55)*(length^-1.61)%*%(params["linf"]^1.44)%*%params["k"]) {
   return(params["linf"] %*% (3 / (3 + mFn(params["l50"],params)%/%params["k"])))})
 
 #' @title lopt
