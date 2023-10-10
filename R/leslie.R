@@ -1,5 +1,5 @@
 #' @title Leslie matrix
-#' 
+#'   
 #' @description
 #' Creates a Leslie Matrix from a \code{FLBRP} object that represents a population at equilibrium
 #'  
@@ -49,7 +49,7 @@ setMethod("leslie", signature(object="FLBRP"),
   #tmp2   =apply(tmp,2:6,sum)
   #mx[1,,]=(rec(object)[,1]%*%tmp%/%tmp2)%/%stock.n(object)[,1]
   
-  # a/b slope at orign for bevholt
+  # a/b slope at origin for bevholt
   mx[1,,]=sweep((mat(object)%*%stock.wt(object)),2,(rec(object)[,1]%/%ssb(object)[,1]), "*")
   
   #Mass
