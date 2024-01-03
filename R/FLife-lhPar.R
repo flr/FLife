@@ -127,11 +127,11 @@ lhPar <- function(...,
     params <- rbind(params, FLPar("t0"=FLPar(t0(params))))
   if(any(is.na(params["t0"])))
     params["t0",is.na(params["t0"])]=FLPar("t0"=FLPar(t0(params[,is.na(params["t0"])])))
-  
+
   # l50 & a50 ######################################################
   if (!("a50"%in%dimnames(params)$params)) params=rbind(params,propagate(FLPar(a50=NA),dim(params)[2]))
   if (!("l50"%in%dimnames(params)$params)) params=rbind(params,propagate(FLPar(l50=NA),dim(params)[2]))
-
+  
   # l50
   ## l50=NA and a50=NA then estimate l50
   flag=is.na(params["l50"])&(is.na(params["a50"]))
@@ -141,18 +141,17 @@ lhPar <- function(...,
   ## l50=NA and a50!=NA
   flag=is.na(params["l50"])&(!is.na(params["a50"]))
   if (any(flag))
-    params["l50",flag]=vonB(c(params["a50",flag]),params=params[,flag])
+    params["l50",flag]=vonB(age=params["a50",flag],params=params[,flag])
 
   ## l50!=NA and a50=NA
   flag=!is.na(params["l50"])&(is.na(params["a50"]))
-param.<<-params
   if (any(flag))
     params["a50",flag]=vonB(len=params["l50",flag],params=params[,flag])
 
   # sel1
   if(!"sel1" %in% dimnames(params)$params)
     params <- rbind(params, FLPar(sel1=params$a50 + params$ato95))
-  
+
   # bg
   if(!"bg" %in% dimnames(params)$params)
     params <- rbind(params, FLPar(bg=params$b))

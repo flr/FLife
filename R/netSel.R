@@ -64,19 +64,19 @@ netSelAge<-function(len,params){
   exp(a+b*length)/(1+ (exp(a+b*length)))}
 
 
-if(FALSE){
-   #data(ple4)
-   
-   params=FLPar(l50=35,sr=5,t0=-.5,k=0.2,linf=100)
-   netSel(ages(mat(ple4)),params)
-
-   neph70  <- netPar("cod", 70,100,90,12)
-   neph80  <- netPar("cod", 80,100,90,12)
-   neph90  <- netPar("cod", 90,100,90,12)
-   whit100 <- netPar("cod",100,100, 0,12)
-   whit120 <- netPar("cod",120,100, 0,12)
-   flat80  <- netPar("cod", 80,100, 0,12,6)
-   flat120 <- netPar("cod",120,100, 0,12,6)
-   
-   netSel(ages(mat(ple4)),rbind(neph80,FLPar(a=1,b=3,t0=-0.3,k=.3,linf=100)))
-   }
+#' \dontrun{
+#' data(ple4)
+#' 
+#' params=FLPar(l50=35,sr=5,t0=-.5,k=0.2,linf=100)
+#' netSel(ages(mat(ple4)),params)
+#' 
+#' neph70  <- netPar("cod", 70,100,90,12)
+#' neph80  <- netPar("cod", 80,100,90,12)
+#' neph90  <- netPar("cod", 90,100,90,12)
+#' whit100 <- netPar("cod",100,100, 0,12)
+#' whit120 <- netPar("cod",120,100, 0,12)
+#' flat80  <- netPar("cod", 80,100, 0,12,6)
+#' flat120 <- netPar("cod",120,100, 0,12,6)
+#' 
+#' netSel(ages(mat(ple4)),rbind(neph80,FLPar(a=1,b=3,t0=-0.3,k=.3,linf=100)))
+#' }

@@ -66,7 +66,7 @@ vonBFn=function(age,params){
   
   res=params["linf"]%*%(1.0-exp((-params["k"])%*%(age%-%params["t0"])))
   
-  dimnames(res)[1:5]=dimnames(age)[1:5]
+  dimnames(res)[1:length(dim(res))]=dimnames(age)[1:length(dim(res))]
   res}
 
 invVonBFn=function(length,params){
