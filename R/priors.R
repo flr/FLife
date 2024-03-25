@@ -35,7 +35,7 @@ priors<-function(object,eq=lhEql(lhPar(object))){
   rtn=rbind(rtn,lc)
   
   r=maply(seq(dims(eq)$iter), function(x) 
-    log(lambda(leslie(iter(eq,x),fbar=c(refpts(eq)["crash","harvest",x]))[drop=TRUE])))
+    log(lambda(FLife:::leslie(iter(eq,x),fbar=c(refpts(eq)["crash","harvest",x]))[drop=TRUE])))
   r=FLPar(r=array(c(r),c(1,length(c(r)))))
   rtn=rbind(rtn,r)
   
@@ -49,7 +49,7 @@ priors<-function(object,eq=lhEql(lhPar(object))){
   #"m/k",priors<-function(object,eq=lhEql(lhPar(object))){
   
   #LF=M
-  lfm=FLPar(lfm=0.75*param["lc"]%+%0.25*param["linf"])
+  lfm=0.75*rtn["lc"]+(0.25*rtn["linf"])
   rtn=rbind(rtn,lfm)
   
   ## SRR
@@ -79,12 +79,12 @@ priors<-function(object,eq=lhEql(lhPar(object))){
   rtn=rbind(rtn,lc)
   
   r=maply(seq(dims(eq)$iter), function(x) 
-    log(lambda(leslie(iter(eq,x),fbar=c(refpts(eq)["crash","harvest",x]))[drop=TRUE])))
+    log(lambda(FLife:::leslie(iter(eq,x),fbar=c(refpts(eq)["crash","harvest",x]))[drop=TRUE])))
   r=FLPar(r=array(c(r),c(1,length(c(r)))))
   rtn=rbind(rtn,r)
   
   rc=maply(seq(dims(eq)$iter), function(x) 
-    log(lambda(leslie(iter(eq,x),fbar=c(refpts(eq)["msy","harvest",x]))[drop=TRUE])))
+    log(lambda(FLife:::leslie(iter(eq,x),fbar=c(refpts(eq)["msy","harvest",x]))[drop=TRUE])))
   rc=FLPar(rc=array(c(rc),c(1,length(c(rc)))))
   rtn=rbind(rtn,rc)
   
