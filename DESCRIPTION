@@ -30,7 +30,7 @@ Suggests:
   reshape,
   popbio,
   rmarkdown
-Additional_repositories: http://flr-project.org/R
+Additional_repositories: http://flrproject.org/R
 Collate:
     generic.R
     FLife-lhPar.R

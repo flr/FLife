@@ -4,7 +4,7 @@ templates:
 navbar:
   right:
   - text: FLR
-    href: http://flr-project.org/
+    href: http://flrproject.org/
   left:
   - text: Source
     href: http://github.com/flr/FLife

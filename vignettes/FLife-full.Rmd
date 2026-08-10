@@ -56,7 +56,7 @@ The **FLife** package has methods for modelling functional forms, for simulating
 This section provide a quick way to get running and provides an overview of the functions available, their potential use, and where to seek help. 
 
 A number of packages need to be installed from CRAN and the  
-[FLR](http://www.flr-project.org) website, where  [tutorials](https://www.flr-project.org/doc/) are also available.
+[FLR](http://www.flrproject.org) website, where  [tutorials](https://www.flrproject.org/doc/) are also available.
 
 Extensive use is made of the packages of [Hadley Wickham](http://hadley.nz/). For example  `ggplot2`, based on the *Grammar of Graphics* ^[Wilkinson, L. 1999. *The Grammar of Graphics*, Springer. [doi 10.1007/978-3-642-21551-3_13](http://dx.doi.org/10.1007/978-3-642-21551-3_13).], is used for plotting^[<http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html>]. While `reshape` and `plyr` are used for data manipulatation and analysis.
 
@@ -69,11 +69,11 @@ library(plyr)
 The simplest way to obtain **FLife** is to install it from the `FLR` repository via the R console. See help(install.packages) for more details.
 
 ```{r install,echo=TRUE,eval=FALSE}
-install.packages("FLife", repos = "http://flr-project.org/R")
+install.packages("FLife", repos = "http://flrproject.org/R")
 ```
 
 ```{r install-64,echo=FALSE,eval=FALSE}
-install.packages("FLife", repos = "http://flr-project.org/R", INSTALL_opts="-no_multiarch" )
+install.packages("FLife", repos = "http://flrproject.org/R", INSTALL_opts="-no_multiarch" )
 ```
 
 After installing the **FLife** package load it
@@ -318,7 +318,7 @@ exportMethods(rod)
 
 * You can submit bug reports, questions or suggestions on `FLife` at the `FLife` issue page ^[<https://github.com/flr/FLife/issues>], or on the *FLR* mailing list.
 * Or send a pull request to <https://github.com/flr/FLife/>
-* For more information on the FLR Project for Quantitative Fisheries Science in R, visit the FLR webpage ^[<http://flr-project.org>].
+* For more information on the FLR Project for Quantitative Fisheries Science in R, visit the FLR webpage ^[<http://flrproject.org>].
 * The latest version of `FLife` can always be installed using the `devtools` package, by calling
 ```{r, devtools, echo=TRUE, eval=FALSE}
 	library(devtools)
