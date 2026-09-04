@@ -36,8 +36,6 @@ setGeneric('loptAge', function(params,...) standardGeneric('loptAge'))
 
 setGeneric('genTime',function(params,...) standardGeneric('genTime'))
 
-setGeneric('leslie', function(object, ...) standardGeneric('leslie'))
-#setGeneric('r', function(m,fec,...) standardGeneric('r'))
 setGeneric('rod', function(object, ...) standardGeneric('rod'))
 
 setGeneric('powh', function(len,n,...) standardGeneric('powh'))

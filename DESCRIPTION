@@ -1,7 +1,7 @@
 Package: FLife
 Type: Package
 Title: Methods for Modelling Life History Traits
-Version: 3.4.0
+Version: 3.4.1
 Date: 2018-07-25
 Author: Laurence Kell <laurie@seaplusplus.co.uk>
 Maintainer: Laurence Kell <laurie@seaplusplus.co.uk>
